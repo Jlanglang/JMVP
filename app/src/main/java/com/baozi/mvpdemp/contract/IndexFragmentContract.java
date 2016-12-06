@@ -4,8 +4,11 @@ import com.baozi.mvpdemp.location.APIService;
 import com.baozi.mvpdemp.ui.view.BaseFragmentView;
 import com.baozi.mvpdemp.presenter.BasePresenter;
 
+import java.util.HashMap;
+
+import rx.Observable;
+
 /**
- * Created by baozi on 2016/11/28.
  */
 public class IndexFragmentContract {
     public interface View extends BaseFragmentView {
@@ -15,6 +18,6 @@ public class IndexFragmentContract {
     }
 
     public interface Model {
-
+        Observable login(HashMap<String,Object> parmas);
     }
 }

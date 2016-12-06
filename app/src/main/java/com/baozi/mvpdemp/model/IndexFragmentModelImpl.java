@@ -1,9 +1,10 @@
 package com.baozi.mvpdemp.model;
 
 import com.baozi.mvpdemp.contract.IndexFragmentContract;
-import com.baozi.mvpdemp.location.APIService;
 import com.baozi.mvpdemp.location.APIServiceImpl;
-import com.baozi.mvpdemp.location.ModleFilterFactory;
+import com.baozi.mvpdemp.location.rxandroid.ModleFilterFactory;
+
+import java.util.HashMap;
 
 import rx.Observable;
 
@@ -12,7 +13,9 @@ import rx.Observable;
  */
 
 public class IndexFragmentModelImpl implements IndexFragmentContract.Model {
-    public Observable<String> getData() {
-        return ModleFilterFactory.filter(APIServiceImpl.getInstance().getData());
+
+    @Override
+    public Observable login(HashMap<String, Object> parmas) {
+        return ModleFilterFactory.filter(APIServiceImpl.getInstance().login(parmas));
     }
 }
