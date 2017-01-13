@@ -2,7 +2,6 @@ package com.baozi.mvpdemo.model;
 
 import com.baozi.mvpdemo.contract.IndexFragmentContract;
 import com.baozi.mvpdemo.location.APIServiceImpl;
-import com.baozi.mvpdemo.location.rxandroid.ModleFilterFactory;
 
 import java.util.HashMap;
 

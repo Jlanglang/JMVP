@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 
 import com.baozi.mvpdemo.base.BaseFragment;
 
@@ -16,6 +17,10 @@ public interface BaseFragmentView extends BaseView {
     Context getContext();
 
     Bundle getBundle();
+
+    void setToolbar(Toolbar toolbar);
+
+    void setToolbar(Toolbar toolbar, boolean showTitle);
 
     void startFragment(Fragment tofragment);
 

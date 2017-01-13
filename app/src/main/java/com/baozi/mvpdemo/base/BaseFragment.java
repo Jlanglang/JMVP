@@ -1,10 +1,13 @@
 package com.baozi.mvpdemo.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,18 +15,24 @@ import android.view.ViewGroup;
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseFragmentView;
 
-public abstract class BaseFragment<T extends BasePresenter> extends Fragment implements BaseFragmentView {
+
+/**
+ * @author jlanglang  2016/8/5 9:42
+ */
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment
+        implements BaseFragmentView {
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         if (mBundle != null) {
             outState.putBundle("bundle", mBundle);
         }
+        super.onSaveInstanceState(outState);
     }
+
     /**
      * 绑定activity
      *
@@ -50,13 +59,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         } else {
             mBundle = getArguments() == null ? new Bundle() : getArguments();
         }
-        //创建presenter
         mPresenter = initPresenter();
     }
 
     /**
      * 运行在onCreate之后
      * 生成view视图
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
      */
     @Nullable
     @Override
@@ -67,13 +80,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     /**
      * 运行在onCreateView之后
      * 加载数据
+     *
+     * @param savedInstanceState
      */
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //由于fragment生命周期比较复杂,所以Presenter在onCreateView创建视图之后再进行绑定,不然会报空指针异常
-        mPresenter.onAttch(this);
-        mPresenter.onCreate();
+        //创建presenter
+        if (mPresenter != null) {
+            mPresenter.onAttch(this);
+            mPresenter.onCreate();
+        }
+        initListener();
     }
 
     @Override
@@ -81,31 +99,35 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
         mPresenter.onDestroy();
         super.onDestroyView();
     }
+
     @Override
     public void onDetach() {
         mPresenter.onDetach();
-        super.onDestroyView();
+        super.onDetach();
     }
-    /**
-     * 跳转fragment
-     *
-     * @param tofragment
-     */
+
     @Override
-    public void startFragment(Fragment tofragment) {
-        startFragment(tofragment, null);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void setToolbar(Toolbar toolbar) {
+        setToolbar(toolbar, false);
+    }
+
+    @Override
+    public void setToolbar(Toolbar toolbar, boolean showTitle) {
+        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
+        ((AppCompatActivity) mContext).getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
     }
 
     /**
-     * @param tofragment 跳转的fragment
-     * @param tag        fragment的标签
+     * 初始化监听器
      */
-    @Override
-    public void startFragment(Fragment tofragment, String tag) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(this).add(android.R.id.content, tofragment, tag);
-        fragmentTransaction.addToBackStack(tag);
-        fragmentTransaction.commitAllowingStateLoss();
+    public void initListener() {
+
     }
 
     /**
@@ -124,11 +146,31 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public abstract View initView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
     /**
-     * 创建prensenter
+     * '
+     * 跳转fragment
      *
-     * @return <T extends BasePresenter> 必须是BasePresenter的子类
+     * @param tofragment
      */
-    public abstract T initPresenter();
+    @Override
+    public void startFragment(Fragment tofragment) {
+        startFragment(tofragment, null);
+    }
+
+    /**
+     * @param tofragment 跳转的fragment
+     * @param tag        fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment tofragment, String tag) {
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+//        fragmentTransaction.setCustomAnimations(
+//                R.anim.translate_fade_in_right,
+//                R.anim.translate_fade_out_right, R.anim.translate_fade_in_left, R.anim.translate_fade_out_left);
+        fragmentTransaction.hide(this).add(android.R.id.content, tofragment, tag);
+        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
 
     @Override
     public Context getContext() {
@@ -144,5 +186,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment imp
     public BaseFragment getFragment() {
         return this;
     }
+
+    protected abstract T initPresenter();
 
 }
