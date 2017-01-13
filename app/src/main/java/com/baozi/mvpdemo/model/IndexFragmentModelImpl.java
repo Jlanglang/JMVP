@@ -2,6 +2,7 @@ package com.baozi.mvpdemo.model;
 
 import com.baozi.mvpdemo.contract.IndexFragmentContract;
 import com.baozi.mvpdemo.location.APIServiceImpl;
+import com.baozi.mvpdemo.location.rxandroid.ModelFilterFactory;
 
 import java.util.HashMap;
 
@@ -15,6 +16,6 @@ public class IndexFragmentModelImpl implements IndexFragmentContract.Model {
 
     @Override
     public Observable login(HashMap<String, Object> parmas) {
-        return ModleFilterFactory.filter(APIServiceImpl.getInstance().login(parmas));
+        return ModelFilterFactory.compose(APIServiceImpl.getInstance().login(parmas));
     }
 }
