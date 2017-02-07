@@ -16,6 +16,6 @@ public class IndexFragmentModelImpl implements IndexFragmentContract.Model {
 
     @Override
     public Observable login(HashMap<String, Object> parmas) {
-        return ModelFilterFactory.compose(APIServiceImpl.getInstance().login(parmas));
+        return ModelFilterFactory.filter(APIServiceImpl.getInstance().login(parmas));
     }
 }

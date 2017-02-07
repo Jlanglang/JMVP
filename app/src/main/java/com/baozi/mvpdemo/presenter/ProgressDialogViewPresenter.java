@@ -52,7 +52,7 @@ public abstract class ProgressDialogViewPresenter<T extends BaseView> extends Ba
     }
 
     /**
-     * 对Observable进行修改,可以弹出ProgressDialog
+     * 对Observable进行修改,使其加载数据时弹出ProgressDialog
      */
     public <R> Observable<R> loadingSubscribe(Observable<R> observable) {
         return observable.doOnSubscribe(new Action0() {

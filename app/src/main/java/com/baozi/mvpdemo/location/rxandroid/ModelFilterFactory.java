@@ -24,7 +24,7 @@ public class ModelFilterFactory {
      * @return Observable<T>
      */
     @SuppressWarnings("unchecked")
-    public static <T> Observable<T> compose(Observable<BaseResponse<T>> observable) {
+    public static <T> Observable<T> filter(Observable<BaseResponse<T>> observable) {
         return observable.compose(transformer);
     }
 

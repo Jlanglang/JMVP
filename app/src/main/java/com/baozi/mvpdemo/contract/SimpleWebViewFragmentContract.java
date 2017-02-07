@@ -10,7 +10,6 @@ public class SimpleWebViewFragmentContract {
 
     public interface View extends BaseWebViewContract.View {
 
-
         void setTitle(String str);
 
         void setTitle(int res);

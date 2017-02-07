@@ -16,6 +16,6 @@ public class BaseWebViewModelImpl implements BaseWebViewContract.Model {
 
     @Override
     public Observable<String> loadWebViewData(String url, HashMap<String,Object> params) {
-        return ModelFilterFactory.compose(APIServiceImpl.getInstance().loadWebViewData(url, params));
+        return ModelFilterFactory.filter(APIServiceImpl.getInstance().loadWebViewData(url, params));
     }
 }

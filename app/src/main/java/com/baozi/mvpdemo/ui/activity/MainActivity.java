@@ -19,5 +19,8 @@ public class MainActivity extends BaseActivity<MainActivityPresenterImpl> implem
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    public void isNightMode(boolean isNight) {
 
+    }
 }

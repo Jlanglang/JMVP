@@ -35,7 +35,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      *
      * @return
      */
-    public abstract T initPresenter();
+    protected abstract T initPresenter();
 
 
     @Override
