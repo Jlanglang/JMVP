@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
-import com.baozi.mvpdemo.base.BaseWebViewFragment;
 import com.baozi.mvpdemo.contract.SimpleWebViewFragmentContract;
 import com.baozi.mvpdemo.presenter.BaseWebViewPresenterImpl;
 import com.baozi.mvpdemo.widget.WebViewWithProgress;

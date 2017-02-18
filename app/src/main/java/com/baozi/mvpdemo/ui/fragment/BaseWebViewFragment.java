@@ -1,6 +1,7 @@
-package com.baozi.mvpdemo.base;
+package com.baozi.mvpdemo.ui.fragment;
 
 
+import com.baozi.mvpdemo.base.BaseFragment;
 import com.baozi.mvpdemo.contract.BaseWebViewContract;
 import com.baozi.mvpdemo.presenter.BaseWebViewPresenterImpl;
 
