@@ -32,6 +32,11 @@ public class MainActivity extends BaseActivity {
             public boolean isCustomLayout() {
                 return false;
             }
+
+            @Override
+            public boolean toolbarShowTitleEnabled() {
+                return false;
+            }
         };
     }
 

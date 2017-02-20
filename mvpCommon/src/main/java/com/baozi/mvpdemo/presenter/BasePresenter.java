@@ -106,4 +106,9 @@ public abstract class BasePresenter<T extends BaseView> {
      */
     public abstract boolean isCustomLayout();
 
+    public abstract boolean toolbarShowTitleEnabled();
+
+    public boolean toolbarShowHomeAsUpEnabled() {
+        return false;
+    }
 }

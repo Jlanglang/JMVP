@@ -9,8 +9,10 @@ import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -27,7 +29,6 @@ import com.baozi.mvpdemo.ui.view.BaseActivityView;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
-
     private static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
     private SparseArray<View> mViews;
@@ -45,20 +46,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             super.setContentView(R.layout.activity_base);
             //创建contentview
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
-            if (getSupportActionBar() == null || initToolbar() <= 0) {
-                //有actionbar,不需要toolbar
-
-            } else if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
-                //默认的toolbar
-                ViewStub viewStub = findView(R.id.vs_toolbar);
-                viewStub.setLayoutResource(initToolbar());
-                viewStub.inflate();
-            } else {
-                //子类修改自定义的actionbar
-                ViewStub viewStub = findView(R.id.vs_toolbar);
-                viewStub.setLayoutResource(initToolbar());
-                viewStub.inflate();
-            }
+            creatToolbar();
             //真正的添加contentview
             FrameLayout base_content = findView(R.id.base_content);
             mPresenter.initContentView(base_content, view);
@@ -74,12 +62,49 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     /**
+     * 创建toolbar
+     */
+    private void creatToolbar() {
+        if (getSupportActionBar() != null || initToolbar() <= 0) {
+            //有actionbar或者不需要toolbar
+            return;
+        }
+        ViewStub viewStub = findView(R.id.vs_toolbar);
+        viewStub.setLayoutResource(initToolbar());
+        Toolbar toolbar = (Toolbar) viewStub.inflate();
+        setSupportActionBar(toolbar);
+        if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
+            //默认的toolbar
+            toolbar.setContentInsetsAbsolute(0, 0);
+            if (mPresenter.toolbarShowTitleEnabled()) {
+                toolbar.findViewById(R.id.tv_title).setVisibility(View.GONE);
+            } else {
+                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            }
+            if (mPresenter.toolbarShowHomeAsUpEnabled()) {
+                toolbar.findViewById(R.id.tv_left).setVisibility(View.GONE);
+            } else {
+                getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+            }
+
+        } else {
+            //子类修改自定义的actionbar
+
+        }
+    }
+
+    /**
      * 默认使用base_toolbar
      *
      * @return
      */
     protected int initToolbar() {
         return DEFUATL_BASE_TOOLBAR;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
