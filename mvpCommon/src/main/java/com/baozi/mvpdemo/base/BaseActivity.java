@@ -1,13 +1,17 @@
 package com.baozi.mvpdemo.base;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -17,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.presenter.BasePresenter;
@@ -31,7 +36,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         implements BaseActivityView {
     private static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
-    private SparseArray<View> mViews;
+    protected SparseArray<View> mViews;
+    protected Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +52,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             super.setContentView(R.layout.activity_base);
             //创建contentview
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
-            creatToolbar();
+            //创建toolbar
+            createToolbar();
             //真正的添加contentview
             FrameLayout base_content = findView(R.id.base_content);
+            //交给Persenter去处理
             mPresenter.initContentView(base_content, view);
         }
         mPresenter.onCreate();
@@ -64,33 +72,116 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 创建toolbar
      */
-    private void creatToolbar() {
+    private void createToolbar() {
         if (getSupportActionBar() != null || initToolbar() <= 0) {
             //有actionbar或者不需要toolbar
             return;
         }
         ViewStub viewStub = findView(R.id.vs_toolbar);
         viewStub.setLayoutResource(initToolbar());
-        Toolbar toolbar = (Toolbar) viewStub.inflate();
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) viewStub.inflate();
+        setSupportActionBar(mToolbar);
+        if (mPresenter.isMaterialDesign()) {
+            getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onBack();
+                }
+            });
+            return;
+        }
+        //默认的toolbar
         if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
-            //默认的toolbar
-            toolbar.setContentInsetsAbsolute(0, 0);
-            if (mPresenter.toolbarShowTitleEnabled()) {
-                toolbar.findViewById(R.id.tv_title).setVisibility(View.GONE);
-            } else {
-                getSupportActionBar().setDisplayShowTitleEnabled(false);
+            //设置无边距
+            mToolbar.setContentInsetsAbsolute(0, 0);
+            //显示大标题,则隐藏中间的title
+            if (!mPresenter.isToolbarShowLeftText()) {
+                mToolbar.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
             }
-            if (mPresenter.toolbarShowHomeAsUpEnabled()) {
-                toolbar.findViewById(R.id.tv_left).setVisibility(View.GONE);
-            } else {
-                getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(false);
+            if (!mPresenter.isToolbarShowRightText()) {
+                mToolbar.findViewById(R.id.tv_left).setVisibility(View.VISIBLE);
             }
-
         } else {
             //子类修改自定义的actionbar
 
         }
+    }
+
+    protected void setTitile(String title) {
+        if (mToolbar == null) {
+            return;
+        }
+        if (mPresenter.isMaterialDesign()) {
+            getSupportActionBar().setTitle(title);
+        } else {
+            ((TextView) mToolbar.findViewById(R.id.tv_title))
+                    .setText(title);
+        }
+    }
+
+    protected void setTitile(int titleId) {
+        String title = getResources().getString(titleId);
+        setTitle(title);
+    }
+
+    protected void setLeftTextString(String str) {
+        if (mToolbar == null || mPresenter.isMaterialDesign()) {
+            return;
+        }
+        ((TextView) mToolbar.findViewById(R.id.tv_left))
+                .setText(str);
+    }
+
+    protected void setLeftTextString(@StringRes int strId) {
+        String string = getResources().getString(strId);
+        setLeftTextString(string);
+    }
+
+    protected void setLeftTextDrawable(Drawable drawable) {
+        if (mToolbar == null || mPresenter.isMaterialDesign()) {
+            return;
+        }
+        View tv_left = mToolbar.findViewById(R.id.tv_left);
+        tv_left.setBackground(drawable);
+        tv_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBack();
+            }
+        });
+
+    }
+
+    protected void setLeftTextDrawable(@DrawableRes int drawableId) {
+        setLeftTextDrawable(ContextCompat.getDrawable(this, drawableId));
+    }
+
+    protected void setRightTextString(String str) {
+        if (mToolbar == null || mPresenter.isMaterialDesign()) {
+            return;
+        }
+        ((TextView) mToolbar.findViewById(R.id.tv_left))
+                .setText(str);
+    }
+
+    protected void setRightTextString(int strId) {
+        String string = getResources().getString(strId);
+        setRightTextString(string);
+    }
+
+    protected void setRightTextDrawable(Drawable drawable) {
+        if (mToolbar == null || mPresenter.isMaterialDesign()) {
+            return;
+        }
+        mToolbar.findViewById(R.id.tv_right)
+                .setBackground(drawable);
+    }
+
+    protected void setRightTextDrawable(int drawableId) {
+        setRightTextDrawable(ContextCompat.getDrawable(this, drawableId));
     }
 
     /**
@@ -104,8 +195,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if (mPresenter.onCreateOptionsMenu(menu, getMenuInflater())) {
+//            mToolbar.setOnMenuItemClickListener(this);
+        }
         return super.onCreateOptionsMenu(menu);
     }
+
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -202,27 +297,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onSaveInstanceState(outState);
     }
 
-//    /**
-//     * 设置toolbar,默认不显示toolbar的title.标题
-//     *
-//     * @param toolbar
-//     */
-//    @Override
-//    public void setToolbar(Toolbar toolbar) {
-//        setToolbar(toolbar, false);
-//    }
-//
-//    /**
-//     * 设置toolbar,默认不显示toolbar的title.标题
-//     *
-//     * @param toolbar
-//     */
-//    @Override
-//    public void setToolbar(Toolbar toolbar, boolean showTitle) {
-//        setSupportActionBar(toolbar);
-//        getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
-//    }
-
     /**
      * '
      * 跳转fragment
@@ -257,6 +331,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public BaseActivity getActivity() {
         return this;
+    }
+
+    @Override
+    public void isNightMode(boolean isNight) {
+
     }
 
     @Override

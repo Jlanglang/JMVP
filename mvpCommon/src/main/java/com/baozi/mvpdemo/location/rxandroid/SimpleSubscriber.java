@@ -14,7 +14,6 @@ import rx.Subscriber;
  * @author jlanglang  2016/11/14 17:32
  * @版本 2.0
  * @Change
- * @des ${TODO}
  */
 public abstract class SimpleSubscriber<T> extends Subscriber<T> {
 

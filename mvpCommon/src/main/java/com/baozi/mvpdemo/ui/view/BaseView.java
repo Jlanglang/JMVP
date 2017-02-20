@@ -16,5 +16,4 @@ public interface BaseView {
 
     Context getContext();
 
-    <V extends View> V findView(int viewId);
 }

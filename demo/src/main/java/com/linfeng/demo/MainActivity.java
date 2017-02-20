@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.baozi.mvpdemo.base.BaseActivity;
 import com.baozi.mvpdemo.presenter.BasePresenter;
+import com.baozi.mvpdemo.ui.view.BaseActivityView;
 
 public class MainActivity extends BaseActivity {
 
@@ -27,19 +28,8 @@ public class MainActivity extends BaseActivity {
             public void LoadData() {
 
             }
-
-            @Override
-            public boolean isCustomLayout() {
-                return false;
-            }
-
-            @Override
-            public boolean toolbarShowTitleEnabled() {
-                return false;
-            }
         };
     }
-
     @Override
     public void isNightMode(boolean isNight) {
 

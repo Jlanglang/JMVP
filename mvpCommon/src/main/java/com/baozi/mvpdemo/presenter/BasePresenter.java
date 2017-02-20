@@ -2,6 +2,8 @@ package com.baozi.mvpdemo.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -13,7 +15,6 @@ import rx.subscriptions.CompositeSubscription;
  * @author jlanglang  2016/11/11 15:10
  * @版本 2.0
  * @Change
- * @des ${TODO}
  */
 public abstract class BasePresenter<T extends BaseView> {
     protected T mView;
@@ -104,11 +105,23 @@ public abstract class BasePresenter<T extends BaseView> {
      *
      * @return
      */
-    public abstract boolean isCustomLayout();
+    public boolean isCustomLayout() {
+        return false;
+    }
 
-    public abstract boolean toolbarShowTitleEnabled();
+    public boolean isToolbarShowLeftText() {
+        return false;
+    }
 
-    public boolean toolbarShowHomeAsUpEnabled() {
+    public boolean isMaterialDesign() {
+        return false;
+    }
+
+    public boolean isToolbarShowRightText() {
+        return true;
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         return false;
     }
 }

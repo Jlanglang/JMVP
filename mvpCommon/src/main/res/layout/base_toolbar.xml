@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar
     style="@style/base_toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:id="@+id/tl_costomF"
+    app:navigationIcon="?attr/homeAsUpIndicator"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:id="@+id/tv_left"
@@ -9,6 +12,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:text="左边text"
+        android:visibility="gone"
         android:textColor="@color/colorAccent"
         />
 
@@ -17,7 +21,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="标题"
         android:textColor="@color/colorAccent"/>
 
     <TextView
@@ -26,5 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="right"
         android:text="右边text"
+        android:visibility="gone"
         android:textColor="@color/colorAccent"/>
 </android.support.v7.widget.Toolbar>

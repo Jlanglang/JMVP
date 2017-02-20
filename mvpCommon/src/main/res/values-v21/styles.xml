@@ -2,7 +2,6 @@
 <resources>
     <style name="base_toolbar" parent="@style/toolbar">
         <item name="android:elevation">6px</item>
-        <item name="android:contentInsetStart">0px</item>
         <item name="android:popupTheme">@style/BaseAppTheme</item>
     </style>
 </resources>

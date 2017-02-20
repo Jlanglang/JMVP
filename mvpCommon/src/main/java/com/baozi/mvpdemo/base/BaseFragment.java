@@ -110,20 +110,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
         mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
-//    @Override
-//    public void setToolbar(Toolbar toolbar) {
-//        setToolbar(toolbar, false);
-//    }
-//
-//    @Override
-//    public void setToolbar(Toolbar toolbar, boolean showTitle) {
-//        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
-//        ((AppCompatActivity) mContext).getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
-//    }
 
     /**
      * 初始化监听器
