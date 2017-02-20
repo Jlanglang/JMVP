@@ -2,6 +2,8 @@ package com.baozi.mvpdemo.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.ui.view.BaseView;
 
@@ -27,6 +29,14 @@ public abstract class BasePresenter<T extends BaseView> {
         //创建管理rx请求生命周期
         this.mView = view;
         mCompositeSubscription = new CompositeSubscription();
+    }
+
+    /**
+     * @param contenetView
+     * @param contentGroup
+     */
+    public void initContentView(ViewGroup contentGroup, View contenetView) {
+        contentGroup.addView(contenetView);
     }
 
     /**
@@ -88,5 +98,12 @@ public abstract class BasePresenter<T extends BaseView> {
     public void onStop() {
 
     }
+
+    /**
+     * 是否完全自定义布局
+     *
+     * @return
+     */
+    public abstract boolean isCustomLayout();
 
 }

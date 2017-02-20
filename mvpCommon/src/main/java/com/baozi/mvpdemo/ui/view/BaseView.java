@@ -1,6 +1,7 @@
 package com.baozi.mvpdemo.ui.view;
 
 import android.content.Context;
+import android.view.View;
 
 /**
  * Created by baozi on 2016/11/24.
@@ -14,4 +15,6 @@ public interface BaseView {
     void isNightMode(boolean isNight);
 
     Context getContext();
+
+    <V extends View> V findView(int viewId);
 }

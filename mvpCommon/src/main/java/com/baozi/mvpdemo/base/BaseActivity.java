@@ -4,43 +4,65 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
+import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseActivityView;
 
-import butterknife.ButterKnife;
-
 /**
  * activity的基类
  *
  * @param <T>
  */
-public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity implements BaseActivityView {
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
+        implements BaseActivityView {
+
+    private static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
-    protected Toolbar mToolbar;
-    protected FrameLayout contentView;
     private SparseArray<View> mViews;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
-        ButterKnife.bind(this);
+        mViews = new SparseArray<>();
         //创建presenter
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttch(this);
-        LayoutInflater inflater = LayoutInflater.from(this);
-        contentView.addView(initContentView(inflater, savedInstanceState));
+        //是否完全自定义layout
+        if (!mPresenter.isCustomLayout()) {
+            super.setContentView(R.layout.activity_base);
+            //创建contentview
+            View view = initContentView(LayoutInflater.from(this), savedInstanceState);
+            if (getSupportActionBar() == null || initToolbar() <= 0) {
+                //有actionbar,不需要toolbar
+
+            } else if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
+                //默认的toolbar
+                ViewStub viewStub = findView(R.id.vs_toolbar);
+                viewStub.setLayoutResource(initToolbar());
+                viewStub.inflate();
+            } else {
+                //子类修改自定义的actionbar
+                ViewStub viewStub = findView(R.id.vs_toolbar);
+                viewStub.setLayoutResource(initToolbar());
+                viewStub.inflate();
+            }
+            //真正的添加contentview
+            FrameLayout base_content = findView(R.id.base_content);
+            mPresenter.initContentView(base_content, view);
+        }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
@@ -52,7 +74,44 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     /**
+     * 默认使用base_toolbar
+     *
+     * @return
+     */
+    protected int initToolbar() {
+        return DEFUATL_BASE_TOOLBAR;
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        if (mPresenter.isCustomLayout()) {
+            super.setContentView(layoutResID);
+        } else {
+            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
+        }
+    }
+
+    @Override
+    public void setContentView(View view) {
+        if (mPresenter.isCustomLayout()) {
+            super.setContentView(view);
+        } else {
+            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
+        }
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+        if (mPresenter.isCustomLayout()) {
+            super.setContentView(view, params);
+        } else {
+            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
+        }
+    }
+
+    /**
      * 初始化ContentView
+     * 建议不要包含toolbar
      *
      * @param inflater
      * @param savedInstanceState
@@ -118,26 +177,26 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onSaveInstanceState(outState);
     }
 
-    /**
-     * 设置toolbar,默认不显示toolbar的title.标题
-     *
-     * @param toolbar
-     */
-    @Override
-    public void setToolbar(Toolbar toolbar) {
-        setToolbar(toolbar, false);
-    }
-
-    /**
-     * 设置toolbar,默认不显示toolbar的title.标题
-     *
-     * @param toolbar
-     */
-    @Override
-    public void setToolbar(Toolbar toolbar, boolean showTitle) {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
-    }
+//    /**
+//     * 设置toolbar,默认不显示toolbar的title.标题
+//     *
+//     * @param toolbar
+//     */
+//    @Override
+//    public void setToolbar(Toolbar toolbar) {
+//        setToolbar(toolbar, false);
+//    }
+//
+//    /**
+//     * 设置toolbar,默认不显示toolbar的title.标题
+//     *
+//     * @param toolbar
+//     */
+//    @Override
+//    public void setToolbar(Toolbar toolbar, boolean showTitle) {
+//        setSupportActionBar(toolbar);
+//        getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
+//    }
 
     /**
      * '
@@ -186,12 +245,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @param viewId 资源id
      * @return
      */
-    public <E extends View> E getView(int viewId) {
+    @Override
+    public <V extends View> V findView(@IdRes int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             view = findViewById(viewId);
             mViews.put(viewId, view);
         }
-        return (E) view;
+        return (V) view;
     }
 }

@@ -6,8 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +23,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
+    private SparseArray<View> mViews;
+    private View mContentView;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -32,6 +33,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         super.onSaveInstanceState(outState);
     }
+
     /**
      * 绑定activity
      *
@@ -73,7 +75,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return initContentView(inflater,savedInstanceState);
+        mContentView = initContentView(inflater, savedInstanceState);
+        return mContentView;
     }
 
     /**
@@ -111,16 +114,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void setToolbar(Toolbar toolbar) {
-        setToolbar(toolbar, false);
-    }
-
-    @Override
-    public void setToolbar(Toolbar toolbar, boolean showTitle) {
-        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
-        ((AppCompatActivity) mContext).getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
-    }
+//    @Override
+//    public void setToolbar(Toolbar toolbar) {
+//        setToolbar(toolbar, false);
+//    }
+//
+//    @Override
+//    public void setToolbar(Toolbar toolbar, boolean showTitle) {
+//        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
+//        ((AppCompatActivity) mContext).getSupportActionBar().setDisplayShowTitleEnabled(showTitle);
+//    }
 
     /**
      * 初始化监听器
@@ -193,4 +196,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      */
     protected abstract T initPresenter();
 
+    /**
+     * 通过viewId获取控件
+     *
+     * @param viewId 资源id
+     * @return
+     */
+    public <V extends View> V getView(int viewId) {
+        View view = mViews.get(viewId);
+        if (view == null) {
+            view = mContentView.findViewById(viewId);
+            mViews.put(viewId, view);
+        }
+        return (V) view;
+    }
 }
