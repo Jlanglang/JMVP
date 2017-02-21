@@ -1,17 +1,13 @@
 package com.baozi.mvpdemo.base;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -21,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.presenter.BasePresenter;
@@ -38,6 +33,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected T mPresenter;
     protected SparseArray<View> mViews;
     protected Toolbar mToolbar;
+    protected ToolbarHelper mToolbarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,10 +77,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         viewStub.setLayoutResource(initToolbar());
         mToolbar = (Toolbar) viewStub.inflate();
         setSupportActionBar(mToolbar);
+        //是否使用MaterialDesign
         if (mPresenter.isMaterialDesign()) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowCustomEnabled(true);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,94 +93,24 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         //默认的toolbar
         if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
+            mToolbarHelper = new SimpleToolbarHelper(mToolbar, this);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
             //设置无边距
             mToolbar.setContentInsetsAbsolute(0, 0);
-            //显示大标题,则隐藏中间的title
+            //显示左边的TextView
             if (!mPresenter.isToolbarShowLeftText()) {
                 mToolbar.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
             }
+            //显示右边的TextView
             if (!mPresenter.isToolbarShowRightText()) {
                 mToolbar.findViewById(R.id.tv_left).setVisibility(View.VISIBLE);
             }
         } else {
-            //子类修改自定义的actionbar
-
+            //自定义的Toolbar
+            mToolbarHelper = mPresenter.CustomToolbar();
         }
     }
 
-    protected void setTitile(String title) {
-        if (mToolbar == null) {
-            return;
-        }
-        if (mPresenter.isMaterialDesign()) {
-            getSupportActionBar().setTitle(title);
-        } else {
-            ((TextView) mToolbar.findViewById(R.id.tv_title))
-                    .setText(title);
-        }
-    }
-
-    protected void setTitile(int titleId) {
-        String title = getResources().getString(titleId);
-        setTitle(title);
-    }
-
-    protected void setLeftTextString(String str) {
-        if (mToolbar == null || mPresenter.isMaterialDesign()) {
-            return;
-        }
-        ((TextView) mToolbar.findViewById(R.id.tv_left))
-                .setText(str);
-    }
-
-    protected void setLeftTextString(@StringRes int strId) {
-        String string = getResources().getString(strId);
-        setLeftTextString(string);
-    }
-
-    protected void setLeftTextDrawable(Drawable drawable) {
-        if (mToolbar == null || mPresenter.isMaterialDesign()) {
-            return;
-        }
-        View tv_left = mToolbar.findViewById(R.id.tv_left);
-        tv_left.setBackground(drawable);
-        tv_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBack();
-            }
-        });
-
-    }
-
-    protected void setLeftTextDrawable(@DrawableRes int drawableId) {
-        setLeftTextDrawable(ContextCompat.getDrawable(this, drawableId));
-    }
-
-    protected void setRightTextString(String str) {
-        if (mToolbar == null || mPresenter.isMaterialDesign()) {
-            return;
-        }
-        ((TextView) mToolbar.findViewById(R.id.tv_left))
-                .setText(str);
-    }
-
-    protected void setRightTextString(int strId) {
-        String string = getResources().getString(strId);
-        setRightTextString(string);
-    }
-
-    protected void setRightTextDrawable(Drawable drawable) {
-        if (mToolbar == null || mPresenter.isMaterialDesign()) {
-            return;
-        }
-        mToolbar.findViewById(R.id.tv_right)
-                .setBackground(drawable);
-    }
-
-    protected void setRightTextDrawable(int drawableId) {
-        setRightTextDrawable(ContextCompat.getDrawable(this, drawableId));
-    }
 
     /**
      * 默认使用base_toolbar
@@ -196,7 +124,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (mPresenter.onCreateOptionsMenu(menu, getMenuInflater())) {
-//            mToolbar.setOnMenuItemClickListener(this);
+
         }
         return super.onCreateOptionsMenu(menu);
     }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="base_toolbar" parent="@style/toolbar">
         <item name="android:elevation">6px</item>
-        <item name="android:popupTheme">@style/BaseAppTheme</item>
+        <item name="android:navigationIcon">?attr/homeAsUpIndicator</item>
     </style>
 </resources>

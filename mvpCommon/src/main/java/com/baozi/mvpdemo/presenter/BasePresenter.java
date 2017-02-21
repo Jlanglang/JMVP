@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baozi.mvpdemo.base.ToolbarHelper;
 import com.baozi.mvpdemo.ui.view.BaseView;
 
 import rx.subscriptions.CompositeSubscription;
@@ -118,10 +119,14 @@ public abstract class BasePresenter<T extends BaseView> {
     }
 
     public boolean isToolbarShowRightText() {
-        return true;
+        return false;
     }
 
     public boolean onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         return false;
+    }
+
+    public ToolbarHelper CustomToolbar() {
+        return null;
     }
 }

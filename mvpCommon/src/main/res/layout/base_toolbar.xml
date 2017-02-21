@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.Toolbar
+    android:id="@+id/tl_costom"
     style="@style/base_toolbar"
-    android:id="@+id/tl_costomF"
-    app:navigationIcon="?attr/homeAsUpIndicator"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 
-    <TextView
-        android:id="@+id/tv_left"
-        android:layout_width="wrap_content"
+    <ImageButton
+        android:id="@+id/ib_left"
+        android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:src="@drawable/back"
         android:text="左边text"
         android:visibility="gone"
-        android:textColor="@color/colorAccent"
+        />
+
+    <ImageButton
+        android:id="@+id/tv_left"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:src="@drawable/back"
+        android:text="左边text"
+        android:visibility="gone"
         />
 
     <TextView
@@ -21,14 +34,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textColor="@color/colorAccent"/>
+        android:gravity="center"
+        android:text="标题"
+        />
+
+    <ImageButton
+        android:id="@+id/tib_right"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:text="左边text"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/tv_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
+        android:background="@null"
+        android:gravity="center"
         android:text="右边text"
-        android:visibility="gone"
-        android:textColor="@color/colorAccent"/>
+        />
 </android.support.v7.widget.Toolbar>
