@@ -17,14 +17,13 @@
         android:visibility="gone"
         />
 
-    <ImageButton
+    <TextView
         android:id="@+id/tv_left"
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
         android:background="@android:color/transparent"
         android:gravity="center"
-        android:src="@drawable/back"
         android:text="左边text"
         android:visibility="gone"
         />
@@ -39,7 +38,7 @@
         />
 
     <ImageButton
-        android:id="@+id/tib_right"
+        android:id="@+id/ib_right"
         android:layout_width="48dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"

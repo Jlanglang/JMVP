@@ -32,8 +32,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
     protected SparseArray<View> mViews;
-    protected Toolbar mToolbar;
-    protected ToolbarHelper mToolbarHelper;
+    private ToolbarHelper mToolbarHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         //绑定Activity
         mPresenter.onAttch(this);
         //是否完全自定义layout
-        if (!mPresenter.isCustomLayout()) {
+        if (!isCustomLayout()) {
             super.setContentView(R.layout.activity_base);
             //创建contentview
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
@@ -75,42 +74,36 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         ViewStub viewStub = findView(R.id.vs_toolbar);
         viewStub.setLayoutResource(initToolbar());
-        mToolbar = (Toolbar) viewStub.inflate();
-        setSupportActionBar(mToolbar);
+//        mToolbar = (Toolbar) viewStub.inflate();
+        Toolbar toolbar = getToolbarHelper().getToolbar();
+        if (toolbar!=null){
+            setSupportActionBar(toolbar);
+        }
         //是否使用MaterialDesign
-        if (mPresenter.isMaterialDesign()) {
+        if (isMaterialDesign()) {
             getSupportActionBar().setDisplayShowTitleEnabled(true);
             getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             getSupportActionBar().setDisplayUseLogoEnabled(true);
-            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onBack();
-                }
-            });
+//            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    onBack();
+//                }
+//            });
             return;
         }
         //默认的toolbar
         if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
-            mToolbarHelper = new SimpleToolbarHelper(mToolbar, this);
-            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            mToolbarHelper = new DefuatlToolbarHelperImpl(mToolbar, this);
+//            getSupportActionBar().setDisplayShowTitleEnabled(false);
             //设置无边距
-            mToolbar.setContentInsetsAbsolute(0, 0);
-            //显示左边的TextView
-            if (!mPresenter.isToolbarShowLeftText()) {
-                mToolbar.findViewById(R.id.tv_title).setVisibility(View.VISIBLE);
-            }
-            //显示右边的TextView
-            if (!mPresenter.isToolbarShowRightText()) {
-                mToolbar.findViewById(R.id.tv_left).setVisibility(View.VISIBLE);
-            }
+//            mToolbar.setContentInsetsAbsolute(0, 0);
         } else {
-            //自定义的Toolbar
-            mToolbarHelper = mPresenter.CustomToolbar();
+            //自定义的Toolbar,自定义实现．使用gettoolbar()获取并设置．
+
         }
     }
-
 
     /**
      * 默认使用base_toolbar
@@ -123,16 +116,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mPresenter.onCreateOptionsMenu(menu, getMenuInflater())) {
-
-        }
         return super.onCreateOptionsMenu(menu);
     }
 
-
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
-        if (mPresenter.isCustomLayout()) {
+        if (isCustomLayout()) {
             super.setContentView(layoutResID);
         } else {
             throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
@@ -141,7 +130,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void setContentView(View view) {
-        if (mPresenter.isCustomLayout()) {
+        if (isCustomLayout()) {
             super.setContentView(view);
         } else {
             throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
@@ -150,7 +139,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     public void setContentView(View view, ViewGroup.LayoutParams params) {
-        if (mPresenter.isCustomLayout()) {
+        if (isCustomLayout()) {
             super.setContentView(view, params);
         } else {
             throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
@@ -285,5 +274,38 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             mViews.put(viewId, view);
         }
         return (V) view;
+    }
+
+    /**
+     * 是否完全自定义布局
+     *
+     * @return
+     */
+    public boolean isCustomLayout() {
+        return false;
+    }
+
+    /**
+     * 是否启用MaterialDesign样式
+     * @return
+     */
+    public boolean isMaterialDesign() {
+        return false;
+    }
+
+    /**
+     * 如果设置的主题不是NoActionBar或者initToolbar()返回是0,则返回null.
+     *
+     * @return mToolbar 可能为null.
+     */
+    public Toolbar getToolbar() {
+        return getToolbarHelper().getToolbar();
+    }
+
+    public ToolbarHelper getToolbarHelper() {
+        if (mToolbarHelper == null) {
+            mToolbarHelper = ToolbarHelper.Create(this,this);
+        }
+        return mToolbarHelper;
     }
 }

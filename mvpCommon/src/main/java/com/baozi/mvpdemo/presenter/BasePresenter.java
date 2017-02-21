@@ -100,33 +100,4 @@ public abstract class BasePresenter<T extends BaseView> {
     public void onStop() {
 
     }
-
-    /**
-     * 是否完全自定义布局
-     *
-     * @return
-     */
-    public boolean isCustomLayout() {
-        return false;
-    }
-
-    public boolean isToolbarShowLeftText() {
-        return false;
-    }
-
-    public boolean isMaterialDesign() {
-        return false;
-    }
-
-    public boolean isToolbarShowRightText() {
-        return false;
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
-        return false;
-    }
-
-    public ToolbarHelper CustomToolbar() {
-        return null;
-    }
 }
