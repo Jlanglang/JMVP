@@ -1,9 +1,11 @@
 package com.baozi.mvpdemo.base;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.view.ViewStub;
 
 import com.baozi.mvpdemo.R;
+import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
  * @author jlanglang  2017/2/22 16:58
@@ -20,16 +23,21 @@ import com.baozi.mvpdemo.R;
 public class BaseToolBarHelperImpl extends ToolbarHelper {
     protected int mToolbarLayout;
     protected Toolbar mToolbar;
+    protected UIView mUIView;
     protected Context mContext;
     protected boolean isMaterialDesign;
 
-    public BaseToolBarHelperImpl(Context context, int toolbarLayout) {
-        this.mContext = context;
+    public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
+        this.mUIView = uiView;
+        this.mContext = uiView.getContext();
         this.mToolbarLayout = toolbarLayout;
-        View decorView = ((Activity) mContext).getWindow().getDecorView();
-        ViewStub vs_toolbar = (ViewStub) decorView.findViewById(R.id.vs_toolbar);
-        vs_toolbar.setLayoutResource(mToolbarLayout);
-        mToolbar = (Toolbar) vs_toolbar.inflate();
+        ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
+        if (vs_toolbar != null) {
+            vs_toolbar.setLayoutResource(mToolbarLayout);
+            mToolbar = (Toolbar) vs_toolbar.inflate();
+        } else {
+            mToolbar = uiView.findView(toolbarLayout);
+        }
         initToolbar();
     }
 
@@ -46,10 +54,12 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         this.isMaterialDesign = isMaterialDesign;
+
+
     }
 
     @Override
-    public void setTitle(@Nullable String str) {
+    public void setTitle(@NonNull String str) {
 
     }
 
@@ -59,42 +69,44 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public void setLeft(@StringRes int strId) {
+    public void setLeftText(@StringRes int strId, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setLeft(@Nullable String str) {
+    public void setLeftText(@NonNull String str, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setLeft(Drawable drawable, View.OnClickListener clickListener) {
+    public void setLeftButton(Drawable drawable, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setLeft(@DrawableRes int drawableId, View.OnClickListener clickListener) {
+    public void setLeftButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setRight(@Nullable String str) {
+    public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setRight(@StringRes int strId) {
+    public void setRightText(@StringRes int strId, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setRight(@Nullable Drawable drawable, View.OnClickListener clickListener) {
+    public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
 
     }
 
     @Override
-    public void setRight(@DrawableRes int drawableId, View.OnClickListener clickListener) {
+    public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
 
     }
+
+
 }

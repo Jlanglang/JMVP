@@ -6,12 +6,14 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.baozi.mvpdemo.R;
+import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
  * @author jlanglang  2017/2/21 16:31
@@ -25,20 +27,12 @@ public abstract class ToolbarHelper {
 
     }
 
-    public static ToolbarHelper Create(Context context, @LayoutRes int toolbarLayout) {
-        return new DefuatlToolbarHelperImplV1(context, toolbarLayout);
-    }
-
-    public static ToolbarHelper Create(Activity activity, @LayoutRes int toolbarLayout) {
+    public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == DEFUATL_BASE_TOOLBAR_V1) {
-            return new DefuatlToolbarHelperImplV1(activity, toolbarLayout);
+            return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
         } else {
-            return new BaseToolBarHelperImpl(activity, toolbarLayout);
+            return new BaseToolBarHelperImpl(uiView, toolbarLayout);
         }
-    }
-
-    public static ToolbarHelper Create(Dialog dialog, @LayoutRes int toolbarLayout) {
-        return new DefuatlToolbarHelperImplV1(dialog.getContext(), toolbarLayout);
     }
 
     public abstract void initToolbar();
@@ -53,7 +47,7 @@ public abstract class ToolbarHelper {
      * @param str
      */
 
-    public abstract void setTitle(@Nullable String str);
+    public abstract void setTitle(@NonNull String str);
 
     public abstract void setTitle(@StringRes int str);
 
@@ -62,13 +56,13 @@ public abstract class ToolbarHelper {
      *
      * @param strId
      */
-    public abstract void setLeft(@StringRes int strId);
+    public abstract void setLeftText(@StringRes int strId, View.OnClickListener clickListener);
 
-    public abstract void setLeft(@Nullable String str);
+    public abstract void setLeftText(@NonNull String str, View.OnClickListener clickListener);
 
-    public abstract void setLeft(Drawable drawable, View.OnClickListener clickListener);
+    public abstract void setLeftButton(Drawable drawable, View.OnClickListener clickListener);
 
-    public abstract void setLeft(@DrawableRes int drawableId, View.OnClickListener clickListener);
+    public abstract void setLeftButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
 
     /**
@@ -76,11 +70,11 @@ public abstract class ToolbarHelper {
      *
      * @param str
      */
-    public abstract void setRight(@Nullable String str);
+    public abstract void setRightText(@NonNull String str, View.OnClickListener clickListener);
 
-    public abstract void setRight(@StringRes int strId);
+    public abstract void setRightText(@StringRes int strId, View.OnClickListener clickListener);
 
-    public abstract void setRight(@Nullable Drawable drawable, View.OnClickListener clickListener);
+    public abstract void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener);
 
-    public abstract void setRight(@DrawableRes int drawableId, View.OnClickListener clickListener);
+    public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 }

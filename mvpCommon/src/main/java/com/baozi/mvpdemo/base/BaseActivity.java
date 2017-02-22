@@ -1,6 +1,7 @@
 package com.baozi.mvpdemo.base;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -8,6 +9,7 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -28,7 +30,6 @@ import com.baozi.mvpdemo.ui.view.BaseActivityView;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
-    public static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
     protected SparseArray<View> mViews;
     private ToolbarHelper mToolbarHelper;
@@ -42,13 +43,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttch(this);
-        //是否自定义layout
+        //是否完全自定义layout
         if (isCustomLayout()) {
             initContentView(LayoutInflater.from(this), savedInstanceState);
         } else {
             super.setContentView(R.layout.activity_base);
-            //创建toolbar
-            createToolbar();
             //创建contentView
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             //添加contentView
@@ -57,6 +56,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 //交给Persenter去扩展
                 mPresenter.initContentView(base_content, view);
             }
+            //创建toolbar
+            createToolbar();
         }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -285,10 +286,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return (V) view;
     }
 
+
     /**
      * 是否完全自定义布局
      *
-     * @return
+     * @return 返回false使用Base_activity, 返回true则需要在initContView里面使用setContentView.
+     * 不推荐复写onCreate(),因为子类Presenter的oncreate(),会调用在子类的
+     * @see BaseActivity#onCreate(Bundle) 之前,可能造成NullException异常
      */
     @Override
     public abstract boolean isCustomLayout();

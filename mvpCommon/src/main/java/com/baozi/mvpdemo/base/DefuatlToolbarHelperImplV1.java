@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
+import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
  * @author jlanglang  2017/2/21 16:44
@@ -26,8 +28,8 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private ImageButton mRightButton;
     private TextView mTitle;
 
-    public DefuatlToolbarHelperImplV1(Context context, @LayoutRes int toolbar) {
-        super(context, toolbar);
+    public DefuatlToolbarHelperImplV1(UIView uiView, @LayoutRes int toolbar) {
+        super(uiView, toolbar);
     }
 
     @Override
@@ -37,6 +39,14 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitle = (TextView) mToolbar.findViewById(R.id.tv_title);
+        //默认无边距
+        mToolbar.setContentInsetsAbsolute(0, 0);
+        setLeftButton(R.drawable.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUIView.onBack();
+            }
+        });
     }
 
     @Override
@@ -45,7 +55,12 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setTitle(String title) {
+    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+
+    }
+
+    @Override
+    public void setTitle(@NonNull String title) {
         if (mToolbar != null) {
             mTitle.setText(title);
         }
@@ -53,30 +68,27 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setTitle(int titleId) {
-        String title = mContext.getResources().getString(titleId);
+        String title = mUIView.getResources().getString(titleId);
         setTitle(title);
     }
 
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-
-    }
 
     @Override
-    public void setLeft(String str) {
+    public void setLeftText(@NonNull String str, View.OnClickListener clickListener) {
         mLeftButton.setVisibility(View.GONE);
         mLeftText.setVisibility(View.VISIBLE);
         mLeftText.setText(str);
+        mLeftText.setOnClickListener(clickListener);
     }
 
     @Override
-    public void setLeft(@StringRes int strId) {
-        String string = mContext.getResources().getString(strId);
-        setLeft(string);
+    public void setLeftText(@StringRes int strId, View.OnClickListener clickListener) {
+        String string = mUIView.getResources().getString(strId);
+        setLeftText(string, clickListener);
     }
 
     @Override
-    public void setLeft(Drawable drawable, View.OnClickListener clickListener) {
+    public void setLeftButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
         if (mToolbar != null) {
             mLeftText.setVisibility(View.GONE);
             mLeftButton.setVisibility(View.VISIBLE);
@@ -86,27 +98,28 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setLeft(@DrawableRes int drawableId, View.OnClickListener clickListener) {
-        setLeft(ContextCompat.getDrawable(mContext, drawableId), clickListener);
+    public void setLeftButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
+        setLeftButton(ContextCompat.getDrawable(mUIView.getContext(), drawableId), clickListener);
     }
 
     @Override
-    public void setRight(String str) {
+    public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
         if (mToolbar != null) {
             mRightButton.setVisibility(View.GONE);
             mRightText.setVisibility(View.VISIBLE);
             mRightText.setText(str);
+            mRightText.setOnClickListener(clickListener);
         }
     }
 
     @Override
-    public void setRight(int strId) {
-        String string = mContext.getResources().getString(strId);
-        setRight(string);
+    public void setRightText(int strId, View.OnClickListener clickListener) {
+        String string = mUIView.getResources().getString(strId);
+        setRightText(string, clickListener);
     }
 
     @Override
-    public void setRight(Drawable drawable, View.OnClickListener clickListener) {
+    public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
         if (mToolbar != null) {
             mRightText.setVisibility(View.GONE);
             mRightButton.setVisibility(View.VISIBLE);
@@ -116,7 +129,7 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setRight(int drawableId, View.OnClickListener clickListener) {
-        setRight(ContextCompat.getDrawable(mContext, drawableId), clickListener);
+    public void setRightButton(int drawableId, View.OnClickListener clickListener) {
+        setRightButton(ContextCompat.getDrawable(mUIView.getContext(), drawableId), clickListener);
     }
 }

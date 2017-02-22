@@ -15,15 +15,5 @@ public interface BaseFragmentView extends UIView {
 
     Bundle getBundle();
 
-    void setToolbar(Toolbar toolbar);
-
-    void setToolbar(Toolbar toolbar, boolean showTitle);
-
-    void onBack();
-
-    void startFragment(Fragment tofragment);
-
-    void startFragment(Fragment tofragment, String tag);
-
     BaseFragment getFragment();
 }

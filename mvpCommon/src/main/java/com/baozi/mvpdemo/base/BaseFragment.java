@@ -2,6 +2,7 @@ package com.baozi.mvpdemo.base;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -130,6 +131,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         getFragmentManager().popBackStackImmediate();
     }
 
+
+    @Override
+    public boolean isMaterialDesign() {
+        return false;
+    }
+
+    @Override
+    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+
+    }
+
     /**
      * 初始化Fragment应有的视图
      *
@@ -138,7 +150,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public abstract View initContentView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
 
     /**
-     * '
      * 跳转fragment
      *
      * @param tofragment
@@ -165,6 +176,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
 
     @Override
+    public void isNightMode(boolean isNight) {
+
+    }
+
+    @Override
     public Context getContext() {
         return mContext;
     }
@@ -179,12 +195,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return this;
     }
 
-    /**
-     * 初始化Presenter
-     *
-     * @return
-     */
-    protected abstract T initPresenter();
 
     /**
      * 通过viewId获取控件
@@ -192,7 +202,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * @param viewId 资源id
      * @return
      */
-    public <V extends View> V getView(int viewId) {
+    public <V extends View> V findView(int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
             view = mContentView.findViewById(viewId);
@@ -200,4 +210,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         return (V) view;
     }
+    /**
+     * 初始化Presenter
+     *
+     * @return
+     */
+    protected abstract T initPresenter();
 }
