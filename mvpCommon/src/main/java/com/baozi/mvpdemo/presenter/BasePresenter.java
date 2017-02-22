@@ -2,12 +2,9 @@ package com.baozi.mvpdemo.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.base.ToolbarHelper;
 import com.baozi.mvpdemo.ui.view.BaseView;
 
 import rx.subscriptions.CompositeSubscription;
@@ -35,10 +32,10 @@ public abstract class BasePresenter<T extends BaseView> {
 
     /**
      * @param contenetView
-     * @param contentGroup
+     * @param preant
      */
-    public void initContentView(ViewGroup contentGroup, View contenetView) {
-        contentGroup.addView(contenetView);
+    public void initContentView(ViewGroup preant, View contenetView) {
+        preant.addView(contenetView);
     }
 
     /**

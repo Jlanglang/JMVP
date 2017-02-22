@@ -7,8 +7,16 @@ import android.view.View;
  * 用户页面,操作页面，对应Activity,frgament
  */
 
-public interface BaseUIView extends BaseView {
+public interface UIView extends BaseView {
 
     <V extends View> V findView(int viewId);
+
+    void onBack();
+
+    boolean isCustomLayout();
+
+    boolean isMaterialDesign();
+
+    void setMaterialDesignEnabled(boolean isMaterialDesign);
 
 }

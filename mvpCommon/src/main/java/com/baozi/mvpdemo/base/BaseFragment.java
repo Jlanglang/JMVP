@@ -163,6 +163,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+
     @Override
     public Context getContext() {
         return mContext;

@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewStub;
 import android.widget.FrameLayout;
 
 import com.baozi.mvpdemo.R;
@@ -29,10 +28,11 @@ import com.baozi.mvpdemo.ui.view.BaseActivityView;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
-    private static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
+    public static final int DEFUATL_BASE_TOOLBAR = R.layout.base_toolbar;
     protected T mPresenter;
     protected SparseArray<View> mViews;
     private ToolbarHelper mToolbarHelper;
+    private boolean isMaterialDesign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,17 +42,21 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttch(this);
-        //是否完全自定义layout
-        if (!isCustomLayout()) {
+        //是否自定义layout
+        if (isCustomLayout()) {
+            initContentView(LayoutInflater.from(this), savedInstanceState);
+        } else {
             super.setContentView(R.layout.activity_base);
-            //创建contentview
-            View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             //创建toolbar
             createToolbar();
-            //真正的添加contentview
+            //创建contentView
+            View view = initContentView(LayoutInflater.from(this), savedInstanceState);
+            //添加contentView
             FrameLayout base_content = findView(R.id.base_content);
-            //交给Persenter去处理
-            mPresenter.initContentView(base_content, view);
+            if (view != null) {
+                //交给Persenter去扩展
+                mPresenter.initContentView(base_content, view);
+            }
         }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -68,50 +72,54 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 创建toolbar
      */
     private void createToolbar() {
-        if (getSupportActionBar() != null || initToolbar() <= 0) {
+        if (getSupportActionBar() != null || initToolbarLayout() <= 0) {
             //有actionbar或者不需要toolbar
             return;
         }
-        ViewStub viewStub = findView(R.id.vs_toolbar);
-        viewStub.setLayoutResource(initToolbar());
-//        mToolbar = (Toolbar) viewStub.inflate();
-        Toolbar toolbar = getToolbarHelper().getToolbar();
-        if (toolbar!=null){
-            setSupportActionBar(toolbar);
-        }
-        //是否使用MaterialDesign
-        if (isMaterialDesign()) {
-            getSupportActionBar().setDisplayShowTitleEnabled(true);
-            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowCustomEnabled(true);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
-//            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onBack();
-//                }
-//            });
-            return;
-        }
-        //默认的toolbar
-        if (initToolbar() == DEFUATL_BASE_TOOLBAR) {
-//            mToolbarHelper = new DefuatlToolbarHelperImpl(mToolbar, this);
-//            getSupportActionBar().setDisplayShowTitleEnabled(false);
-            //设置无边距
-//            mToolbar.setContentInsetsAbsolute(0, 0);
-        } else {
-            //自定义的Toolbar,自定义实现．使用gettoolbar()获取并设置．
-
-        }
+//        ViewStub viewStub = findView(R.id.vs_toolbar);
+//        viewStub.setLayoutResource(initToolbarLayout());
+//        Toolbar mToolbar = (Toolbar) viewStub.inflate();
+        mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
+        setSupportActionBar(mToolbarHelper.getToolbar());
+//        Toolbar toolbar = getToolbarHelper().getToolbar();
+//        if (toolbar != null) {
+//            setSupportActionBar(toolbar);
+//        }
     }
+//        //是否使用MaterialDesign
+//        if (isMaterialDesign()) {
+//            getSupportActionBar().setDisplayShowTitleEnabled(true);
+//            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowCustomEnabled(true);
+//            getSupportActionBar().setDisplayUseLogoEnabled(true);
+////            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+////                @Override
+////                public void onClick(View v) {
+////                    onBack();
+////                }
+////            });
+//            return;
+//        }
+//        //默认的toolbar
+//        if (initToolbarLayout() == DEFUATL_BASE_TOOLBAR) {
+////            mToolbarHelper = new DefuatlToolbarHelperImplV1(mToolbar, this);
+////            getSupportActionBar().setDisplayShowTitleEnabled(false);
+//            //设置无边距
+////            mToolbar.setContentInsetsAbsolute(0, 0);
+//        } else {
+//            //自定义的Toolbar,自定义实现．使用gettoolbar()获取并设置．
+//
+//        }
+//    }
 
     /**
      * 默认使用base_toolbar
+     * 如果不需要toolbar,请复写,并返回0.或者-1
      *
      * @return
      */
-    protected int initToolbar() {
-        return DEFUATL_BASE_TOOLBAR;
+    protected int initToolbarLayout() {
+        return ToolbarHelper.DEFUATL_BASE_TOOLBAR_V1;
     }
 
     @Override
@@ -237,6 +245,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+
     /**
      * onBackPressed();
      */
@@ -281,16 +290,24 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      *
      * @return
      */
-    public boolean isCustomLayout() {
-        return false;
+    @Override
+    public abstract boolean isCustomLayout();
+
+
+    @Override
+    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+        this.isMaterialDesign = isMaterialDesign;
+        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
     }
 
     /**
      * 是否启用MaterialDesign样式
+     *
      * @return
      */
+    @Override
     public boolean isMaterialDesign() {
-        return false;
+        return isMaterialDesign;
     }
 
     /**
@@ -302,9 +319,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return getToolbarHelper().getToolbar();
     }
 
+    /**
+     * 如果修改了initToolbarLayout(),并且<=0的话,该方法将返回null
+     *
+     * @return
+     */
     public ToolbarHelper getToolbarHelper() {
-        if (mToolbarHelper == null) {
-            mToolbarHelper = ToolbarHelper.Create(this,this);
+        if (mToolbarHelper == null && initToolbarLayout() >= 0) {
+            mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
         }
         return mToolbarHelper;
     }
