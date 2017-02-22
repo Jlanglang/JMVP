@@ -1,7 +1,6 @@
 package com.baozi.mvpdemo.base;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -9,7 +8,6 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -20,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.baozi.mvpdemo.R;
+import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseActivityView;
 

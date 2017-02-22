@@ -1,6 +1,5 @@
-package com.baozi.mvpdemo.base;
+package com.baozi.mvpdemo.helper;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;

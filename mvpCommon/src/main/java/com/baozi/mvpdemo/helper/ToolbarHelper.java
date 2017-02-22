@@ -1,13 +1,9 @@
-package com.baozi.mvpdemo.base;
+package com.baozi.mvpdemo.helper;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
