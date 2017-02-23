@@ -44,9 +44,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter.onAttch(this);
         //是否完全自定义layout
         if (isCustomLayout()) {
-            initContentView(LayoutInflater.from(this), savedInstanceState);
+            //创建contentView
+            View view = initContentView(LayoutInflater.from(this), savedInstanceState);
+            super.setContentView(view);
         } else {
             super.setContentView(R.layout.activity_base);
+            //创建toolbar
+            createToolbar();
             //创建contentView
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             //添加contentView
@@ -55,8 +59,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 //交给Persenter去扩展
                 mPresenter.initContentView(base_content, view);
             }
-            //创建toolbar
-            createToolbar();
+
         }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -67,6 +70,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             }
         });
     }
+
 
     /**
      * 创建toolbar
@@ -80,7 +84,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 //        viewStub.setLayoutResource(initToolbarLayout());
 //        Toolbar mToolbar = (Toolbar) viewStub.inflate();
         mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
-        setSupportActionBar(mToolbarHelper.getToolbar());
+//        setSupportActionBar(mToolbarHelper.getToolbar());
 //        Toolbar toolbar = getToolbarHelper().getToolbar();
 //        if (toolbar != null) {
 //            setSupportActionBar(toolbar);
@@ -296,22 +300,24 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public abstract boolean isCustomLayout();
 
+    /**
+     * 是否启用MaterialDesign风格.
+     */
+    public final boolean isMaterialDesign() {
+        return isMaterialDesign;
+    }
 
+    /**
+     * 切换MaterialDesign风格.
+     *
+     * @param isMaterialDesign
+     */
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         this.isMaterialDesign = isMaterialDesign;
         getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
     }
 
-    /**
-     * 是否启用MaterialDesign样式
-     *
-     * @return
-     */
-    @Override
-    public boolean isMaterialDesign() {
-        return isMaterialDesign;
-    }
 
     /**
      * 如果设置的主题不是NoActionBar或者initToolbar()返回是0,则返回null.
@@ -327,10 +333,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      *
      * @return
      */
+    @Override
     public ToolbarHelper getToolbarHelper() {
         if (mToolbarHelper == null && initToolbarLayout() >= 0) {
             mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
         }
         return mToolbarHelper;
     }
+
 }

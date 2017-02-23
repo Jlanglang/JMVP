@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewStub;
@@ -17,12 +18,12 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @版本 2.0
  * @Change
  */
-public class BaseToolBarHelperImpl extends ToolbarHelper {
-    protected int mToolbarLayout;
-    protected Toolbar mToolbar;
-    protected UIView mUIView;
-    protected Context mContext;
-    protected boolean isMaterialDesign;
+ class BaseToolBarHelperImpl extends ToolbarHelper {
+     int mToolbarLayout;
+     Toolbar mToolbar;
+     UIView mUIView;
+     Context mContext;
+     boolean isMaterialDesign;
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
@@ -35,6 +36,7 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
         } else {
             mToolbar = uiView.findView(toolbarLayout);
         }
+        uiView.setSupportActionBar(mToolbar);
         initToolbar();
     }
 
@@ -51,8 +53,14 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         this.isMaterialDesign = isMaterialDesign;
-
-
+        ActionBar supportActionBar = mUIView.getSupportActionBar();
+        if (supportActionBar != null) {
+            supportActionBar.setDisplayUseLogoEnabled(isMaterialDesign);
+            supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign);
+            supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign);
+            supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign);
+            supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign);
+        }
     }
 
     @Override

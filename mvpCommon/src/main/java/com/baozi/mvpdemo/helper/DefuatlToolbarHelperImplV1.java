@@ -6,7 +6,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
+import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,9 +38,29 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitle = (TextView) mToolbar.findViewById(R.id.tv_title);
-        //默认无边距
-        mToolbar.setContentInsetsAbsolute(0, 0);
         setLeftButton(R.drawable.back, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mUIView.onBack();
+            }
+        });
+
+    }
+
+    /**
+     * 应该保证在调用Activity.setSupportActionBar()之后使用.
+     *
+     * @param isMaterialDesign
+     */
+    @Override
+    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+        super.setMaterialDesignEnabled(isMaterialDesign);
+        ActionBar supportActionBar = mUIView.getSupportActionBar();
+        if (supportActionBar == null) {
+            return;
+        }
+        setTitle(mTitle.getText().toString());
+        setLeftButton(mLeftButton.getDrawable(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUIView.onBack();
@@ -49,18 +69,10 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public Toolbar getToolbar() {
-        return null;
-    }
-
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-
-    }
-
-    @Override
     public void setTitle(@NonNull String title) {
-        if (mToolbar != null) {
+        if (isMaterialDesign) {
+            mUIView.getSupportActionBar().setTitle(title);
+        } else {
             mTitle.setText(title);
         }
     }
@@ -74,10 +86,12 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setLeftText(@NonNull String str, View.OnClickListener clickListener) {
-        mLeftButton.setVisibility(View.GONE);
-        mLeftText.setVisibility(View.VISIBLE);
-        mLeftText.setText(str);
-        mLeftText.setOnClickListener(clickListener);
+        if (!isMaterialDesign) {
+            mLeftButton.setVisibility(View.GONE);
+            mLeftText.setVisibility(View.VISIBLE);
+            mLeftText.setText(str);
+            mLeftText.setOnClickListener(clickListener);
+        }
     }
 
     @Override
@@ -88,7 +102,12 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setLeftButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
-        if (mToolbar != null) {
+        if (isMaterialDesign) {
+            mToolbar.setNavigationIcon(drawable);
+            mToolbar.setNavigationOnClickListener(clickListener);
+            mLeftText.setVisibility(View.GONE);
+            mLeftButton.setVisibility(View.GONE);
+        } else {
             mLeftText.setVisibility(View.GONE);
             mLeftButton.setVisibility(View.VISIBLE);
             mLeftButton.setImageDrawable(drawable);
@@ -103,7 +122,7 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
-        if (mToolbar != null) {
+        if (!isMaterialDesign) {
             mRightButton.setVisibility(View.GONE);
             mRightText.setVisibility(View.VISIBLE);
             mRightText.setText(str);
@@ -119,7 +138,7 @@ public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
-        if (mToolbar != null) {
+        if (!isMaterialDesign) {
             mRightText.setVisibility(View.GONE);
             mRightButton.setVisibility(View.VISIBLE);
             mRightButton.setImageDrawable(drawable);

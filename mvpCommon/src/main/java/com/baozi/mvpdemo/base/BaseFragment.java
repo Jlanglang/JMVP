@@ -2,7 +2,6 @@ package com.baozi.mvpdemo.base;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,6 +25,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected Bundle mBundle;
     private SparseArray<View> mViews;
     private View mContentView;
+    private boolean isMaterialDesign;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -122,6 +122,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     }
 
+    @Override
+    public final boolean isMaterialDesign() {
+        return isMaterialDesign;
+    }
+
     /**
      * 类似Activity的OnBackgress
      * fragment进行回退
@@ -131,11 +136,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         getFragmentManager().popBackStackImmediate();
     }
 
-
-    @Override
-    public boolean isMaterialDesign() {
-        return false;
-    }
 
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
@@ -210,6 +210,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         return (V) view;
     }
+
     /**
      * 初始化Presenter
      *

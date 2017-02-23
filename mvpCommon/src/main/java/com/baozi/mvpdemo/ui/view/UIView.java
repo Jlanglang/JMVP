@@ -3,8 +3,11 @@ package com.baozi.mvpdemo.ui.view;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
+
+import com.baozi.mvpdemo.helper.ToolbarHelper;
 
 /**
  * Created by baozi on 2017/2/20.
@@ -75,4 +78,24 @@ public interface UIView extends BaseView {
      * @param tofragment
      */
     void startFragment(Fragment tofragment, String tag);
+
+    /**
+     * 获得getSupportActionBar
+     *
+     * @return
+     */
+    ActionBar getSupportActionBar();
+
+    /**
+     * 设置getSupportActionBar
+     *
+     * @param toolbar
+     * @return
+     */
+    void setSupportActionBar(Toolbar toolbar);
+
+    /**
+     * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
+     */
+    ToolbarHelper getToolbarHelper();
 }
