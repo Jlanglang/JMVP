@@ -8,6 +8,8 @@ import com.baozi.mvpdemo.base.BaseActivity;
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.UIView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends BaseActivity {
 
 
@@ -23,6 +25,19 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onCreate() {
                 mView.getToolbarHelper().setTitle("首页");
+                RecyclerBanner view = mView.findView(R.id.rl_content);
+                RecyclerBanner.BannerEntity bannerEntity = new RecyclerBanner.BannerEntity() {
+                    @Override
+                    public String getUrl() {
+                        return "http://a.hiphotos.baidu.com/image/pic/item/78310a55b319ebc497ee99908026cffc1e171620.jpg";
+                    }
+                };
+                ArrayList<RecyclerBanner.BannerEntity> bannerEntities = new ArrayList<>();
+                bannerEntities.add(bannerEntity);
+                bannerEntities.add(bannerEntity);
+                bannerEntities.add(bannerEntity);
+                bannerEntities.add(bannerEntity);
+                view.setDatas(bannerEntities);
             }
 
             @Override
