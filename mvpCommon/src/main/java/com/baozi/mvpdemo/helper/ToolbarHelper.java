@@ -26,6 +26,8 @@ public abstract class ToolbarHelper {
     public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == DEFUATL_BASE_TOOLBAR_V1) {
             return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
+        } else if (toolbarLayout <= 0) {
+            return new EmptyToolbarHelperImpl(uiView,toolbarLayout);
         } else {
             return new BaseToolBarHelperImpl(uiView, toolbarLayout);
         }

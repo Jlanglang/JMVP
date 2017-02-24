@@ -20,14 +20,14 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 
-public class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
+class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private TextView mLeftText;
     private TextView mRightText;
     private ImageButton mLeftButton;
     private ImageButton mRightButton;
     private TextView mTitle;
 
-    public DefuatlToolbarHelperImplV1(UIView uiView, @LayoutRes int toolbar) {
+    DefuatlToolbarHelperImplV1(UIView uiView, @LayoutRes int toolbar) {
         super(uiView, toolbar);
     }
 

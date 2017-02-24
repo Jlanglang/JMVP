@@ -2,6 +2,7 @@
 <android.support.v7.widget.Toolbar
     android:id="@+id/tl_costom"
     style="@style/base_toolbar"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     >
 

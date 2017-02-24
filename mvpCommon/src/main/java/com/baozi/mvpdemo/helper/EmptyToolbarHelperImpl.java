@@ -1,43 +1,23 @@
 package com.baozi.mvpdemo.helper;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewStub;
 
-import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
- * @author jlanglang  2017/2/22 16:58
- * @版本 2.0
- * @Change
  */
- class BaseToolBarHelperImpl extends ToolbarHelper {
-     private int mToolbarLayout;
-     Toolbar mToolbar;
-     UIView mUIView;
-     Context mContext;
-     boolean isMaterialDesign;
+class EmptyToolbarHelperImpl extends ToolbarHelper {
+    private UIView mUIView;
+    private int mToolbarLayout;
 
-    public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
+    EmptyToolbarHelperImpl(UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
-        this.mContext = uiView.getContext();
         this.mToolbarLayout = toolbarLayout;
-        ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
-        if (vs_toolbar != null) {
-            vs_toolbar.setLayoutResource(mToolbarLayout);
-            mToolbar = (Toolbar) vs_toolbar.inflate();
-        } else {
-            mToolbar = uiView.findView(toolbarLayout);
-        }
-        uiView.setSupportActionBar(mToolbar);
-        initToolbar();
     }
 
     @Override
@@ -47,20 +27,12 @@ import com.baozi.mvpdemo.ui.view.UIView;
 
     @Override
     public Toolbar getToolbar() {
-        return mToolbar;
+        return null;
     }
 
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        this.isMaterialDesign = isMaterialDesign;
-        ActionBar supportActionBar = mUIView.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayUseLogoEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign);
-            supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign);
-        }
+
     }
 
     @Override
@@ -112,6 +84,4 @@ import com.baozi.mvpdemo.ui.view.UIView;
     public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
 
     }
-
-
 }

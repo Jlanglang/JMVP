@@ -80,41 +80,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             //有actionbar或者不需要toolbar
             return;
         }
-//        ViewStub viewStub = findView(R.id.vs_toolbar);
-//        viewStub.setLayoutResource(initToolbarLayout());
-//        Toolbar mToolbar = (Toolbar) viewStub.inflate();
         mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
-//        setSupportActionBar(mToolbarHelper.getToolbar());
-//        Toolbar toolbar = getToolbarHelper().getToolbar();
-//        if (toolbar != null) {
-//            setSupportActionBar(toolbar);
-//        }
     }
-//        //是否使用MaterialDesign
-//        if (isMaterialDesign()) {
-//            getSupportActionBar().setDisplayShowTitleEnabled(true);
-//            getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowCustomEnabled(true);
-//            getSupportActionBar().setDisplayUseLogoEnabled(true);
-////            mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-////                @Override
-////                public void onClick(View v) {
-////                    onBack();
-////                }
-////            });
-//            return;
-//        }
-//        //默认的toolbar
-//        if (initToolbarLayout() == DEFUATL_BASE_TOOLBAR) {
-////            mToolbarHelper = new DefuatlToolbarHelperImplV1(mToolbar, this);
-////            getSupportActionBar().setDisplayShowTitleEnabled(false);
-//            //设置无边距
-////            mToolbar.setContentInsetsAbsolute(0, 0);
-//        } else {
-//            //自定义的Toolbar,自定义实现．使用gettoolbar()获取并设置．
-//
-//        }
-//    }
 
     /**
      * 默认使用base_toolbar
@@ -215,10 +182,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
-    @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -335,7 +302,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public ToolbarHelper getToolbarHelper() {
-        if (mToolbarHelper == null && initToolbarLayout() >= 0) {
+        if (mToolbarHelper == null) {
             mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
         }
         return mToolbarHelper;
