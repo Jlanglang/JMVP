@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -38,13 +37,14 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitle = (TextView) mToolbar.findViewById(R.id.tv_title);
+        mToolbar.setContentInsetsAbsolute(0, 0);
         setLeftButton(R.drawable.back, new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUIView.onBack();
             }
         });
-
+        setMaterialDesignEnabled(false);
     }
 
     /**
@@ -55,17 +55,34 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         super.setMaterialDesignEnabled(isMaterialDesign);
-        ActionBar supportActionBar = mUIView.getSupportActionBar();
-        if (supportActionBar == null) {
+        if (mUIView.getSupportActionBar() == null) {
             return;
         }
-        setTitle(mTitle.getText().toString());
         setLeftButton(mLeftButton.getDrawable(), new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mUIView.onBack();
             }
         });
+        setLeftText(mLeftText.getText().toString(), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        setRightText(mRightText.getText().toString(), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        setRightButton(mRightButton.getDrawable(), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        setTitle(mTitle.getText().toString());
     }
 
     @Override
@@ -74,6 +91,7 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
             mUIView.getSupportActionBar().setTitle(title);
         } else {
             mTitle.setText(title);
+            mTitle.setVisibility(View.GONE);
         }
     }
 
@@ -142,8 +160,9 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
             mRightText.setVisibility(View.GONE);
             mRightButton.setVisibility(View.VISIBLE);
             mRightButton.setImageDrawable(drawable);
+        }else {
+            mRightButton.setVisibility(View.GONE);
         }
-
     }
 
     @Override

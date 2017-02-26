@@ -98,8 +98,8 @@ public class RecyclerBanner extends FrameLayout {
         addView(recyclerView, vpLayoutParams);
         addView(linearLayout, linearLayoutParams);
 
-        PSnapHelper pagerSnapHelper = new PSnapHelper();
-        pagerSnapHelper.attachToRecyclerView(recyclerView);
+//        com.linfeng.demo.PagerSnapHelper pagerSnapHelper = new com.linfeng.demo.PagerSnapHelper();
+//        pagerSnapHelper.attachToRecyclerView(recyclerView);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -247,7 +247,6 @@ public class RecyclerBanner extends FrameLayout {
 //            Glide.with(getContext()).load(R.mipmap.a).into(img);
             img.setText(position + "");
             img.setBackgroundResource(R.color.colorAccent);
-            img.setGravity(Gravity.CENTER);
             img.setTextColor(Color.WHITE);
         }
 
@@ -269,23 +268,26 @@ public class RecyclerBanner extends FrameLayout {
 
         @Override
         public int findTargetSnapPosition(RecyclerView.LayoutManager layoutManager, int velocityX, int velocityY) {
-            //当前位移的Position
+            if (Math.abs(velocityX) < 2000) {
+                return RecyclerView.NO_POSITION;
+            }
             int targetPos = super.findTargetSnapPosition(layoutManager, velocityX, velocityY);
-            Log.i("targetPos1", targetPos + "");
             final View currentView = findSnapView(layoutManager);
             if (targetPos != RecyclerView.NO_POSITION && currentView != null) {
-                //放下时最新显示的Position
                 int currentPostion = layoutManager.getPosition(currentView);
-                Log.i("currentPostion1", currentPostion + "");
-//                int[] first = ((StaggeredGridLayoutManager) layoutManager).findFirstVisibleItemPositions(null);
-//                int[] last = ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(null);
-                //如果currentPostion小于targetPos，则是左移
-                //如果currentPostion大于targetPos，则是右移
-//                currentPostion = targetPos < currentPostion ? first[0] : (targetPos > currentPostion ? last[1] : currentPostion);
-//                targetPos = targetPos < currentPostion ? currentPostion - 8 : (targetPos > currentPostion ? currentPostion + 8 : targetPos);
-//                targetPos = currentPostion;
-//                targetPos = targetPos<currentPostion-4
-                Log.i("currentPostion2", currentPostion + "");
+                int[] first = ((StaggeredGridLayoutManager) layoutManager).findFirstVisibleItemPositions(null);
+                int[] last = ((StaggeredGridLayoutManager) layoutManager).findLastVisibleItemPositions(null);
+//                currentPostion = targetPos < currentPostion ? last[0] : (targetPos > currentPostion ? first[0] : currentPostion);
+//                targetPos = targetPos < currentPostion ? currentPostion - 8 : (targetPos > currentPostion ? currentPostion + 8 : currentPostion);
+//                Log.i("first",first[0]+","+first[1]);
+//                Log.i("last",last[0]+","+last[1]);
+//                Log.i("currentPostion",currentPostion+"");
+//                Log.i("targetPos",targetPos+"");
+                if (velocityX > 0) {
+                    targetPos += 8;
+                } else {
+                    targetPos -= 8;
+                }
             }
             Log.i("targetPos", targetPos + "");
             return targetPos;

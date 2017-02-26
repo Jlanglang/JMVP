@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -21,6 +23,8 @@ import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseActivityView;
+
+import java.lang.reflect.Method;
 
 /**
  * activity的基类
@@ -50,7 +54,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         } else {
             super.setContentView(R.layout.activity_base);
             //创建toolbar
-            createToolbar();
+            mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
             //创建contentView
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             //添加contentView
@@ -72,16 +76,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
 
-    /**
-     * 创建toolbar
-     */
-    private void createToolbar() {
-        if (getSupportActionBar() != null || initToolbarLayout() <= 0) {
-            //有actionbar或者不需要toolbar
-            return;
-        }
-        mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
-    }
+//    /**
+//     * 创建toolbar
+//     */
+//    private void createToolbar() {
+//        if (getSupportActionBar() != null || initToolbarLayout() <= 0) {
+//            //有actionbar或者不需要toolbar
+//            return;
+//        }
+//
+//    }
 
     /**
      * 默认使用base_toolbar
@@ -93,10 +97,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return ToolbarHelper.DEFUATL_BASE_TOOLBAR_V1;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
     public void setContentView(@LayoutRes int layoutResID) {
@@ -124,23 +124,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
         }
     }
-
-    /**
-     * 初始化ContentView
-     * 建议不要包含toolbar
-     *
-     * @param inflater
-     * @param savedInstanceState
-     * @return
-     */
-    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
-
-    /**
-     * 子类实现Presenter,且必须继承BasePrensenter
-     *
-     * @return
-     */
-    protected abstract T initPresenter();
 
 
     @Override
@@ -182,15 +165,65 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         super.onDestroy();
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//    }
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         mPresenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * 此方法用于初始化菜单，其中menu参数就是即将要显示的Menu实例。 返回true则显示该menu,false 则不显示;
+     * (只会在第一次初始化菜单时调用)
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!isMaterialDesign() || getToolbarHelper() == null) {
+            return false;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    /**
+     * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
+     * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等）
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+    @Override
+    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
+        if (menu != null) {
+            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
+                try{
+                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
+                    m.setAccessible(true);
+                    m.invoke(menu, true);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "onMenuOpened...unable to set icons for overflow menu", e);
+                }
+            }
+        }
+        return super.onPrepareOptionsPanel(view, menu);
+    }
+    /**
+     * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
+     */
+    @Override
+    public void onOptionsMenuClosed(Menu menu) {
+
+        super.onOptionsMenuClosed(menu);
+    }
+
+    /**
+     * 菜单项被点击时调用，也就是菜单项的监听方法。
+     * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
+     */
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -231,11 +264,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void isNightMode(boolean isNight) {
-
-    }
-
-    @Override
     public Context getContext() {
         return this;
     }
@@ -256,16 +284,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return (V) view;
     }
 
-
-    /**
-     * 是否完全自定义布局
-     *
-     * @return 返回false使用Base_activity, 返回true则需要在initContView里面使用setContentView.
-     * 不推荐复写onCreate(),因为子类Presenter的oncreate(),会调用在子类的
-     * @see BaseActivity#onCreate(Bundle) 之前,可能造成NullException异常
-     */
     @Override
-    public abstract boolean isCustomLayout();
+    public void isNightMode(boolean isNight) {
+
+    }
 
     /**
      * 是否启用MaterialDesign风格.
@@ -308,4 +330,30 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return mToolbarHelper;
     }
 
+    /**
+     * 初始化ContentView
+     * 建议不要包含toolbar
+     *
+     * @param inflater
+     * @param savedInstanceState
+     * @return
+     */
+    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
+
+    /**
+     * 子类实现Presenter,且必须继承BasePrensenter
+     *
+     * @return
+     */
+    protected abstract T initPresenter();
+
+    /**
+     * 是否完全自定义布局
+     *
+     * @return 返回false使用Base_activity, 返回true则需要在initContView里面使用setContentView.
+     * 不推荐复写onCreate(),因为子类Presenter的oncreate(),会调用在子类的
+     * @see BaseActivity#onCreate(Bundle) 之前,可能造成NullException异常
+     */
+    @Override
+    public abstract boolean isCustomLayout();
 }

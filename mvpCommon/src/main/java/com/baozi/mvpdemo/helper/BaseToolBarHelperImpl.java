@@ -18,20 +18,23 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @版本 2.0
  * @Change
  */
- class BaseToolBarHelperImpl extends ToolbarHelper {
-     private int mToolbarLayout;
-     Toolbar mToolbar;
-     UIView mUIView;
-     Context mContext;
-     boolean isMaterialDesign;
+class BaseToolBarHelperImpl extends ToolbarHelper {
+//    private int mToolbarLayout;
+    Toolbar mToolbar;
+    UIView mUIView;
+    Context mContext;
+    boolean isMaterialDesign;
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
         this.mContext = uiView.getContext();
-        this.mToolbarLayout = toolbarLayout;
+//        this.mToolbarLayout = toolbarLayout;
         ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
+        if (uiView.getSupportActionBar() != null) {
+            return;
+        }
         if (vs_toolbar != null) {
-            vs_toolbar.setLayoutResource(mToolbarLayout);
+            vs_toolbar.setLayoutResource(toolbarLayout);
             mToolbar = (Toolbar) vs_toolbar.inflate();
         } else {
             mToolbar = uiView.findView(toolbarLayout);

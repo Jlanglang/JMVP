@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.example.acctionbaractivitydemo.MainActivity">
+    <item
+        android:id="@+id/menu1"
+        android:icon="@mipmap/ic_launcher"
+        android:title=""
+        app:showAsAction="withText|ifRoom"/>
+    <item
+        android:id="@+id/menu2"
+        android:icon="@mipmap/ic_launcher"
+        android:title="哈哈"
+        app:showAsAction="withText"/>
+    <item
+        android:id="@+id/menu3"
+        android:icon="@mipmap/ic_launcher"
+        android:title="呵呵"
+        app:showAsAction="withText"/>
+</menu>
