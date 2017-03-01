@@ -53,7 +53,7 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
             }
         });
         ActionBar supportActionBar = mUIView.getSupportActionBar();
-        if (supportActionBar!=null){
+        if (supportActionBar != null) {
             supportActionBar.setDisplayShowTitleEnabled(false);
         }
     }
@@ -117,6 +117,7 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
+        mRightDrawable = null;
         mRightButton.setVisibility(View.GONE);
         mRightTextView.setVisibility(View.VISIBLE);
         mRightTextView.setText(str);
@@ -131,6 +132,7 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
+        mRightText = null;
         mRightTextView.setVisibility(View.GONE);
         mRightButton.setVisibility(View.VISIBLE);
         mRightButton.setImageDrawable(drawable);
