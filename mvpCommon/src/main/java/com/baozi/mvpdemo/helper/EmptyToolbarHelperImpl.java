@@ -11,13 +11,11 @@ import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
  */
-class EmptyToolbarHelperImpl extends ToolbarHelper {
-    private UIView mUIView;
-    private int mToolbarLayout;
+class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
-    EmptyToolbarHelperImpl(UIView uiView, int toolbarLayout) {
-        this.mUIView = uiView;
-        this.mToolbarLayout = toolbarLayout;
+
+    public EmptyToolbarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
+        super(uiView, toolbarLayout);
     }
 
     @Override
@@ -35,7 +33,6 @@ class EmptyToolbarHelperImpl extends ToolbarHelper {
 
     }
 
-    @Override
     public void setTitle(@NonNull String str) {
 
     }

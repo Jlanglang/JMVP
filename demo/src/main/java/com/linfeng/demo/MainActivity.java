@@ -15,10 +15,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
         getToolbarHelper().setTitle("首页");
-        setMaterialDesignEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setSubtitle("小标题");
+        setMaterialDesignEnabled(false);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+//        getSupportActionBar().setSubtitle("小标题");
         return inflater.inflate(R.layout.activity_main, null);
     }
 

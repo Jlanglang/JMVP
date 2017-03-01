@@ -5,7 +5,6 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewStub;
@@ -18,8 +17,7 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @版本 2.0
  * @Change
  */
-class BaseToolBarHelperImpl extends ToolbarHelper {
-//    private int mToolbarLayout;
+abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     Toolbar mToolbar;
     UIView mUIView;
     Context mContext;
@@ -28,7 +26,6 @@ class BaseToolBarHelperImpl extends ToolbarHelper {
     public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
         this.mContext = uiView.getContext();
-//        this.mToolbarLayout = toolbarLayout;
         ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
         if (uiView.getSupportActionBar() != null) {
             return;
@@ -44,11 +41,6 @@ class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public void initToolbar() {
-
-    }
-
-    @Override
     public Toolbar getToolbar() {
         return mToolbar;
     }
@@ -56,17 +48,8 @@ class BaseToolBarHelperImpl extends ToolbarHelper {
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         this.isMaterialDesign = isMaterialDesign;
-        ActionBar supportActionBar = mUIView.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayUseLogoEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign);
-            supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign);
-            supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign);
-        }
     }
 
-    @Override
     public void setTitle(@NonNull String str) {
 
     }
@@ -115,6 +98,4 @@ class BaseToolBarHelperImpl extends ToolbarHelper {
     public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
 
     }
-
-
 }

@@ -63,7 +63,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 //交给Persenter去扩展
                 mPresenter.initContentView(base_content, view);
             }
-
         }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -76,16 +75,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
 
-//    /**
-//     * 创建toolbar
-//     */
-//    private void createToolbar() {
-//        if (getSupportActionBar() != null || initToolbarLayout() <= 0) {
-//            //有actionbar或者不需要toolbar
-//            return;
-//        }
-//
-//    }
 
     /**
      * 默认使用base_toolbar
@@ -189,9 +178,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-
         return super.onPrepareOptionsMenu(menu);
     }
+
+    /**
+     * 显示menu的icon
+     * @param view
+     * @param menu
+     * @return
+     */
     @Override
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         if (menu != null) {
@@ -212,7 +207,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public void onOptionsMenuClosed(Menu menu) {
-
         super.onOptionsMenuClosed(menu);
     }
 
@@ -222,7 +216,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -303,7 +296,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        this.isMaterialDesign = isMaterialDesign;
+        this. isMaterialDesign = isMaterialDesign;
         getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
     }
 

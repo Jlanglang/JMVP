@@ -3,15 +3,6 @@
     <style name="base_toolbar" parent="@style/toolbar">
         <item name="android:elevation">6px</item>
         <item name="android:navigationIcon">?attr/homeAsUpIndicator</item>
-        <item name="android:popupTheme">@style/ToolbarTheme</item>
-    </style>
-    <!-- ToolBar菜单样式 ,与实际相反.-->
-    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Dark">
-        <item name="android:textSize">18sp</item> <!--  搞掂字体大小-->
-        <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
     </style>
 
-    <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
-        <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
-    </style>
 </resources>

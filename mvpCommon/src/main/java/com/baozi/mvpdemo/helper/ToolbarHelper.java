@@ -29,7 +29,7 @@ public abstract class ToolbarHelper {
         } else if (toolbarLayout <= 0) {
             return new EmptyToolbarHelperImpl(uiView,toolbarLayout);
         } else {
-            return new BaseToolBarHelperImpl(uiView, toolbarLayout);
+            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
         }
     }
 
