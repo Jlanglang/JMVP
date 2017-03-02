@@ -52,7 +52,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             super.setContentView(view);
         } else {
-            super.setContentView(R.layout.activity_base);
+            super.setContentView(R.layout.activity_base2);
             //创建toolbar
             mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
             //创建contentView
