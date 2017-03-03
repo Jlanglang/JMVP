@@ -17,22 +17,35 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 public abstract class ToolbarHelper {
-    public static final int DEFUATL_BASE_TOOLBAR_V1 = R.layout.base_toolbar;
+    public static final int TOOLBAR_DEFUATL_V1 = R.layout.toolbar_defuatl_v1;
+    public static final int TOOLBAR_MATERIAL_DESIGN_V1 = R.layout.toolbar_material_design_v1;
 
     public ToolbarHelper() {
 
     }
 
     public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout) {
-        if (toolbarLayout == DEFUATL_BASE_TOOLBAR_V1) {
+        if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
             return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MATERIAL_DESIGN_V1) {
+            return new MaterialDesignToolBarHelperImplV1(uiView, toolbarLayout);
         } else if (toolbarLayout <= 0) {
-            return new EmptyToolbarHelperImpl(uiView,toolbarLayout);
+            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
         } else {
             return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
         }
     }
-
+    public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout,boolean is) {
+        if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
+            return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MATERIAL_DESIGN_V1) {
+            return new MaterialDesignToolBarHelperImplV1(uiView, toolbarLayout);
+        } else if (toolbarLayout <= 0) {
+            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
+        } else {
+            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
+        }
+    }
     public abstract void initToolbar();
 
     public abstract Toolbar getToolbar();
@@ -75,4 +88,5 @@ public abstract class ToolbarHelper {
     public abstract void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener);
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
+
 }

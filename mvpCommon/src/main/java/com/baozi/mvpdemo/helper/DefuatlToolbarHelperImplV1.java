@@ -7,8 +7,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -29,7 +31,6 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private TextView mTitleView;
     private String mLeftText;
     private String mRightText;
-    private String mTitleText;
     private Drawable mLeftDrawable;
     private Drawable mRightDrawable;
 
@@ -40,11 +41,21 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void initToolbar() {
+        ViewStub vs_toolbar = mUIView.findView(R.id.vs_toolbar);
+        if (vs_toolbar != null) {
+            vs_toolbar.setLayoutResource(toolbarLayout);
+            mToolbar = (Toolbar) vs_toolbar.inflate();
+        } else {
+            mToolbar = mUIView.findView(toolbarLayout);
+        }
+        mUIView.setSupportActionBar(mToolbar);
+
         mLeftTextView = (TextView) mToolbar.findViewById(R.id.tv_left);
         mRightTextView = (TextView) mToolbar.findViewById(R.id.tv_right);
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitleView = (TextView) mToolbar.findViewById(R.id.tv_title);
+
         mToolbar.setContentInsetsAbsolute(0, 0);
         setLeftButton(R.drawable.back, new View.OnClickListener() {
             @Override
@@ -67,10 +78,10 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
         super.setMaterialDesignEnabled(isMaterialDesign);
         int visibility = isMaterialDesign ? View.GONE : View.VISIBLE;
-        if (!TextUtils.isEmpty(mRightText)) {
+        if (null != mRightText) {
             mRightTextView.setVisibility(visibility);
         }
-        if (mRightButton != null) {
+        if (null != mRightButton) {
             mRightButton.setVisibility(visibility);
         }
     }
@@ -88,8 +99,8 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setLeftText(@NonNull String str, View.OnClickListener clickListener) {
+        mLeftDrawable = null;
         mLeftText = str;
-        mLeftButton.setVisibility(View.GONE);
         mLeftTextView.setVisibility(View.VISIBLE);
         mLeftTextView.setText(str);
         mLeftTextView.setOnClickListener(clickListener);
@@ -103,8 +114,8 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void setLeftButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
+        mLeftText = null;
         mLeftDrawable = drawable;
-        mLeftTextView.setVisibility(View.GONE);
         mLeftButton.setVisibility(View.VISIBLE);
         mLeftButton.setImageDrawable(drawable);
         mLeftButton.setOnClickListener(clickListener);
@@ -118,7 +129,8 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     @Override
     public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
         mRightDrawable = null;
-        mRightButton.setVisibility(View.GONE);
+        mRightText = str;
+//        mRightButton.setVisibility(View.GONE);
         mRightTextView.setVisibility(View.VISIBLE);
         mRightTextView.setText(str);
         mRightTextView.setOnClickListener(clickListener);
@@ -133,7 +145,8 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     @Override
     public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
         mRightText = null;
-        mRightTextView.setVisibility(View.GONE);
+        mRightDrawable = drawable;
+//        mRightTextView.setVisibility(View.GONE);
         mRightButton.setVisibility(View.VISIBLE);
         mRightButton.setImageDrawable(drawable);
     }

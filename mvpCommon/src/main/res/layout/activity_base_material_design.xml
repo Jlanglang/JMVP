@@ -18,8 +18,7 @@
             android:id="@+id/vs_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inflatedId="@layout/base_toolbar"
-            app:layout_scrollFlags="scroll|enterAlways"
+            android:inflatedId="@layout/toolbar_defuatl_v1"
             />
     </android.support.design.widget.AppBarLayout>
 

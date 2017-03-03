@@ -34,7 +34,7 @@ import java.lang.reflect.Method;
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
     protected T mPresenter;
-    protected SparseArray<View> mViews;
+    private SparseArray<View> mViews;
     private ToolbarHelper mToolbarHelper;
 
     @Override
@@ -49,15 +49,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (isCustomLayout()) {
             //创建contentView
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
-            super.setContentView(view);
+            setContentView(view);
+            //创建toolbar
+            mToolbarHelper = getToolbarHelper();
         } else {
             if (isMaterialDesign()) {
                 super.setContentView(R.layout.activity_base_material_design);
             } else {
                 super.setContentView(R.layout.activity_base);
             }
-            //创建toolbar
-            mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
             //创建contentView
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             //添加contentView
@@ -65,7 +65,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             if (view != null) {
                 //交给Persenter去扩展
                 mPresenter.initContentView(base_content, view);
+            } else {
+                throw new IllegalStateException("must initContentView is not return null");
             }
+            //创建toolbar
+            mToolbarHelper = getToolbarHelper();
         }
         mPresenter.onCreate();
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
@@ -85,7 +89,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     protected int initToolbarLayout() {
-        return ToolbarHelper.DEFUATL_BASE_TOOLBAR_V1;
+        return isCustomLayout() ? 0 : ToolbarHelper.TOOLBAR_DEFUATL_V1;
     }
 
 
@@ -289,6 +293,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 是否启用MaterialDesign风格.
      */
+    @Override
     public boolean isMaterialDesign() {
         return false;
     }
@@ -346,10 +351,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 是否完全自定义布局
      *
-     * @return 返回false使用Base_activity, 返回true则需要在initContView里面使用setContentView.
+     * @return 返回false使用模板, 返回true则自定义布局
      * 不推荐复写onCreate(),因为子类Presenter的oncreate(),会调用在子类的
      * @see BaseActivity#onCreate(Bundle) 之前,可能造成NullException异常
      */
-    @Override
-    public abstract boolean isCustomLayout();
+    public boolean isCustomLayout() {
+        return false;
+    }
 }

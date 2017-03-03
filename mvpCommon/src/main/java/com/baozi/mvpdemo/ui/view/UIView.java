@@ -37,12 +37,6 @@ public interface UIView extends BaseView {
      */
     void onBack();
 
-    /**
-     * 是否自定义布局
-     *
-     * @return
-     */
-    boolean isCustomLayout();
 
     /**
      * 是否使用MaterialDesign风格

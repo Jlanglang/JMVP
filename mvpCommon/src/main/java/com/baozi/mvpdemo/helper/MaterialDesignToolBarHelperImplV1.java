@@ -11,9 +11,9 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 
-public class MaterialDesignToolBarHelper extends BaseToolBarHelperImpl {
+public class MaterialDesignToolBarHelperImplV1 extends BaseToolBarHelperImpl {
 
-    public MaterialDesignToolBarHelper(@NonNull UIView uiView, int toolbarLayout) {
+    public MaterialDesignToolBarHelperImplV1(@NonNull UIView uiView, int toolbarLayout) {
         super(uiView, toolbarLayout);
     }
 

@@ -18,6 +18,7 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 abstract class BaseToolBarHelperImpl extends ToolbarHelper {
+    int toolbarLayout;
     Toolbar mToolbar;
     UIView mUIView;
     Context mContext;
@@ -26,18 +27,10 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
         this.mContext = uiView.getContext();
+        this.toolbarLayout = toolbarLayout;
         if (uiView.getSupportActionBar() != null) {
             return;
         }
-        ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
-        if (vs_toolbar != null) {
-            vs_toolbar.setLayoutResource(toolbarLayout);
-            mToolbar = (Toolbar) vs_toolbar.inflate();
-        } else {
-            mToolbar = uiView.findView(toolbarLayout);
-        }
-        uiView.setSupportActionBar(mToolbar);
-//        layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL| AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
         initToolbar();
     }
 

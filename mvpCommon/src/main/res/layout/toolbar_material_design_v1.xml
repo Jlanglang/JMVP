@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CollapsingToolbarLayout
-    android:id="@+id/toolbar_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toolbar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -10,15 +10,14 @@
     app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/tl_costom"
-        style="@style/base_toolbar"
-        app:layout_scrollFlags="scroll|enterAlways"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/tl_costom"
+        style="@style/base_toolbar"
         android:minHeight="?attr/actionBarSize"
+        app:layout_collapseMode="pin"
         app:popupTheme="@style/popup_theme"
         app:theme="@style/toolbar_theme"
-        app:layout_collapseMode="pin"
         />
 
 </android.support.design.widget.CollapsingToolbarLayout>
