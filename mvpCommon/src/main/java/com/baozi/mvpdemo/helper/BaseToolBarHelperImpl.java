@@ -26,10 +26,10 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
         this.mUIView = uiView;
         this.mContext = uiView.getContext();
-        ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
         if (uiView.getSupportActionBar() != null) {
             return;
         }
+        ViewStub vs_toolbar = uiView.findView(R.id.vs_toolbar);
         if (vs_toolbar != null) {
             vs_toolbar.setLayoutResource(toolbarLayout);
             mToolbar = (Toolbar) vs_toolbar.inflate();
@@ -37,6 +37,7 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
             mToolbar = uiView.findView(toolbarLayout);
         }
         uiView.setSupportActionBar(mToolbar);
+//        layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL| AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
         initToolbar();
     }
 

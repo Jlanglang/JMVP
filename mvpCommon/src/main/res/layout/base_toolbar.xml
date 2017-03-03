@@ -2,10 +2,12 @@
 <android.support.v7.widget.Toolbar
     android:id="@+id/tl_costom"
     style="@style/base_toolbar"
-    app:theme="@style/toolbar_theme"
-    app:popupTheme="@style/popup_theme"
+    app:layout_scrollFlags="scroll|enterAlways"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:minHeight="?attr/actionBarSize"
+    app:popupTheme="@style/popup_theme"
+    app:theme="@style/toolbar_theme">
 
     <ImageButton
         android:id="@+id/ib_left"
@@ -16,7 +18,6 @@
         android:gravity="center"
         android:src="@drawable/back"
         android:text="左边text"
-        android:visibility="gone"
         />
 
     <TextView

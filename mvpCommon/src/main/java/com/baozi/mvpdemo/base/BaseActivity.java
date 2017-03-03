@@ -36,7 +36,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected T mPresenter;
     protected SparseArray<View> mViews;
     private ToolbarHelper mToolbarHelper;
-    private boolean isMaterialDesign;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +51,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             View view = initContentView(LayoutInflater.from(this), savedInstanceState);
             super.setContentView(view);
         } else {
-            super.setContentView(R.layout.activity_base2);
+            if (isMaterialDesign()) {
+                super.setContentView(R.layout.activity_base_material_design);
+            } else {
+                super.setContentView(R.layout.activity_base);
+            }
             //创建toolbar
             mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
             //创建contentView
@@ -73,7 +76,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             }
         });
     }
-
 
 
     /**
@@ -183,6 +185,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     /**
      * 显示menu的icon
+     *
      * @param view
      * @param menu
      * @return
@@ -191,7 +194,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected boolean onPrepareOptionsPanel(View view, Menu menu) {
         if (menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
-                try{
+                try {
                     Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
                     m.setAccessible(true);
                     m.invoke(menu, true);
@@ -202,6 +205,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         return super.onPrepareOptionsPanel(view, menu);
     }
+
     /**
      * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
      */
@@ -285,8 +289,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 是否启用MaterialDesign风格.
      */
-    public final boolean isMaterialDesign() {
-        return isMaterialDesign;
+    public boolean isMaterialDesign() {
+        return false;
     }
 
     /**
@@ -296,7 +300,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        this. isMaterialDesign = isMaterialDesign;
         getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
     }
 

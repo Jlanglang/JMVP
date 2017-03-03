@@ -2,7 +2,6 @@ package com.linfeng.demo;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 
 import com.baozi.mvpdemo.base.BaseActivity;
@@ -16,9 +15,6 @@ public class MainActivity extends BaseActivity {
     protected View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
         getToolbarHelper().setTitle("首页");
         setMaterialDesignEnabled(false);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setSubtitle("小标题");
         return inflater.inflate(R.layout.activity_main, null);
     }
 
@@ -27,7 +23,12 @@ public class MainActivity extends BaseActivity {
         return new BasePresenter<UIView>() {
             @Override
             public void onCreate() {
-
+//                TabLayout tabLayout = mView.findView(R.id.tabLayout);
+//                for (int i = 0; i < 4; i++) {
+//                    TabLayout.Tab tab = tabLayout.newTab();
+//                    tab.setText(i+"");
+//                    tabLayout.addTab(tab);
+//                }
             }
 
             @Override
@@ -42,15 +43,19 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu,menu);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu,menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean isCustomLayout() {
         return false;
     }
 
+    @Override
+    public boolean isMaterialDesign() {
+        return true;
+    }
 }

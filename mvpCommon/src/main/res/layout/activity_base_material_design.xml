@@ -6,21 +6,27 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:theme="@style/BaseAppTheme">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
+        android:orientation="vertical"
         >
+
         <ViewStub
             android:id="@+id/vs_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_collapseMode="pin"/>
+            android:inflatedId="@layout/base_toolbar"
+            app:layout_scrollFlags="scroll|enterAlways"
+            />
     </android.support.design.widget.AppBarLayout>
+
     <FrameLayout
         android:id="@+id/base_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-       />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 </android.support.design.widget.CoordinatorLayout>
