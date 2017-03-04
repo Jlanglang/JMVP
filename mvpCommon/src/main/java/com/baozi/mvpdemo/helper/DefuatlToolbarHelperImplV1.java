@@ -8,7 +8,6 @@ import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageButton;
@@ -35,18 +34,18 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private Drawable mRightDrawable;
 
 
-    DefuatlToolbarHelperImplV1(UIView uiView, @LayoutRes int toolbar) {
-        super(uiView, toolbar);
+    DefuatlToolbarHelperImplV1(UIView uiView, View rootView, @LayoutRes int toolbar) {
+        super(uiView, rootView, toolbar);
     }
 
     @Override
     public void initToolbar() {
-        ViewStub vs_toolbar = mUIView.findView(R.id.vs_toolbar);
+        ViewStub vs_toolbar = (ViewStub) mRootView.findViewById(R.id.vs_toolbar);
         if (vs_toolbar != null) {
             vs_toolbar.setLayoutResource(toolbarLayout);
             mToolbar = (Toolbar) vs_toolbar.inflate();
         } else {
-            mToolbar = mUIView.findView(toolbarLayout);
+            mToolbar = (Toolbar) mRootView.findViewById(toolbarLayout);
         }
         mUIView.setSupportActionBar(mToolbar);
 

@@ -7,8 +7,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.baozi.mvpdemo.helper.ToolbarHelper;
-
 /**
  * Created by baozi on 2017/2/20.
  * 用户页面,操作页面，对应Activity,frgament...
@@ -88,8 +86,9 @@ public interface UIView extends BaseView {
      */
     void setSupportActionBar(Toolbar toolbar);
 
-    /**
-     * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
-     */
-    ToolbarHelper getToolbarHelper();
+//    /**
+//     * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
+//     *
+//     */
+//    ToolbarHelper getToolbarHelper();
 }

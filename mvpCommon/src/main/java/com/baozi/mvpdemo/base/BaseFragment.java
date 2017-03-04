@@ -76,7 +76,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContentView = initContentView(inflater, savedInstanceState);
+        mContentView = initView(inflater, savedInstanceState);
         return mContentView;
     }
 
@@ -147,7 +147,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      *
      * @return
      */
-    public abstract View initContentView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
+    public abstract View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
 
     /**
      * 跳转fragment

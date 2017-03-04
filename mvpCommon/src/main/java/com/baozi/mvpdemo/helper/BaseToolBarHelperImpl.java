@@ -1,15 +1,12 @@
 package com.baozi.mvpdemo.helper;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewStub;
 
-import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.ui.view.UIView;
 
 /**
@@ -21,12 +18,12 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     int toolbarLayout;
     Toolbar mToolbar;
     UIView mUIView;
-    Context mContext;
+    View mRootView;
     boolean isMaterialDesign;
 
-    public BaseToolBarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
+    public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         this.mUIView = uiView;
-        this.mContext = uiView.getContext();
+        this.mRootView = rootView;
         this.toolbarLayout = toolbarLayout;
         if (uiView.getSupportActionBar() != null) {
             return;

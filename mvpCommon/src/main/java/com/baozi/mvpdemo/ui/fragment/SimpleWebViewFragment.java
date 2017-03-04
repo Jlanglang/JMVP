@@ -34,7 +34,7 @@ public abstract class SimpleWebViewFragment<T extends BaseWebViewPresenterImpl> 
 //    WebViewWithProgress mWvContent;
 
     @Override
-    public View initContentView(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
+    public View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         View inflate = View.inflate(mContext, R.layout.fragment_webview_simple, null);
         ButterKnife.bind(this, inflate);
 //        setToolbar(mTlCustom);

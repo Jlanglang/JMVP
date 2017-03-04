@@ -14,8 +14,8 @@ import com.baozi.mvpdemo.ui.view.UIView;
 class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
 
-    public EmptyToolbarHelperImpl(@NonNull UIView uiView, int toolbarLayout) {
-        super(uiView, toolbarLayout);
+    public EmptyToolbarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
+        super(uiView, rootView,toolbarLayout);
     }
 
     @Override

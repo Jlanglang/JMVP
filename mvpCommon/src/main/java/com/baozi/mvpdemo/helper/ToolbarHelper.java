@@ -24,28 +24,18 @@ public abstract class ToolbarHelper {
 
     }
 
-    public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout) {
+    public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
-            return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
+            return new DefuatlToolbarHelperImplV1(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout == TOOLBAR_MATERIAL_DESIGN_V1) {
-            return new MaterialDesignToolBarHelperImplV1(uiView, toolbarLayout);
+            return new MaterialDesignToolBarHelperImplV1(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout <= 0) {
-            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
+            return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else {
-            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
+            return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         }
     }
-    public static ToolbarHelper Create(@NonNull UIView uiView, @LayoutRes int toolbarLayout,boolean is) {
-        if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
-            return new DefuatlToolbarHelperImplV1(uiView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MATERIAL_DESIGN_V1) {
-            return new MaterialDesignToolBarHelperImplV1(uiView, toolbarLayout);
-        } else if (toolbarLayout <= 0) {
-            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
-        } else {
-            return new EmptyToolbarHelperImpl(uiView, toolbarLayout);
-        }
-    }
+
     public abstract void initToolbar();
 
     public abstract Toolbar getToolbar();

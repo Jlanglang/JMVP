@@ -2,6 +2,7 @@ package com.baozi.mvpdemo.helper;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.view.View;
 
 import com.baozi.mvpdemo.ui.view.UIView;
 
@@ -13,8 +14,8 @@ import com.baozi.mvpdemo.ui.view.UIView;
 
 public class MaterialDesignToolBarHelperImplV1 extends BaseToolBarHelperImpl {
 
-    public MaterialDesignToolBarHelperImplV1(@NonNull UIView uiView, int toolbarLayout) {
-        super(uiView, toolbarLayout);
+    public MaterialDesignToolBarHelperImplV1(@NonNull UIView uiView, View rootView, int toolbarLayout) {
+        super(uiView, rootView, toolbarLayout);
     }
 
     @Override
