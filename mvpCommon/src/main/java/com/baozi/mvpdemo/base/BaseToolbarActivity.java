@@ -15,7 +15,7 @@ import android.widget.FrameLayout;
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarView;
+import com.baozi.mvpdemo.ui.view.ToolbarActivityView;
 
 import java.lang.reflect.Method;
 
@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
  * @param <T>
  */
 public abstract class BaseToolbarActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements ToolbarView {
+        implements ToolbarActivityView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
 

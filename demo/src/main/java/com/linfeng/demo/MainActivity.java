@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.base.BaseToolbarActivity;
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarView;
 
 public class MainActivity extends BaseToolbarActivity {
 
