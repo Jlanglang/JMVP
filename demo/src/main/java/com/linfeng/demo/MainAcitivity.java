@@ -9,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.base.TempletActivity;
-import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarView;
 
 public class MainAcitivity extends TempletActivity {
 
