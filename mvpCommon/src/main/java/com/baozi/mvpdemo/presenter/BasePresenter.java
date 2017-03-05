@@ -15,6 +15,7 @@ import rx.subscriptions.CompositeSubscription;
  * @Change
  */
 public abstract class BasePresenter<T extends BaseView> {
+
     protected T mView;
     /**
      * 使用CompositeSubscription来持有所有的Subscriptions
@@ -30,13 +31,6 @@ public abstract class BasePresenter<T extends BaseView> {
         mCompositeSubscription = new CompositeSubscription();
     }
 
-    /**
-     * @param contenetView
-     * @param preant
-     */
-    public void initContentView(ViewGroup preant, View contenetView) {
-        preant.addView(contenetView);
-    }
 
     /**
      * 做初始化的操作,需要在view的视图初始化完成之后才能调用
@@ -48,7 +42,7 @@ public abstract class BasePresenter<T extends BaseView> {
      * 运行在onCreate()之后,可能在onStart()之后调用.
      * 建议加载数据,处理数据刷新页面的操作放在这里
      */
-    public abstract void LoadData();
+    public abstract void loadData();
 
     /**
      * 在这里结束异步操作

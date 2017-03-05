@@ -3,6 +3,8 @@ package com.baozi.mvpdemo.base;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -25,7 +27,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected Bundle mBundle;
     private SparseArray<View> mViews;
     private View mContentView;
-    private boolean isMaterialDesign;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -44,6 +45,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mPresenter = initPresenter();
+        mPresenter.onAttch(this);
     }
 
     /**
@@ -61,7 +64,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         } else {
             mBundle = getArguments() == null ? new Bundle() : getArguments();
         }
-        mPresenter = initPresenter();
     }
 
     /**
@@ -91,8 +93,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         super.onActivityCreated(savedInstanceState);
         //创建presenter
         if (mPresenter != null) {
-            mPresenter.onAttch(this);
             mPresenter.onCreate();
+            //加载完成再刷新视图
+            Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+                @Override
+                public boolean queueIdle() {
+                    mPresenter.loadData();
+                    return false;
+                }
+            });
         }
         initListener();
     }
@@ -122,10 +131,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     }
 
-    @Override
-    public final boolean isMaterialDesign() {
-        return isMaterialDesign;
-    }
 
     /**
      * 类似Activity的OnBackgress
@@ -136,11 +141,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         getFragmentManager().popBackStackImmediate();
     }
 
-
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-
-    }
 
     /**
      * 初始化Fragment应有的视图

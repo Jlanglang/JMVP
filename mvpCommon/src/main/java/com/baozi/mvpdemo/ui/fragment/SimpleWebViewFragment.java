@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.baozi.mvpdemo.R;
+import com.baozi.mvpdemo.base.BaseWebViewFragment;
 import com.baozi.mvpdemo.contract.SimpleWebViewFragmentContract;
 import com.baozi.mvpdemo.presenter.BaseWebViewPresenterImpl;
 import com.gzsll.jsbridge.WVJBWebView;

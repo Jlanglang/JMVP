@@ -11,9 +11,9 @@ import com.baozi.mvpdemo.base.BaseFragment;
  * Created by baozi on 2016/11/24.
  */
 public interface BaseFragmentView extends UIView {
-    FragmentManager getFragmentManager();
 
     Bundle getBundle();
 
+    FragmentManager getFragmentManager();
     BaseFragment getFragment();
 }

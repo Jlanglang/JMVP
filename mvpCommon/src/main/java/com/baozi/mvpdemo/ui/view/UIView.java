@@ -1,11 +1,13 @@
 package com.baozi.mvpdemo.ui.view;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.Window;
 
 /**
  * Created by baozi on 2017/2/20.
@@ -34,21 +36,6 @@ public interface UIView extends BaseView {
      * 回退
      */
     void onBack();
-
-
-    /**
-     * 是否使用MaterialDesign风格
-     *
-     * @return
-     */
-    boolean isMaterialDesign();
-
-    /**
-     * MaterialDesign风格,普通风格之间转换
-     *
-     * @param isMaterialDesign
-     */
-    void setMaterialDesignEnabled(boolean isMaterialDesign);
 
     /**
      * 获取Acitivity
@@ -86,9 +73,5 @@ public interface UIView extends BaseView {
      */
     void setSupportActionBar(Toolbar toolbar);
 
-//    /**
-//     * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
-//     *
-//     */
-//    ToolbarHelper getToolbarHelper();
+    Window getWindow();
 }

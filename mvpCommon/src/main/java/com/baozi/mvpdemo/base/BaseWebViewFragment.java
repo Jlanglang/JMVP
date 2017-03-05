@@ -1,4 +1,4 @@
-package com.baozi.mvpdemo.ui.fragment;
+package com.baozi.mvpdemo.base;
 
 
 import com.baozi.mvpdemo.base.BaseFragment;

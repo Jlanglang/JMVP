@@ -79,4 +79,5 @@ public abstract class ToolbarHelper {
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
+
 }

@@ -35,56 +35,30 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttch(this);
-//        //是否完全自定义layout
-//        if (isCustomLayout()) {
-        //创建contentView
-
+        //创建ContentView
         View view = initView(LayoutInflater.from(this), savedInstanceState);
         setContentView(view);
-//            //创建toolbar
-//            mToolbarHelper = getToolbarHelper();
-//        } else {
-//            if (isMaterialDesign()) {
-//                super.setContentView(R.layout.activity_base_material_design);
-//            } else {
-//                super.setContentView(R.layout.activity_base);
-//            }
-//            //创建toolbar
-//            mToolbarHelper = getToolbarHelper();
-//            //创建contentView
-//            View view = initView(LayoutInflater.from(this), savedInstanceState);
-//            //添加contentView
-//            FrameLayout base_content = findView(R.id.base_content);
-//            if (view != null) {
-//                //交给Persenter去扩展
-//                mPresenter.initView(base_content, view);
-//            } else {
-//                throw new IllegalStateException("must initView is not return null");
-//            }
-//        }
+    }
+
+    /**
+     * 初始化view之后再进行presenter的初始化,
+     * 该方法只会调用一次,调用在onResume之后.
+     */
+    @Override
+    public void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        //初始化presenter
         mPresenter.onCreate();
+        //加载完成再刷新视图
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
-                mPresenter.LoadData();
+                mPresenter.loadData();
                 return false;
             }
         });
     }
-
-//
-//    /**
-//     * 默认使用base_toolbar
-//     * 如果不需要toolbar,请复写,并返回0.或者-1
-//     *
-//     * @return
-//     */
-//    protected int initToolbarLayout() {
-//        return isCustomLayout() ? 0 : ToolbarHelper.TOOLBAR_DEFUATL_V1;
-//    }
-
-
-//    @Override
+    //    //    @Override
 //    public void setContentView(@LayoutRes int layoutResID) {
 //        if (isCustomLayout()) {
 //            super.setContentView(layoutResID);
@@ -146,9 +120,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onDestroy() {
         if (mPresenter != null) {
             mPresenter.onDestroy();
-            mPresenter.onDetach();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onDetachedFromWindow() {
+        mPresenter.onDetach();
+        super.onDetachedFromWindow();
     }
 
     @Override
@@ -156,67 +135,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
     }
-//
-//    /**
-//     * 此方法用于初始化菜单，其中menu参数就是即将要显示的Menu实例。 返回true则显示该menu,false 则不显示;
-//     * (只会在第一次初始化菜单时调用)
-//     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        if (!isMaterialDesign() || getToolbarHelper() == null) {
-//            return false;
-//        }
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
-//    /**
-//     * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
-//     * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等）
-//     */
-//    @Override
-//    public boolean onPrepareOptionsMenu(Menu menu) {
-//        return super.onPrepareOptionsMenu(menu);
-//    }
-//
-//    /**
-//     * 显示menu的icon
-//     *
-//     * @param view
-//     * @param menu
-//     * @return
-//     */
-//    @Override
-//    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-//        if (menu != null) {
-//            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
-//                try {
-//                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-//                    m.setAccessible(true);
-//                    m.invoke(menu, true);
-//                } catch (Exception e) {
-//                    Log.e(getClass().getSimpleName(), "onMenuOpened...unable to set icons for overflow menu", e);
-//                }
-//            }
-//        }
-//        return super.onPrepareOptionsPanel(view, menu);
-//    }
-//
-//    /**
-//     * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
-//     */
-//    @Override
-//    public void onOptionsMenuClosed(Menu menu) {
-//        super.onOptionsMenuClosed(menu);
-//    }
-//
-//    /**
-//     * 菜单项被点击时调用，也就是菜单项的监听方法。
-//     * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
-//     */
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        return super.onOptionsItemSelected(item);
-//    }
 
     /**
      * '
@@ -286,46 +204,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     }
 
-    /**
-     * 是否启用MaterialDesign风格.
-     */
-    @Override
-    public boolean isMaterialDesign() {
-        return false;
-    }
-
-    /**
-     * 切换MaterialDesign风格.
-     *
-     * @param isMaterialDesign
-     */
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-//        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
-    }
-
-
-//    /**
-//     * 如果设置的主题不是NoActionBar或者initToolbar()返回是0,则返回null.
-//     *
-//     * @return mToolbar 可能为null.
-//     */
-//    public Toolbar getToolbar() {
-//        return getToolbarHelper().getToolbar();
-//    }
-
-//    /**
-//     * 如果修改了initToolbarLayout(),并且<=0的话,该方法将返回null
-//     *
-//     * @return
-//     */
-//    @Override
-//    public ToolbarHelper getToolbarHelper() {
-//        if (mToolbarHelper == null) {
-//            mToolbarHelper = ToolbarHelper.Create(this, initToolbarLayout());
-//        }
-//        return mToolbarHelper;
-//    }
 
     /**
      * 初始化ContentView

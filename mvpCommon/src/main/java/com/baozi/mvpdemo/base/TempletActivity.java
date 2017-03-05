@@ -14,8 +14,8 @@ import android.widget.FrameLayout;
 
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
-import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarActivityView;
+import com.baozi.mvpdemo.presenter.TempletPresenter;
+import com.baozi.mvpdemo.ui.view.ToolbarView;
 
 import java.lang.reflect.Method;
 
@@ -24,8 +24,8 @@ import java.lang.reflect.Method;
  *
  * @param <T>
  */
-public abstract class BaseToolbarActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements ToolbarActivityView {
+public abstract class TempletActivity<T extends TempletPresenter> extends BaseActivity<T>
+        implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
 
@@ -33,18 +33,20 @@ public abstract class BaseToolbarActivity<T extends BasePresenter> extends BaseA
     @Override
     protected View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         if (isMaterialDesign()) {
-            rootView = inflater.inflate(R.layout.activity_base_material_design, null);
+            rootView = inflater.inflate(R.layout.activity_templet_material_design, null);
         } else {
-            rootView = inflater.inflate(R.layout.activity_base, null);
+            rootView = inflater.inflate(R.layout.activity_templet, null);
         }
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
         //ContentView容器
-        FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.base_content);
+        FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
         View contentView = initContentView(inflater, contentGroup, savedInstanceState);
+        contentGroup.removeAllViews();
+        contentGroup.addView(contentView);
         //交给Persenter去扩展
-        mPresenter.initContentView(contentGroup, contentView);
+        mPresenter.wapperContentView(contentGroup);
         return rootView;
     }
 
@@ -125,7 +127,7 @@ public abstract class BaseToolbarActivity<T extends BasePresenter> extends BaseA
 
 
     @Override
-    public BaseToolbarActivity getActivity() {
+    public TempletActivity getActivity() {
         return this;
     }
 
@@ -160,4 +162,7 @@ public abstract class BaseToolbarActivity<T extends BasePresenter> extends BaseA
         }
         return mToolbarHelper;
     }
+
+    @Override
+    protected abstract T initPresenter();
 }
