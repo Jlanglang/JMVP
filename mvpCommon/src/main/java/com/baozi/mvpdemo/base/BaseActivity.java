@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.support.annotation.IdRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -12,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseActivityView;
@@ -37,16 +39,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter.onAttch(this);
         //创建ContentView
         View view = initView(LayoutInflater.from(this), savedInstanceState);
-        setContentView(view);
-    }
-
-    /**
-     * 初始化view之后再进行presenter的初始化,
-     * 该方法只会调用一次,调用在onResume之后.
-     */
-    @Override
-    public void onAttachedToWindow() {
-        super.onAttachedToWindow();
+        super.setContentView(view);
         //初始化presenter
         mPresenter.onCreate();
         //加载完成再刷新视图
@@ -58,33 +51,18 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             }
         });
     }
-    //    //    @Override
-//    public void setContentView(@LayoutRes int layoutResID) {
-//        if (isCustomLayout()) {
-//            super.setContentView(layoutResID);
-//        } else {
-//            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
-//        }
-//    }
-//
-//    @Override
-//    public void setContentView(View view) {
-//        if (isCustomLayout()) {
-//            super.setContentView(view);
-//        } else {
-//            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
-//        }
-//    }
-//
-//    @Override
-//    public void setContentView(View view, ViewGroup.LayoutParams params) {
-//        if (isCustomLayout()) {
-//            super.setContentView(view, params);
-//        } else {
-//            throw new IllegalStateException("please setting Presenter Method isCustomLyout() return true ");
-//        }
-//    }
 
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+    }
+
+    @Override
+    public void setContentView(View view) {
+    }
+
+    @Override
+    public void setContentView(View view, ViewGroup.LayoutParams params) {
+    }
 
     @Override
     protected void onStart() {

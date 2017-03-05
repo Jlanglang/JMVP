@@ -107,6 +107,30 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
+    public void onStart() {
+        mPresenter.onStart();
+        super.onStart();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            //相当于Fragment的onResume
+            mPresenter.onResume();
+        } else {
+            //相当于Fragment的onPause
+            mPresenter.onPause();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        mPresenter.onStop();
+        super.onStop();
+    }
+
+    @Override
     public void onDestroyView() {
         mPresenter.onDestroy();
         super.onDestroyView();
