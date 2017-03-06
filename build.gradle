@@ -17,7 +17,7 @@ allprojects {
         jcenter()
         mavenCentral()
         flatDir {
-            dirs '../mvpCommon/libs','libs'
+            dirs '../mvp-common-appcompat/libs','libs'
         }
     }
 }

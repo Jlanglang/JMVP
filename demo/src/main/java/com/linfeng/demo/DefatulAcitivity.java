@@ -12,7 +12,7 @@ import com.baozi.mvpdemo.base.TempletActivity;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
 
-public class MainAcitivity extends TempletActivity {
+public class DefatulAcitivity extends TempletActivity {
 
 
     @NonNull
