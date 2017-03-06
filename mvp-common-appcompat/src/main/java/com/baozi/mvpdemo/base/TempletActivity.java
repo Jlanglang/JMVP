@@ -21,7 +21,7 @@ import com.baozi.mvpdemo.ui.view.ToolbarView;
 import java.lang.reflect.Method;
 
 /**
- * activity的基类
+ * 模版Activity
  *
  * @param <T>
  */
@@ -38,7 +38,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends BaseAc
             throw new IllegalStateException("pleace exends BaseActivity,TempletActivity theme must Noactionbar");
         }
 //        if (isMaterialDesign()) {
-            rootView = inflater.inflate(R.layout.activity_templet, null);
+        rootView = inflater.inflate(R.layout.activity_templet, null);
 //        } else {
 //            rootView = inflater.inflate(R.layout.activity_templet, null);
 //        }

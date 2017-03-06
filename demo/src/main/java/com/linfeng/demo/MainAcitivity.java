@@ -3,6 +3,7 @@ package com.linfeng.demo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.base.TempletActivity;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
+import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
+import com.baozi.mvpdemo.ui.view.ToolbarView;
 
 public class MainAcitivity extends TempletActivity {
 
@@ -36,12 +39,21 @@ public class MainAcitivity extends TempletActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+
+    @Override
+    public boolean isMaterialDesign() {
+        return true;
+    }
+
     @Override
     protected TempletPresenter initPresenter() {
-        return new TempletPresenter() {
+        return new TempletPresenter<ToolbarView>() {
             @Override
             public void onCreate() {
-
+                ViewGroup.LayoutParams layoutParams = getToolbarHelper().getAppBarLayout().getLayoutParams();
+                layoutParams.height = 400;
+                getToolbarHelper().setScrollFlag(R.id.collapsing_layout, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
             }
 
             @Override
@@ -49,11 +61,6 @@ public class MainAcitivity extends TempletActivity {
 
             }
         };
-    }
-
-    @Override
-    public boolean isMaterialDesign() {
-        return true;
     }
 
     @Override

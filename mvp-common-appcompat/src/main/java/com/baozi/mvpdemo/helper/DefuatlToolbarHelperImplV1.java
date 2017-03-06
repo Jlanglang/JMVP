@@ -41,17 +41,13 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void initToolbar() {
-        AppBarLayout appBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
-        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(toolbarLayout, appBarLayout, false);
-        appBarLayout.removeAllViews();
-        appBarLayout.addView(inflate);
-//        ViewStubCompat vs_toolbar = (ViewStubCompat) mRootView.findViewById(R.id.vs_toolbar);
-//        if (vs_toolbar != null) {
-//            vs_toolbar.setLayoutResource(toolbarLayout);
-//            mToolbar = (Toolbar) vs_toolbar.inflate();
-//        } else {
-            mToolbar = (Toolbar) mRootView.findViewById(R.id.tl_costom);
-//        }
+        if (mToolbar != null) {
+            return;
+        }
+        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+        mAppBarLayout.removeAllViews();
+        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
+        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
         mUIView.setSupportActionBar(mToolbar);
 
         mLeftTextView = (TextView) mToolbar.findViewById(R.id.tv_left);

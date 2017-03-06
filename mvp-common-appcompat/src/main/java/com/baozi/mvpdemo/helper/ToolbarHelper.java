@@ -2,9 +2,11 @@ package com.baozi.mvpdemo.helper;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -36,6 +38,8 @@ public abstract class ToolbarHelper {
         }
     }
 
+
+    public abstract boolean setScrollFlag(@IdRes int viewId,@AppBarLayout.LayoutParams.ScrollFlags int flag);
 
     public abstract Toolbar getToolbar();
 
@@ -78,5 +82,7 @@ public abstract class ToolbarHelper {
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
+    public abstract <V extends View> V appBarFindView(@IdRes int viewId);
 
+    public abstract View getAppBarLayout();
 }

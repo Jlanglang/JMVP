@@ -24,22 +24,10 @@ class MaterialDesignToolBarHelperImplV1 extends BaseToolBarHelperImpl {
 
     @Override
     public void initToolbar() {
-        AppBarLayout appBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
-        appBarLayout.removeAllViews();
-        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(toolbarLayout, appBarLayout, true);
-//        appBarLayout.removeAllViews();
-//        appBarLayout.addView(inflate);
-//        ViewStubCompat vs_toolbar = (ViewStubCompat) mRootView.findViewById(R.id.vs_toolbar);
-//        if (vs_toolbar != null) {
-//            vs_toolbar.setLayoutResource(toolbarLayout);
-//            LinearLayout inflate = (LinearLayout) vs_toolbar.inflate();
-//            CollapsingToolbarLayout viewById = (CollapsingToolbarLayout) inflate.findViewById(R.id.toolbar_layout);
-//            AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) viewById.getLayoutParams();
-//            layoutParams.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-//            mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
-//        } else {
+        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+        mAppBarLayout.removeAllViews();
+        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
-//        }
         mUIView.setSupportActionBar(mToolbar);
     }
 
