@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.base.TempletActivity;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
-import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
 import com.baozi.mvpdemo.ui.view.ToolbarView;
 
@@ -23,7 +22,7 @@ public class MainAcitivity extends TempletActivity {
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         getToolbarHelper().setTitle("首页");
         getToolbarHelper().setRightText("213", null);
-        setMaterialDesignEnabled(true);
+//        setMaterialDesignEnabled(true);
         return inflater.inflate(R.layout.activity_main, null);
     }
 
@@ -50,10 +49,10 @@ public class MainAcitivity extends TempletActivity {
         return new TempletPresenter<ToolbarView>() {
             @Override
             public void onCreate() {
-                ViewGroup.LayoutParams layoutParams = getToolbarHelper().getAppBarLayout().getLayoutParams();
-                layoutParams.height = 400;
-                getToolbarHelper().setScrollFlag(R.id.collapsing_layout, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|
-                        AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+//                ViewGroup.LayoutParams layoutParams = getToolbarHelper().getAppBarLayout().getLayoutParams();
+//                layoutParams.height = 400;
+                getToolbarHelper().setScrollFlag(R.id.tl_costom, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL|
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
             }
 
             @Override
@@ -65,6 +64,6 @@ public class MainAcitivity extends TempletActivity {
 
     @Override
     public int initToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_MATERIAL_DESIGN_V1;
+        return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
 }

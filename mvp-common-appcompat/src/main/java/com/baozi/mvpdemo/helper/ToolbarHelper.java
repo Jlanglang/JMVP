@@ -19,18 +19,24 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 public abstract class ToolbarHelper {
-    public static final int TOOLBAR_DEFUATL_V1 = R.layout.toolbar_defuatl_v1;
-    public static final int TOOLBAR_MATERIAL_DESIGN_V1 = R.layout.toolbar_material_design_v1;
+    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_templet_defuatl;
+    public static final int TOOLBAR_MD_COLLAPSING = R.layout.toolbar_md_collapsing;
+    public static final int TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl;
+    public static final int TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout;
 
     public ToolbarHelper() {
 
     }
 
     public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
-        if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
-            return new DefuatlToolbarHelperImplV1(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MATERIAL_DESIGN_V1) {
-            return new MaterialDesignToolBarHelperImplV1(uiView, rootView, toolbarLayout);
+        if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
+            return new TempletDefuatlToolbarHelperImpl(uiView, rootView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MD_DEFUATL) {
+            return new MDDefuatlToolBarHelperImpl(uiView, rootView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MD_COLLAPSING) {
+            return new MDCollapsingToolBarHelperImpl(uiView, rootView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
+            return new MDTablayoutToolBarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout <= 0) {
             return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else {
@@ -38,8 +44,7 @@ public abstract class ToolbarHelper {
         }
     }
 
-
-    public abstract boolean setScrollFlag(@IdRes int viewId,@AppBarLayout.LayoutParams.ScrollFlags int flag);
+    public abstract boolean setScrollFlag(@IdRes int viewId, @AppBarLayout.LayoutParams.ScrollFlags int flag);
 
     public abstract Toolbar getToolbar();
 
@@ -82,7 +87,7 @@ public abstract class ToolbarHelper {
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
-    public abstract <V extends View> V appBarFindView(@IdRes int viewId);
+    public abstract <V extends View> V findAppBarView(@IdRes int viewId);
 
     public abstract View getAppBarLayout();
 }

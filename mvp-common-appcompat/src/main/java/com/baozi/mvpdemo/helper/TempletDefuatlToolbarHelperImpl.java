@@ -5,11 +5,8 @@ import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,7 +20,7 @@ import com.baozi.mvpdemo.ui.view.UIView;
  * @Change
  */
 
-class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
+class TempletDefuatlToolbarHelperImpl extends BaseToolBarHelperImpl {
     private TextView mLeftTextView;
     private TextView mRightTextView;
     private ImageButton mLeftButton;
@@ -35,20 +32,18 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private Drawable mRightDrawable;
 
 
-    DefuatlToolbarHelperImplV1(UIView uiView, View rootView, @LayoutRes int toolbar) {
+    TempletDefuatlToolbarHelperImpl(UIView uiView, View rootView, @LayoutRes int toolbar) {
         super(uiView, rootView, toolbar);
     }
 
     @Override
     public void initToolbar() {
-        if (mToolbar != null) {
-            return;
-        }
-        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
-        mAppBarLayout.removeAllViews();
-        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
-        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
-        mUIView.setSupportActionBar(mToolbar);
+//        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+//        mAppBarLayout.removeAllViews();
+//        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
+//
+//        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
+//        mUIView.setSupportActionBar(mToolbar);
 
         mLeftTextView = (TextView) mToolbar.findViewById(R.id.tv_left);
         mRightTextView = (TextView) mToolbar.findViewById(R.id.tv_right);

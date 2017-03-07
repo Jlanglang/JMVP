@@ -4,9 +4,9 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -25,33 +25,57 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     Toolbar mToolbar;
     UIView mUIView;
     View mRootView;
-    SparseArray<View> mViews;
     AppBarLayout mAppBarLayout;
-    boolean isMaterialDesign;
+    private boolean isMaterialDesign;
+    private SparseArray<View> mViews;
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         mUIView = uiView;
         mRootView = rootView;
         mToolbarLayout = toolbarLayout;
         mViews = new SparseArray<>();
+        //初始化AppBarLayout
+        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+        mAppBarLayout.removeAllViews();
+        //将toolbarLayout添加到AppBarLayout中
+        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
+        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
+        if (mToolbar != null) {
+            mUIView.setSupportActionBar(mToolbar);
+        }
         initToolbar();
     }
 
     public abstract void initToolbar();
 
+    /**
+     * 从AppBarLayout中获取控件
+     *
+     * @param viewId
+     * @param <V>
+     * @return
+     */
+    @Nullable
     @Override
-    public <V extends View> V appBarFindView(@IdRes int viewId) {
+    public <V extends View> V findAppBarView(@IdRes int viewId) {
         View view = mViews.get(viewId);
-        if (view == null) {
-            view = getAppBarLayout().findViewById(viewId);
+        if (view == null && mAppBarLayout != null) {
+            view = mAppBarLayout.findViewById(viewId);
             mViews.put(viewId, view);
         }
         return (V) view;
     }
 
+    /**
+     * 设置控件滑动效果
+     *
+     * @param viewId
+     * @param flag
+     * @return
+     */
     @Override
     public boolean setScrollFlag(@IdRes int viewId, @AppBarLayout.LayoutParams.ScrollFlags int flag) {
-        View view = appBarFindView(viewId);
+        View view = findAppBarView(viewId);
         if (view != null) {
             try {
                 AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) view.getLayoutParams();
@@ -127,6 +151,7 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
 
     }
+
     @Override
     public View getAppBarLayout() {
         return mAppBarLayout;

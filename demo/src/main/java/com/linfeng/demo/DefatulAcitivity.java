@@ -58,6 +58,6 @@ public class DefatulAcitivity extends TempletActivity {
 
     @Override
     public int initToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_MATERIAL_DESIGN_V1;
+        return ToolbarHelper.TOOLBAR_MD_COLLAPSING;
     }
 }

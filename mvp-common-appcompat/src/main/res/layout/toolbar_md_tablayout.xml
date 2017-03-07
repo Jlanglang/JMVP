@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/tl_costom"
         style="@style/base_toolbar"
@@ -18,6 +19,6 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorAccent"/>
 </merge>

@@ -37,11 +37,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends BaseAc
         if (supportActionBar != null) {
             throw new IllegalStateException("pleace exends BaseActivity,TempletActivity theme must Noactionbar");
         }
-//        if (isMaterialDesign()) {
         rootView = inflater.inflate(R.layout.activity_templet, null);
-//        } else {
-//            rootView = inflater.inflate(R.layout.activity_templet, null);
-//        }
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
         //ContentView容器
@@ -66,7 +62,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends BaseAc
      */
     @Override
     public int initToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_DEFUATL_V1;
+        return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
 
 
