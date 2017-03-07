@@ -19,9 +19,7 @@ import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseActivityView;
 
 /**
- * activity的基类
- *
- * @param <T>
+ * @author jlanglang  2016/1/5 9:42
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {

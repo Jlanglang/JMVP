@@ -44,8 +44,36 @@ public abstract class ToolbarHelper {
         }
     }
 
+    /**
+     * 设置滑动Flag
+     *
+     * @param viewId
+     * @param flag
+     * @return
+     */
     public abstract boolean setScrollFlag(@IdRes int viewId, @AppBarLayout.LayoutParams.ScrollFlags int flag);
 
+    /**
+     * 获取AppBarLayout中的View
+     *
+     * @param viewId
+     * @param <V>
+     * @return
+     */
+    public abstract <V extends View> V findAppBarView(@IdRes int viewId);
+
+    /**
+     * 获取AppBarLayout
+     *
+     * @return
+     */
+    public abstract View getAppBarLayout();
+
+    /**
+     * 获取Toolbar
+     *
+     * @return
+     */
     public abstract Toolbar getToolbar();
 
     public abstract void setMaterialDesignEnabled(boolean isMaterialDesign);
@@ -87,7 +115,4 @@ public abstract class ToolbarHelper {
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
-    public abstract <V extends View> V findAppBarView(@IdRes int viewId);
-
-    public abstract View getAppBarLayout();
 }
