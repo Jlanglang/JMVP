@@ -2,7 +2,7 @@ package com.baozi.mvpdemo.presenter;
 
 import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.ui.view.BaseView;
+import com.baozi.mvpdemo.ui.BaseView;
 
 /**
  * Created by baozi on 2017/3/5.

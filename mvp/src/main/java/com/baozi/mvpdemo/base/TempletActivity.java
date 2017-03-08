@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarView;
+import com.baozi.mvpdemo.ui.view.IToolbarView;
 
 /**
  * activity的基类
@@ -22,7 +22,7 @@ import com.baozi.mvpdemo.ui.view.ToolbarView;
  * @param <T>
  */
 public abstract class TempletActivity<T extends TempletPresenter> extends BaseActivity<T>
-        implements ToolbarView {
+        implements IToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
 

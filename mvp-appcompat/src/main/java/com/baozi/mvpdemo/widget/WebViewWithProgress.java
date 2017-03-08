@@ -12,13 +12,12 @@ import android.widget.AbsoluteLayout;
 import android.widget.ProgressBar;
 
 import com.baozi.mvpdemo.R;
-import com.gzsll.jsbridge.WVJBWebView;
 
 
 /**
  * Created by xiaoz on 15/10/20.
  */
-public class WebViewWithProgress extends WVJBWebView {
+public class WebViewWithProgress extends WebView {
 
     private ProgressBar mProgressBar;
     private OnTitleReadyListener mOnTitleReadyListener;

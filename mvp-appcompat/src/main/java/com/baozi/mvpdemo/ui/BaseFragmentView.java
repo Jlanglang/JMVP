@@ -1,9 +1,7 @@
-package com.baozi.mvpdemo.ui.view;
+package com.baozi.mvpdemo.ui;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 
 import com.baozi.mvpdemo.base.BaseFragment;
 

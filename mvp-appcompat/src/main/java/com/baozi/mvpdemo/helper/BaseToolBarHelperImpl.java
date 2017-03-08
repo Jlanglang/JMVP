@@ -13,7 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.baozi.mvpdemo.R;
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.UIView;
 
 /**
  * @author jlanglang  2017/2/22 16:58

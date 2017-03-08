@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.BaseActivityView;
+import com.baozi.mvpdemo.ui.view.IBaseActivityView;
 
 /**
  * activity的基类
@@ -24,7 +24,7 @@ import com.baozi.mvpdemo.ui.view.BaseActivityView;
  * @param <T>
  */
 public abstract class BaseActivity<T extends BasePresenter> extends FragmentActivity
-        implements BaseActivityView {
+        implements IBaseActivityView {
     protected T mPresenter;
     private SparseArray<View> mViews;
 

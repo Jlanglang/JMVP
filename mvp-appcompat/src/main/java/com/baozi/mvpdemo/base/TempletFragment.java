@@ -16,7 +16,7 @@ import android.widget.FrameLayout;
 import com.baozi.mvpdemo.R;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
-import com.baozi.mvpdemo.ui.view.ToolbarView;
+import com.baozi.mvpdemo.ui.ToolbarView;
 
 /**
  * 模版Fragment

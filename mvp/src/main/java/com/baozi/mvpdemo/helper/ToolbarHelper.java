@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.baozi.mvpdemo.R;
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.view.IUIView;
 
 /**
  * @author jlanglang  2017/2/21 16:31
@@ -22,7 +22,7 @@ public abstract class ToolbarHelper {
 
     }
 
-    public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
+    public static ToolbarHelper Create(@NonNull IUIView uiView, View rootView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == TOOLBAR_DEFUATL_V1) {
             return new DefuatlToolbarHelperImplV1(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout <= 0) {

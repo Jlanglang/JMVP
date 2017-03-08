@@ -3,9 +3,10 @@ package com.baozi.mvpdemo.presenter;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.support.annotation.NonNull;
 
-import com.baozi.mvpdemo.ui.view.BaseView;
-import com.baozi.mvpdemo.ui.view.ProgressDialogView;
+import com.baozi.mvpdemo.ui.BaseView;
+import com.baozi.mvpdemo.ui.ProgressDialogView;
 
 import rx.Observable;
 import rx.functions.Action0;
@@ -29,7 +30,7 @@ public abstract class ProgressDialogViewPresenter<T extends BaseView> extends Ba
             loading.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-//                    mCompositeSubscription.unsubscribe();
+                  mCompositeSubscription.unsubscribe();
                 }
             });
         }
@@ -41,12 +42,12 @@ public abstract class ProgressDialogViewPresenter<T extends BaseView> extends Ba
      *
      * @param progressDialog
      */
-    public void setLoadingDialog(ProgressDialog progressDialog) {
+    public void setLoadingDialog(@NonNull ProgressDialog progressDialog) {
         this.loading = progressDialog;
         loading.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-//                mCompositeSubscription.unsubscribe();
+                mCompositeSubscription.unsubscribe();
             }
         });
     }

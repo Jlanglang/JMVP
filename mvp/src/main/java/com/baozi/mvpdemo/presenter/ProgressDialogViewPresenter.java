@@ -4,8 +4,8 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 
-import com.baozi.mvpdemo.ui.view.BaseView;
-import com.baozi.mvpdemo.ui.view.ProgressDialogView;
+import com.baozi.mvpdemo.ui.view.IBaseView;
+import com.baozi.mvpdemo.ui.view.IProgressDialogView;
 
 import rx.Observable;
 import rx.functions.Action0;
@@ -16,8 +16,8 @@ import rx.functions.Action1;
  * @版本 2.0
  */
 
-public abstract class ProgressDialogViewPresenter<T extends BaseView> extends BasePresenter<T>
-        implements ProgressDialogView {
+public abstract class ProgressDialogViewPresenter<T extends IBaseView> extends BasePresenter<T>
+        implements IProgressDialogView {
     private ProgressDialog loading;
 
     /**

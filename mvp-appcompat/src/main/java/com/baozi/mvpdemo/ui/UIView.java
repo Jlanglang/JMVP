@@ -1,4 +1,4 @@
-package com.baozi.mvpdemo.ui.view;
+package com.baozi.mvpdemo.ui;
 
 import android.app.Activity;
 import android.content.res.Resources;

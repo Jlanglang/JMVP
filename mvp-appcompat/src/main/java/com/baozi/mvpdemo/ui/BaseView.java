@@ -1,7 +1,6 @@
-package com.baozi.mvpdemo.ui.view;
+package com.baozi.mvpdemo.ui;
 
 import android.content.Context;
-import android.view.View;
 
 /**
  * Created by baozi on 2016/11/24.

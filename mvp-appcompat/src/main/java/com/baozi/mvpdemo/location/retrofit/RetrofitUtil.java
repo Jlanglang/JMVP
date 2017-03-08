@@ -4,7 +4,6 @@ import android.util.Log;
 
 
 import com.baozi.mvpdemo.converter.FastjsonConverterFactory;
-import com.baozi.mvpdemo.location.APIService;
 
 import java.io.File;
 
@@ -55,7 +54,7 @@ public class RetrofitUtil {
     }
 
     /**
-     * 当{@link APIService}中接口的注解为{@link retrofit2.http.Multipart}时，参数为{@link RequestBody}
+     * 当接口的注解为{@link retrofit2.http.Multipart}时，参数为{@link RequestBody}
      * 生成对应的RequestBody
      *
      * @param param 参数

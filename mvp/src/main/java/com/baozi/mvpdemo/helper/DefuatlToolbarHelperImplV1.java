@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.view.IUIView;
 
 /**
  * @author jlanglang  2017/2/21 16:44
@@ -34,7 +34,7 @@ class DefuatlToolbarHelperImplV1 extends BaseToolBarHelperImpl {
     private Drawable mRightDrawable;
 
 
-    DefuatlToolbarHelperImplV1(UIView uiView, View rootView, @LayoutRes int toolbar) {
+    DefuatlToolbarHelperImplV1(IUIView uiView, View rootView, @LayoutRes int toolbar) {
         super(uiView, rootView, toolbar);
     }
 

@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.BaseFragmentView;
+import com.baozi.mvpdemo.ui.BaseFragmentView;
 
 
 /**

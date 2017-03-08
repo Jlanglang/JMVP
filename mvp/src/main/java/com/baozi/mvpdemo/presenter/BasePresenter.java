@@ -2,10 +2,8 @@ package com.baozi.mvpdemo.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.ui.view.BaseView;
+import com.baozi.mvpdemo.ui.view.IBaseView;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -14,7 +12,7 @@ import rx.subscriptions.CompositeSubscription;
  * @版本 2.0
  * @Change
  */
-public abstract class BasePresenter<T extends BaseView> {
+public abstract class BasePresenter<T extends IBaseView> {
 
     protected T mView;
     /**

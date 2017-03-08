@@ -2,7 +2,7 @@ package com.baozi.mvpdemo.helper;
 
 import android.view.View;
 
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.UIView;
 
 /**
  * @author jlanglang  2017/3/7 16:29

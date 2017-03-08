@@ -16,7 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.BaseActivityView;
+import com.baozi.mvpdemo.ui.BaseActivityView;
 
 /**
  * @author jlanglang  2016/1/5 9:42

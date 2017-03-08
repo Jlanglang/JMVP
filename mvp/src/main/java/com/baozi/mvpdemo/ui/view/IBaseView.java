@@ -6,7 +6,7 @@ import android.view.View;
 /**
  * Created by baozi on 2016/11/24.
  */
-public interface BaseView {
+public interface IBaseView {
     /**
      * 切换夜间模式
      *

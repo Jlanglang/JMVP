@@ -14,14 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
-import com.baozi.mvpdemo.ui.view.BaseFragmentView;
+import com.baozi.mvpdemo.ui.view.IBaseFragmentView;
 
 
 /**
  * @author jlanglang  2016/8/5 9:42
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment
-        implements BaseFragmentView {
+        implements IBaseFragmentView {
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;

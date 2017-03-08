@@ -7,7 +7,7 @@ import android.support.annotation.StringRes;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.view.IUIView;
 
 /**
  * @author jlanglang  2017/2/22 16:58
@@ -17,11 +17,11 @@ import com.baozi.mvpdemo.ui.view.UIView;
 abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     int toolbarLayout;
     LinearLayout mToolbar;
-    UIView mUIView;
+    IUIView mUIView;
     View mRootView;
     boolean isMaterialDesign;
 
-    public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
+    public BaseToolBarHelperImpl(@NonNull IUIView uiView, View rootView, int toolbarLayout) {
         this.mUIView = uiView;
         this.mRootView = rootView;
         this.toolbarLayout = toolbarLayout;

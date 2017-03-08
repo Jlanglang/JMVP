@@ -31,6 +31,7 @@ public abstract class SimpleSubscriber<T> extends Subscriber<T> {
         } else if (e instanceof SocketTimeoutException) {
 //            ToastUtil.showToast("请求超时");
         } else if (e instanceof ConnectException) {
+
 //            ToastUtil.showToast("连接失败");
         } else if (e instanceof HttpException) {
 //            ToastUtil.showToast("请求超时");

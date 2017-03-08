@@ -1,6 +1,6 @@
 package com.baozi.mvpdemo.location.rxandroid;
 
-import com.baozi.mvpdemo.bean.BaseResponse;
+import com.baozi.mvpdemo.location.BaseResponse;
 import com.baozi.mvpdemo.location.APIException;
 
 import java.util.concurrent.TimeUnit;

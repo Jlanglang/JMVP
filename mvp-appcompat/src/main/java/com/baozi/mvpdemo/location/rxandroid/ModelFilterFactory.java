@@ -1,7 +1,7 @@
 package com.baozi.mvpdemo.location.rxandroid;
 
 
-import com.baozi.mvpdemo.bean.BaseResponse;
+import com.baozi.mvpdemo.location.BaseResponse;
 import com.baozi.mvpdemo.location.APIException;
 
 import java.util.concurrent.TimeUnit;
@@ -57,18 +57,16 @@ public class ModelFilterFactory {
             return Observable.create(new Observable.OnSubscribe<T>() {
                 @Override
                 public void call(Subscriber<? super T> subscriber) {
-                    if (response.isSuccess()) {//请求成功
-                        if (!subscriber.isUnsubscribed()) {
+                    if (!subscriber.isUnsubscribed()) {
+                        if (response.isSuccess()) {//请求成功
                             subscriber.onNext(response.getData());
-                        }
-                    } else {//请求失败
-                        int resultCode = response.getResultCode();
-                        if (!subscriber.isUnsubscribed()) {
+                        } else {//请求失败
                             subscriber.onError(new APIException(response.getResultCode(), response.getMsg()));
+                            return;
                         }
-                        return;
                     }
-                    if (!subscriber.isUnsubscribed()) {//请求完成
+                    if (!subscriber.isUnsubscribed()){
+                        //请求完成
                         subscriber.onCompleted();
                     }
                 }

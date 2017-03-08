@@ -1,4 +1,4 @@
-package com.baozi.mvpdemo.bean;
+package com.baozi.mvpdemo.location;
 
 /**
  * Created by baozi on 2016/12/5.

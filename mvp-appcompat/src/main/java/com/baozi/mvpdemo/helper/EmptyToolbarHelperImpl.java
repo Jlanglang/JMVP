@@ -7,12 +7,11 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.UIView;
 
 /**
  */
 class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
-
 
     EmptyToolbarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         super(uiView, rootView, toolbarLayout);

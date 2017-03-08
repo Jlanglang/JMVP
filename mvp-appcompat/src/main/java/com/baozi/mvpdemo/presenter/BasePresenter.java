@@ -2,10 +2,8 @@ package com.baozi.mvpdemo.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.ui.view.BaseView;
+import com.baozi.mvpdemo.ui.BaseView;
 
 import rx.subscriptions.CompositeSubscription;
 

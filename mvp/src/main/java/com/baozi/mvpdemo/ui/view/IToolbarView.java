@@ -8,7 +8,7 @@ import com.baozi.mvpdemo.helper.ToolbarHelper;
  * @Change
  */
 
-public interface ToolbarView extends UIView {
+public interface IToolbarView extends IUIView {
     /**
      * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
      */

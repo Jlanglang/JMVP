@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baozi.mvpdemo.R;
-import com.baozi.mvpdemo.ui.view.UIView;
+import com.baozi.mvpdemo.ui.UIView;
 
 /**
  * @author jlanglang  2017/2/21 16:44

@@ -11,7 +11,7 @@ import android.view.Window;
  * 用户页面,操作页面，对应Activity,frgament...
  */
 
-public interface UIView extends BaseView {
+public interface IUIView extends IBaseView {
     /**
      * id查找控件
      * 省去findviewById的强转操作
