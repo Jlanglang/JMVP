@@ -1,1 +1,1 @@
-include ':mvp-common', ':demo', ':mvp-common-appcompat'
+include ':mvp', ':demo', ':mvp-appcompat'

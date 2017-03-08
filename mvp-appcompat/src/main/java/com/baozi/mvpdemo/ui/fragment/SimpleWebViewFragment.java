@@ -10,7 +10,6 @@ import com.baozi.mvpdemo.contract.SimpleWebViewFragmentContract;
 import com.baozi.mvpdemo.presenter.BaseWebViewPresenterImpl;
 import com.gzsll.jsbridge.WVJBWebView;
 
-import butterknife.ButterKnife;
 
 
 /**
@@ -36,7 +35,6 @@ public abstract class SimpleWebViewFragment<T extends BaseWebViewPresenterImpl> 
     @Override
     public View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         View inflate = View.inflate(mContext, R.layout.fragment_webview_simple, null);
-        ButterKnife.bind(this, inflate);
 //        setToolbar(mTlCustom);
         return inflate;
     }

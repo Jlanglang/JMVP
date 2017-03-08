@@ -29,7 +29,7 @@ public abstract class ProgressDialogViewPresenter<T extends BaseView> extends Ba
             loading.setOnCancelListener(new DialogInterface.OnCancelListener() {
                 @Override
                 public void onCancel(DialogInterface dialog) {
-                    mCompositeSubscription.unsubscribe();
+//                    mCompositeSubscription.unsubscribe();
                 }
             });
         }
@@ -46,7 +46,7 @@ public abstract class ProgressDialogViewPresenter<T extends BaseView> extends Ba
         loading.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                mCompositeSubscription.unsubscribe();
+//                mCompositeSubscription.unsubscribe();
             }
         });
     }

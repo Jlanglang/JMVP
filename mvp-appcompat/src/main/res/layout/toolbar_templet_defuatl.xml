@@ -26,6 +26,7 @@
         android:layout_gravity="left"
         android:background="@android:color/transparent"
         android:gravity="center"
+        android:visibility="gone"
         />
 
     <TextView
@@ -44,6 +45,7 @@
         android:layout_gravity="right"
         android:background="@null"
         android:gravity="center"
+        android:visibility="gone"
         android:layout_marginRight="20dp"
         />
 
@@ -51,7 +53,7 @@
         android:id="@+id/ib_right"
         android:layout_width="48dp"
         android:layout_height="match_parent"
-        android:layout_gravity="left"
+        android:layout_gravity="right"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:visibility="gone"
