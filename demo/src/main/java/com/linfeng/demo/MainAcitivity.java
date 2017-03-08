@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 
 import com.baozi.mvpdemo.base.TempletActivity;
 import com.baozi.mvpdemo.helper.ToolbarHelper;
@@ -31,9 +34,16 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
         return new TempletPresenter<MainContract.View>() {
             @Override
             public void onCreate() {
+                AppBarLayout appBarLayout = getToolbarHelper().getAppBarLayout();
+                ViewGroup.LayoutParams layoutParams = appBarLayout.getLayoutParams();
+                layoutParams.height=320;
+//                TabLayout tabLayout = getToolbarHelper().findAppBarView(R.id.tab_layout);
+//                for (int i = 0; i < 4; i++) {
+//                    tabLayout.addTab(tabLayout.newTab().setText(i + ""));
+//                }
                 //设置滑动效果
                 mView.getToolbarHelper().setScrollFlag(R.id.tl_costom, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL |
-                        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
+                        AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
             }
 
             @Override
@@ -46,7 +56,7 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
     //重写该方法,设置ToolbarLayout
     @Override
     public int initToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
+        return ToolbarHelper.TOOLBAR_MD_COLLAPSING;
     }
 
 

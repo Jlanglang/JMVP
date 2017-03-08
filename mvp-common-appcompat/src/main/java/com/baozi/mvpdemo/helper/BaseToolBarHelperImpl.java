@@ -153,7 +153,7 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public View getAppBarLayout() {
+    public AppBarLayout getAppBarLayout() {
         return mAppBarLayout;
     }
 }

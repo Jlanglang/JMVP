@@ -61,7 +61,7 @@ public abstract class ToolbarHelper {
      *
      * @return
      */
-    public abstract View getAppBarLayout();
+    public abstract AppBarLayout getAppBarLayout();
 
     /**
      * 获取Toolbar
