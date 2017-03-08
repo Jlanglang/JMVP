@@ -31,16 +31,10 @@ public abstract class ToolbarHelper {
     public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
             return new TempletDefuatlToolbarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MD_DEFUATL) {
-            return new MDDefuatlToolBarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MD_COLLAPSING) {
-            return new MDCollapsingToolBarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
-            return new MDTablayoutToolBarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout <= 0) {
             return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else {
-            return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
+            return new MDDefuatlToolBarHelperImpl(uiView, rootView, toolbarLayout);
         }
     }
 

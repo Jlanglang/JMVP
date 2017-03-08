@@ -13,7 +13,8 @@ import com.baozi.mvpdemo.helper.ToolbarHelper;
 import com.baozi.mvpdemo.presenter.TempletPresenter;
 import com.linfeng.demo.contract.MainContract;
 
-public class MainAcitivity extends TempletActivity <TempletPresenter> {
+public class MainAcitivity extends TempletActivity<TempletPresenter>
+        implements MainContract.View {
 
 
     @NonNull

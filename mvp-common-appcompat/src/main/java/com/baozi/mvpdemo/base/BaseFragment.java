@@ -1,5 +1,6 @@
 package com.baozi.mvpdemo.base;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,10 +9,14 @@ import android.os.MessageQueue;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 
 import com.baozi.mvpdemo.presenter.BasePresenter;
 import com.baozi.mvpdemo.ui.view.BaseFragmentView;
@@ -45,6 +50,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        mViews = new SparseArray<>();
         mPresenter = initPresenter();
         mPresenter.onAttch(this);
     }
@@ -198,12 +204,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-
     @Override
     public void isNightMode(boolean isNight) {
 
     }
-
     @Override
     public Context getContext() {
         return mContext;
@@ -217,6 +221,21 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public BaseFragment getFragment() {
         return this;
+    }
+
+    @Override
+    public Window getWindow() {
+        return getActivity() == null ? ((Activity) mContext).getWindow() : getActivity().getWindow();
+    }
+
+    @Override
+    public ActionBar getSupportActionBar() {
+        return ((AppCompatActivity) mContext).getSupportActionBar();
+    }
+
+    @Override
+    public void setSupportActionBar(@Nullable Toolbar toolbar) {
+        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
     }
 
 

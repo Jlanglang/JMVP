@@ -191,7 +191,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     @NonNull
-    protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
+    public abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 子类实现Presenter,且必须继承BasePrensenter
