@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/mvp-appcompat/mvp-appcompat.iml" filepath="$PROJECT_DIR$/mvp-appcompat/mvp-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/utils-common/utils-common.iml" filepath="$PROJECT_DIR$/utils-common/utils-common.iml" />
     </modules>
   </component>
 </project>
