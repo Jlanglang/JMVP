@@ -1,5 +1,7 @@
 package com.baozi.mvpdemo.ui;
 
+import android.support.annotation.LayoutRes;
+
 import com.baozi.mvpdemo.helper.ToolbarHelper;
 
 /**
@@ -21,6 +23,12 @@ public interface ToolbarView extends UIView {
      */
     boolean isMaterialDesign();
 
+    /**
+     * 通过这个修改toolbar的样式layout,不需要可以传0或者-1;
+     *
+     * @return
+     */
+    @LayoutRes
     int initToolbarLayout();
 
     /**

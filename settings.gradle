@@ -1,1 +1,1 @@
-include ':mvp', ':demo', ':mvp-appcompat'
+include ':mvp', ':demo', ':mvp-appcompat', ':network-rx-retrofit', ':imageloder-glide'

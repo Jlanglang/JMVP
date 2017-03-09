@@ -48,6 +48,11 @@ public class DefatulAcitivity extends TempletActivity {
             public void loadData() {
 
             }
+
+            @Override
+            public void cancleNetWork() {
+
+            }
         };
     }
 

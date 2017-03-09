@@ -3,9 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imageloder-glide/imageloder-glide.iml" filepath="$PROJECT_DIR$/imageloder-glide/imageloder-glide.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp-appcompat/mvp-appcompat.iml" filepath="$PROJECT_DIR$/mvp-appcompat/mvp-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" />
     </modules>
   </component>
 </project>

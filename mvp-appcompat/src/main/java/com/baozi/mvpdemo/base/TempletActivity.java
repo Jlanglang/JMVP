@@ -25,7 +25,7 @@ import java.lang.reflect.Method;
  *
  * @param <T>
  */
-public abstract class TempletActivity<T extends TempletPresenter> extends BaseActivity<T>
+public abstract class TempletActivity<T extends TempletPresenter> extends JBaseActivity<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
@@ -35,7 +35,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends BaseAc
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("pleace exends BaseActivity,TempletActivity theme must Noactionbar");
+            throw new IllegalStateException("pleace exends JBaseActivity,TempletActivity theme must Noactionbar");
         }
         rootView = inflater.inflate(R.layout.activity_templet, null);
         //创建toolbar

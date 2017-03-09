@@ -47,6 +47,11 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
             public void loadData() {
 
             }
+
+            @Override
+            public void cancleNetWork() {
+
+            }
         };
     }
 
@@ -61,13 +66,6 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
     public void isNightMode(boolean isNight) {
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.menu, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
 
     @Override
     public boolean isMaterialDesign() {

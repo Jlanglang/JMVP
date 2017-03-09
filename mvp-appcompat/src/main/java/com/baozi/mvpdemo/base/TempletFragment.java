@@ -23,7 +23,7 @@ import com.baozi.mvpdemo.ui.ToolbarView;
  *
  * @param <T>
  */
-public abstract class TempletFragment<T extends TempletPresenter> extends BaseFragment<T>
+public abstract class TempletFragment<T extends TempletPresenter> extends JBaseFragment<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
@@ -33,7 +33,7 @@ public abstract class TempletFragment<T extends TempletPresenter> extends BaseFr
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("pleace exends BaseFragment,TempletFragmenttheme must Noactionbar");
+            throw new IllegalStateException("pleace exends JBaseFragment,TempletFragmenttheme must Noactionbar");
         }
         rootView = inflater.inflate(R.layout.activity_templet, null);
         //创建toolbar
