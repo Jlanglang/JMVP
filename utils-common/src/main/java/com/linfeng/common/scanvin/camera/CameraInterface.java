@@ -11,10 +11,11 @@ import android.hardware.Camera.ShutterCallback;
 import android.hardware.Camera.Size;
 import android.view.SurfaceHolder;
 
-import com.xingdt.technician.common.scanvin.util.CamParaUtil;
-import com.xingdt.technician.common.scanvin.util.FileUtil;
-import com.xingdt.technician.common.scanvin.util.ImageUtil;
-import com.xingdt.technician.common.utils.HLog;
+
+import com.linfeng.common.scanvin.util.CamParaUtil;
+import com.linfeng.common.scanvin.util.FileUtil;
+import com.linfeng.common.scanvin.util.ImageUtil;
+import com.linfeng.common.utils.HLog;
 
 import java.io.IOException;
 import java.util.List;

@@ -49,8 +49,8 @@ public class AndroidBug5497Workaround {
                     frameLayoutParams.height += AutoUtils.getPercentHeightSize(56);
                 }
             } else {
-                boolean b = Utils.checkDeviceHasNavigationBar();//是否有虚拟按键.
-                int navigationBarHeight = Utils.getNavigationBarHeight();
+                boolean b = Utils.checkDeviceHasNavigationBar(content.getContext());//是否有虚拟按键.
+                int navigationBarHeight = Utils.getNavigationBarHeight(content.getContext());
                 if (b) {
                     frameLayoutParams.height = usableHeightSansKeyboard - navigationBarHeight;
                 } else {

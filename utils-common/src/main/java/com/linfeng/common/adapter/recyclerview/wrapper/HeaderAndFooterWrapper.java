@@ -6,8 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xingdt.technician.common.adapter.recyclerview.base.ViewHolder;
-import com.xingdt.technician.common.adapter.recyclerview.utils.WrapperUtils;
+import com.linfeng.common.adapter.recyclerview.base.ViewHolder;
+import com.linfeng.common.adapter.recyclerview.utils.WrapperUtils;
 
 
 /**

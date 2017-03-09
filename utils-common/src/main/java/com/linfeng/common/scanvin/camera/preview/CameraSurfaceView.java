@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.xingdt.technician.common.scanvin.camera.CameraInterface;
+import com.linfeng.common.scanvin.camera.CameraInterface;
 
 
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback {

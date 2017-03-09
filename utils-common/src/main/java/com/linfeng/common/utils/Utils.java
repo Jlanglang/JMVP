@@ -17,6 +17,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+
 import java.lang.reflect.Method;
 
 /**
@@ -252,14 +257,14 @@ public class Utils {
      *
      * @return
      */
-    public static boolean isOpenInternet() {
-        ConnectivityManager con = (ConnectivityManager) Utils.getContext().getSystemService(Activity.CONNECTIVITY_SERVICE);
+    public static boolean isOpenInternet(Context context) {
+        ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
         boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
         boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
         if (wifi || intenter) {
             return true;
         } else {
-            ToastUtil.showToast(Utils.getContext(), "请打开网络");
+            ToastUtil.showToast(context, "请打开网络");
             return false;
         }
     }

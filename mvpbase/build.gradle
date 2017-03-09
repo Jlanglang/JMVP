@@ -2,15 +2,14 @@ apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
+//        applicationId "com.baozi.mvpdemp"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-
-
     }
     buildTypes {
         release {
@@ -19,19 +18,19 @@ android {
         }
     }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    compile 'com.android.support:recyclerview-v7:25.2.0'
-    compile 'com.android.support:design:25.2.0'
-    compile 'com.android.support:cardview-v7:25.2.0'
-    compile 'com.android.support:support-v4:25.2.0'
-
     testCompile 'junit:junit:4.12'
-    /**
-     * 自动适配
-     */
-    compile 'com.zhy:autolayout:1.4.5'
-    compile files('libs/zxing.jar')
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:design:25.2.0'
+    //Rx的包
+    compile 'io.reactivex:rxjava:1.1.+'
+    compile 'io.reactivex:rxandroid:1.1.+'
+    //retrofit2
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    //CallAdapterFactory的Rx依赖包
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    //ConverterFactory的String依赖包
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+
 }

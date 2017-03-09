@@ -4,7 +4,8 @@ import android.content.Context;
 import android.graphics.Point;
 import android.util.DisplayMetrics;
 
-import com.xingdt.technician.common.utils.HLog;
+import com.linfeng.common.utils.HLog;
+
 
 public class DisplayUtil {
 	private static final String TAG = "YanZi";
