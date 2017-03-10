@@ -2,15 +2,13 @@ package com.baozi.homemodle;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.base.TempletActivity;
-import com.baozi.mvpdemo.presenter.TempletPresenter;
+import com.baozi.jmvp.base.TempletActivity;
+import com.baozi.jmvp.presenter.TempletPresenter;
 import com.zhy.autolayout.utils.AutoUtils;
 
 public class MainActivity extends TempletActivity {

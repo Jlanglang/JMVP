@@ -8,10 +8,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baozi.mvpdemo.base.TempletActivity;
-import com.baozi.mvpdemo.helper.ToolbarHelper;
-import com.baozi.mvpdemo.presenter.TempletPresenter;
-import com.baozi.mvpdemo.ui.ToolbarView;
+import com.baozi.jmvp.base.TempletActivity;
+import com.baozi.jmvp.helper.ToolbarHelper;
+import com.baozi.jmvp.presenter.TempletPresenter;
+import com.baozi.jmvp.ui.ToolbarView;
 
 public class DefatulAcitivity extends TempletActivity {
 

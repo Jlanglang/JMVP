@@ -1,7 +1,7 @@
 package com.linfeng.demo.contract;
 
-import com.baozi.mvpdemo.ui.BaseActivityView;
-import com.baozi.mvpdemo.ui.ToolbarView;
+import com.baozi.jmvp.ui.BaseActivityView;
+import com.baozi.jmvp.ui.ToolbarView;
 
 /**
  * @author jlanglang  2017/3/7 18:20
