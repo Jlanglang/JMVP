@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tl_costom"
+    style="@style/base_toolbar"
+    android:minHeight="?attr/actionBarSize"
+    app:popupTheme="@style/popup_theme"
+    app:theme="@style/toolbar_theme">
+
+    <ImageButton
+        android:id="@+id/ib_left"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:src="@drawable/back"
+        android:text="左边text"
+        />
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        />
+
+
+    <TextView
+        android:id="@+id/tv_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:background="@null"
+        android:gravity="center"
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        />
+
+    <ImageButton
+        android:id="@+id/ib_right"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:visibility="gone"
+        />
+</android.support.v7.widget.Toolbar>
