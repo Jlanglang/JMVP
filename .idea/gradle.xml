@@ -9,13 +9,15 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ModlerLib" />
+            <option value="$PROJECT_DIR$/ModlerLib/imageloder-glide" />
+            <option value="$PROJECT_DIR$/ModlerLib/mvpbase" />
+            <option value="$PROJECT_DIR$/ModlerLib/mvpbase-appcompat" />
+            <option value="$PROJECT_DIR$/ModlerLib/network-rx-retrofit" />
+            <option value="$PROJECT_DIR$/ModlerLib/utils-common" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/homeModle" />
-            <option value="$PROJECT_DIR$/imageloder-glide" />
-            <option value="$PROJECT_DIR$/mvpbase" />
-            <option value="$PROJECT_DIR$/mvpbase-appcompat" />
-            <option value="$PROJECT_DIR$/network-rx-retrofit" />
-            <option value="$PROJECT_DIR$/utils-common" />
+            <option value="$PROJECT_DIR$/jmvp" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -16,7 +16,6 @@ import com.linfeng.demo.contract.MainContract;
 public class MainAcitivity extends TempletActivity<TempletPresenter>
         implements MainContract.View {
 
-
     @NonNull
     @Override
     protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

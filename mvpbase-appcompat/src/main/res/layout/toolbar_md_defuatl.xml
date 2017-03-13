@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar
-    android:id="@+id/tl_costom"
-    style="@style/base_toolbar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="?actionBarSize"
-    app:popupTheme="@style/popup_theme"
-    app:theme="@style/toolbar_theme"/>
