@@ -1,2 +1,3 @@
 include ':jmvp'
-include 'ModlerLib:mvpbase', ':app', 'ModlerLib:mvpbase-appcompat', 'ModlerLib:network-rx-retrofit', 'ModlerLib:imageloder-glide', 'ModlerLib:utils-common', ':homeModle'
+include 'ModlerLib:mvpbase', 'ModlerLib:mvpbase-appcompat', 'ModlerLib:network-rx-retrofit', 'ModlerLib:imageloder-glide','ModlerLib:utils-common'
+include  ':app','homemodule'
