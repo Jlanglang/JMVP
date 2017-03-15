@@ -19,7 +19,7 @@ public class ThreadUtils {
     /**
      * 运行在ui线程里面的task
      */
-    private static Handler mHandler;
+    private static Handler mHandler = new Handler();
 
     public static void runInUIThread(Runnable task) {
         mHandler.post(task);

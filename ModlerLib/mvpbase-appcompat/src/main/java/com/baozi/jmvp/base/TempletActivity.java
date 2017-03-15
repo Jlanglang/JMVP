@@ -1,8 +1,10 @@
 package com.baozi.jmvp.base;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -12,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import com.baozi.jmvp.R;
 import com.baozi.jmvp.helper.ToolbarHelper;
@@ -43,7 +46,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends JBaseA
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = initContentView(inflater, contentGroup, savedInstanceState);
+        View contentView = initContentView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
         //交给Persenter去扩展
@@ -52,7 +55,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends JBaseA
     }
 
     @NonNull
-    protected abstract View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState);
+    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar
@@ -77,6 +80,7 @@ public abstract class TempletActivity<T extends TempletPresenter> extends JBaseA
         }
         return super.onCreateOptionsMenu(menu);
     }
+
     /**
      * 在onCreateOptionsMenu执行后，菜单被显示前调用；如果菜单已经被创建，则在菜单显示前被调用。 同样的，
      * 返回true则显示该menu,false 则不显示; （可以通过此方法动态的改变菜单的状态，比如加载不同的菜单等）
@@ -169,4 +173,5 @@ public abstract class TempletActivity<T extends TempletPresenter> extends JBaseA
 
     @Override
     protected abstract T initPresenter();
+
 }

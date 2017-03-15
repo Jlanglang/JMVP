@@ -28,6 +28,11 @@ public abstract class TempletFragment<T extends TempletPresenter> extends JBaseF
     private ToolbarHelper mToolbarHelper;
     private View rootView;
 
+    /**
+     * @param inflater
+     * @param savedInstanceState
+     * @return
+     */
     @NonNull
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
@@ -41,7 +46,7 @@ public abstract class TempletFragment<T extends TempletPresenter> extends JBaseF
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = initContentView(inflater, contentGroup, savedInstanceState);
+        View contentView = initContentView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
         //交给Persenter去扩展
@@ -50,7 +55,7 @@ public abstract class TempletFragment<T extends TempletPresenter> extends JBaseF
     }
 
     @NonNull
-    protected abstract View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState);
+    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar
