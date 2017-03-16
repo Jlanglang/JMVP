@@ -1,5 +1,7 @@
 package com.baozi.jmvp.base;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
@@ -7,8 +9,6 @@ import android.os.MessageQueue;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -25,7 +25,6 @@ public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatA
         implements BaseActivityView {
     protected T mPresenter;
     private SparseArray<View> mViews;
-    private BindViewHolder mBindViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +131,7 @@ public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatA
      */
     @Override
     public void startFragment(Fragment tofragment, String tag) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.add(android.R.id.content, tofragment, tag);
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commitAllowingStateLoss();
