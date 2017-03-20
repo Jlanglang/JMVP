@@ -25,7 +25,6 @@ public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatA
         implements BaseActivityView {
     protected T mPresenter;
     private SparseArray<View> mViews;
-    private BindViewHolder mBindViewHolder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +162,6 @@ public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatA
      * @param viewId 资源id
      * @return
      */
-    @Override
     public <V extends View> V findView(@IdRes int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {

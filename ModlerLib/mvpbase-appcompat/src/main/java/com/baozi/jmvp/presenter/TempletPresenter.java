@@ -16,5 +16,4 @@ public abstract class TempletPresenter<T extends BaseView> extends JBasePresente
 
     }
 
-
 }

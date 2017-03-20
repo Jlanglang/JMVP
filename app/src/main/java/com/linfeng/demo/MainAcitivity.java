@@ -18,7 +18,7 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
 
     @NonNull
     @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    protected View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.activity_main, null);
     }

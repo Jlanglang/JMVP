@@ -1,5 +1,6 @@
-package com.baozi.homemodle;
+package com.baozi.homemodle.ui.activity;
 
+import android.content.Intent;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.support.annotation.NonNull;
@@ -8,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.baozi.jmvp.base.JBaseActivity;
+import com.baozi.homemodle.R;
 import com.baozi.jmvp.base.TempletActivity;
 import com.baozi.jmvp.presenter.TempletPresenter;
-import com.linfeng.common.utils.ToastUtil;
 import com.zhy.autolayout.utils.AutoUtils;
 
 
@@ -75,4 +75,8 @@ public class MainActivity extends TempletActivity<TempletPresenter> {
         };
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }

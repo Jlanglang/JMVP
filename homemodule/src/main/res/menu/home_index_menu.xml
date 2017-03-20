@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      tools:context="com.example.acctionbaractivitydemo.MainActivity">
+    <item
+        android:id="@+id/menu1"
+        android:icon="@mipmap/ic_launcher"
+        android:title=""
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu2"
+        android:icon="@mipmap/ic_launcher"
+        android:title="哈哈"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/menu3"
+        android:icon="@mipmap/ic_launcher"
+        android:title="呵呵"
+        app:showAsAction="ifRoom"/>
+</menu>

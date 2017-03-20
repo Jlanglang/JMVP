@@ -1,4 +1,4 @@
-package com.baozi.j_mvp_frame;
+package com.baozi.frame;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

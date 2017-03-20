@@ -18,7 +18,7 @@ public class DefatulAcitivity extends TempletActivity {
 
     @NonNull
     @Override
-    protected View initContentView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+    protected View initContentView(LayoutInflater inflater,  Bundle savedInstanceState) {
         setMaterialDesignEnabled(true);
         return inflater.inflate(R.layout.activity_main, null);
     }
@@ -60,6 +60,7 @@ public class DefatulAcitivity extends TempletActivity {
     public boolean isMaterialDesign() {
         return true;
     }
+
 
     @Override
     public int initToolbarLayout() {

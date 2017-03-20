@@ -39,9 +39,12 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mAppBarLayout.removeAllViews();
         //将toolbarLayout添加到AppBarLayout中
         View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
+        //如果find不为null,则设置toolbar
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
         if (mToolbar != null) {
             mUIView.setSupportActionBar(mToolbar);
+        }else {
+            //说明为自定义toolbar
         }
         initToolbar();
     }

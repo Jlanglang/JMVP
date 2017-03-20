@@ -15,15 +15,15 @@ import android.view.Window;
  */
 
 public interface UIView extends BaseView {
-    /**
-     * id查找控件
-     * 省去findviewById的强转操作
-     *
-     * @param viewId 控件id
-     * @param <V>    控件类型
-     * @return V extends View
-     */
-    <V extends View> V findView(int viewId);
+//    /**
+//     * id查找控件
+//     * 省去findviewById的强转操作
+//     *
+//     * @param viewId 控件id
+//     * @param <V>    控件类型
+//     * @return V extends View
+//     */
+//    <V extends View> V findView(int viewId);
 
     /**
      * res资源获取
