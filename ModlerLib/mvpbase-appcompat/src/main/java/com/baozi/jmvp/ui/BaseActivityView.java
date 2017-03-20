@@ -11,5 +11,4 @@ public interface BaseActivityView extends UIView {
 
     FragmentManager getFragmentManager();
 
-    android.support.v4.app.FragmentManager getSupportFragmentManager();
 }
