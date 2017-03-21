@@ -2,7 +2,6 @@ package com.baozi.jmvp.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
@@ -10,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.baozi.jmvp.R;
@@ -23,7 +21,7 @@ import com.baozi.jmvp.ui.ToolbarView;
  *
  * @param <T>
  */
-public abstract class TempletFragment<T extends TempletPresenter> extends JBaseFragment<T>
+public abstract class TempletFragment<T extends TempletPresenter> extends BaseFragment<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
@@ -38,7 +36,7 @@ public abstract class TempletFragment<T extends TempletPresenter> extends JBaseF
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("pleace exends JBaseFragment,TempletFragmenttheme must Noactionbar");
+            throw new IllegalStateException("pleace exends BaseFragment,TempletFragmenttheme must Noactionbar");
         }
         rootView = inflater.inflate(R.layout.activity_templet, null);
         //创建toolbar
@@ -67,42 +65,6 @@ public abstract class TempletFragment<T extends TempletPresenter> extends JBaseF
     public int initToolbarLayout() {
         return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
-
-
-//    /**
-//     * 此方法用于初始化菜单，其中menu参数就是即将要显示的Menu实例。 返回true则显示该menu,false 则不显示;
-//     * (只会在第一次初始化菜单时调用)
-//     */
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        if (!isMaterialDesign() || getToolbarHelper() == null) {
-//            return false;
-//        }
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
-//    /**
-//     * 显示menu的icon
-//     *
-//     * @param view
-//     * @param menu
-//     * @return
-//     */
-//    @Override
-//    protected boolean onPrepareOptionsPanel(View view, Menu menu) {
-//        if (menu != null) {
-//            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
-//                try {
-//                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-//                    m.setAccessible(true);
-//                    m.invoke(menu, true);
-//                } catch (Exception e) {
-//                    Log.e(getClass().getSimpleName(), "onMenuOpened...unable to set icons for overflow menu", e);
-//                }
-//            }
-//        }
-//        return super.onPrepareOptionsPanel(view, menu);
-//    }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {

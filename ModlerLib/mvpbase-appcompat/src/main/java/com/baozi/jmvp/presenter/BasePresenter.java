@@ -11,21 +11,15 @@ import com.baozi.jmvp.ui.BaseView;
  * @版本 2.0
  * @Change
  */
-public abstract class JBasePresenter<T extends BaseView> {
+public abstract class BasePresenter<T extends BaseView> {
 
     protected T mView;
-//    /**
-//     * 使用CompositeSubscription来持有所有的Subscriptions
-//     */
-//    protected CompositeSubscription mCompositeSubscription;
 
     /**
      * 绑定View
      */
     public void onAttch(T view) {
-        //创建管理rx请求生命周期
         this.mView = view;
-//        mCompositeSubscription = new CompositeSubscription();
     }
 
 
@@ -60,10 +54,6 @@ public abstract class JBasePresenter<T extends BaseView> {
      * 取消网络请求
      */
     public abstract void cancleNetWork();
-//        if (mCompositeSubscription != null) {
-//            mCompositeSubscription.unsubscribe();
-//        }
-//    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

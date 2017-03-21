@@ -18,14 +18,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.baozi.jmvp.presenter.JBasePresenter;
+import com.baozi.jmvp.presenter.BasePresenter;
 import com.baozi.jmvp.ui.BaseFragmentView;
 
 
 /**
  * @author jlanglang  2016/8/5 9:42
  */
-public abstract class JBaseFragment<T extends JBasePresenter> extends Fragment
+public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         implements BaseFragmentView {
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
@@ -219,7 +219,7 @@ public abstract class JBaseFragment<T extends JBasePresenter> extends Fragment
     }
 
     @Override
-    public JBaseFragment getFragment() {
+    public BaseFragment getFragment() {
         return this;
     }
 

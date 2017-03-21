@@ -15,13 +15,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baozi.jmvp.presenter.JBasePresenter;
+import com.baozi.jmvp.presenter.BasePresenter;
 import com.baozi.jmvp.ui.BaseActivityView;
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
-public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatActivity
+public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
     protected T mPresenter;
     private SparseArray<View> mViews;
@@ -147,7 +147,7 @@ public abstract class JBaseActivity<T extends JBasePresenter> extends AppCompatA
     }
 
     @Override
-    public JBaseActivity getActivity() {
+    public BaseActivity getActivity() {
         return this;
     }
 
