@@ -8,12 +8,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/ModlerLib" />
-            <option value="$PROJECT_DIR$/ModlerLib/imageloder-glide" />
-            <option value="$PROJECT_DIR$/ModlerLib/mvpbase" />
-            <option value="$PROJECT_DIR$/ModlerLib/mvpbase-appcompat" />
-            <option value="$PROJECT_DIR$/ModlerLib/network-rx-retrofit" />
-            <option value="$PROJECT_DIR$/ModlerLib/utils-common" />
+            <option value="$PROJECT_DIR$/ModuleLib" />
+            <option value="$PROJECT_DIR$/ModuleLib/imageloder-glide" />
+            <option value="$PROJECT_DIR$/ModuleLib/mvpbase" />
+            <option value="$PROJECT_DIR$/ModuleLib/mvpbase-appcompat" />
+            <option value="$PROJECT_DIR$/ModuleLib/network-rx-retrofit" />
+            <option value="$PROJECT_DIR$/ModuleLib/utils-common" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/homemodule" />
             <option value="$PROJECT_DIR$/jmvp" />

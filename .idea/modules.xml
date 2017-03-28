@@ -3,14 +3,20 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/ModlerLib.iml" filepath="$PROJECT_DIR$/ModlerLib/ModlerLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/ModuleLib.iml" filepath="$PROJECT_DIR$/ModuleLib/ModuleLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/homemodule/homemodule.iml" filepath="$PROJECT_DIR$/homemodule/homemodule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/imageloder-glide/imageloder-glide.iml" filepath="$PROJECT_DIR$/ModuleLib/imageloder-glide/imageloder-glide.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/imageloder-glide/imageloder-glide.iml" filepath="$PROJECT_DIR$/ModlerLib/imageloder-glide/imageloder-glide.iml" />
       <module fileurl="file://$PROJECT_DIR$/jmvp/jmvp.iml" filepath="$PROJECT_DIR$/jmvp/jmvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/mvpbase/mvpbase.iml" filepath="$PROJECT_DIR$/ModuleLib/mvpbase/mvpbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/mvpbase/mvpbase.iml" filepath="$PROJECT_DIR$/ModlerLib/mvpbase/mvpbase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/mvpbase-appcompat/mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/ModuleLib/mvpbase-appcompat/mvpbase-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/mvpbase-appcompat/mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/ModlerLib/mvpbase-appcompat/mvpbase-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/ModuleLib/network-rx-retrofit/network-rx-retrofit.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/ModlerLib/network-rx-retrofit/network-rx-retrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ModuleLib/utils-common/utils-common.iml" filepath="$PROJECT_DIR$/ModuleLib/utils-common/utils-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModlerLib/utils-common/utils-common.iml" filepath="$PROJECT_DIR$/ModlerLib/utils-common/utils-common.iml" />
     </modules>
   </component>

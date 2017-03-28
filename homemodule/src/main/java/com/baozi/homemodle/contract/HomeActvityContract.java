@@ -2,13 +2,9 @@ package com.baozi.homemodle.contract;
 
 import android.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
-import android.widget.TableLayout;
 
-import com.baozi.jmvp.ui.BaseActivityView;
 import com.baozi.jmvp.ui.TempletActivityView;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -16,6 +12,7 @@ import java.util.List;
  */
 
 public class HomeActvityContract {
+
     public interface View extends TempletActivityView {
         //contentview为viewpage+fragment
         ViewPager getContentViewPager();
@@ -26,7 +23,6 @@ public class HomeActvityContract {
     }
 
     public interface Presenter {
-
     }
 
     public interface Model {

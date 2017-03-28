@@ -11,11 +11,9 @@ import android.view.View;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
-import com.baozi.jmvp.base.JBaseActivity;
 import com.baozi.jmvp.base.TempletActivity;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,7 +64,7 @@ public class HomeActivity extends TempletActivity<HomeActvityPresenterImpl>
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.home_index_menu,menu);
+        getMenuInflater().inflate(R.menu.home_index_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
