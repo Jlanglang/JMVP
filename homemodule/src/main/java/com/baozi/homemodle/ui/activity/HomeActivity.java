@@ -11,7 +11,7 @@ import android.view.View;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
-import com.baozi.jmvp.base.TempletActivity;
+import com.baozi.mvp.base.TempletActivity;
 
 import java.util.ArrayList;
 import java.util.List;

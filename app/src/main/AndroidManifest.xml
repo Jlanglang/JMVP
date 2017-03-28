@@ -3,7 +3,7 @@
           package="com.linfeng.demo">
 
     <application
-        android:name="com.baozi.jmvp.application.JBaseApplication"
+        android:name="com.baozi.mvp.application.JBaseApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

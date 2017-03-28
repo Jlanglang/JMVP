@@ -1,13 +1,13 @@
 package com.baozi.homemodle.presenter;
 
+import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.contract.HomeActvityContract;
-import com.baozi.jmvp.presenter.TempletPresenter;
 
 /**
  * Created by Administrator on 2017/03/28
  */
 
-public class HomeActvityPresenterImpl extends TempletPresenter<HomeActvityContract.View>
+public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract.View>
         implements HomeActvityContract.Presenter {
 
     @Override
@@ -17,11 +17,6 @@ public class HomeActvityPresenterImpl extends TempletPresenter<HomeActvityContra
 
     @Override
     public void loadData() {
-
-    }
-
-    @Override
-    public void cancleNetWork() {
 
     }
 }

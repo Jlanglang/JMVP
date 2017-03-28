@@ -2,15 +2,12 @@ package com.linfeng.demo;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.baozi.jmvp.base.TempletActivity;
-import com.baozi.jmvp.helper.ToolbarHelper;
-import com.baozi.jmvp.presenter.TempletPresenter;
+import com.baozi.mvp.base.TempletActivity;
+import com.baozi.mvp.helper.ToolbarHelper;
 import com.linfeng.demo.contract.MainContract;
 
 public class MainAcitivity extends TempletActivity<TempletPresenter>
