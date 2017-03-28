@@ -2,10 +2,12 @@ package com.baozi.mvp.ui;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
+import android.view.ViewGroup;
 import android.view.Window;
 
 /**
@@ -36,6 +38,13 @@ public interface UIView extends BaseView {
     Activity getActivity();
 
     /**
+     * 主要视图的preant
+     *
+     * @return
+     */
+    ViewGroup getContentPreant();
+
+    /**
      * Frgament跳转.
      *
      * @param tofragment
@@ -49,6 +58,7 @@ public interface UIView extends BaseView {
      */
     void startFragment(Fragment tofragment, String tag);
 
+    FragmentManager getFragmentManager();
 
     Window getWindow();
 

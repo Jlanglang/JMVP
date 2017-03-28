@@ -9,6 +9,5 @@ import android.os.Bundle;
  */
 public interface BaseFragmentView extends UIView {
     Bundle getBundle();
-    FragmentManager getFragmentManager();
     Fragment getFragment();
 }

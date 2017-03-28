@@ -63,9 +63,6 @@ public class ImageUtils {
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true，即只读边不读内容  
         newOpts.inJustDecodeBounds = true;
         newOpts.inPreferredConfig = Config.RGB_565;
-        // Get bitmap info, but notice that bitmap is null now    
-        Bitmap bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
-
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
@@ -82,10 +79,8 @@ public class ImageUtils {
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;//设置缩放比例  
         // 开始压缩图片，注意此时已经把options.inJustDecodeBounds 设回false了  
-        bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
-        // 压缩好比例大小后再进行质量压缩  
-//        return compress(bitmap, maxSize); // 这里再进行质量压缩的意义不大，反而耗资源，删除  
-        return bitmap;
+        // 压缩好比例大小后再进行质量压缩
+        return BitmapFactory.decodeFile(imgPath, newOpts);
     }
 
     /**
@@ -104,12 +99,10 @@ public class ImageUtils {
             os.reset();//重置baos即清空baos    
             image.compress(Bitmap.CompressFormat.PNG, 50, os);//这里压缩50%，把压缩后的数据存放到baos中
         }
-        ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         //开始读入图片，此时把options.inJustDecodeBounds 设回true了    
         newOpts.inJustDecodeBounds = true;
         newOpts.inPreferredConfig = Config.RGB_565;
-        Bitmap bitmap = BitmapFactory.decodeStream(is, null, newOpts);
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
@@ -125,11 +118,9 @@ public class ImageUtils {
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;//设置缩放比例    
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了    
-        is = new ByteArrayInputStream(os.toByteArray());
-        bitmap = BitmapFactory.decodeStream(is, null, newOpts);
-        //压缩好比例大小后再进行质量压缩  
-//      return compress(bitmap, maxSize); // 这里再进行质量压缩的意义不大，反而耗资源，删除  
-        return bitmap;
+        ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
+        //压缩好比例大小后再进行质量压缩
+        return BitmapFactory.decodeStream(is, null, newOpts);
     }
 
     /**
@@ -218,6 +209,7 @@ public class ImageUtils {
             ex.printStackTrace();
         }
     }
+
     /**
      * Compress by quality,  and generate image to the path specified
      *

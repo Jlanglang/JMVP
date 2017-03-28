@@ -88,7 +88,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         mPresenter.wapperContentParent();
         return mContentView;
     }
-
     /**
      * 运行在onCreateView之后
      * 加载数据

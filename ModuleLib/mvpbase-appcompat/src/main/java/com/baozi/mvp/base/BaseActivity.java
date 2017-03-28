@@ -51,7 +51,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             }
         });
     }
-
+    @Override
     public ViewGroup getContentPreant() {
         return findView(android.R.id.content);
     }
@@ -122,7 +122,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     /**
-     * '
+     *
      * 跳转fragment
      *
      * @param tofragment

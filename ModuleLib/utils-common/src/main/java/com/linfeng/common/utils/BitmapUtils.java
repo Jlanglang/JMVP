@@ -17,7 +17,7 @@ public class BitmapUtils {
      * @return
      * @description 计算图片的压缩比率
      */
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // 源图片的高度和宽度
         final int height = options.outHeight;
         final int width = options.outWidth;
@@ -40,7 +40,7 @@ public class BitmapUtils {
      * @return
      * @description 通过传入的bitmap，进行压缩，得到符合标准的bitmap
      */
-    public static Bitmap createScaleBitmap(Bitmap src, int dstWidth, int dstHeight, int inSampleSize) {
+    private static Bitmap createScaleBitmap(Bitmap src, int dstWidth, int dstHeight, int inSampleSize) {
         //如果inSampleSize是2的倍数，也就说这个src已经是我们想要的缩略图了，直接返回即可。
         if (inSampleSize % 2 == 0) {
             return src;
@@ -60,13 +60,22 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap createScaleBitmap(String src, int dstWidth, int dstHeight) {
+        //读取文件
+        Bitmap bitmap = BitmapFactory.decodeFile(src);
+        return createScaleBitmap(bitmap, dstWidth, dstHeight);
+    }
+
+    /**
+     * @param dstWidth
+     * @param dstHeight
+     * @return
+     */
+    public static Bitmap createScaleBitmap(Bitmap bitmap, int dstWidth, int dstHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         options.inSampleSize = calculateInSampleSize(options, dstWidth, dstHeight);
         options.inJustDecodeBounds = false;
-        //读取文件
-        Bitmap bitmap = BitmapFactory.decodeFile(src, options);
         return createScaleBitmap(bitmap, dstWidth, dstHeight, options.inSampleSize);
     }
 }

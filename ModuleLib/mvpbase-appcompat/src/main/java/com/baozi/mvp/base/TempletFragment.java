@@ -47,8 +47,8 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
         View contentView = initContentView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
-        //交给Persenter去扩展
-        mPresenter.wapperContentParent();
+//        //交给Persenter去扩展
+//        mPresenter.wapperContentParent();
         return rootView;
     }
 
