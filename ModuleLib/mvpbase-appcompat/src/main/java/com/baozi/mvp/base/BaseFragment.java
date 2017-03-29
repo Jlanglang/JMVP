@@ -85,7 +85,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mContentView = initView(inflater, savedInstanceState);
-        mPresenter.wapperContentParent();
         return mContentView;
     }
     /**
@@ -153,7 +152,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
-    public ViewGroup getContentPreant() {
+    public View getContentView() {
         return findView(android.R.id.content);
     }
 

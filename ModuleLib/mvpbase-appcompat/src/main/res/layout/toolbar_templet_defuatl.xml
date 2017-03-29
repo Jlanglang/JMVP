@@ -6,7 +6,7 @@
     style="@style/base_toolbar"
     android:minHeight="?attr/actionBarSize"
     app:popupTheme="@style/popup_theme"
-    app:theme="@style/toolbar_theme">
+    >
 
     <ImageButton
         android:id="@+id/ib_left"

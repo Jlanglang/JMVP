@@ -2,7 +2,6 @@ package com.baozi.mvp.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ViewGroup;
 
 import com.baozi.mvp.ui.view.IBaseView;
 
@@ -88,12 +87,6 @@ public abstract class BasePresenter<T extends IBaseView> {
     }
 
     public void onStop() {
-
-    }
-    /**
-     * @param preant
-     */
-    public void wapperContentView(ViewGroup preant) {
 
     }
 }

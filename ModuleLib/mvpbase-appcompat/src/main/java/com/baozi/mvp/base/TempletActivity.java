@@ -3,21 +3,18 @@ package com.baozi.mvp.base;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.ToolbarView;
-
-import java.lang.reflect.Method;
 
 /**
  * 模版Activity
@@ -28,7 +25,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View mRootView;
-    private FrameLayout mContentParent;
+    private View mContentView;
 
     @NonNull
     @Override
@@ -40,14 +37,15 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         mRootView = inflater.inflate(R.layout.activity_templet, null);
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
-//        //ContentView容器
-        mContentParent = (FrameLayout) mRootView.findViewById(R.id.templet_content);
+        //ContentView容器
+        FrameLayout mContentParent = (FrameLayout) mRootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = initContentView(inflater, savedInstanceState);
+        mContentView = initContentView(inflater, savedInstanceState);
         mContentParent.removeAllViews();
-        mContentParent.addView(contentView);
+        mContentParent.addView(mContentView);
         return mRootView;
     }
+
 
     /**
      * 如果调用在initView()之前,可能为null
@@ -55,8 +53,8 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
      * @return
      */
     @Override
-    public ViewGroup getContentPreant() {
-        return mContentParent;
+    public View getContentView() {
+        return mContentView;
     }
 
     @NonNull
@@ -107,11 +105,10 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         if (menu != null) {
             if (menu.getClass().getSimpleName().equals("MenuBuilder")) {
                 try {
-                    Method m = menu.getClass().getDeclaredMethod("setOptionalIconsVisible", Boolean.TYPE);
-                    m.setAccessible(true);
-                    m.invoke(menu, true);
+                    MenuBuilder menuBuilder = (MenuBuilder) menu;
+                    menuBuilder.setOptionalIconsVisible(true);
                 } catch (Exception e) {
-                    Log.e(getClass().getSimpleName(), "onMenuOpened...unable to set icons for overflow menu", e);
+                    e.printStackTrace();
                 }
             }
         }

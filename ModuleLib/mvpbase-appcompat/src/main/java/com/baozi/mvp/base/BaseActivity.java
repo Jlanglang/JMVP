@@ -38,8 +38,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         //初始化ContentView
         mContentView = initView(LayoutInflater.from(this), savedInstanceState);
         super.setContentView(mContentView);
-        //装饰ContentParent
-        mPresenter.wapperContentParent();
         //初始化presenter
         mPresenter.onCreate();
         //延时加载数据.
@@ -50,10 +48,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 return false;
             }
         });
+
     }
+
     @Override
-    public ViewGroup getContentPreant() {
-        return findView(android.R.id.content);
+    public View getContentView() {
+        return mContentView;
     }
 
     @Override
@@ -122,7 +122,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     /**
-     *
      * 跳转fragment
      *
      * @param tofragment

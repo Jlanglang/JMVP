@@ -6,16 +6,16 @@
     <item
         android:id="@+id/menu1"
         android:icon="@mipmap/ic_launcher"
-        android:title=""
-        app:showAsAction="always"/>
+        android:title="嘿嘿"
+        android:showAsAction="always"/>
     <item
         android:id="@+id/menu2"
         android:icon="@mipmap/ic_launcher"
         android:title="哈哈"
-        app:showAsAction="ifRoom"/>
+        android:showAsAction="ifRoom"/>
     <item
         android:id="@+id/menu3"
         android:icon="@mipmap/ic_launcher"
         android:title="呵呵"
-        app:showAsAction="ifRoom"/>
+        android:showAsAction="ifRoom"/>
 </menu>

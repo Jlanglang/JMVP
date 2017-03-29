@@ -38,20 +38,12 @@ class TempletDefuatlToolbarHelperImpl extends BaseToolBarHelperImpl {
 
     @Override
     public void initToolbar() {
-//        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
-//        mAppBarLayout.removeAllViews();
-//        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
-//
-//        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
-//        mUIView.setSupportActionBar(mToolbar);
-
         mLeftTextView = (TextView) mToolbar.findViewById(R.id.tv_left);
         mRightTextView = (TextView) mToolbar.findViewById(R.id.tv_right);
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitleView = (TextView) mToolbar.findViewById(R.id.tv_title);
 
-        mToolbar.setContentInsetsAbsolute(0, 0);
         setLeftButton(R.drawable.back, new View.OnClickListener() {
             @Override
             public void onClick(View v) {

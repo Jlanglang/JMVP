@@ -7,7 +7,7 @@ import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.Window;
 
 /**
@@ -38,11 +38,11 @@ public interface UIView extends BaseView {
     Activity getActivity();
 
     /**
-     * 主要视图的preant
+     * 主要视图View
      *
      * @return
      */
-    ViewGroup getContentPreant();
+    View getContentView();
 
     /**
      * Frgament跳转.

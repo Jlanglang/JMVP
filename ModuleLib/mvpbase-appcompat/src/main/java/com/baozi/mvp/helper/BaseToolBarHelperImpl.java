@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -43,11 +44,20 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
         if (mToolbar != null) {
             mUIView.setSupportActionBar(mToolbar);
-        }else {
+            mToolbar.setContentInsetsAbsolute(0, 0);
+            //默认所有自带的都不显示.
+            ActionBar supportActionBar = mUIView.getSupportActionBar();
+            supportActionBar.setDisplayHomeAsUpEnabled(false);
+            supportActionBar.setDisplayShowTitleEnabled(false);
+            supportActionBar.setDisplayUseLogoEnabled(false);
+            supportActionBar.setDisplayShowHomeEnabled(false);
+            initToolbar();
+        } else {
             //说明为自定义toolbar
         }
-        initToolbar();
     }
+
+
 
     public abstract void initToolbar();
 

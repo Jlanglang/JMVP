@@ -1,7 +1,6 @@
 package com.baozi.frame;
 
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.UIView;
@@ -31,15 +30,6 @@ public abstract class LoadPresenter<T extends UIView> extends JBasePresenter<T> 
     @Override
     public void loadData() {
         mBasePresenter.loadData();
-    }
-
-    @Override
-    public void wapperContentParent() {
-        mBasePresenter.wapperContentParent();
-        ViewGroup contentPreant = mView.getContentPreant();
-        contentPreant.addView(mLoadingView);
-        contentPreant.addView(mEmptyView);
-        contentPreant.addView(mErrorView);
     }
 
     abstract View loadingView();

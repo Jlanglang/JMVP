@@ -21,22 +21,6 @@ public class MainActivity extends TempletActivity<HomeActvityPresenterImpl> {
         return inflate;
     }
 
-//    /**
-//     * 将ip的整数形式转换成ip形式
-//     *
-//     * @param ipInt
-//     * @return
-//     */
-//    public static String int2ip(int ipInt) {
-//        StringBuilder sb = new StringBuilder();
-//        sb.append(ipInt & 0xFF).append(".");//取最后8位
-//        sb.append((ipInt >> 8) & 0xFF).append(".");//取倒数第二个8位
-//        sb.append((ipInt >> 16) & 0xFF).append(".");//取倒数第三个8位
-//        sb.append((ipInt >> 24) & 0xFF);//取倒数第四个8位
-//        return sb.toString();
-//    }
-
-
     @Override
     protected HomeActvityPresenterImpl initPresenter() {
         return new HomeActvityPresenterImpl();

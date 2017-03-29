@@ -13,7 +13,6 @@
         app:layout_collapseMode="pin"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/popup_theme"
-        app:theme="@style/toolbar_theme"
         />
 
     <android.support.design.widget.TabLayout

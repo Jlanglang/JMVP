@@ -28,7 +28,6 @@ public class HomeActivity extends TempletActivity<HomeActvityPresenterImpl>
         View inflate = inflater.inflate(R.layout.home_activity_index, null);
         return inflate;
     }
-
     @Override
     protected HomeActvityPresenterImpl initPresenter() {
         return new HomeActvityPresenterImpl();
@@ -59,7 +58,7 @@ public class HomeActivity extends TempletActivity<HomeActvityPresenterImpl>
 
     @Override
     public int initToolbarLayout() {
-        return R.layout.home_acitivity_index_toolbar;
+        return R.layout.toolbar_md_defuatl;
     }
 
     @Override
