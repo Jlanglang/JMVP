@@ -44,8 +44,8 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
         if (mToolbar != null) {
             mUIView.setSupportActionBar(mToolbar);
+            //默认所有自带的都不显示.不带边距
             mToolbar.setContentInsetsAbsolute(0, 0);
-            //默认所有自带的都不显示.
             ActionBar supportActionBar = mUIView.getSupportActionBar();
             supportActionBar.setDisplayHomeAsUpEnabled(false);
             supportActionBar.setDisplayShowTitleEnabled(false);

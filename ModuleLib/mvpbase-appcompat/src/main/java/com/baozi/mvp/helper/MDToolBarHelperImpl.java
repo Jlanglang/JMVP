@@ -9,8 +9,9 @@ import com.baozi.mvp.ui.UIView;
  * @版本 2.0
  * @Change
  */
-public class MDDefuatlToolBarHelperImpl extends BaseToolBarHelperImpl {
-    public MDDefuatlToolBarHelperImpl(UIView uiView, View rootView, int toolbarLayout) {
+public class MDToolBarHelperImpl extends BaseToolBarHelperImpl {
+
+    public MDToolBarHelperImpl(UIView uiView, View rootView, int toolbarLayout) {
         super(uiView, rootView, toolbarLayout);
     }
 

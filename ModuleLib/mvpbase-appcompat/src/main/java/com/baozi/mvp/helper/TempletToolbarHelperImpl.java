@@ -20,7 +20,7 @@ import com.baozi.mvp.ui.UIView;
  * @Change
  */
 
-class TempletDefuatlToolbarHelperImpl extends BaseToolBarHelperImpl {
+class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
     private TextView mLeftTextView;
     private TextView mRightTextView;
     private ImageButton mLeftButton;
@@ -32,7 +32,7 @@ class TempletDefuatlToolbarHelperImpl extends BaseToolBarHelperImpl {
     private Drawable mRightDrawable;
 
 
-    TempletDefuatlToolbarHelperImpl(UIView uiView, View rootView, @LayoutRes int toolbar) {
+    TempletToolbarHelperImpl(UIView uiView, View rootView, @LayoutRes int toolbar) {
         super(uiView, rootView, toolbar);
     }
 

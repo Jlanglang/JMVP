@@ -8,9 +8,10 @@ import android.view.View;
 
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
+import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
 
-public class MainAcitivity extends TempletActivity<TempletPresenter>
+public class MainAcitivity extends TempletActivity<BasePresenter>
         implements MainContract.View {
 
     @NonNull
@@ -22,17 +23,10 @@ public class MainAcitivity extends TempletActivity<TempletPresenter>
 
     //这里偷懒,就不去单独写个PresenterImpl了
     @Override
-    protected TempletPresenter initPresenter() {
-        return new TempletPresenter<MainContract.View>() {
+    protected BasePresenter initPresenter() {
+        return new BasePresenter<MainContract.View>() {
             @Override
             public void onCreate() {
-//                AppBarLayout appBarLayout = getToolbarHelper().getAppBarLayout();
-//                ViewGroup.LayoutParams layoutParams = appBarLayout.getLayoutParams();
-//                layoutParams.height=320;
-//                TabLayout tabLayout = getToolbarHelper().findAppBarView(R.id.tab_layout);
-//                for (int i = 0; i < 4; i++) {
-//                    tabLayout.addTab(tabLayout.newTab().setText(i + ""));
-//                }
                 mView.getToolbarHelper().setTitle("首页");
                 mView.getToolbarHelper().setRightText("213", null);
                 //设置滑动效果

@@ -1,5 +1,7 @@
 package com.baozi.mvp.helper;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
@@ -7,6 +9,8 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -30,11 +34,35 @@ public abstract class ToolbarHelper {
 
     public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
-            return new TempletDefuatlToolbarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout <= 0) {
+            return new TempletToolbarHelperImpl(uiView, rootView, toolbarLayout);
+        } else if (toolbarLayout == 0) {
             return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else {
-            return new MDDefuatlToolBarHelperImpl(uiView, rootView, toolbarLayout);
+            return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
+        }
+    }
+
+    /**
+     * 快速设置Toolbar,取消边距,隐藏所有默认的显示.
+     * setDisplayShowCustomEnabled(),setDisplayHomeAsUpEnabled()
+     * setDisplayShowTitleEnabled(),setDisplayShowHomeEnable()
+     * 都将设置为false
+     *
+     * @param context 继承Appcompat的activity的上下文
+     * @param toolbar 将要设置的Toolbar
+     */
+    public static void SimpleInitToolbar(Context context, @NonNull Toolbar toolbar) {
+        if (context instanceof AppCompatActivity) {
+            AppCompatActivity activity = (AppCompatActivity) context;
+            toolbar.setContentInsetsAbsolute(0, 0);
+            activity.setSupportActionBar(toolbar);
+            ActionBar supportActionBar = activity.getSupportActionBar();
+            if (supportActionBar != null) {
+                supportActionBar.setDisplayShowCustomEnabled(false);
+                supportActionBar.setDisplayHomeAsUpEnabled(false);
+                supportActionBar.setDisplayShowTitleEnabled(false);
+                supportActionBar.setDisplayShowHomeEnabled(false);
+            }
         }
     }
 

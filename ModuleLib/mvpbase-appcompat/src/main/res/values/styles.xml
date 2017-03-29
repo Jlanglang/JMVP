@@ -25,5 +25,5 @@
         <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
     </style>
 
-    <style name="base_toolbar" parent="toolbar"/>
+    <!--<style name="base_toolbar" parent="toolbar"/>-->
 </resources>

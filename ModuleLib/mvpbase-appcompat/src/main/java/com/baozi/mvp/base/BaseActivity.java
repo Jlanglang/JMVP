@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.BaseActivityView;
+import com.baozi.mvp.ui.BaseView;
 
 /**
  * @author jlanglang  2016/1/5 9:42
@@ -168,6 +169,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @param viewId 资源id
      * @return
      */
+    @Override
     public <V extends View> V findView(@IdRes int viewId) {
         View view = mViews.get(viewId);
         if (view == null) {
@@ -197,7 +199,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     @NonNull
-    public abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
+    protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 子类实现Presenter,且必须继承BasePrensenter

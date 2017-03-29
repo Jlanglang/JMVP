@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.ui.TempletView;
 import com.baozi.mvp.ui.ToolbarView;
 
 /**
@@ -22,7 +23,7 @@ import com.baozi.mvp.ui.ToolbarView;
  * @param <T>
  */
 public abstract class TempletActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements ToolbarView {
+        implements TempletView {
     private ToolbarHelper mToolbarHelper;
     private View mRootView;
     private View mContentView;
@@ -34,7 +35,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         if (supportActionBar != null) {
             throw new IllegalStateException("pleace exends BaseActivity.TempletActivity  theme must be Noactionbar");
         }
-        mRootView = inflater.inflate(R.layout.activity_templet, null);
+        mRootView = inflater.inflate(R.layout.templet_content, null);
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
         //ContentView容器

@@ -3,7 +3,8 @@ package com.baozi.homemodle.contract;
 import android.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.baozi.mvp.ui.TempletActivityView;
+import com.baozi.mvp.ui.BaseActivityView;
+import com.baozi.mvp.ui.TempletView;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 public class HomeActvityContract {
 
-    public interface View extends TempletActivityView {
+    public interface View extends BaseActivityView {
         //contentview为viewpage+fragment
         ViewPager getContentViewPager();
 

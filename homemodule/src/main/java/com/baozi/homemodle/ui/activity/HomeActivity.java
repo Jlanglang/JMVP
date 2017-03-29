@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.view.View;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
+import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.base.TempletActivity;
+import com.baozi.mvp.helper.ToolbarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +23,15 @@ import java.util.List;
  * Created by baozi on 2017/3/20.
  */
 
-public class HomeActivity extends TempletActivity<HomeActvityPresenterImpl>
+public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         implements HomeActvityContract.View {
     @NonNull
     @Override
-    protected View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
+    protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
         View inflate = inflater.inflate(R.layout.home_activity_index, null);
         return inflate;
     }
+
     @Override
     protected HomeActvityPresenterImpl initPresenter() {
         return new HomeActvityPresenterImpl();
@@ -55,20 +59,10 @@ public class HomeActivity extends TempletActivity<HomeActvityPresenterImpl>
 
     }
 
-
-    @Override
-    public int initToolbarLayout() {
-        return R.layout.toolbar_md_defuatl;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.home_index_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
-    @Override
-    public boolean isMaterialDesign() {
-        return true;
-    }
 }

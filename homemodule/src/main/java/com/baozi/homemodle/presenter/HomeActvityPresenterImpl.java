@@ -1,9 +1,14 @@
 package com.baozi.homemodle.presenter;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import com.baozi.frame.JBasePresenter;
+import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
+import com.baozi.mvp.helper.ToolbarHelper;
 
 /**
  * Created by Administrator on 2017/03/28
@@ -14,12 +19,9 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
 
     @Override
     public void onCreate() {
-        ActionBar supportActionBar = mView.getSupportActionBar();
-        supportActionBar.setDisplayHomeAsUpEnabled(false);
-        supportActionBar.setDisplayShowTitleEnabled(false);
-        supportActionBar.setDisplayUseLogoEnabled(false);
-        supportActionBar.setDisplayShowHomeEnabled(false);
-        mView.getToolbarHelper().getToolbar().setContentInsetsAbsolute(0,0);
+        Toolbar toolbar = mView.findView(R.id.tl_costom);
+        ToolbarHelper.SimpleInitToolbar(mView.getContext(), toolbar);
+        ViewPager view = mView.getContentViewPager();
     }
 
     @Override

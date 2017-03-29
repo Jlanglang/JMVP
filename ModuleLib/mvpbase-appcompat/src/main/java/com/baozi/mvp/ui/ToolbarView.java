@@ -38,5 +38,4 @@ public interface ToolbarView extends UIView {
      */
     void setMaterialDesignEnabled(boolean isMaterialDesign);
 
-
 }
