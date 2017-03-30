@@ -53,7 +53,6 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             }
         };
         RecyclerView recyclerView = mView.findView(R.id.rl_content);
-        recyclerView.requestDisallowInterceptTouchEvent(true);
         recyclerView.setAdapter(mSimpleRecyclerBaseAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.VERTICAL, false));
@@ -69,4 +68,5 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
     public void loadData() {
 
     }
+
 }

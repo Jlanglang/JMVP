@@ -32,6 +32,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected Bundle mBundle;
     private SparseArray<View> mViews;
     private View mContentView;
+    private boolean isInit;
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -50,9 +51,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        mViews = new SparseArray<>();
-        mPresenter = initPresenter();
-        mPresenter.onAttch(this);
+        //应该只初始化一次Presenter.
+        if (!isInit) {
+            mViews = new SparseArray<>();
+            mPresenter = initPresenter();
+            mPresenter.onAttch(this);
+        }
     }
 
     /**
@@ -84,12 +88,21 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mContentView = initView(inflater, savedInstanceState);
+        if (null == mContentView) {
+            mContentView = initView(inflater, savedInstanceState);
+        } else {
+            //缓存的ContentView需要判断是否已有parent， 如果有parent需要从parent删除，否则会抛出异常。
+            ViewGroup parent = (ViewGroup) mContentView.getParent();
+            if (parent != null) {
+                parent.removeView(mContentView);
+            }
+        }
         return mContentView;
     }
+
     /**
      * 运行在onCreateView之后
-     * 加载数据
+     * 加载数据,初始化Presenter
      *
      * @param savedInstanceState
      */
@@ -97,9 +110,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //创建presenter
-        if (mPresenter != null) {
+        if (mPresenter != null && !isInit) {
             mPresenter.onCreate();
-            //加载完成再刷新视图
+            isInit = true;
+            //View可见时再加载数据刷新视图
             Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
                 @Override
                 public boolean queueIdle() {
@@ -108,7 +122,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
                 }
             });
         }
-        initListener();
     }
 
     @Override
@@ -120,15 +133,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-        if (null==mPresenter){
-            return;
-        }
-        if (isVisibleToUser) {
-            //相当于Fragment的onResume
-            mPresenter.onResume();
-        } else {
-            //相当于Fragment的onPause
-            mPresenter.onPause();
+        if (null != mPresenter) {
+            if (isVisibleToUser) {
+                //相当于Fragment的onResume
+                mPresenter.onResume();
+            } else {
+                //相当于Fragment的onPause
+                mPresenter.onPause();
+            }
         }
     }
 
@@ -157,13 +169,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     public View getContentView() {
         return findView(android.R.id.content);
-    }
-
-    /**
-     * 初始化监听器
-     */
-    public void initListener() {
-
     }
 
 
@@ -266,4 +271,5 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * @return
      */
     protected abstract T initPresenter();
+
 }

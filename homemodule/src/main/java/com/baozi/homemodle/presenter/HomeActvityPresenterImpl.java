@@ -3,9 +3,12 @@ package com.baozi.homemodle.presenter;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.support.design.widget.TabLayout;
+import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
@@ -35,7 +38,7 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
 
     }
 
-    private class HomePageAdapter extends FragmentStatePagerAdapter {
+    private class HomePageAdapter extends FragmentPagerAdapter {
 
         public HomePageAdapter(FragmentManager fm) {
             super(fm);
@@ -55,5 +58,7 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
         public int getCount() {
             return mView.getFragments().size();
         }
+
+
     }
 }

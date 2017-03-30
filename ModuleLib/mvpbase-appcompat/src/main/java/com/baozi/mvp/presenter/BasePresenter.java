@@ -13,6 +13,12 @@ import com.baozi.mvp.ui.BaseView;
  */
 public abstract class BasePresenter<T extends BaseView> {
 
+
+//    /**
+//     * 是否初始化,是否调用了onCreate()
+//     */
+//    private boolean isInit;
+
     protected T mView;
 
     /**

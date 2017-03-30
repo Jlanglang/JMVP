@@ -25,6 +25,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         implements HomeActvityContract.View {
 
     private ArrayList<Fragment> mFragments;
+    private ArrayList<String> mTabs;
 
     @NonNull
     @Override
@@ -60,15 +61,16 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
 
     @Override
     public List<String> getTabs() {
-        ArrayList<String> tabs = new ArrayList<>();
-        tabs.add("直播");
-        tabs.add("推荐");
-        tabs.add("追番");
-        tabs.add("分区");
-        tabs.add("动态");
-        tabs.add("发现");
-        return tabs;
-
+        if (null == mTabs) {
+            mTabs = new ArrayList<>();
+            mTabs.add("直播");
+            mTabs.add("推荐");
+            mTabs.add("追番");
+            mTabs.add("分区");
+            mTabs.add("动态");
+            mTabs.add("发现");
+        }
+        return mTabs;
     }
 
     @Override
