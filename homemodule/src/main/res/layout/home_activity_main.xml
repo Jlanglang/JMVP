@@ -7,14 +7,9 @@
     android:layout_height="match_parent"
     tools:context="com.baozi.homemodle.ui.activity.MainActivity">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"/>
-    <Button
-        android:id="@+id/bt_socket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+       />
 </RelativeLayout>

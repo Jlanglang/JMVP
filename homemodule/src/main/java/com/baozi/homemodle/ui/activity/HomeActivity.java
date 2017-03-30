@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -12,9 +11,8 @@ import android.view.View;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
+import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
-import com.baozi.mvp.base.TempletActivity;
-import com.baozi.mvp.helper.ToolbarHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,9 @@ import java.util.List;
 
 public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         implements HomeActvityContract.View {
+
+    private ArrayList<Fragment> mFragments;
+
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
@@ -42,9 +43,19 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         return findView(R.id.vp_content);
     }
 
+    @NonNull
     @Override
     public List<Fragment> getFragments() {
-        return new ArrayList<>();
+        if (null == mFragments) {
+            mFragments = new ArrayList<>();
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+        }
+        return mFragments;
     }
 
     @Override
@@ -54,6 +65,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         tabs.add("推荐");
         tabs.add("追番");
         tabs.add("分区");
+        tabs.add("动态");
         tabs.add("发现");
         return tabs;
 

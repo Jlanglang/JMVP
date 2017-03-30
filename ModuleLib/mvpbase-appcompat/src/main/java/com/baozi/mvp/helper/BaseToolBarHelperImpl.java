@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -18,39 +17,27 @@ import com.baozi.mvp.ui.UIView;
 
 /**
  * @author jlanglang  2017/2/22 16:58
- * @版本 2.0
- * @Change
  */
-abstract class BaseToolBarHelperImpl extends ToolbarHelper {
-    int mToolbarLayout;
+public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     Toolbar mToolbar;
     UIView mUIView;
-    View mRootView;
-    AppBarLayout mAppBarLayout;
-    private boolean isMaterialDesign;
+    //    private View mRootView;
+    private AppBarLayout mAppBarLayout;
     private SparseArray<View> mViews;
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         mUIView = uiView;
-        mRootView = rootView;
-        mToolbarLayout = toolbarLayout;
+//        mRootView = rootView;
+//        mToolbarLayout = toolbarLayout;
         mViews = new SparseArray<>();
         //初始化AppBarLayout
-        mAppBarLayout = (AppBarLayout) mRootView.findViewById(R.id.app_bar);
+        mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
         mAppBarLayout.removeAllViews();
         //将toolbarLayout添加到AppBarLayout中
-        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(mToolbarLayout, mAppBarLayout, true);
+        View inflate = LayoutInflater.from(mUIView.getContext()).inflate(toolbarLayout, mAppBarLayout, true);
         //如果find不为null,则设置toolbar
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
         if (mToolbar != null) {
-            mUIView.setSupportActionBar(mToolbar);
-            //默认所有自带的都不显示.不带边距
-            mToolbar.setContentInsetsAbsolute(0, 0);
-            ActionBar supportActionBar = mUIView.getSupportActionBar();
-            supportActionBar.setDisplayHomeAsUpEnabled(false);
-            supportActionBar.setDisplayShowTitleEnabled(false);
-            supportActionBar.setDisplayUseLogoEnabled(false);
-            supportActionBar.setDisplayShowHomeEnabled(false);
             initToolbar();
         } else {
             //说明为自定义toolbar
@@ -58,19 +45,18 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
 
-
     public abstract void initToolbar();
 
     /**
      * 从AppBarLayout中获取控件
      *
-     * @param viewId
-     * @param <V>
-     * @return
+     * @param viewId 控件Id
+     * @param <V>    返回泛型,减少强转操作
+     * @return 可能为null
      */
     @Nullable
     @Override
-    public <V extends View> V findAppBarView(@IdRes int viewId) {
+    public <V extends View> V findViewFromAppBar(@IdRes int viewId) {
         View view = mViews.get(viewId);
         if (view == null && mAppBarLayout != null) {
             view = mAppBarLayout.findViewById(viewId);
@@ -82,13 +68,13 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     /**
      * 设置控件滑动效果
      *
-     * @param viewId
-     * @param flag
-     * @return
+     * @param viewId view id
+     * @param flag   设置的滑动flag
+     * @return 设置成功返回true, 设置失败返回false
      */
     @Override
     public boolean setScrollFlag(@IdRes int viewId, @AppBarLayout.LayoutParams.ScrollFlags int flag) {
-        View view = findAppBarView(viewId);
+        View view = findViewFromAppBar(viewId);
         if (view != null) {
             try {
                 AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) view.getLayoutParams();
@@ -113,7 +99,7 @@ abstract class BaseToolBarHelperImpl extends ToolbarHelper {
 
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        this.isMaterialDesign = isMaterialDesign;
+
     }
 
     public void setTitle(@NonNull String str) {

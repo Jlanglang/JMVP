@@ -1,9 +1,11 @@
 package com.baozi.homemodle.presenter;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.support.design.widget.TabLayout;
+import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
@@ -20,12 +22,38 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
     @Override
     public void onCreate() {
         Toolbar toolbar = mView.findView(R.id.tl_costom);
-        ToolbarHelper.SimpleInitToolbar(mView.getContext(), toolbar);
-        ViewPager view = mView.getContentViewPager();
+        ToolbarHelper.SimpleInitToolbar(mView.getContext(), toolbar, false);
+
+        TabLayout tabLayout = mView.findView(R.id.tab_layout);
+        ViewPager viewPager = mView.getContentViewPager();
+        viewPager.setAdapter(new HomePageAdapter(mView.getFragmentManager()));
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     @Override
     public void loadData() {
 
+    }
+
+    private class HomePageAdapter extends FragmentStatePagerAdapter {
+
+        public HomePageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mView.getFragments().get(position);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mView.getTabs().get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mView.getFragments().size();
+        }
     }
 }

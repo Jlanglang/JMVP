@@ -120,6 +120,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (null==mPresenter){
+            return;
+        }
         if (isVisibleToUser) {
             //相当于Fragment的onResume
             mPresenter.onResume();

@@ -1,6 +1,5 @@
 package com.baozi.mvp.helper;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -24,7 +23,6 @@ import com.baozi.mvp.ui.UIView;
  */
 public abstract class ToolbarHelper {
     public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_templet_defuatl;
-    public static final int TOOLBAR_MD_COLLAPSING = R.layout.toolbar_md_collapsing;
     public static final int TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl;
     public static final int TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout;
 
@@ -35,10 +33,13 @@ public abstract class ToolbarHelper {
     public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
         if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
             return new TempletToolbarHelperImpl(uiView, rootView, toolbarLayout);
+        } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
+            return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout == 0) {
             return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else {
-            return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
+            throw new IllegalStateException("Unknown toolbarLayout ID,You should extends BaseActvity,BaseFragment," +
+                    "Don't extends TempletAcitvity,TempletFrgament");
         }
     }
 
@@ -51,17 +52,17 @@ public abstract class ToolbarHelper {
      * @param context 继承Appcompat的activity的上下文
      * @param toolbar 将要设置的Toolbar
      */
-    public static void SimpleInitToolbar(Context context, @NonNull Toolbar toolbar) {
+    public static void SimpleInitToolbar(Context context, @NonNull Toolbar toolbar, boolean isMaterialDesign) {
         if (context instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) context;
             toolbar.setContentInsetsAbsolute(0, 0);
             activity.setSupportActionBar(toolbar);
             ActionBar supportActionBar = activity.getSupportActionBar();
             if (supportActionBar != null) {
-                supportActionBar.setDisplayShowCustomEnabled(false);
-                supportActionBar.setDisplayHomeAsUpEnabled(false);
-                supportActionBar.setDisplayShowTitleEnabled(false);
-                supportActionBar.setDisplayShowHomeEnabled(false);
+                supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign);
+                supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign);
+                supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign);
+                supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign);
             }
         }
     }
@@ -82,7 +83,7 @@ public abstract class ToolbarHelper {
      * @param <V>
      * @return
      */
-    public abstract <V extends View> V findAppBarView(@IdRes int viewId);
+    public abstract <V extends View> V findViewFromAppBar(@IdRes int viewId);
 
     /**
      * 获取AppBarLayout

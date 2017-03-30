@@ -17,6 +17,6 @@ public class MDToolBarHelperImpl extends BaseToolBarHelperImpl {
 
     @Override
     public void initToolbar() {
-
+        ToolbarHelper.SimpleInitToolbar(mUIView.getContext(), mToolbar, true);
     }
 }

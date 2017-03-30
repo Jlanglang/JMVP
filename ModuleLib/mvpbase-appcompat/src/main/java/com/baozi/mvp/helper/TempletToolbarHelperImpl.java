@@ -6,7 +6,6 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -50,10 +49,7 @@ class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
                 mUIView.onBack();
             }
         });
-        ActionBar supportActionBar = mUIView.getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayShowTitleEnabled(false);
-        }
+        ToolbarHelper.SimpleInitToolbar(mUIView.getContext(), mToolbar, false);
     }
 
     /**
