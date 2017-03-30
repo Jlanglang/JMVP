@@ -29,6 +29,7 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
 
         TabLayout tabLayout = mView.findView(R.id.tab_layout);
         ViewPager viewPager = mView.getContentViewPager();
+
         viewPager.setAdapter(new HomePageAdapter(mView.getFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -39,9 +40,11 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
     }
 
     private class HomePageAdapter extends FragmentPagerAdapter {
+        FragmentManager mFragmentManager;
 
         public HomePageAdapter(FragmentManager fm) {
             super(fm);
+            mFragmentManager = fm;
         }
 
         @Override
@@ -59,6 +62,20 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
             return mView.getFragments().size();
         }
 
+        @Override
+        public Fragment instantiateItem(ViewGroup container, int position) {
+
+            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+            mFragmentManager.beginTransaction().show(fragment).commit();
+            return fragment;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+//            super.destroyItem(container, position, object);
+            mFragmentManager.beginTransaction().hide(getItem(position)).commit();
+
+        }
 
     }
 }

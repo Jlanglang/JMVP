@@ -57,7 +57,7 @@ public abstract class BasePresenter<T extends BaseView> {
 
 
     /**
-     * 取消网络请求
+     * 取消网络请求回调
      */
     public abstract void cancleNetWork();
 

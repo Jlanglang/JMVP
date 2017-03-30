@@ -109,11 +109,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //创建presenter
+        //初始化Presenter
         if (mPresenter != null && !isInit) {
             mPresenter.onCreate();
             isInit = true;
-            //View可见时再加载数据刷新视图
+            //可见时再加载数据刷新视图
             Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
                 @Override
                 public boolean queueIdle() {
@@ -152,12 +152,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     @Override
     public void onDestroyView() {
-        mPresenter.onDestroy();
         super.onDestroyView();
     }
 
     @Override
     public void onDetach() {
+        //fragment中,这个方法才是真正的销毁frgament
+        mPresenter.onDestroy();
         mPresenter.onDetach();
         super.onDetach();
     }

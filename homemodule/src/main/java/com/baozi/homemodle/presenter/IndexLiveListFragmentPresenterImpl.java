@@ -1,6 +1,7 @@
 package com.baozi.homemodle.presenter;
 
 import android.graphics.Rect;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 
 public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLiveListFragmentContract.View>
         implements IndexLiveListFragmentContract.Presenter {
-
     private SimpleRecyclerBaseAdapter mSimpleRecyclerBaseAdapter;
 
     @Override
@@ -69,4 +69,10 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        SwipeRefreshLayout swipeRefreshLayout = mView.findView(R.id.sw_refresh);
+        swipeRefreshLayout.setRefreshing(false);
+    }
 }

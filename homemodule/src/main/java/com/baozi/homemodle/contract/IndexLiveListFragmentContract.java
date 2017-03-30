@@ -9,6 +9,7 @@ import com.baozi.mvp.ui.BaseFragmentView;
  */
 
 public class IndexLiveListFragmentContract {
+
     public interface View extends BaseFragmentView {
     }
 
