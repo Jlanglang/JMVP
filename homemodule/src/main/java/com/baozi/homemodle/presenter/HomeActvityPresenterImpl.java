@@ -39,7 +39,7 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
 
     }
 
-    private class HomePageAdapter extends FragmentPagerAdapter {
+    private class HomePageAdapter extends FragmentStatePagerAdapter {
         FragmentManager mFragmentManager;
 
         public HomePageAdapter(FragmentManager fm) {
@@ -62,20 +62,18 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
             return mView.getFragments().size();
         }
 
-        @Override
-        public Fragment instantiateItem(ViewGroup container, int position) {
-
-            Fragment fragment = (Fragment) super.instantiateItem(container, position);
-            mFragmentManager.beginTransaction().show(fragment).commit();
-            return fragment;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-//            super.destroyItem(container, position, object);
-            mFragmentManager.beginTransaction().hide(getItem(position)).commit();
-
-        }
+//        @Override
+//        public Fragment instantiateItem(ViewGroup container, int position) {
+//            Fragment fragment = (Fragment) super.instantiateItem(container, position);
+//            mFragmentManager.beginTransaction().show(fragment).commitAllowingStateLoss();
+//            return fragment;
+//        }
+//
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+////            super.destroyItem(container, position, object);
+//            mFragmentManager.beginTransaction().hide(getItem(position)).commitAllowingStateLoss();
+//        }
 
     }
 }

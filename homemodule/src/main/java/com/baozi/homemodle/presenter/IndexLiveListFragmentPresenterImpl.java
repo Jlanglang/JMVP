@@ -31,7 +31,26 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         for (int i = 0; i < 20; i++) {
             strings.add(i + "");
         }
-        mSimpleRecyclerBaseAdapter = new SimpleRecyclerBaseAdapter<String>(mView.getContext(), R.layout.home_item_live_list, strings) {
+        init();
+        initRecyclerView();
+        mSimpleRecyclerBaseAdapter.replaceAll(strings);
+    }
+
+    private void initRecyclerView() {
+        RecyclerView recyclerView = mView.findView(R.id.rl_content);
+        recyclerView.setAdapter(mSimpleRecyclerBaseAdapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                outRect.top = AutoUtils.getPercentHeightSize(20);
+            }
+        });
+    }
+
+    private void init() {
+        mSimpleRecyclerBaseAdapter = new SimpleRecyclerBaseAdapter<String>(mView.getContext(), R.layout.home_item_live_list) {
             @Override
             protected void convert(ViewHolder holder, String o, int position) {
 
@@ -52,16 +71,6 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
                 return super.getItemViewType(position);
             }
         };
-        RecyclerView recyclerView = mView.findView(R.id.rl_content);
-        recyclerView.setAdapter(mSimpleRecyclerBaseAdapter);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.VERTICAL, false));
-        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.top = AutoUtils.getPercentHeightSize(20);
-            }
-        });
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -51,12 +52,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        //应该只初始化一次Presenter.
-        if (!isInit) {
+        //应该只创建一次Presenter.
+        if (mPresenter == null || !isInit) {
             mViews = new SparseArray<>();
             mPresenter = initPresenter();
-            mPresenter.onAttch(this);
         }
+        mPresenter.onAttch(this);
     }
 
     /**
@@ -109,7 +110,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //初始化Presenter
+        //初始化Presenter,除非Fragment被回收,否则应该只初始化一次
         if (mPresenter != null && !isInit) {
             mPresenter.onCreate();
             isInit = true;
@@ -152,13 +153,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     @Override
     public void onDestroyView() {
+        mPresenter.onDestroy();
         super.onDestroyView();
     }
 
     @Override
     public void onDetach() {
-        //fragment中,这个方法才是真正的销毁frgament
-        mPresenter.onDestroy();
         mPresenter.onDetach();
         super.onDetach();
     }
@@ -207,9 +207,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void startFragment(Fragment tofragment, String tag) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-//        fragmentTransaction.setCustomAnimations(
-//                R.anim.translate_fade_in_right,
-//                R.anim.translate_fade_out_right, R.anim.translate_fade_in_left, R.anim.translate_fade_out_left);
         fragmentTransaction.hide(this).add(android.R.id.content, tofragment, tag);
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commitAllowingStateLoss();

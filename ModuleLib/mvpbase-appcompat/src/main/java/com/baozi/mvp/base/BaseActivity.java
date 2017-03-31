@@ -104,9 +104,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onDestroy() {
-        if (mPresenter != null) {
-            mPresenter.onDestroy();
-        }
+        mPresenter.onDestroy();
         super.onDestroy();
     }
 
