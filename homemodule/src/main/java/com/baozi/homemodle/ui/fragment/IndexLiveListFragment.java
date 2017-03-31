@@ -18,6 +18,7 @@ import com.baozi.mvp.base.BaseFragment;
 
 public class IndexLiveListFragment extends BaseFragment<IndexLiveListFragmentPresenterImpl>
         implements IndexLiveListFragmentContract.View {
+
     @Override
     public View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_fragment_livelist, null);
