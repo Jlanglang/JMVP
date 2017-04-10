@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -75,18 +76,14 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     @Override
     public boolean setScrollFlag(@IdRes int viewId, @AppBarLayout.LayoutParams.ScrollFlags int flag) {
         View view = findViewFromAppBar(viewId);
-        if (view != null) {
-            try {
-                AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) view.getLayoutParams();
-                layoutParams.setScrollFlags(flag);
-            } catch (ClassCastException e) {
-                e.printStackTrace();
-                return false;
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                return false;
-            }
-        } else {
+        try {
+            AppBarLayout.LayoutParams layoutParams = (AppBarLayout.LayoutParams) view.getLayoutParams();
+            layoutParams.setScrollFlags(flag);
+        } catch (ClassCastException e) {
+            e.printStackTrace();
+            return false;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
             return false;
         }
         return true;

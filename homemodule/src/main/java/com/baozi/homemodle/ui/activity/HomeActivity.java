@@ -13,6 +13,7 @@ import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
 import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
+import com.baozi.mvp.presenter.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.home_activity_index, null);
+        View inflate = inflater.inflate(R.layout.home_fragment_mine, null);
         return inflate;
     }
 
