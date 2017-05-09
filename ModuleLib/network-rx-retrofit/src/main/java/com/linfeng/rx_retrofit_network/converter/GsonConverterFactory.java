@@ -12,31 +12,31 @@ import retrofit2.Retrofit;
 /**
  * Created by dayaa on 16/1/20.
  */
-public class FastjsonConverterFactory extends Converter.Factory {
+public class GsonConverterFactory extends Converter.Factory {
 
     private Charset charset;
     private static final Charset UTF_8  = Charset.forName("UTF-8");
 
-    public static FastjsonConverterFactory create() {
+    public static GsonConverterFactory create() {
         return create(UTF_8);
     }
 
-    public static FastjsonConverterFactory create(Charset charset) {
-        return new FastjsonConverterFactory(charset);
+    public static GsonConverterFactory create(Charset charset) {
+        return new GsonConverterFactory(charset);
     }
 
-    public FastjsonConverterFactory(Charset charset) {
+    public GsonConverterFactory(Charset charset) {
         this.charset = charset;
     }
 
     @Override
     public Converter<?, RequestBody> requestBodyConverter(Type type, Annotation[] parameterAnnotations,
                                                           Annotation[] methodAnnotations, Retrofit retrofit) {
-        return new FastjsonRequestBodyConverter<>(type, charset);
+        return new GsonRequestBodyConverter<>(type, charset);
     }
 
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        return new FastjsonResponseBodyConverter<>(type, charset);
+        return new GsonResponseBodyConverter<>(type, charset);
     }
 }

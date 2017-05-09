@@ -183,10 +183,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return findView(id);
     }
 
-    @Override
-    public void isNightMode(boolean isNight) {
-
-    }
+//    @Override
+//    public void isNightMode(boolean isNight) {
+//
+//    }
 
     /**
      * 初始化ContentView

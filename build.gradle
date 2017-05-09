@@ -16,8 +16,10 @@ allprojects {
     repositories {
         jcenter()
         mavenCentral()
-        flatDir {
-            dirs '../mvp-appcompat/libs','libs'
+        repositories {
+            flatDir {
+                dirs 'libs',"../jmvp/libs"
+            }
         }
     }
 }

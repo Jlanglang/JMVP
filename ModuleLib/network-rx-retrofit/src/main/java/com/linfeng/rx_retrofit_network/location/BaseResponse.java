@@ -3,7 +3,7 @@ package com.linfeng.rx_retrofit_network.location;
 /**
  * Created by baozi on 2016/12/5.
  */
-public class BaseResponse<T> {
+public class BaseResponse<T>{
     private boolean success;
     private int resultCode;
     private String msg;
@@ -13,7 +13,7 @@ public class BaseResponse<T> {
         return success;
     }
 
-    public  T getData() {
+    public T getData() {
         return data;
     }
 

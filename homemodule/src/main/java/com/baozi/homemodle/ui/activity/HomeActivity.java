@@ -14,8 +14,10 @@ import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
 import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.treerecyclerview.factory.ItemConfig;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,8 +33,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.home_fragment_mine, null);
-        return inflate;
+        return inflater.inflate(R.layout.home_activity_index, null);
     }
 
     @Override
@@ -64,6 +65,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     public List<String> getTabs() {
         if (null == mTabs) {
             mTabs = new ArrayList<>();
+
             mTabs.add("直播");
             mTabs.add("推荐");
             mTabs.add("追番");

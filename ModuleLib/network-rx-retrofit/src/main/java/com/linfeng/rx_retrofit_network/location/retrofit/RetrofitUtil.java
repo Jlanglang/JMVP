@@ -9,7 +9,7 @@ import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.linfeng.rx_retrofit_network.converter.FastjsonConverterFactory;
+import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -26,6 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
@@ -61,6 +62,7 @@ public class RetrofitUtil {
                     Log.i("RxJava", message);
                 }
             });
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             Interceptor cacheInterceptor = new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
@@ -95,15 +97,18 @@ public class RetrofitUtil {
                 }
             };
             OkHttpClient client = new OkHttpClient.Builder()
+                    //拦截log
                     .addInterceptor(interceptor)
+                    //拦截并设置缓存
                     .addNetworkInterceptor(cacheInterceptor)
+                    //拦截并设置缓存
                     .addInterceptor(cacheInterceptor)
                     .cache(new Cache(mContext.getCacheDir(), 10240 * 1024))
                     .build();
             return new Retrofit.Builder()
                     .client(client)
                     .baseUrl(API_HOST)
-                    .addConverterFactory(FastjsonConverterFactory.create())
+                    .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                     .build();
         }
@@ -153,7 +158,13 @@ public class RetrofitUtil {
             return RequestBodyHashMap;
         }
 
-        public static HashMap<String, RequestBody> creatRequestBodyImagesFiles(List<String> images) {
+        /**
+         * 次方法获取的bitmap为原始大小,图片文件过大可能造成oom
+         *
+         * @param images
+         * @return
+         */
+        public static HashMap<String, RequestBody> creatRequestBodyImagesFiles(List<String> images) throws OutOfMemoryError {
             if (images == null) {
                 return null;
             }
@@ -172,6 +183,12 @@ public class RetrofitUtil {
             return photoRequestMap;
         }
 
+        /**
+         * 建议调用此方法前,先将bitmap压缩.
+         *
+         * @param images
+         * @return
+         */
         public static HashMap<String, RequestBody> creatRequestBodyBitmap(List<Bitmap> images) {
             if (images == null) {
                 return null;

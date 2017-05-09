@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLiveListFragmentContract.View>
         implements IndexLiveListFragmentContract.Presenter {
-    private SimpleRecyclerBaseAdapter mSimpleRecyclerBaseAdapter;
+    private SimpleRecyclerBaseAdapter<String> mSimpleRecyclerBaseAdapter;
 
     @Override
     public void onCreate() {

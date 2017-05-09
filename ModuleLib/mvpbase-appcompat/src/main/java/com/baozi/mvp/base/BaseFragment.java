@@ -110,7 +110,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //初始化Presenter,除非Fragment被回收,否则应该只初始化一次
+        //初始化Presenter,应该只初始化一次
         if (mPresenter != null && !isInit) {
             mPresenter.onCreate();
             isInit = true;
@@ -212,10 +212,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-    @Override
-    public void isNightMode(boolean isNight) {
-
-    }
+//    @Override
+//    public void isNightMode(boolean isNight) {
+//
+//    }
 
     @Override
     public Context getContext() {

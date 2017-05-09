@@ -21,8 +21,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    //强制资源文件以module名开头
     resourcePrefix "home_"
-
 
     sourceSets {
         main {

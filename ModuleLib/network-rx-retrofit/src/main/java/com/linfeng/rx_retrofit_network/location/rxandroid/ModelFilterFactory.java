@@ -1,6 +1,7 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 
+
 import com.linfeng.rx_retrofit_network.location.BaseResponse;
 
 import rx.Observable;

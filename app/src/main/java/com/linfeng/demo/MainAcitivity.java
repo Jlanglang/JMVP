@@ -53,10 +53,10 @@ public class MainAcitivity extends TempletActivity<BasePresenter>
     }
 
 
-    @Override
-    public void isNightMode(boolean isNight) {
-
-    }
+//    @Override
+//    public void isNightMode(boolean isNight) {
+//
+//    }
 
     @Override
     public boolean isMaterialDesign() {
