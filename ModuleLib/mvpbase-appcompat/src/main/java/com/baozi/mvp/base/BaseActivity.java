@@ -1,7 +1,5 @@
 package com.baozi.mvp.base;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Looper;
@@ -9,6 +7,8 @@ import android.os.MessageQueue;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.BaseActivityView;
-import com.baozi.mvp.ui.BaseView;
 
 /**
  * @author jlanglang  2016/1/5 9:42
@@ -39,6 +38,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         //初始化ContentView
         mContentView = initView(LayoutInflater.from(this), savedInstanceState);
         super.setContentView(mContentView);
+        //初始化Activity
+        init(savedInstanceState);
         //初始化presenter
         mPresenter.onCreate();
         //延时加载数据.
@@ -136,7 +137,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public void startFragment(Fragment tofragment, String tag) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.add(android.R.id.content, tofragment, tag);
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commitAllowingStateLoss();
@@ -183,10 +184,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return findView(id);
     }
 
-//    @Override
-//    public void isNightMode(boolean isNight) {
-//
-//    }
 
     /**
      * 初始化ContentView
@@ -198,6 +195,17 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @NonNull
     protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
+
+    /**
+     * 运行在initView之后
+     * 此时setContentView
+     * 可以做一些初始化操作
+     *
+     * @return
+     */
+    protected void init(Bundle savedInstanceState) {
+
+    }
 
     /**
      * 子类实现Presenter,且必须继承BasePrensenter

@@ -71,11 +71,19 @@ public class BitmapUtils {
      * @return
      */
     public static Bitmap createScaleBitmap(Bitmap bitmap, int dstWidth, int dstHeight) {
-        BitmapFactory.Options options = new BitmapFactory.Options();
-        options.inJustDecodeBounds = true;
-        options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        options.inSampleSize = calculateInSampleSize(options, dstWidth, dstHeight);
-        options.inJustDecodeBounds = false;
-        return createScaleBitmap(bitmap, dstWidth, dstHeight, options.inSampleSize);
+//        BitmapFactory.Options options = new BitmapFactory.Options();
+//        options.outHeight = bitmap.getHeight();
+//        options.outWidth = bitmap.getWidth();
+//        options.inJustDecodeBounds = true;
+//        options.inPreferredConfig = Bitmap.Config.RGB_565;
+//        options.inSampleSize = calculateInSampleSize(options, dstWidth, dstHeight);
+//        options.inJustDecodeBounds = false;
+        // 如果是放大图片，filter决定是否平滑，如果是缩小图片，filter无影响，我们这里是缩小图片，所以直接设置为false
+        Bitmap dst = Bitmap.createScaledBitmap(bitmap, dstWidth, dstHeight, false);
+        if (bitmap != dst) { // 如果没有缩放，那么不回收
+            bitmap.recycle(); // 释放Bitmap的native像素数组
+        }
+        return dst;
     }
+
 }

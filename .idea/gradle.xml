@@ -18,7 +18,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/homemodule" />
             <option value="$PROJECT_DIR$/jmvp" />
-            <option value="$PROJECT_DIR$/testmodule" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

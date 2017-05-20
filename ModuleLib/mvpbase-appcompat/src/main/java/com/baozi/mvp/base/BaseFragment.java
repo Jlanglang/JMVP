@@ -1,15 +1,14 @@
 package com.baozi.mvp.base;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -110,6 +109,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        //View做一些初始化操作.
+        init(savedInstanceState);
         //初始化Presenter,应该只初始化一次
         if (mPresenter != null && !isInit) {
             mPresenter.onCreate();
@@ -184,11 +185,20 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
 
     /**
-     * 初始化Fragment应有的视图
+     * 创建Fragment视图
      *
-     * @return
+     * @return Fragment视图
      */
     public abstract View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
+
+    /**
+     * 运行在initView之后
+     * 此时已经setContentView
+     * 可以做一些初始化操作
+     */
+    public void init(Bundle savedInstanceState) {
+
+    }
 
     /**
      * 跳转fragment
@@ -212,10 +222,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
-//    @Override
-//    public void isNightMode(boolean isNight) {
-//
-//    }
 
     @Override
     public Context getContext() {
@@ -269,5 +275,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * @return
      */
     protected abstract T initPresenter();
+
 
 }

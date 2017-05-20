@@ -15,7 +15,6 @@ import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.TempletView;
-import com.baozi.mvp.ui.ToolbarView;
 
 /**
  * 模版Fragment
@@ -45,7 +44,7 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = initContentView(inflater, savedInstanceState);
+        View contentView = onCreatContentView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
 //        //交给Persenter去扩展
@@ -55,7 +54,7 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
 
 
     @NonNull
-    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
+    protected abstract View onCreatContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar
