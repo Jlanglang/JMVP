@@ -1,0 +1,24 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp">
+
+    <ImageView
+        android:scaleType="centerCrop"
+        android:id="@+id/photo_wall_item_photo"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        />
+
+    <TextView
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:id="@+id/photo_wall_item_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="4px"
+        android:background="@drawable/select_photo_wall"
+        />
+</RelativeLayout>

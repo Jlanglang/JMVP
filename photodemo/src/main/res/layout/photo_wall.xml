@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/tl_custom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        >
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:layout_marginRight="8dp"
+            android:textColor="#fff"/>
+    </android.support.v7.widget.Toolbar>
+
+    <com.baozi.jrecyclerviewadapter.adapter.widget.DragSelectRecyclerView
+        android:id="@+id/photo_wall_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ccc"
+        />
+
+</LinearLayout>

@@ -17,6 +17,7 @@
             <option value="$PROJECT_DIR$/ModuleLib/utils-common" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/homemodule" />
+            <option value="$PROJECT_DIR$/j-recyclerview-adapter" />
             <option value="$PROJECT_DIR$/jmvp" />
           </set>
         </option>

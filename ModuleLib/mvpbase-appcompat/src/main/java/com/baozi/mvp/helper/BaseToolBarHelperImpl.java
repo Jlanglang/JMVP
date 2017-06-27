@@ -27,8 +27,6 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         mUIView = uiView;
-//        mRootView = rootView;
-//        mToolbarLayout = toolbarLayout;
         mViews = new SparseArray<>();
         //初始化AppBarLayout
         mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);

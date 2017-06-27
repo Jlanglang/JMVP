@@ -46,7 +46,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
-                mPresenter.loadData();
+                mPresenter.initData();
                 return false;
             }
         });
@@ -153,7 +153,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public BaseActivity getActivity() {
+    public BaseActivity getAppcompatActivity() {
         return this;
     }
 

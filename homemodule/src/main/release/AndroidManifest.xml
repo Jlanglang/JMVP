@@ -12,7 +12,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/home_app_name"
         android:supportsRtl="true"
-        android:theme="@style/home_theme">
+        android:theme="@style/Base_theme">
         <activity android:name=".ui.activity.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

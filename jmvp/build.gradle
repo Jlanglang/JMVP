@@ -16,15 +16,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
 
-
-    dependencies {
-        compile fileTree(include: ['*.jar'], dir: 'libs')
-        testCompile 'junit:junit:4.12'
-        compile project(':ModuleLib:imageloder-glide')
-        compile project(':ModuleLib:mvpbase-appcompat')
-        compile project(':ModuleLib:network-rx-retrofit')
-        compile project(':ModuleLib:utils-common')
-        compile(name: 'TreeRecyclerView', ext: 'aar')
-    }
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile project(':ModuleLib:imageloder-glide')
+    compile project(':ModuleLib:mvpbase-appcompat')
+    compile project(':ModuleLib:network-rx-retrofit')
+    compile project(':ModuleLib:utils-common')
+    compile(name: 'TreeRecyclerView', ext: 'aar')
+    compile project(':j-recyclerview-adapter')
 }

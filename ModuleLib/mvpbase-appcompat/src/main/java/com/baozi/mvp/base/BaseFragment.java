@@ -34,13 +34,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     private View mContentView;
     private boolean isInit;
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (mBundle != null) {
-            outState.putBundle("bundle", mBundle);
-        }
-        super.onSaveInstanceState(outState);
-    }
 
     /**
      * 绑定activity
@@ -74,6 +67,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         } else {
             mBundle = getArguments() == null ? new Bundle() : getArguments();
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        if (mBundle != null) {
+            outState.putBundle("bundle", mBundle);
+        }
+        super.onSaveInstanceState(outState);
     }
 
     /**
@@ -119,7 +120,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
             Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
                 @Override
                 public boolean queueIdle() {
-                    mPresenter.loadData();
+                    mPresenter.initData();
                     return false;
                 }
             });
@@ -170,7 +171,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     public View getContentView() {
-        return findView(android.R.id.content);
+        return mContentView;
     }
 
 
@@ -244,13 +245,18 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
+    public AppCompatActivity getAppcompatActivity() {
+        return (AppCompatActivity) mContext;
+    }
+
+    @Override
     public ActionBar getSupportActionBar() {
-        return ((AppCompatActivity) mContext).getSupportActionBar();
+        return getAppcompatActivity().getSupportActionBar();
     }
 
     @Override
     public void setSupportActionBar(@Nullable Toolbar toolbar) {
-        ((AppCompatActivity) mContext).setSupportActionBar(toolbar);
+        getAppcompatActivity().setSupportActionBar(toolbar);
     }
 
 
