@@ -115,7 +115,6 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         }
         return super.onPrepareOptionsPanel(view, menu);
     }
-
     /**
      * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
      */
@@ -135,7 +134,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
 
 
     @Override
-    public TempletActivity getActivity() {
+    public TempletActivity getAppcompatActivity() {
         return this;
     }
 

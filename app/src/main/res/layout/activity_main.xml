@@ -8,22 +8,19 @@
     android:layout_height="2000dp"
     android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.linfeng.demo.MainAcitivity">
-
+    tools:context="com.linfeng.demo.MainActivity">
     <LinearLayout
+        android:background="#fff"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="2000dp">
+        <android.support.v7.widget.SearchView
+            android:layout_width="match_parent"
+            android:layout_height="48dp"/>
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="hello world"
-            />
-        <TextView
-            android:id="@+id/rl_content"
-            android:layout_width="match_parent"
-            android:layout_height="2000dp"
             android:gravity="center"
             android:text="hello world"
             />

@@ -1,8 +1,8 @@
 package com.baozi.homemodle.ui.activity;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -33,6 +33,7 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
+        
         return inflater.inflate(R.layout.home_activity_index, null);
     }
 
@@ -52,11 +53,11 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         if (null == mFragments) {
             mFragments = new ArrayList<>();
             mFragments.add(new IndexLiveListFragment());
-            mFragments.add(new IndexLiveListFragment());
-            mFragments.add(new IndexLiveListFragment());
-            mFragments.add(new IndexLiveListFragment());
-            mFragments.add(new IndexLiveListFragment());
-            mFragments.add(new IndexLiveListFragment());
+//            mFragments.add(new IndexLiveListFragment());
+//            mFragments.add(new IndexLiveListFragment());
+//            mFragments.add(new IndexLiveListFragment());
+//            mFragments.add(new IndexLiveListFragment());
+//            mFragments.add(new IndexLiveListFragment());
         }
         return mFragments;
     }
@@ -67,11 +68,11 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
             mTabs = new ArrayList<>();
 
             mTabs.add("直播");
-            mTabs.add("推荐");
-            mTabs.add("追番");
-            mTabs.add("分区");
-            mTabs.add("动态");
-            mTabs.add("发现");
+//            mTabs.add("推荐");
+//            mTabs.add("追番");
+//            mTabs.add("分区");
+//            mTabs.add("动态");
+//            mTabs.add("发现");
         }
         return mTabs;
     }

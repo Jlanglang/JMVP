@@ -16,7 +16,7 @@
         app:layout_collapseMode="pin"
         app:layout_scrollFlags="scroll|enterAlways"
         app:popupTheme="@style/popup_theme"
-        app:theme="@style/home_theme"
+        app:theme="@style/Base_theme"
         >
 
         <ImageView

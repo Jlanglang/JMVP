@@ -1,21 +1,28 @@
 package com.baozi.homemodle.presenter;
 
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
+import com.baozi.frame.CarouselRecyclerView;
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.IndexLiveListFragmentContract;
-import com.linfeng.common.adapter.recyclerview.SimpleRecyclerBaseAdapter;
-import com.linfeng.common.adapter.recyclerview.base.ViewHolder;
+import com.baozi.jrecyclerviewadapter.adapter.recyclerview.SimpleRecyclerAdapter;
+import com.baozi.jrecyclerviewadapter.adapter.recyclerview.ViewHolder;
+import com.baozi.jrecyclerviewadapter.adapter.recyclerview.wrapper.HeaderAndFootWapper;
+import com.linfeng.imageloder.BindImageFactory;
 import com.zhy.autolayout.utils.AutoUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Administrator on 2017/03/30
@@ -23,7 +30,8 @@ import java.util.ArrayList;
 
 public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLiveListFragmentContract.View>
         implements IndexLiveListFragmentContract.Presenter {
-    private SimpleRecyclerBaseAdapter<String> mSimpleRecyclerBaseAdapter;
+    private String[] mStrings = {"1","2","3"};
+    private HeaderAndFootWapper<String> mHeaderAndFootWapper;
 
     @Override
     public void onCreate() {
@@ -33,12 +41,11 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         }
         init();
         initRecyclerView();
-        mSimpleRecyclerBaseAdapter.replaceAll(strings);
+        mHeaderAndFootWapper.getItemManager().addAllItems(strings);
     }
 
     private void initRecyclerView() {
         RecyclerView recyclerView = mView.findView(R.id.rl_content);
-        recyclerView.setAdapter(mSimpleRecyclerBaseAdapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(mView.getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
@@ -47,34 +54,52 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
                 outRect.top = AutoUtils.getPercentHeightSize(20);
             }
         });
+        recyclerView.setAdapter(mHeaderAndFootWapper);
+
     }
 
     private void init() {
-        mSimpleRecyclerBaseAdapter = new SimpleRecyclerBaseAdapter<String>(mView.getContext(), R.layout.home_item_live_list) {
+        SimpleRecyclerAdapter mSimpleRecyclerBaseAdapter = new SimpleRecyclerAdapter<String>() {
             @Override
-            protected void convert(ViewHolder holder, String o, int position) {
+            public void convert(ViewHolder holder, String o, int position) {
 
             }
 
             @Override
-            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-                return super.onCreateViewHolder(parent, viewType);
-            }
-
-            @Override
-            public void onBindViewHolder(ViewHolder holder, int position) {
-                super.onBindViewHolder(holder, position);
-            }
-
-            @Override
-            public int getItemViewType(int position) {
-                return super.getItemViewType(position);
+            public int getLayoutId() {
+                return R.layout.home_item_live_list;
             }
         };
+        mHeaderAndFootWapper = new HeaderAndFootWapper<String>(mSimpleRecyclerBaseAdapter);
+
+        SimpleRecyclerAdapter<String> carouselAdapter = new SimpleRecyclerAdapter<String>() {
+            @Override
+            public int getLayoutId() {
+                return R.layout.home_item_carouse_image;
+            }
+
+            @Override
+            public void convert(ViewHolder holder, String o, int position) {
+                ImageView itemView = (ImageView) holder.itemView;
+                itemView.setBackground(ContextCompat.getDrawable(mView.getContext(),R.mipmap.ic_launcher));
+//                BindImageFactory.bindImage(itemView.getContext(), o, itemView);
+            }
+        };
+        CarouselRecyclerView contentView = new CarouselRecyclerView.Builder(mView.getContext())
+                .setAdapter(carouselAdapter)
+                .setItemChangeCallBack(new CarouselRecyclerView.ItemChangeCallBack() {
+                    @Override
+                    public void change(ViewGroup indicator, int index) {
+
+                    }
+                })
+                .create();
+        carouselAdapter.getItemManager().replaceAllItem(Arrays.asList(mStrings));
+        mHeaderAndFootWapper.addHeaderView(contentView);
     }
 
     @Override
-    public void loadData() {
+    public void initData() {
 
     }
 

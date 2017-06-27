@@ -1,5 +1,5 @@
 <resources>
-    <!-- Base application theme. -->
+     Base application theme.
     <style name="toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

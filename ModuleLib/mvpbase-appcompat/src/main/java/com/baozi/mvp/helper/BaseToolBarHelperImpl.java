@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -28,8 +27,6 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
 
     public BaseToolBarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
         mUIView = uiView;
-//        mRootView = rootView;
-//        mToolbarLayout = toolbarLayout;
         mViews = new SparseArray<>();
         //初始化AppBarLayout
         mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
@@ -37,7 +34,7 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         //将toolbarLayout添加到AppBarLayout中
         View inflate = LayoutInflater.from(mUIView.getContext()).inflate(toolbarLayout, mAppBarLayout, true);
         //如果find不为null,则设置toolbar
-        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_costom);
+        mToolbar = (Toolbar) inflate.findViewById(R.id.tl_custom);
         if (mToolbar != null) {
             initToolbar();
         } else {

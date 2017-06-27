@@ -13,12 +13,6 @@ import com.baozi.mvp.ui.BaseView;
  */
 public abstract class BasePresenter<T extends BaseView> {
 
-
-//    /**
-//     * 是否初始化,是否调用了onCreate()
-//     */
-//    private boolean isInit;
-
     protected T mView;
 
     /**
@@ -39,7 +33,7 @@ public abstract class BasePresenter<T extends BaseView> {
      * 运行在onCreate()之后,可能在onStart()之后调用.
      * 建议加载数据,处理数据刷新页面的操作放在这里
      */
-    public abstract void loadData();
+    public abstract void initData();
 
     /**
      * 在这里结束异步操作

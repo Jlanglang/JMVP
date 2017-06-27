@@ -1,8 +1,7 @@
 package com.baozi.mvp.ui;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 /**
  * Created by baozi on 2016/11/24.

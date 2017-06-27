@@ -36,7 +36,7 @@ public class MainActivity extends TempletActivity<BasePresenter> {
             }
 
             @Override
-            public void loadData() {
+            public void initData() {
             }
 
             @Override
