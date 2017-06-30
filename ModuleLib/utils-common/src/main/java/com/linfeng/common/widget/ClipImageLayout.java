@@ -5,8 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.widget.RelativeLayout;
 
-import com.zhy.autolayout.AutoRelativeLayout;
 
 /**
  * @ClassName: ClipImageLayout
@@ -14,7 +14,7 @@ import com.zhy.autolayout.AutoRelativeLayout;
  * @author xiechengfa2000@163.com
  * @date 2015-5-10 下午10:22:24
  */
-public class ClipImageLayout extends AutoRelativeLayout {
+public class ClipImageLayout extends RelativeLayout {
 	public ClipZoomImageView getZoomImageView() {
 		return mZoomImageView;
 	}

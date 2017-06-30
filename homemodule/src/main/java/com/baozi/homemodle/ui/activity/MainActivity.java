@@ -10,7 +10,7 @@ import com.baozi.homemodle.R;
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.zhy.autolayout.utils.AutoUtils;
+import com.linfeng.common.utils.AutoUtils;
 
 
 public class MainActivity extends TempletActivity<BasePresenter> {

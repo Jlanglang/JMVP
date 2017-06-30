@@ -13,6 +13,7 @@ class Main2Activity : AppCompatActivity() {
     }
 
     override fun onStart() {
+
     }
 
 }

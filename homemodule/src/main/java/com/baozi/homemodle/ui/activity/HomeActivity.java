@@ -1,9 +1,16 @@
 package com.baozi.homemodle.ui.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.SpannableStringBuilder;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -15,6 +22,7 @@ import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.treerecyclerview.factory.ItemConfig;
+import com.linfeng.common.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,13 +38,15 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTabs;
 
+
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
-        
-        return inflater.inflate(R.layout.home_activity_index, null);
+        View inflate = inflater.inflate(R.layout.home_activity_index, null);
+        AutoUtils.setSize(this,true,720,1280);
+        AutoUtils.auto(inflate);
+        return inflate;
     }
-
     @Override
     protected HomeActvityPresenterImpl initPresenter() {
         return new HomeActvityPresenterImpl();

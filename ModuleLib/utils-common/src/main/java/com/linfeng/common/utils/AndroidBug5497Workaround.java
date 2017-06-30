@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 
-import com.zhy.autolayout.utils.AutoUtils;
 
 public class AndroidBug5497Workaround {
     private final FrameLayout content;
@@ -46,7 +45,7 @@ public class AndroidBug5497Workaround {
                 // keyboard probably just became visible
                 frameLayoutParams.height = usableHeightSansKeyboard - heightDifference;
                 if (Integer.parseInt(Build.VERSION.SDK) >= 19) {
-                    frameLayoutParams.height += AutoUtils.getPercentHeightSize(56);
+                    frameLayoutParams.height += AutoUtils.getDisplayHeightValue(56);
                 }
             } else {
                 boolean b = Utils.checkDeviceHasNavigationBar(content.getContext());//是否有虚拟按键.
@@ -58,7 +57,7 @@ public class AndroidBug5497Workaround {
                 }
                 frameLayoutParams.height = usableHeightSansKeyboard;
                 if (Integer.parseInt(Build.VERSION.SDK) <= 19) {
-                    frameLayoutParams.height -= AutoUtils.getPercentHeightSize(56);
+                    frameLayoutParams.height -= AutoUtils.getDisplayHeightValue(56);
                 }
             }
             mChildOfContent.requestLayout();

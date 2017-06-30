@@ -26,7 +26,7 @@ public class AutoUtils {
 	
 	public static void setSize(Activity act, boolean hasStatusBar, int designWidth, int designHeight){
 		if(act==null || designWidth<1 || designHeight<1)return;
-		
+
         Display display = act.getWindowManager().getDefaultDisplay();
 		int width = display.getWidth();
         int height = display.getHeight();
