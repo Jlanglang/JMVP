@@ -13,11 +13,9 @@ import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
 import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
-import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.treerecyclerview.factory.ItemConfig;
+import com.linfeng.common.utils.AutoUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,8 +31,13 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @NonNull
     @Override
     protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
-        
         return inflater.inflate(R.layout.home_activity_index, null);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AutoUtils.setSize(this, false, 720, 1280);
     }
 
     @Override
@@ -53,11 +56,11 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         if (null == mFragments) {
             mFragments = new ArrayList<>();
             mFragments.add(new IndexLiveListFragment());
-//            mFragments.add(new IndexLiveListFragment());
-//            mFragments.add(new IndexLiveListFragment());
-//            mFragments.add(new IndexLiveListFragment());
-//            mFragments.add(new IndexLiveListFragment());
-//            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
+            mFragments.add(new IndexLiveListFragment());
         }
         return mFragments;
     }
@@ -68,11 +71,11 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
             mTabs = new ArrayList<>();
 
             mTabs.add("直播");
-//            mTabs.add("推荐");
-//            mTabs.add("追番");
-//            mTabs.add("分区");
-//            mTabs.add("动态");
-//            mTabs.add("发现");
+            mTabs.add("推荐");
+            mTabs.add("追番");
+            mTabs.add("分区");
+            mTabs.add("动态");
+            mTabs.add("发现");
         }
         return mTabs;
     }

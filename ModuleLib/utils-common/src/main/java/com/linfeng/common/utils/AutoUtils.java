@@ -138,8 +138,7 @@ public class AutoUtils {
         }
         
     }
-    
-    public static void autoTextSize(View view){
+	public static void autoTextSize(View view){
     	if(view instanceof TextView){
     		double designPixels=((TextView) view).getTextSize();
     		double displayPixels=textPixelsRate*designPixels;

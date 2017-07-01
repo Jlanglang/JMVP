@@ -10,7 +10,7 @@ import com.baozi.homemodle.R;
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.zhy.autolayout.utils.AutoUtils;
+import com.linfeng.common.utils.AutoUtils;
 
 
 public class MainActivity extends TempletActivity<BasePresenter> {
@@ -18,9 +18,14 @@ public class MainActivity extends TempletActivity<BasePresenter> {
     @NonNull
     @Override
     public View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
-        View inflate = inflater.inflate(R.layout.home_activity_main, null);
-        AutoUtils.auto(inflate);
-        return inflate;
+        return inflater.inflate(R.layout.home_activity_main, null);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        AutoUtils.auto(this);
+
     }
 
     @Override

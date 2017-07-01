@@ -30,10 +30,10 @@ dependencies {
     compile 'com.android.support:support-v13:25.2.0'
     testCompile 'junit:junit:4.12'
     compile files('libs/zxing.jar')
-    /**
-     * 自动适配
-     */
-    compile 'com.zhy:autolayout:1.4.5'
+//    /**
+//     * 自动适配
+//     */
+//    compile 'com.zhy:autolayout:1.4.5'
     compile 'com.android.support:support-annotations:25.2.0'
 
 }

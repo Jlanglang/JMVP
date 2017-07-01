@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.baozi.frame.CarouselRecyclerView;
@@ -18,8 +17,7 @@ import com.baozi.homemodle.contract.IndexLiveListFragmentContract;
 import com.baozi.jrecyclerviewadapter.adapter.recyclerview.SimpleRecyclerAdapter;
 import com.baozi.jrecyclerviewadapter.adapter.recyclerview.ViewHolder;
 import com.baozi.jrecyclerviewadapter.adapter.recyclerview.wrapper.HeaderAndFootWapper;
-import com.linfeng.imageloder.BindImageFactory;
-import com.zhy.autolayout.utils.AutoUtils;
+import com.linfeng.common.utils.AutoUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,7 +49,7 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.top = AutoUtils.getPercentHeightSize(20);
+                outRect.top = AutoUtils.getDisplayHeightValue(20);
             }
         });
         recyclerView.setAdapter(mHeaderAndFootWapper);
@@ -63,6 +61,13 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             @Override
             public void convert(ViewHolder holder, String o, int position) {
 
+            }
+
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                AutoUtils.auto(viewHolder.itemView);
+                return viewHolder;
             }
 
             @Override
@@ -82,7 +87,6 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             public void convert(ViewHolder holder, String o, int position) {
                 ImageView itemView = (ImageView) holder.itemView;
                 itemView.setBackground(ContextCompat.getDrawable(mView.getContext(),R.mipmap.ic_launcher));
-//                BindImageFactory.bindImage(itemView.getContext(), o, itemView);
             }
         };
         CarouselRecyclerView contentView = new CarouselRecyclerView.Builder(mView.getContext())

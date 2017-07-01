@@ -9,8 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.LinearLayout;
 
-import com.zhy.autolayout.AutoLinearLayout;
 
 /**
  * @author jlanglang  2016/11/3 10:46
@@ -18,7 +18,7 @@ import com.zhy.autolayout.AutoLinearLayout;
  * @Change
  * @des ${TODO}
  */
-public class SwipeExitLayout extends AutoLinearLayout {
+public class SwipeExitLayout extends LinearLayout {
 
     private final Context context;
     private ViewDragHelper mViewDragHelper;

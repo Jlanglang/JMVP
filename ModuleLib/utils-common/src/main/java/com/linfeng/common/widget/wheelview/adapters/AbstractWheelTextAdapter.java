@@ -25,7 +25,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.zhy.autolayout.utils.AutoUtils;
+import com.linfeng.common.utils.AutoUtils;
+
 
 /**
  * Abstract wheel adapter provides common functionality for adapters.
@@ -223,7 +224,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     protected void configureTextView(TextView view) {
         view.setTextColor(textColor);
         view.setGravity(Gravity.CENTER);
-        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getPercentWidthSize(textSize*2));
+        view.setTextSize(TypedValue.COMPLEX_UNIT_PX, AutoUtils.getDisplayWidthValue(textSize*2));
         view.setEllipsize(TextUtils.TruncateAt.END);
         view.setLines(1);
 //        view.setCompoundDrawablePadding(20);
