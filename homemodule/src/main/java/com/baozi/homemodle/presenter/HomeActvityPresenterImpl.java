@@ -34,7 +34,24 @@ public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract
 
     @Override
     public void initData() {
-
+//        final int time = 10000;
+//        //倒计时
+//        Subscription subscribe1 = Observable.interval(1, TimeUnit.SECONDS)
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribeOn(Schedulers.io())
+//                .take(time/1000+1)
+//                .map(new Func1<Long, Long>() {
+//                    @Override
+//                    public Long call(Long aLong) {
+//                        return time - aLong*1000;
+//                    }
+//                })
+//                .subscribe(new Action1<Long>() {
+//                    @Override
+//                    public void call(Long aLong) {
+//                        ((TextView)mView.findView(R.id.tv_title)).setText(aLong+"");
+//                    }
+//                });
     }
 
     private class HomePageAdapter extends FragmentStatePagerAdapter {

@@ -32,4 +32,5 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
     testCompile 'junit:junit:4.12'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.android.support:support-compat:25.2.0'
 }

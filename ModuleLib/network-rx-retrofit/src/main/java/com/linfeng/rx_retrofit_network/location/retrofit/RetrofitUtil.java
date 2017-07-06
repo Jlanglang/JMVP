@@ -14,14 +14,17 @@ import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.Headers;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -38,7 +41,7 @@ public class RetrofitUtil {
      * 服务器地址
      */
     private static String API_HOST;
-    private static Context mContext;
+    private static Application mContext;
 
     public static void init(String baseUrl, Application context) {
         if (TextUtils.isEmpty(baseUrl)) {
@@ -113,99 +116,127 @@ public class RetrofitUtil {
                     .build();
         }
 
+    }
 
-        /**
-         * 生成对应的RequestBody
-         *
-         * @param param 参数
-         * @return RequestBody
-         */
-        public static RequestBody createRequestBody(int param) {
-            return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
-        }
+    /**
+     * 生成对应的RequestBody
+     *
+     * @param param 参数
+     * @return RequestBody
+     */
+    public static RequestBody createRequestBody(int param) {
+        return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
+    }
 
-        public static RequestBody createRequestBody(long param) {
-            return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
-        }
+    public static RequestBody createRequestBody(long param) {
+        return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
+    }
 
-        public static RequestBody createRequestBody(float param) {
-            return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
-        }
+    public static RequestBody createRequestBody(float param) {
+        return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
+    }
 
-        public static RequestBody createRequestBody(Object param) {
-            return createRequestBody(String.valueOf(param));
-        }
+    public static RequestBody createRequestBody(Object param) {
+        return createRequestBody(String.valueOf(param));
+    }
 
-        public static RequestBody createRequestBody(double param) {
-            return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
-        }
+    public static RequestBody createRequestBody(double param) {
+        return RequestBody.create(MediaType.parse("text/plain"), String.valueOf(param));
+    }
 
-        public static RequestBody createRequestBody(String param) {
-            return RequestBody.create(MediaType.parse("text/plain"), param);
-        }
+    public static RequestBody createRequestBody(String param) {
+        return RequestBody.create(MediaType.parse("text/plain"), param);
+    }
 
-        protected RequestBody createRequestBody(File param) {
-            return RequestBody.create(MediaType.parse("image/*"), param);
-        }
+    protected RequestBody createRequestBody(File param) {
+        return RequestBody.create(MediaType.parse("image/*"), param);
+    }
 
-        public static HashMap<String, RequestBody> createRequestBody(HashMap<String, Object> params) {
-            HashMap<String, RequestBody> RequestBodyHashMap = new HashMap<>();
-            Set<String> strings = params.keySet();
-            for (String str : strings) {
-                Object param = params.get(str);
-                RequestBodyHashMap.put(str, createRequestBody(param));
-            }
-            return RequestBodyHashMap;
+    public static HashMap<String, RequestBody> createRequestBody(HashMap<String, Object> params) {
+        HashMap<String, RequestBody> RequestBodyHashMap = new HashMap<>();
+        Set<String> strings = params.keySet();
+        for (String str : strings) {
+            Object param = params.get(str);
+            RequestBodyHashMap.put(str, createRequestBody(param));
         }
+        return RequestBodyHashMap;
+    }
 
-        /**
-         * 次方法获取的bitmap为原始大小,图片文件过大可能造成oom
-         *
-         * @param images
-         * @return
-         */
-        public static HashMap<String, RequestBody> creatRequestBodyImagesFiles(List<String> images) throws OutOfMemoryError {
-            if (images == null) {
-                return null;
-            }
-            HashMap<String, RequestBody> photoRequestMap = new HashMap<>();
-            int size = images.size();
-            for (int i = 0; i < size; i++) {
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                Bitmap bitmap = BitmapFactory.decodeFile(images.get(i));
-                //转化为二进制流数组
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                bitmap.recycle();
-                photoRequestMap.put("file" + i + "\";filename=\"" +
-                        System.currentTimeMillis(), RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
-            }
-            return photoRequestMap;
+    /**
+     * 次方法获取的bitmap为原始大小,图片文件过大可能造成oom
+     *
+     * @param images
+     * @return
+     */
+    public static HashMap<String, RequestBody> creatRequestBodyImagesFiles(List<String> images) {
+        if (images == null) {
+            return null;
         }
+        HashMap<String, RequestBody> photoRequestMap = new HashMap<>();
+        int size = images.size();
+        for (int i = 0; i < size; i++) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            Bitmap bitmap = BitmapFactory.decodeFile(images.get(i));
+            //转化为二进制流数组
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            bitmap.recycle();
+            photoRequestMap.put("file" + i + "\";filename=\"" +
+                    System.currentTimeMillis(), RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
+        }
+        return photoRequestMap;
+    }
 
-        /**
-         * 建议调用此方法前,先将bitmap压缩.
-         *
-         * @param images
-         * @return
-         */
-        public static HashMap<String, RequestBody> creatRequestBodyBitmap(List<Bitmap> images) {
-            if (images == null) {
-                return null;
-            }
-            HashMap<String, RequestBody> photoRequestMap = new HashMap<>();
-            int size = images.size();
-            for (int i = 0; i < size; i++) {
-                Bitmap bitmap = images.get(i);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                //转化为二进制流数组
-                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                photoRequestMap.put("file" + i + "\";filename=\"" +
-                        System.currentTimeMillis(), RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
-            }
-            return photoRequestMap;
+    /**
+     * 建议调用此方法前,先将bitmap压缩.
+     *
+     * @param images
+     * @return
+     */
+    public static HashMap<String, RequestBody> creatRequestBodyBitmap(List<Bitmap> images) {
+        if (images == null) {
+            return null;
         }
+        HashMap<String, RequestBody> photoRequestMap = new HashMap<>();
+        int size = images.size();
+        for (int i = 0; i < size; i++) {
+            Bitmap bitmap = images.get(i);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            //转化为二进制流数组
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            photoRequestMap.put("file" + i + "\";filename=\"" +
+                    System.currentTimeMillis(), RequestBody.create(MediaType.parse("multipart/form-data"), byteArray));
+        }
+        return photoRequestMap;
+    }
+
+    private RequestBody buildMultipartFormRequestBody(List<File> files, String filesKey, HashMap<String, String> params) {
+        if (params == null) {
+            params = new HashMap();
+        }
+        MultipartBody.Builder builder = new MultipartBody.Builder();
+        Set<String> strings = params.keySet();
+        for (String key : strings) {
+            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + key + "\""),
+                    RequestBody.create(null, params.get(key)));
+        }
+        if (files == null) {
+            files = new ArrayList<>();
+        }
+        int size = files.size();
+        if (size == 0) {
+            builder.addPart(Headers.of("Content-Disposition", "form-data; name=\"" + filesKey + "\""),
+                    RequestBody.create(null, "[]"));
+        }
+        for (int i = 0; i < size; i++) {
+            //TODO 根据文件名设置contentType
+            builder.addPart(Headers.of("Content-Disposition",
+                    "form-data; name=\"" + filesKey + "\"; fileName=\"" + System.currentTimeMillis()  + "\""),
+                    RequestBody.create(MediaType.parse("multipart/form-data"), files.get(i)));
+        }
+        return builder.build();
+
     }
 
     /**

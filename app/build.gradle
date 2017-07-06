@@ -25,10 +25,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':jmvp')
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
     compile project(':j-recyclerview-adapter')
-    compile 'com.mapzen:on-the-road:0.8.1'
 }
 repositories {
     mavenCentral()

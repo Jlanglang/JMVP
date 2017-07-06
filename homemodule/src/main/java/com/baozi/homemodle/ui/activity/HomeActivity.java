@@ -37,7 +37,8 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoUtils.setSize(this, false, 720, 1280);
+        AutoUtils.init(this,false,720,1280);
+        AutoUtils.auto(this);
     }
 
     @Override

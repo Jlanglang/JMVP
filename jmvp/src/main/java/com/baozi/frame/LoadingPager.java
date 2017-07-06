@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 
-public abstract class LoadingPager extends FrameLayout {
+public class LoadingPager extends FrameLayout {
     private LoadingInterface mLoadingInterface;
     private Context context;
     private View mErrorPage;
@@ -18,7 +18,7 @@ public abstract class LoadingPager extends FrameLayout {
     public static final int STATE_DEFAULT = 0;
     public static final int STATE_LOADING = 1;
     public static final int STATE_ERROR = 2;
-    public static final int STATE_EMPTY = 3;
+    public static final int STATE_EMPTY = 3;yz
     public static final int STATE_SUCCESS = 4;
     private int mCurrentState;
 
@@ -62,11 +62,6 @@ public abstract class LoadingPager extends FrameLayout {
         mLoadingInterface = loadingInterface;
     }
 
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-
-    }
 
     @Override
     protected void onFinishInflate() {
@@ -95,6 +90,15 @@ public abstract class LoadingPager extends FrameLayout {
     }
 
     private void initView() {
+        if (mEmptyPage == null) {
+            mEmptyPage = new View(context);
+        }
+        if (mErrorPage == null) {
+            mErrorPage = new View(context);
+        }
+        if (mLoadingPage == null) {
+            mLoadingPage = new View(context);
+        }
         addView(mEmptyPage);
         addView(mErrorPage);
         addView(mLoadingPage);

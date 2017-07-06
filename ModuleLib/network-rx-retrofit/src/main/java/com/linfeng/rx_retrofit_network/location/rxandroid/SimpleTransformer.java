@@ -20,7 +20,8 @@ public class SimpleTransformer<T> implements Observable.Transformer<BaseResponse
 
     @Override
     public Observable<T> call(Observable<BaseResponse<T>> observable) {
-        return observable.subscribeOn(Schedulers.io())
+        return observable
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io())
                 .timeout(Defautl_TIME_OUT, TimeUnit.SECONDS)

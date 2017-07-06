@@ -16,10 +16,13 @@ import rx.Subscriber;
  * @Change
  */
 public abstract class SimpleSubscriber<T> extends Subscriber<T> {
-
     @Override
-    public void onCompleted() {
-
+    public void onNext(T t) {
+        if (t != null) {
+            call(t);
+        } else {
+            errorMessage("连接失败");
+        }
     }
 
     @Override
@@ -44,17 +47,14 @@ public abstract class SimpleSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onNext(T t) {
-        if (t != null) {
-            call(t);
-        } else {
-            errorMessage("连接失败");
-        }
+    public void onCompleted() {
+
     }
 
     public void errorMessage(String errormsg) {
 
     }
+
 
     public abstract void call(T t);
 }
