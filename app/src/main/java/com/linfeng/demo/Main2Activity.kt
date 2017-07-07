@@ -1,9 +1,9 @@
 package com.linfeng.demo
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import com.google.gson.Gson
+import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
+import rx.Observable
 
 
 class Main2Activity : AppCompatActivity() {
@@ -13,6 +13,8 @@ class Main2Activity : AppCompatActivity() {
     }
 
     override fun onStart() {
+        Observable.just("").map { s -> if (s == null) "" else "123" }
+                .filter { s -> s == "" }
+                .subscribe { s -> Toast.makeText(this, s, Toast.LENGTH_SHORT) }
     }
-
 }

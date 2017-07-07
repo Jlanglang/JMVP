@@ -14,8 +14,8 @@ import android.widget.FrameLayout;
 import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.ui.TempletView;
 import com.baozi.mvp.ui.ToolbarView;
+import com.baozi.mvp.ui.UIView;
 
 /**
  * 模版Activity
@@ -23,7 +23,7 @@ import com.baozi.mvp.ui.ToolbarView;
  * @param <T>
  */
 public abstract class TempletActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements TempletView {
+        implements UIView, ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View mRootView;
     private View mContentView;

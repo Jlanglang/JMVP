@@ -1,3 +1,3 @@
-include ':jmvp', ':j-recyclerview-adapter'
-include 'ModuleLib:mvpbase', 'ModuleLib:mvpbase-appcompat', 'ModuleLib:network-rx-retrofit', 'ModuleLib:imageloder-glide', 'ModuleLib:utils-common'
+include ':jmvp', ':j-recyclerview-adapter', 'ModuleLib:mvpbase-kotlin'
+include 'ModuleLib:mvpbase-appcompat', 'ModuleLib:network-rx-retrofit', 'ModuleLib:imageloder-glide', 'ModuleLib:utils-common'
 include ':app', 'homemodule'

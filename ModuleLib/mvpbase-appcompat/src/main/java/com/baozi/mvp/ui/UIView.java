@@ -1,6 +1,5 @@
 package com.baozi.mvp.ui;
 
-import android.app.Activity;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;

@@ -1,25 +1,21 @@
 package com.linfeng.demo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.annotation.IntDef;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.RestrictTo;
-import android.support.annotation.StringDef;
 import android.support.design.widget.AppBarLayout;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
+
+import rx.Observable;
 
 import static com.linfeng.demo.R.layout.activity_main;
 
@@ -28,7 +24,12 @@ public class MainActivity extends TempletActivity<BasePresenter>
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         mPresenter.onAttch(this);
+        Observable.just("")
+                .map(s -> s.equals("") ? "" : "123")
+                .filter(s -> s.equals(""))
+                .subscribe(s -> Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT));
         super.onCreate(savedInstanceState, persistentState);
+
     }
 
 

@@ -263,9 +263,8 @@ public class Utils {
         boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
         if (wifi || intenter) {
             return true;
-        } else {
-            ToastUtil.showToast(context, "请打开网络");
-            return false;
         }
+        ToastUtil.showToast(context, "请打开网络");
+        return false;
     }
 }

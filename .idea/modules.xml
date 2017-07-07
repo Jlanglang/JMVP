@@ -9,8 +9,8 @@
       <module fileurl="file://$PROJECT_DIR$/j-recyclerview-adapter/j-recyclerview-adapter.iml" filepath="$PROJECT_DIR$/j-recyclerview-adapter/j-recyclerview-adapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/jmvp/jmvp.iml" filepath="$PROJECT_DIR$/jmvp/jmvp.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ModuleLib/mvpbase/mvpbase.iml" filepath="$PROJECT_DIR$/ModuleLib/mvpbase/mvpbase.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleLib/mvpbase-appcompat/mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/ModuleLib/mvpbase-appcompat/mvpbase-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleLib/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/ModuleLib/network-rx-retrofit/network-rx-retrofit.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModuleLib/utils-common/utils-common.iml" filepath="$PROJECT_DIR$/ModuleLib/utils-common/utils-common.iml" />
     </modules>
