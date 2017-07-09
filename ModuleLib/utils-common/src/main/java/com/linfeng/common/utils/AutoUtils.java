@@ -83,7 +83,7 @@ public class AutoUtils {
     public void autoTextSize(View view) {
         if (view instanceof TextView) {
             double designPixels = ((TextView) view).getTextSize();
-            double displayPixels = mAutoOptions.textPixelsRate * designPixels;
+            double displayPixels = mAutoOptions.getTextPixelsRate() * designPixels;
             ((TextView) view).setIncludeFontPadding(false);
             ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) displayPixels);
         }
@@ -123,14 +123,15 @@ public class AutoUtils {
         if (designWidthValue < 2) {
             return designWidthValue;
         }
-        return designWidthValue * mAutoOptions.displayWidth / mAutoOptions.designWidth;
+
+        return designWidthValue * mAutoOptions.getDisplayWidth() / mAutoOptions.getDesignWidth();
     }
 
     public int getDisplayHeightValue(int designHeightValue) {
         if (designHeightValue < 2) {
             return designHeightValue;
         }
-        return designHeightValue * mAutoOptions.displayHeight / mAutoOptions.designHeight;
+        return designHeightValue * mAutoOptions.getDisplayHeight() / mAutoOptions.getDesignHeight();
     }
 
     private static class AutoInstance {

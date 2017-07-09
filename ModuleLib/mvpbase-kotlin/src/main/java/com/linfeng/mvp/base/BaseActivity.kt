@@ -20,7 +20,7 @@ abstract class BaseActivity<T : BasePresenter<BaseView>> : AppCompatActivity(), 
     private var mViews: SparseArray<View>? = null
     private var mContentView: View? = null
 
-    protected override fun onCreate(savedInstanceState: Bundle?) {
+     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mViews = SparseArray<View>()
         //创建presenter
