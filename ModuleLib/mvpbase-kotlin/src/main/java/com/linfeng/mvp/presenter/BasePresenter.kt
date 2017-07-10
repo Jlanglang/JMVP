@@ -12,16 +12,15 @@ import com.linfeng.mvp.view.BaseView
  * *
  * @Change
  */
-abstract class BasePresenter<T : BaseView> {
+abstract class BasePresenter(var mView: BaseView) {
 
-    protected abstract var mView: T
-
-    /**
-     * 绑定View
-     */
-    fun onAttch(view: T) {
-        this.mView = view
-    }
+//
+//    /**
+//    * 绑定View
+//     */
+//    fun onAttch(view: T) {
+//        this.mView = view
+//    }
 
 
     /**

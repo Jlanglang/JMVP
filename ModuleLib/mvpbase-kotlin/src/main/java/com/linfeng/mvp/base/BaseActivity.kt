@@ -1,5 +1,6 @@
 package com.baozi.mvp.base
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Looper
 import android.support.annotation.LayoutRes
@@ -10,24 +11,29 @@ import android.view.View
 import android.view.ViewGroup
 import com.baozi.mvp.presenter.BasePresenter
 import com.linfeng.mvp.view.BaseActivityView
-import com.linfeng.mvp.view.BaseView
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
-abstract class BaseActivity<T : BasePresenter<BaseView>> : AppCompatActivity(), BaseActivityView {
-    protected abstract var mPresenter: T
+abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseActivityView {
     private var mViews: SparseArray<View>? = null
+    protected val mPresenter: T by lazy {
+        initPresenter()
+    }
+    override val context: Context
+        get() = this
     private var mContentView: View? = null
 
-     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    init {
         mViews = SparseArray<View>()
-        //创建presenter
-        mPresenter = initPresenter()
+    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+//        //创建presenter
+//        mPresenter = initPresenter()
         //绑定Activity
-        mPresenter.onAttch(this)
+//        mPresenter.onAttch(this)
         //初始化ContentView
         mContentView = initView(LayoutInflater.from(this), savedInstanceState)
         super.setContentView(mContentView)
@@ -42,10 +48,6 @@ abstract class BaseActivity<T : BasePresenter<BaseView>> : AppCompatActivity(), 
         }
 
     }
-
-//    override fun getContentView(): View {
-//        return mContentView
-//    }
 
     override fun setContentView(@LayoutRes layoutResID: Int) {
 

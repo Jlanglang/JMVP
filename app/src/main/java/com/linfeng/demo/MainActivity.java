@@ -24,10 +24,10 @@ public class MainActivity extends TempletActivity<BasePresenter>
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         mPresenter.onAttch(this);
-//        Observable.just("")
-//                .map(s -> s.equals("") ? "" : "123")
-//                .filter(s -> s.equals(""))
-//                .subscribe(s -> Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT));
+        Observable.just("")
+                .map(s -> s.equals("") ? "" : "123")
+                .filter(s -> s.equals(""))
+                .subscribe(s -> Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT));
         super.onCreate(savedInstanceState, persistentState);
 
     }

@@ -28,7 +28,6 @@ android {
 //        targetCompatibility JavaVersion.VERSION_1_8
 //    }
 }
-
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':jmvp')
@@ -36,7 +35,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(':j-recyclerview-adapter')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-}
-repositories {
-    mavenCentral()
 }
