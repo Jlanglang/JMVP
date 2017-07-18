@@ -13,6 +13,7 @@ import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
 import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
+import com.linfeng.common.utils.AutoOptions;
 import com.linfeng.common.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -37,7 +38,14 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoUtils.init(this,false,720,1280);
+        AutoOptions builder = new AutoOptions.Builder().init(this)
+                .setAutoType(AutoOptions.AutoType.DP_2)
+                .setCrossScreen(false)
+                .setHasStatusBar(true)
+                .setDesign(720, 1280).build();
+        AutoUtils.setAutoOptions(builder);
+
+
         AutoUtils.auto(this);
     }
 

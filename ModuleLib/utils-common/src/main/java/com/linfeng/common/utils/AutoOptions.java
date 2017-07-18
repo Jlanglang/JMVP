@@ -17,10 +17,15 @@ public class AutoOptions {
     private int designWidth;
     private int designHeight;
     private AutoType mAutoType;
-    private double textPixelsRate;
+    private float density;
+    private boolean isCrossScreen;
 
-    public AutoOptions() {
+    public boolean isCrossScreen() {
+        return isCrossScreen;
+    }
 
+    public void setCrossScreen(boolean crossScreen) {
+        isCrossScreen = crossScreen;
     }
 
     public int getDisplayWidth() {
@@ -32,6 +37,9 @@ public class AutoOptions {
     }
 
     public int getDisplayHeight() {
+        if (isCrossScreen()) {
+            return displayWidth;
+        }
         return displayHeight;
     }
 
@@ -40,7 +48,18 @@ public class AutoOptions {
     }
 
     public int getDesignWidth() {
+        if (isCrossScreen()) {
+            return designHeight;
+        }
         return designWidth;
+    }
+
+    public float getDensity() {
+        return density;
+    }
+
+    public void setDensity(float density) {
+        this.density = density;
     }
 
     public void setDesignWidth(int designWidth) {
@@ -63,23 +82,28 @@ public class AutoOptions {
         mAutoType = autoType;
     }
 
-    public double getTextPixelsRate() {
-        return textPixelsRate;
-    }
 
-    public void setTextPixelsRate(double textPixelsRate) {
-        this.textPixelsRate = textPixelsRate;
-    }
-
-    public class Builder {
+    public  static class Builder {
         private int displayWidth;
         private int displayHeight;
         private int designWidth;
         private int designHeight;
         private AutoType mAutoType;
-        private double textPixelsRate;
         private boolean hasStatusBar;
         private int mStatusBarHeight;
+        private boolean isCrossScreen;
+        private float density;
+
+        public AutoOptions.Builder init(Context context) {
+            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+            Display display = windowManager.getDefaultDisplay();
+            mStatusBarHeight = getStatusBarHeight(context);
+            this.displayWidth = display.getWidth();
+            this.displayHeight = display.getHeight();
+            this.density = context.getResources().getDisplayMetrics().density;
+            return this;
+        }
+
 
         public AutoOptions.Builder setDesign(int designWidth, int designHeight) {
             this.designWidth = designWidth;
@@ -92,12 +116,8 @@ public class AutoOptions {
             return this;
         }
 
-        public AutoOptions.Builder init(Context context) {
-            WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-            Display display = windowManager.getDefaultDisplay();
-            mStatusBarHeight = getStatusBarHeight(context);
-            this.displayWidth = display.getWidth();
-            this.displayHeight = display.getHeight();
+        public AutoOptions.Builder setCrossScreen(boolean crossScreen) {
+            isCrossScreen = crossScreen;
             return this;
         }
 
@@ -108,15 +128,15 @@ public class AutoOptions {
 
         public AutoOptions build() {
             AutoOptions autoOptions = new AutoOptions();
-            if (mAutoType==null){
+            if (mAutoType == null) {
                 mAutoType = AutoType.PX;
             }
             autoOptions.setAutoType(mAutoType);
-            if (designHeight==0){
-                designWidth=displayWidth;
+            if (designHeight == 0) {
+                designWidth = displayWidth;
             }
-            if (designHeight==0){
-                designHeight=displayHeight;
+            if (designHeight == 0) {
+                designHeight = displayHeight;
             }
             autoOptions.setDesignHeight(designHeight);
             autoOptions.setDesignWidth(designWidth);
@@ -126,11 +146,8 @@ public class AutoOptions {
             }
             autoOptions.setDisplayHeight(displayHeight);
             autoOptions.setDisplayWidth(displayWidth);
-
-            double displayDiagonal = Math.sqrt(Math.pow(displayWidth, 2) + Math.pow(designWidth, 2));
-            double designDiagonal = Math.sqrt(Math.pow(displayHeight, 2) + Math.pow(designHeight, 2));
-            textPixelsRate = displayDiagonal / designDiagonal;
-            autoOptions.setTextPixelsRate(textPixelsRate);
+            autoOptions.setCrossScreen(isCrossScreen);
+            autoOptions.setDensity(density);
             return autoOptions;
         }
 
@@ -160,12 +177,5 @@ public class AutoOptions {
 
         int dpi;
 
-        public int getDpi() {
-            return dpi;
-        }
-
-        public void setDpi(int dpi) {
-            this.dpi = dpi;
-        }
     }
 }

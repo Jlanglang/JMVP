@@ -18,7 +18,7 @@ public class LoadingPager extends FrameLayout {
     public static final int STATE_DEFAULT = 0;
     public static final int STATE_LOADING = 1;
     public static final int STATE_ERROR = 2;
-    public static final int STATE_EMPTY = 3;yz
+    public static final int STATE_EMPTY = 3;
     public static final int STATE_SUCCESS = 4;
     private int mCurrentState;
 

@@ -8,14 +8,17 @@ import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Toast;
 
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
 
+import java.io.File;
+import java.util.ArrayList;
+
 import rx.Observable;
+import rx.functions.Func1;
 
 import static com.linfeng.demo.R.layout.activity_main;
 
@@ -24,10 +27,18 @@ public class MainActivity extends TempletActivity<BasePresenter>
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         mPresenter.onAttch(this);
-        Observable.just("")
-                .map(s -> s.equals("") ? "" : "123")
-                .filter(s -> s.equals(""))
-                .subscribe(s -> Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT));
+        Observable.just(new ArrayList<String>())
+                .map(new Func1<ArrayList<String>, ArrayList<File>>() {
+                    @Override
+                    public ArrayList<File> call(ArrayList<String> objects) {
+                        ArrayList<File> files = new ArrayList<>();
+                        for (int i = 0; i < objects.size(); i++) {
+                            File file = new File(objects.get(i));
+                            files.add(file);
+                        }
+                        return files;
+                    }
+                });
         super.onCreate(savedInstanceState, persistentState);
 
     }

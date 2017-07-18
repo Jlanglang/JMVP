@@ -13,15 +13,6 @@ import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.common.utils.AutoUtils;
 
-import java.util.concurrent.TimeUnit;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-
 
 public class MainActivity extends TempletActivity<BasePresenter> {
 
@@ -34,7 +25,7 @@ public class MainActivity extends TempletActivity<BasePresenter> {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoUtils.init(this,false,720,1280);
+//        AutoUtils.init(this,false,720,1280);
         AutoUtils.auto(this);
     }
 

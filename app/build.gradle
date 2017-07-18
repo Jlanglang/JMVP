@@ -33,6 +33,5 @@ dependencies {
     compile project(':jmvp')
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
-    compile project(':j-recyclerview-adapter')
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

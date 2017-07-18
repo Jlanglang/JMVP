@@ -16,7 +16,6 @@ class Main2Activity : AppCompatActivity() {
         Observable.just("").map { s -> if (s == null) "" else "123" }
                 .filter { s -> s == "" }
                 .subscribe { s -> Toast.makeText(this, s, Toast.LENGTH_SHORT) }
-        Observable.just("")
-                .flatMap { t -> Observable.just(t) }
+
     }
 }

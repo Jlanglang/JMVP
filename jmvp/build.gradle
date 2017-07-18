@@ -26,5 +26,4 @@ dependencies {
     compile project(':ModuleLib:network-rx-retrofit')
     compile project(':ModuleLib:utils-common')
     compile(name: 'TreeRecyclerView', ext: 'aar')
-    compile project(':j-recyclerview-adapter')
 }
