@@ -38,7 +38,12 @@ public class MainActivity extends TempletActivity<BasePresenter>
                         }
                         return files;
                     }
-                });
+                }).flatMap(new Func1<ArrayList<File>, Observable<?>>() {
+            @Override
+            public Observable<?> call(ArrayList<File> files) {
+                return null;
+            }
+        });
         super.onCreate(savedInstanceState, persistentState);
 
     }

@@ -40,11 +40,9 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
         super.onCreate(savedInstanceState);
         AutoOptions builder = new AutoOptions.Builder().init(this)
                 .setAutoType(AutoOptions.AutoType.DP_2)
-                .setCrossScreen(false)
                 .setHasStatusBar(true)
                 .setDesign(720, 1280).build();
         AutoUtils.setAutoOptions(builder);
-
 
         AutoUtils.auto(this);
     }

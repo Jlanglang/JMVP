@@ -14,9 +14,9 @@ import com.baozi.frame.CarouselRecyclerView;
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.IndexLiveListFragmentContract;
-import com.baozi.jrecyclerviewadapter.adapter.recyclerview.SimpleRecyclerAdapter;
-import com.baozi.jrecyclerviewadapter.adapter.recyclerview.ViewHolder;
-import com.baozi.jrecyclerviewadapter.adapter.recyclerview.wrapper.HeaderAndFootWapper;
+import com.baozi.treerecyclerview.adpater.wapper.HeaderAndFootWapper;
+import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
+import com.baozi.treerecyclerview.base.ViewHolder;
 import com.linfeng.common.utils.AutoUtils;
 
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ import java.util.Arrays;
 
 public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLiveListFragmentContract.View>
         implements IndexLiveListFragmentContract.Presenter {
-    private String[] mStrings = {"1","2","3"};
+    private String[] mStrings = {"1", "2", "3"};
     private HeaderAndFootWapper<String> mHeaderAndFootWapper;
 
     @Override
@@ -39,7 +39,7 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         }
         init();
         initRecyclerView();
-        mHeaderAndFootWapper.getItemManager().addAllItems(strings);
+        mHeaderAndFootWapper.getItemManager().addItems(strings);
     }
 
     private void initRecyclerView() {
@@ -57,9 +57,9 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
     }
 
     private void init() {
-        SimpleRecyclerAdapter mSimpleRecyclerBaseAdapter = new SimpleRecyclerAdapter<String>() {
+        BaseRecyclerAdapter<String> mSimpleRecyclerBaseAdapter = new BaseRecyclerAdapter<String>() {
             @Override
-            public void convert(ViewHolder holder, String o, int position) {
+            public void onBind(ViewHolder holder, String o, int position) {
 
             }
 
@@ -71,22 +71,30 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             }
 
             @Override
-            public int getLayoutId() {
+            public int getLayoutId(int i) {
                 return R.layout.home_item_live_list;
             }
+
         };
         mHeaderAndFootWapper = new HeaderAndFootWapper<String>(mSimpleRecyclerBaseAdapter);
 
-        SimpleRecyclerAdapter<String> carouselAdapter = new SimpleRecyclerAdapter<String>() {
+        BaseRecyclerAdapter<String> carouselAdapter = new BaseRecyclerAdapter<String>() {
             @Override
-            public int getLayoutId() {
+            public int getLayoutId(int i) {
                 return R.layout.home_item_carouse_image;
             }
 
             @Override
-            public void convert(ViewHolder holder, String o, int position) {
+            public void onBind(ViewHolder holder, String o, int position) {
                 ImageView itemView = (ImageView) holder.itemView;
-                itemView.setBackground(ContextCompat.getDrawable(mView.getContext(),R.mipmap.ic_launcher));
+                itemView.setBackground(ContextCompat.getDrawable(mView.getContext(), R.mipmap.ic_launcher));
+            }
+
+            @Override
+            public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+                ViewHolder viewHolder = super.onCreateViewHolder(parent, viewType);
+                AutoUtils.auto(viewHolder.itemView);
+                return viewHolder;
             }
         };
         CarouselRecyclerView contentView = new CarouselRecyclerView.Builder(mView.getContext())

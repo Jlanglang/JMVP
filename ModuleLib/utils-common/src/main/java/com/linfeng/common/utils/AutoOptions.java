@@ -18,15 +18,15 @@ public class AutoOptions {
     private int designHeight;
     private AutoType mAutoType;
     private float density;
-    private boolean isCrossScreen;
+//    private boolean isCrossScreen;
 
-    public boolean isCrossScreen() {
-        return isCrossScreen;
-    }
-
-    public void setCrossScreen(boolean crossScreen) {
-        isCrossScreen = crossScreen;
-    }
+//    public boolean isCrossScreen() {
+//        return isCrossScreen;
+//    }
+//
+//    public void setCrossScreen(boolean crossScreen) {
+//        isCrossScreen = crossScreen;
+//    }
 
     public int getDisplayWidth() {
         return displayWidth;
@@ -37,21 +37,14 @@ public class AutoOptions {
     }
 
     public int getDisplayHeight() {
-        if (isCrossScreen()) {
-            return displayWidth;
-        }
+//        if (isCrossScreen()) {
+//            return displayWidth;
+//        }
         return displayHeight;
     }
 
     public void setDisplayHeight(int displayHeight) {
         this.displayHeight = displayHeight;
-    }
-
-    public int getDesignWidth() {
-        if (isCrossScreen()) {
-            return designHeight;
-        }
-        return designWidth;
     }
 
     public float getDensity() {
@@ -61,6 +54,14 @@ public class AutoOptions {
     public void setDensity(float density) {
         this.density = density;
     }
+
+    public int getDesignWidth() {
+//        if (isCrossScreen()) {
+//            return designHeight;
+//        }
+        return designWidth;
+    }
+
 
     public void setDesignWidth(int designWidth) {
         this.designWidth = designWidth;
@@ -83,7 +84,7 @@ public class AutoOptions {
     }
 
 
-    public  static class Builder {
+    public static class Builder {
         private int displayWidth;
         private int displayHeight;
         private int designWidth;
@@ -91,7 +92,7 @@ public class AutoOptions {
         private AutoType mAutoType;
         private boolean hasStatusBar;
         private int mStatusBarHeight;
-        private boolean isCrossScreen;
+        //        private boolean isCrossScreen;
         private float density;
 
         public AutoOptions.Builder init(Context context) {
@@ -116,10 +117,10 @@ public class AutoOptions {
             return this;
         }
 
-        public AutoOptions.Builder setCrossScreen(boolean crossScreen) {
-            isCrossScreen = crossScreen;
-            return this;
-        }
+//        public AutoOptions.Builder setCrossScreen(boolean crossScreen) {
+//            isCrossScreen = crossScreen;
+//            return this;
+//        }
 
         public AutoOptions.Builder setHasStatusBar(boolean hasStatusBar) {
             this.hasStatusBar = hasStatusBar;
@@ -146,7 +147,7 @@ public class AutoOptions {
             }
             autoOptions.setDisplayHeight(displayHeight);
             autoOptions.setDisplayWidth(displayWidth);
-            autoOptions.setCrossScreen(isCrossScreen);
+//            autoOptions.setCrossScreen(isCrossScreen);
             autoOptions.setDensity(density);
             return autoOptions;
         }

@@ -54,7 +54,6 @@ public class AutoUtils {
         if (lp.width > 0) {
             lp.width = getDisplayWidthValue(lp.width, autoOptions);
         }
-
         if (lp.height > 0) {
             lp.height = getDisplayHeightValue(lp.height, autoOptions);
         }
@@ -71,9 +70,13 @@ public class AutoUtils {
                 designPixels *= autoOptions.getAutoType().dpi;
             }
             double displayDiagonal = Math.sqrt(Math.pow(autoOptions.getDisplayWidth(), 2) + Math.pow(autoOptions.getDisplayHeight(), 2));
-            double designDiagonal = Math.sqrt(Math.pow(autoOptions.getDesignWidth(), 2) + Math.pow(autoOptions.getDesignHeight(), 2));
+            double designDiagonal;
+            if (isScreenOriatation) {
+                designDiagonal = Math.sqrt(Math.pow(autoOptions.getDisplayHeight(), 2) + Math.pow(autoOptions.getDesignWidth(), 2));
+            } else {
+                designDiagonal = Math.sqrt(Math.pow(autoOptions.getDesignWidth(), 2) + Math.pow(autoOptions.getDesignHeight(), 2));
+            }
             double displayPixels = (displayDiagonal / designDiagonal) * designPixels;
-
             ((TextView) view).setIncludeFontPadding(false);
             ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) displayPixels);
         }
@@ -90,8 +93,8 @@ public class AutoUtils {
     public static void auto(Activity act, AutoOptions autoOptions) {
         if (act == null) return;
         View view = act.getWindow().getDecorView();
-        boolean screenOriatationPortrait = isScreenOriatationPortrait(act);
-        autoOptions.setCrossScreen(screenOriatationPortrait);
+        isScreenOriatation = isScreenOriatationPortrait(act);
+//        autoOptions.setCrossScreen(screenOriatationPortrait);
         auto(view, autoOptions);
     }
 
@@ -112,21 +115,35 @@ public class AutoUtils {
     }
 
     public static int getDisplayWidthValue(int designWidthValue, AutoOptions autoOptions) {
+//        if (designWidthValue == ViewGroup.LayoutParams.MATCH_PARENT) {
+//            designWidthValue = isScreenOriatation?autoOptions.getDisplayWidth():autoOptions.getDisplayHeight();
+//        }
         if (designWidthValue < 2) {
             return designWidthValue;
         }
+
         if (autoOptions.getAutoType() != null && autoOptions.getAutoType() != AutoOptions.AutoType.PX) {
             designWidthValue = (int) (designWidthValue / autoOptions.getDensity() + 0.5f) * autoOptions.getAutoType().dpi;
+        }
+        if (isScreenOriatation) {
+            return designWidthValue * autoOptions.getDisplayWidth() / autoOptions.getDesignHeight();
         }
         return designWidthValue * autoOptions.getDisplayWidth() / autoOptions.getDesignWidth();
     }
 
     public static int getDisplayHeightValue(int designHeightValue, AutoOptions autoOptions) {
+//        if (designHeightValue == ViewGroup.LayoutParams.MATCH_PARENT) {
+//            designHeightValue = isScreenOriatation?autoOptions.getDisplayWidth():autoOptions.getDisplayHeight();
+//        }
         if (designHeightValue < 2) {
             return designHeightValue;
         }
+
         if (autoOptions.getAutoType() != null && autoOptions.getAutoType() != AutoOptions.AutoType.PX) {
             designHeightValue = (int) (designHeightValue / autoOptions.getDensity() + 0.5f) * autoOptions.getAutoType().dpi;
+        }
+        if (isScreenOriatation) {
+            return designHeightValue * autoOptions.getDisplayHeight() / autoOptions.getDesignWidth();
         }
         return designHeightValue * autoOptions.getDisplayHeight() / autoOptions.getDesignHeight();
     }
