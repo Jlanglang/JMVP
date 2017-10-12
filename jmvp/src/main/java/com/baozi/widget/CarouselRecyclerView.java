@@ -1,4 +1,4 @@
-package com.baozi.frame;
+package com.baozi.widget;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
@@ -92,7 +92,7 @@ public class CarouselRecyclerView extends FrameLayout {
         mRecyclerView.setAdapter(mAdapter);
         new PagerSnapHelper().attachToRecyclerView(mRecyclerView);
 
-        setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         addView(mRecyclerView, mRecyclerView.getLayoutParams());
         addView(mIndicator);

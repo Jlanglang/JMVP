@@ -1,7 +1,7 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 import com.linfeng.rx_retrofit_network.location.APIException;
-import com.linfeng.rx_retrofit_network.location.BaseResponse;
+import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 
 import java.util.concurrent.TimeUnit;
 
@@ -45,10 +45,10 @@ public class SimpleTransformer<T> implements Observable.Transformer<BaseResponse
             @Override
             public void call(Subscriber<? super T> subscriber) {
                 if (!subscriber.isUnsubscribed()) {
-                    if (response.isSuccess()) {//请求成功
+                    if (response.getCode() == 0) {//请求成功
                         subscriber.onNext(response.getData());
                     } else {//请求失败
-                        subscriber.onError(new APIException(response.getResultCode(), response.getMsg()));
+                        subscriber.onError(new APIException(response.getCode(), response.getMsg()));
                         return;
                     }
                 }

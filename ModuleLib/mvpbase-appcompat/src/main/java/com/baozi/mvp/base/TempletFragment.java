@@ -2,7 +2,6 @@ package com.baozi.mvp.base;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -35,27 +34,21 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
     @NonNull
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            throw new IllegalStateException("pleace exends BaseFragment,TempletFragmenttheme must Noactionbar");
-        }
         rootView = inflater.inflate(R.layout.templet_content, null);
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = onCreatContentView(inflater, savedInstanceState);
+        View contentView = onCreateContentView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
-//        //交给Persenter去扩展
-//        mPresenter.wapperContentParent();
         return rootView;
     }
 
 
     @NonNull
-    protected abstract View onCreatContentView(LayoutInflater inflater, Bundle savedInstanceState);
+    protected abstract View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar

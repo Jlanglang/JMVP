@@ -19,4 +19,14 @@ public class MDToolBarHelperImpl extends BaseToolBarHelperImpl {
     public void initToolbar() {
         ToolbarHelper.SimpleInitToolbar(mUIView.getContext(), mToolbar, true);
     }
+
+    @Override
+    public void setTextsize(int size) {
+
+    }
+
+    @Override
+    public void setTitleSize(int size) {
+
+    }
 }

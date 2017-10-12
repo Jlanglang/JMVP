@@ -95,7 +95,7 @@ public class AutoOptions {
         //        private boolean isCrossScreen;
         private float density;
 
-        public AutoOptions.Builder init(Context context) {
+        public Builder init(Context context) {
             WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Display display = windowManager.getDefaultDisplay();
             mStatusBarHeight = getStatusBarHeight(context);
@@ -106,13 +106,13 @@ public class AutoOptions {
         }
 
 
-        public AutoOptions.Builder setDesign(int designWidth, int designHeight) {
+        public Builder setDesign(int designWidth, int designHeight) {
             this.designWidth = designWidth;
             this.designHeight = designHeight;
             return this;
         }
 
-        public AutoOptions.Builder setAutoType(AutoType autoType) {
+        public Builder setAutoType(AutoType autoType) {
             mAutoType = autoType;
             return this;
         }
@@ -122,7 +122,7 @@ public class AutoOptions {
 //            return this;
 //        }
 
-        public AutoOptions.Builder setHasStatusBar(boolean hasStatusBar) {
+        public Builder setHasStatusBar(boolean hasStatusBar) {
             this.hasStatusBar = hasStatusBar;
             return this;
         }

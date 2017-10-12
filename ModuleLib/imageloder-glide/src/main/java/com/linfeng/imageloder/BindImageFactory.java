@@ -7,6 +7,7 @@ import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.linfeng.imageloder.transformation.GlideCircleTransform;
 import com.linfeng.imageloder.transformation.GlideRoundTransform;
 
@@ -54,27 +55,27 @@ public class BindImageFactory {
      * 设置加载中以及加载失败图片
      * ----------------------------------------------------------------------------------------------------
      */
-    public static void lodingImage(Context mContext, String path, ImageView mImageView, int lodingImage, int errorImageView) {
+    public static void loadingImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(lodingImage)
+                .placeholder(loadingImage)
                 .error(errorImageView)
                 .into(mImageView);
     }
 
-    public static void lodingRoundImage(Context mContext, String path, ImageView mImageView, int lodingImage, int errorImageView, int round) {
+    public static void loadingRoundImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView, int round) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(lodingImage)
+                .placeholder(loadingImage)
                 .error(errorImageView)
                 .transform(new GlideRoundTransform(mContext, round))
                 .into(mImageView);
     }
 
-    public static void lodingCircleImage(Context mContext, String path, ImageView mImageView, int lodingImage, int errorImageView) {
+    public static void loadingCircleImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(lodingImage)
+                .placeholder(loadingImage)
                 .error(errorImageView)
                 .transform(new GlideCircleTransform(mContext))
                 .into(mImageView);
@@ -87,14 +88,14 @@ public class BindImageFactory {
     public static void bindRoundImage(Context context, String url, ImageView imageView) {
         Glide.with(context)
                 .load(url)
-                .transform(new GlideRoundTransform(context))
+                .transform(new CenterCrop(context), new GlideRoundTransform(context))
                 .into(imageView);
     }
 
     public static void bindRoundImage(Context context, int res, ImageView imageView) {
         Glide.with(context)
                 .load(res)
-                .transform(new GlideRoundTransform(context))
+                .transform(new CenterCrop(context), new GlideRoundTransform(context))
                 .into(imageView);
     }
 
@@ -160,4 +161,5 @@ public class BindImageFactory {
     public static void CleanImageCache(Context context) {
         Glide.get(context).clearDiskCache();
     }
+
 }

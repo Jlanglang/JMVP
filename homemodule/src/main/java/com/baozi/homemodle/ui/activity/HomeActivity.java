@@ -43,7 +43,6 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
                 .setHasStatusBar(true)
                 .setDesign(720, 1280).build();
         AutoUtils.setAutoOptions(builder);
-
         AutoUtils.auto(this);
     }
 

@@ -13,7 +13,7 @@ public abstract class JBasePresenter<T extends BaseView> extends BasePresenter<T
     protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
 
     @Override
-    public void cancleNetWork() {
+    public void cancelNetWork() {
         if (mCompositeSubscription != null) {
             mCompositeSubscription.unsubscribe();
         }

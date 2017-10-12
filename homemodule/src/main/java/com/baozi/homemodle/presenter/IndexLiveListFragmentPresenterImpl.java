@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.baozi.frame.CarouselRecyclerView;
+import com.baozi.widget.CarouselRecyclerView;
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.IndexLiveListFragmentContract;

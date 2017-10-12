@@ -27,22 +27,22 @@ public abstract class SimpleSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onError(Throwable e) {
-        String errormsg;
+        String errorMsg;
         if (e instanceof APIException) {
             APIException exception = (APIException) e;
-            errormsg = exception.message;
+            errorMsg = exception.message;
         } else if (e instanceof UnknownHostException) {
-            errormsg = "请打开网络";
+            errorMsg = "请打开网络";
         } else if (e instanceof SocketTimeoutException) {
-            errormsg = "请求超时";
+            errorMsg = "请求超时";
         } else if (e instanceof ConnectException) {
-            errormsg = "连接失败";
+            errorMsg = "连接失败";
         } else if (e instanceof HttpException) {
-            errormsg = "请求超时";
+            errorMsg = "请求超时";
         } else {
-            errormsg = "请求失败";
+            errorMsg = "请求失败";
         }
-        errorMessage(errormsg);
+        errorMessage(errorMsg);
         e.printStackTrace();
     }
 
@@ -51,8 +51,7 @@ public abstract class SimpleSubscriber<T> extends Subscriber<T> {
 
     }
 
-    public void errorMessage(String errormsg) {
-
+    public void errorMessage(String error) {
     }
 
 

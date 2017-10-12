@@ -1,6 +1,9 @@
 package com.linfeng.rx_retrofit_network.converter;
 
-import com.google.gson.Gson;
+import android.util.Log;
+
+import com.linfeng.rx_retrofit_network.factory.JSONFactory;
+import com.linfeng.rx_retrofit_network.location.des.Des;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -28,7 +31,9 @@ final class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> {
     @Override
     public T convert(ResponseBody value) throws IOException {
         try {
-            return new Gson().fromJson(value.string(), type);
+            String mailianc = Des.decode("MAILIANC", value.string());
+            Log.i("data", mailianc);
+            return JSONFactory.fromJson(mailianc, type);
         } finally {
             value.close();
         }

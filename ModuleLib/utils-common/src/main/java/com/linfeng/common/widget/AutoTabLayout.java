@@ -1,4 +1,4 @@
-//package com.linfeng.common.widget;
+package com.linfeng.common.widget;//package com.linfeng.common.widget;
 //
 //import android.content.Context;
 //import android.support.design.widget.TabLayout;

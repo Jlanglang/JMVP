@@ -28,6 +28,16 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
     }
 
     @Override
+    public void setTextsize(int size) {
+
+    }
+
+    @Override
+    public void setTitleSize(int size) {
+
+    }
+
+    @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {
 
     }

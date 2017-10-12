@@ -11,8 +11,15 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
+import android.util.Log;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * @author 写文件的工具类
@@ -35,6 +42,31 @@ public class FileUtils {
         } else {
             return false;
         }
+    }
+
+    public static byte[] readFile(File file) {
+        // 需要读取的文件，参数是文件的路径名加文件名
+        if (file.isFile()) {
+            // 以字节流方法读取文件
+            FileInputStream fis = null;
+            try {
+                fis = new FileInputStream(file);
+                // 设置一个，每次 装载信息的容器
+                byte[] buffer = new byte[1024];
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                // 开始读取数据
+                int len = 0;// 每次读取到的数据的长度
+                while ((len = fis.read(buffer)) != -1) {// len值为-1时，表示没有数据了
+                    // append方法往sb对象里面添加数据
+                    outputStream.write(buffer, 0, len);
+                }
+                // 输出字符串
+                return outputStream.toByteArray();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
     }
 
     /**
@@ -81,29 +113,46 @@ public class FileUtils {
         }
     }
 
-    private static final File parentPath = Environment.getExternalStorageDirectory();
-    private static String storagePath = "";
-    private static final String DST_FOLDER_NAME = "PlayCamera";
+    /**
+     * 创建临时文件
+     *
+     * @param type 文件类型
+     */
+    public static File getTempFile(String dir, FileType type) {
+        try {
+            File dirFile = new File(dir);
+            if (!dirFile.exists()) {
+                dirFile.mkdirs();
+            }
+            File file = File.createTempFile(type.toString(), null, dirFile);
+            file.deleteOnExit();
+            return file;
+        } catch (IOException e) {
+            return null;
+        }
+    }
+
+    public enum FileType {
+        IMG,
+        AUDIO,
+        VIDEO,
+        FILE,
+    }
 
     /**
-     * ��ʼ������·��
-     *
-     * @return
+     * 创建临时文件
      */
-    private static String initPath() {
-        if (storagePath.equals("")) {
-            storagePath = parentPath.getAbsolutePath() + "/" + DST_FOLDER_NAME;
-            File f = new File(storagePath);
-            if (!f.exists()) {
-                f.mkdir();
-            }
-        }
-        return storagePath;
+    public static File getBytesTempFile(byte[] bytes, String dir, FileType type) {
+        File tempFile = getTempFile(dir, type);
+        byteToFile(bytes, tempFile);
+        return tempFile;
     }
 
     // 专为Android4.4设计的从Uri获取文件绝对路径，以前的方法已不好使
     @TargetApi(Build.VERSION_CODES.KITKAT)
     public static String getPathByUri4kitkat(final Context context, final Uri uri) {
+        if (context == null || uri == null)
+            return null;
         final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
         // DocumentProvider
         if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
@@ -194,5 +243,44 @@ public class FileUtils {
      */
     public static boolean isMediaDocument(Uri uri) {
         return "com.android.providers.media.documents".equals(uri.getAuthority());
+    }
+
+    /**
+     * 将数据存储为文件
+     *
+     * @param data 数据
+     */
+    public static File byteToFile(byte[] data, File f) {
+        try {
+            if (!f.exists()) {
+                f.createNewFile();
+            }
+            FileOutputStream fos = new FileOutputStream(f);
+            fos.write(data);
+            fos.flush();
+            fos.close();
+        } catch (IOException e) {
+            Log.e(TAG, "create file error" + e);
+        }
+        return f;
+    }
+
+    public static File createFile(Context context, String mFileDir, String mFileName) {
+        File dir = getFile(context, mFileDir);
+        if (dir != null) {
+            File file = new File(dir, mFileName);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return file;
+        }
+        return null;
     }
 }

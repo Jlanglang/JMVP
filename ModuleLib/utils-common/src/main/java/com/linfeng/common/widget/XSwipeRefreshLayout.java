@@ -37,7 +37,7 @@ public class XSwipeRefreshLayout extends SwipeRefreshLayout {
                 float xDiff = Math.abs(eventX - mPrevX);
                 // Log.d("refresh" ,"move----" + eventX + "   " + mPrevX + "   " + mTouchSlop);
                 // 增加60的容差，让下拉刷新在竖直滑动时就可以触发
-                if (xDiff > mTouchSlop + getMeasuredWidth()/12) {
+                if (xDiff > mTouchSlop + 60) {
                     return false;
                 }
         }

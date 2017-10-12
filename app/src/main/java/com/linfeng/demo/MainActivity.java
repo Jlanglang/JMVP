@@ -48,10 +48,9 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
     }
 
-
     @NonNull
     @Override
-    protected View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
+    protected View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState) {
         return inflater.inflate(activity_main, null);
     }
 
@@ -75,7 +74,8 @@ public class MainActivity extends TempletActivity<BasePresenter>
             }
 
             @Override
-            public void cancleNetWork() {
+            public void cancelNetWork() {
+
             }
         };
     }

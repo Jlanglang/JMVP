@@ -41,12 +41,11 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         //ContentView容器
         FrameLayout mContentParent = (FrameLayout) mRootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        mContentView = initContentView(inflater, savedInstanceState);
+        mContentView = onCreateContentView(inflater, savedInstanceState);
         mContentParent.removeAllViews();
         mContentParent.addView(mContentView);
         return mRootView;
     }
-
 
     /**
      * 如果调用在initView()之前,可能为null
@@ -59,7 +58,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     }
 
     @NonNull
-    protected abstract View initContentView(LayoutInflater inflater, Bundle savedInstanceState);
+    protected abstract View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar
@@ -115,6 +114,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         }
         return super.onPrepareOptionsPanel(view, menu);
     }
+
     /**
      * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
      */

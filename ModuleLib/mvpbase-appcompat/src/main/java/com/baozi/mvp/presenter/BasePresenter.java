@@ -39,7 +39,7 @@ public abstract class BasePresenter<T extends BaseView> {
      * 在这里结束异步操作
      */
     public void onDestroy() {
-        cancleNetWork();
+        cancelNetWork();
     }
 
     /**
@@ -53,7 +53,7 @@ public abstract class BasePresenter<T extends BaseView> {
     /**
      * 取消网络请求回调
      */
-    public abstract void cancleNetWork();
+    public abstract void cancelNetWork();
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 

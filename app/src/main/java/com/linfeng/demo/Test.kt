@@ -8,15 +8,15 @@ import java.util.*
  */
 data class Test(var data: Any) {
 //    var data: Any = Any()
-    fun test() {
-        if (data == null) {
-            data = Any()
-        }
-        var a = data
-//        a?.add(Any())
-        HLog.i("a", a.toString())
-        HLog.i("data", data.toString())
-        data = Any()
-        HLog.i("data", data.toString())
-    }
+//    fun test() {
+//        if (data == null) {
+//            data = Any()
+//        }
+//        var a = data
+////        a?.add(Any())
+//        HLog.i("a", a.toString())
+//        HLog.i("data", data.toString())
+//        data = Any()
+//        HLog.i("data", data.toString())
+//    }
 }

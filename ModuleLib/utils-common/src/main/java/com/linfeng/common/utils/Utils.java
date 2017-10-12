@@ -4,18 +4,22 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.ConnectivityManager;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.NonNull;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,6 +27,11 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 import java.lang.reflect.Method;
+
+//import com.google.zxing.BarcodeFormat;
+//import com.google.zxing.MultiFormatWriter;
+//import com.google.zxing.WriterException;
+//import com.google.zxing.common.BitMatrix;
 
 /**
  * Created by Administrator on 2015/12/24.
@@ -159,15 +168,17 @@ public class Utils {
                 imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         }
-//        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-//        if (imm != null) {
-//            final View currentFocus = activity.getCurrentFocus();
-//            final IBinder windowToken = currentFocus != null ?
-//                    currentFocus.getWindowToken() : activity.getCurrentFocus().getWindowToken();
-//            if (windowToken != null) {
-//                imm.hideSoftInputFromWindow(windowToken, InputMethodManager.HIDE_NOT_ALWAYS);
-//            }
-//        }
+    }
+
+    public static void hideSoftInput(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0); //强制隐藏键盘
+    }
+
+    public static void showSoftInput(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+        //imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
     }
 
     public static void hintKbTwo(Dialog dialog) {
@@ -193,7 +204,8 @@ public class Utils {
      */
     public static Bitmap Create2DCode(String str, ImageView imageView) throws WriterException {
         //生成二维矩阵,编码时指定大小,不要生成了图片以后再进行缩放,这样会模糊导致识别失败
-        BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, imageView.getWidth(), imageView.getHeight());
+        ViewGroup.LayoutParams layoutParams = imageView.getLayoutParams();
+        BitMatrix matrix = new MultiFormatWriter().encode(str, BarcodeFormat.QR_CODE, layoutParams.width, layoutParams.height);
         int width = matrix.getWidth();
         int height = matrix.getHeight();
         //二维矩阵转为一维像素数组,也就是一直横着排了
@@ -211,7 +223,51 @@ public class Utils {
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return bitmap;
     }
+    /**
+     * 在二维码中间添加Logo图案
+     */
+    public static Bitmap addLogo(Bitmap src, Bitmap logo) {
+        if (src == null) {
+            return null;
+        }
 
+        if (logo == null) {
+            return src;
+        }
+
+        //获取图片的宽高
+        int srcWidth = src.getWidth();
+        int srcHeight = src.getHeight();
+        int logoWidth = logo.getWidth();
+        int logoHeight = logo.getHeight();
+
+        if (srcWidth == 0 || srcHeight == 0) {
+            return null;
+        }
+
+        if (logoWidth == 0 || logoHeight == 0) {
+            return src;
+        }
+
+        //logo大小为二维码整体大小的1/5
+        float scaleFactor = srcWidth * 1.0f / 5 / logoWidth;
+        Bitmap bitmap = Bitmap.createBitmap(srcWidth, srcHeight, Bitmap.Config.ARGB_8888);
+        try {
+            Canvas canvas = new Canvas(bitmap);
+            canvas.drawBitmap(src, 0, 0, null);
+            canvas.scale(scaleFactor, scaleFactor, srcWidth / 2, srcHeight / 2);
+            canvas.drawBitmap(logo, (srcWidth - logoWidth) / 2, (srcHeight - logoHeight) / 2, null);
+
+            canvas.save(Canvas.ALL_SAVE_FLAG);
+            canvas.restore();
+        } catch (Exception e) {
+            bitmap.recycle();
+            bitmap = null;
+            e.getStackTrace();
+        }
+
+        return bitmap;
+    }
     /**
      * 判断SD卡是否可用
      */
@@ -253,6 +309,34 @@ public class Utils {
     }
 
     /**
+     * 返回当前程序版本名
+     */
+    public static String getAppVersionName(Context context) {
+        String versionName = "";
+        try {
+            // ---get the package info---
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionName = pi.versionName;
+            if (versionName == null || versionName.length() <= 0) {
+                return "";
+            }
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionName;
+    }
+
+    private static String getVersionName(Context context) throws Exception {
+        // 获取packagemanager的实例
+        PackageManager packageManager = context.getPackageManager();
+        // getPackageName()是你当前类的包名，0代表是获取版本信息
+        PackageInfo packInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+        String version = packInfo.versionName;
+        return version;
+    }
+
+    /**
      * 判断网络是否打开
      *
      * @return
@@ -267,4 +351,6 @@ public class Utils {
         ToastUtil.showToast(context, "请打开网络");
         return false;
     }
+
+
 }

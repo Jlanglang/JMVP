@@ -12,6 +12,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.baozi.mvp.MVPConfig;
 import com.baozi.mvp.R;
 import com.baozi.mvp.ui.UIView;
 
@@ -37,8 +38,12 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_custom);
         if (mToolbar != null) {
             initToolbar();
-        } else {
-            //说明为自定义toolbar
+            if (MVPConfig.toolbarBackgroundColor > 0) {
+                mToolbar.setBackgroundColor(mUIView.getResources().getColor(MVPConfig.toolbarBackgroundColor));
+            }
+            if (MVPConfig.toolbarBackgroundDrawable > 0) {
+                mToolbar.setBackgroundResource(MVPConfig.toolbarBackgroundDrawable);
+            }
         }
     }
 
@@ -90,6 +95,10 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     public Toolbar getToolbar() {
         return mToolbar;
     }
+
+    public abstract void setTextsize(int size);
+
+    public abstract void setTitleSize(int size);
 
     @Override
     public void setMaterialDesignEnabled(boolean isMaterialDesign) {

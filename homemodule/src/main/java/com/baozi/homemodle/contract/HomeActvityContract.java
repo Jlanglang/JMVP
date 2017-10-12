@@ -23,10 +23,11 @@ public class HomeActvityContract {
     }
 
     public interface Presenter {
+
     }
 
     public interface Model {
-    }
 
+    }
 
 }

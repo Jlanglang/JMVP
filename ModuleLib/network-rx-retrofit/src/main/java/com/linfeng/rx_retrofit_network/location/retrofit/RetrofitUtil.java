@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
+import com.linfeng.rx_retrofit_network.location.des.Des;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -42,6 +43,16 @@ public class RetrofitUtil {
      */
     private static String API_HOST;
     private static Application mContext;
+    private static final HashMap<Class, Object> apis = new HashMap<>();
+
+    public static <T> T getApi(Class<T> c) {
+        Object o = apis.get(c);
+        if (o == null) {
+            o = getInstance().create(c);
+            apis.put(c, o);
+        }
+        return (T) o;
+    }
 
     public static void init(String baseUrl, Application context) {
         if (TextUtils.isEmpty(baseUrl)) {
@@ -62,7 +73,7 @@ public class RetrofitUtil {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
-                    Log.i("RxJava", message);
+                    Log.i("RxJava", Des.decode("MAILIANC", message));
                 }
             });
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -73,6 +84,7 @@ public class RetrofitUtil {
                     Request request = chain.request();
                     //读接口上的@Headers里的注解配置
                     String cacheControl = request.cacheControl().toString();
+
                     //判断没有网络并且添加了@Headers注解,才使用网络缓存.
                     if (!isOpenInternet(mContext) && !TextUtils.isEmpty(cacheControl)) {
                         //重置请求体;
@@ -232,7 +244,7 @@ public class RetrofitUtil {
         for (int i = 0; i < size; i++) {
             //TODO 根据文件名设置contentType
             builder.addPart(Headers.of("Content-Disposition",
-                    "form-data; name=\"" + filesKey + "\"; fileName=\"" + System.currentTimeMillis()  + "\""),
+                    "form-data; name=\"" + filesKey + "\"; fileName=\"" + System.currentTimeMillis() + "\""),
                     RequestBody.create(MediaType.parse("multipart/form-data"), files.get(i)));
         }
         return builder.build();

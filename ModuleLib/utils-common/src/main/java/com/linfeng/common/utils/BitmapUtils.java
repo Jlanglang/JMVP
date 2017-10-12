@@ -4,11 +4,6 @@ package com.linfeng.common.utils;
  *
  */
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -25,6 +20,12 @@ import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.util.Log;
 import android.view.View;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Bitmap工具类主要包括获取Bitmap和对Bitmap的操作
@@ -105,16 +106,17 @@ public final class BitmapUtils {
     /**
      * 获取一个指定大小的bitmap
      *
+     * @param pathName
      * @param reqWidth  目标宽度
      * @param reqHeight 目标高度
      */
-    public static Bitmap getBitmapFromFile(String pathName, int reqWidth,
+    public static Bitmap getBitmapFromFile(File pathName, int reqWidth,
                                            int reqHeight) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(pathName, options);
+//        BitmapFactory.decodeFile(pathName.getPath(), options);
         options = calculateInSampleSize(options, reqWidth, reqHeight);
-        return BitmapFactory.decodeFile(pathName, options);
+        return BitmapFactory.decodeFile(pathName.getPath(), options);
     }
 
     /**
@@ -303,7 +305,7 @@ public final class BitmapUtils {
      * @param watermark the water mark above the src
      * @return return a bitmap object ,if paramter's length is 0,return null
      */
-    public static Bitmap createWatermarkBitmap(Bitmap src, Bitmap watermark) {
+    public static Bitmap createWatermarkBitmap(Bitmap src, Bitmap watermark, int marginX, int marginY) {
         if (src == null) {
             return null;
         }
@@ -317,7 +319,7 @@ public final class BitmapUtils {
         // draw src into
         cv.drawBitmap(src, 0, 0, null);// 在 0，0坐标开始画入src
         // draw watermark into
-        cv.drawBitmap(watermark, w - ww + 5, h - wh + 5, null);// 在src的右下角画入水印
+        cv.drawBitmap(watermark, w - ww - Math.abs(marginX), h - wh - Math.abs(marginY), null);// 在src的右下角画入水印
         // save all clip
         cv.save(Canvas.ALL_SAVE_FLAG);// 保存
         // store
@@ -1059,26 +1061,27 @@ public final class BitmapUtils {
      * @param pixelH  target pixel of height
      * @return
      */
-    public static Bitmap getZoomImage(String imgPath, int pixelW, int pixelH) {
+    public static Bitmap getZoomImage(String imgPath, float pixelW, float pixelH) {
         BitmapFactory.Options newOpts = new BitmapFactory.Options();
         // 开始读入图片，此时把options.inJustDecodeBounds 设回true，即只读边不读内容
         newOpts.inJustDecodeBounds = true;
         newOpts.inPreferredConfig = Config.RGB_565;
         // Get bitmap info, but notice that bitmap is null now
+        //这里是为了读下边,给 BitmapFactory.Options赋值
         Bitmap bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
-
+        //设置为false,开始真的读取内容
         newOpts.inJustDecodeBounds = false;
         int w = newOpts.outWidth;
         int h = newOpts.outHeight;
         // 想要缩放的目标尺寸
-        int hh = pixelH;// 设置高度为240f时，可以明显看到图片缩小了
-        int ww = pixelW;// 设置宽度为120f，可以明显看到图片缩小了
+        float hh = pixelH;// 设置高度为240f时，可以明显看到图片缩小了
+        float ww = pixelW;// 设置宽度为120f，可以明显看到图片缩小了
         // 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
         int be = 1;//be=1表示不缩放
         if (w > h && w > ww) {//如果宽度大的话根据宽度固定大小缩放
-            be = (int) (newOpts.outWidth / ww);
+            be = Math.round(newOpts.outWidth / ww);
         } else if (w < h && h > hh) {//如果高度高的话根据宽度固定大小缩放
-            be = (int) (newOpts.outHeight / hh);
+            be = Math.round(newOpts.outHeight / hh);
         }
         if (be <= 0) be = 1;
         newOpts.inSampleSize = be;//设置缩放比例
@@ -1151,5 +1154,12 @@ public final class BitmapUtils {
             Log.e(TAG, e.toString());
         }
         return result;
+    }
+
+    /**
+     * 判断该文件是否是一个图片。
+     */
+    public static boolean isImage(String fileName) {
+        return fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png");
     }
 }

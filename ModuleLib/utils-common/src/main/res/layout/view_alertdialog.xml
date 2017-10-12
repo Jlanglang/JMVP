@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_white_round"
+    android:orientation="vertical">
+
+    <com.linfeng.common.widget.DrawableTextView
+        android:id="@+id/txt_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textSize="17dp" />
+
+    <LinearLayout
+        android:id="@+id/ll_contentview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical">
+
+        <com.linfeng.common.widget.DrawableTextView
+            android:id="@+id/tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="13dp" />
+
+        <ListView
+            android:id="@+id/lv_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/msg_line"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#f0f0f0" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+
+        <com.linfeng.common.widget.DrawableTextView
+            android:id="@+id/btn_neg"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:text="取消"
+            android:textSize="16dp" />
+
+        <View
+            android:id="@+id/bt_lint"
+            android:layout_width="1dp"
+            android:layout_height="45dp"
+            android:background="#f0f0f0" />
+
+
+        <com.linfeng.common.widget.DrawableTextView
+            android:id="@+id/btn_pos"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="确定"
+            android:textSize="16dp" />
+    </LinearLayout>
+</LinearLayout>

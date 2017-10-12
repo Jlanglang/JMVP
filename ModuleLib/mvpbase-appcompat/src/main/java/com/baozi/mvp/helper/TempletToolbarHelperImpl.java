@@ -52,6 +52,17 @@ class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
         ToolbarHelper.SimpleInitToolbar(mUIView.getContext(), mToolbar, false);
     }
 
+    @Override
+    public void setTextsize(int size) {
+        mLeftTextView.setTextSize(size);
+        mRightTextView.setTextSize(size);
+    }
+
+    @Override
+    public void setTitleSize(int size) {
+        mTitleView.setTextSize(size);
+    }
+
     /**
      * 应该保证在调用Activity.setSupportActionBar()之后使用.
      *
@@ -132,6 +143,7 @@ class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
 //        mRightTextView.setVisibility(View.GONE);
         mRightButton.setVisibility(View.VISIBLE);
         mRightButton.setImageDrawable(drawable);
+        mRightButton.setOnClickListener(clickListener);
     }
 
     @Override

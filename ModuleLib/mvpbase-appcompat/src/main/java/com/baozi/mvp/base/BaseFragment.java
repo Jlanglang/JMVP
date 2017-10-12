@@ -46,7 +46,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         mContext = context;
         //应该只创建一次Presenter.
         if (mPresenter == null || !isInit) {
-            mViews = new SparseArray<>();
             mPresenter = initPresenter();
         }
         mPresenter.onAttch(this);
@@ -88,7 +87,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      */
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (null == mContentView) {
             mContentView = initView(inflater, savedInstanceState);
         } else {
@@ -114,8 +113,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         init(savedInstanceState);
         //初始化Presenter,应该只初始化一次
         if (mPresenter != null && !isInit) {
-            mPresenter.onCreate();
             isInit = true;
+            mPresenter.onCreate();
             //可见时再加载数据刷新视图
             Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
                 @Override
@@ -124,7 +123,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
                     return false;
                 }
             });
+            onPresentersCreate();
         }
+    }
+
+    /**
+     * 扩展除了默认的presenter的其他Presenter初始化
+     */
+    protected void onPresentersCreate() {
+
     }
 
     @Override
@@ -154,15 +161,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
-    public void onDestroyView() {
-        mPresenter.onDestroy();
-        super.onDestroyView();
-    }
-
-    @Override
     public void onDetach() {
         mPresenter.onDetach();
         super.onDetach();
+    }
+
+    @Override
+    public void onDestroy() {
+        mPresenter.onDestroy();
+        super.onDestroy();
     }
 
     @Override
@@ -190,7 +197,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      *
      * @return Fragment视图
      */
-    public abstract View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
+    protected abstract View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
 
     /**
      * 运行在initView之后
@@ -210,7 +217,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void startFragment(Fragment tofragment) {
         startFragment(tofragment, null);
     }
-
     /**
      * @param tofragment 跳转的fragment
      * @param tag        fragment的标签
@@ -223,6 +229,32 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass) {
+        Intent intent = new Intent(mContext, zclass);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass, Bundle bundle, int flag) {
+        Intent intent = new Intent(mContext, zclass);
+        intent.putExtras(bundle);
+        intent.addFlags(flag);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass, int flag) {
+        Intent intent = new Intent(mContext, zclass);
+        intent.addFlags(flag);
+        startActivity(intent);
+    }
 
     @Override
     public Context getContext() {
@@ -259,6 +291,12 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         getAppcompatActivity().setSupportActionBar(toolbar);
     }
 
+    public SparseArray<View> getViews() {
+        if (mViews == null) {
+            mViews = new SparseArray<>();
+        }
+        return mViews;
+    }
 
     /**
      * 通过viewId获取控件
@@ -267,10 +305,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * @return
      */
     public <V extends View> V findView(int viewId) {
-        View view = mViews.get(viewId);
+        View view = getViews().get(viewId);
         if (view == null) {
             view = mContentView.findViewById(viewId);
-            mViews.put(viewId, view);
+            getViews().put(viewId, view);
         }
         return (V) view;
     }

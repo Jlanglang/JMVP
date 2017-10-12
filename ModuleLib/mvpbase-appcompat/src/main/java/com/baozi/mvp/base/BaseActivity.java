@@ -1,6 +1,7 @@
 package com.baozi.mvp.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.baozi.mvp.MVPConfig;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.ui.BaseActivityView;
 
@@ -26,11 +28,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected T mPresenter;
     private SparseArray<View> mViews;
     private View mContentView;
+    private View statusBarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViews = new SparseArray<>();
+//        mViews = new SparseArray<>();
         //创建presenter
         mPresenter = initPresenter();
         //绑定Activity
@@ -42,14 +45,55 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         init(savedInstanceState);
         //初始化presenter
         mPresenter.onCreate();
+        onPresentersCreate();
         //延时加载数据.
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
+                if (isStatusBar()) {
+                    initStatusBar();
+                    getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                        @Override
+                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                            initStatusBar();
+                        }
+                    });
+                }
                 mPresenter.initData();
                 return false;
             }
         });
+    }
+
+    protected void initStatusBar() {
+        if (statusBarView == null) {
+            int identifier = getResources().getIdentifier("statusBarBackground", "id", "android");
+            statusBarView = getWindow().findViewById(identifier);
+        }
+        if (statusBarView != null) {
+            statusBarView.setBackgroundResource(MVPConfig.statusDrawable);
+        }
+    }
+
+    protected boolean isStatusBar() {
+        return MVPConfig.isStatusBar();
+    }
+
+    /**
+     * 扩展除了默认的presenter的其他Presenter初始化
+     */
+    protected void onPresentersCreate() {
+
+    }
+
+    /**
+     * 运行在initView之后
+     * 已经setContentView
+     * 可以做一些初始化操作
+     *
+     * @return
+     */
+    protected void init(Bundle savedInstanceState) {
 
     }
 
@@ -80,7 +124,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         mPresenter.onPause();
         super.onPause();
     }
@@ -98,7 +142,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         mPresenter.onResume();
         super.onResume();
     }
@@ -143,6 +187,47 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         fragmentTransaction.commitAllowingStateLoss();
     }
 
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass) {
+        Intent intent = new Intent(this, zclass);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass, Bundle bundle) {
+        Intent intent = new Intent(this, zclass);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass, Bundle bundle, int flag) {
+        Intent intent = new Intent(this, zclass);
+        intent.putExtras(bundle);
+        intent.addFlags(flag);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class zclass, int flag) {
+        Intent intent = new Intent(this, zclass);
+        intent.addFlags(flag);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+    }
+
 
     /**
      * onBackPressed();
@@ -162,6 +247,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return this;
     }
 
+
+    private SparseArray<View> getViews() {
+        if (mViews == null) {
+            mViews = new SparseArray<>();
+        }
+        return mViews;
+    }
+
     /**
      * 通过viewId获取控件
      *
@@ -170,10 +263,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @Override
     public <V extends View> V findView(@IdRes int viewId) {
-        View view = mViews.get(viewId);
+        View view = getViews().get(viewId);
         if (view == null) {
             view = super.findViewById(viewId);
-            mViews.put(viewId, view);
+            getViews().put(viewId, view);
         }
         return (V) view;
     }
@@ -197,21 +290,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
-     * 运行在initView之后
-     * 此时setContentView
-     * 可以做一些初始化操作
-     *
-     * @return
-     */
-    protected void init(Bundle savedInstanceState) {
-
-    }
-
-    /**
      * 子类实现Presenter,且必须继承BasePrensenter
      *
      * @return
      */
     protected abstract T initPresenter();
+
 
 }
