@@ -190,16 +190,16 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass) {
-        Intent intent = new Intent(this, zclass);
+    public void startActivity(Class aClass) {
+        Intent intent = new Intent(this, aClass);
         startActivity(intent);
     }
 
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass, Bundle bundle) {
-        Intent intent = new Intent(this, zclass);
+    public void startActivity(Class aClass, Bundle bundle) {
+        Intent intent = new Intent(this, aClass);
         intent.putExtras(bundle);
         startActivity(intent);
     }
@@ -207,8 +207,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass, Bundle bundle, int flag) {
-        Intent intent = new Intent(this, zclass);
+    public void startActivity(Class aClass, Bundle bundle, int flag) {
+        Intent intent = new Intent(this, aClass);
         intent.putExtras(bundle);
         intent.addFlags(flag);
         startActivity(intent);
@@ -217,17 +217,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass, int flag) {
-        Intent intent = new Intent(this, zclass);
+    public void startActivity(Class aClass, int flag) {
+        Intent intent = new Intent(this, aClass);
         intent.addFlags(flag);
         startActivity(intent);
     }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-    }
-
 
     /**
      * onBackPressed();
@@ -290,7 +284,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
-     * 子类实现Presenter,且必须继承BasePrensenter
+     * 子类实现Presenter,且必须继承BasePresenter
      *
      * @return
      */

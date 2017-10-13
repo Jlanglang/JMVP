@@ -24,44 +24,34 @@ import static com.linfeng.demo.R.layout.activity_main;
 
 public class MainActivity extends TempletActivity<BasePresenter>
         implements MainContract.View {
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        mPresenter.onAttch(this);
-        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-        Observable.just(new ArrayList<String>())
-                .map(new Func1<ArrayList<String>, ArrayList<File>>() {
-                    @Override
-                    public ArrayList<File> call(ArrayList<String> objects) {
-                        ArrayList<File> files = new ArrayList<>();
-                        for (int i = 0; i < objects.size(); i++) {
-                            File file = new File(objects.get(i));
-                            files.add(file);
-                        }
-                        return files;
-                    }
-                }).flatMap(new Func1<ArrayList<File>, Observable<?>>() {
-            @Override
-            public Observable<?> call(ArrayList<File> files) {
-                return null;
-            }
-        });
-        super.onCreate(savedInstanceState, persistentState);
 
-    }
 
     @NonNull
     @Override
     protected View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState) {
-        return inflater.inflate(activity_main, null);
+        return inflater.inflate(R.layout.activity_main, null);
     }
-
 
     //这里偷懒,就不去单独写个PresenterImpl了
     @Override
     protected BasePresenter initPresenter() {
         return new BasePresenter<MainContract.View>() {
+            private boolean isRTL;
+
             @Override
             public void onCreate() {
+                mView.findView(R.id.tv_title).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (!isRTL) {
+                            isRTL = true;
+                            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+                        } else {
+                            isRTL = false;
+                            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+                        }
+                    }
+                });
                 mView.getToolbarHelper().setTitle("首页");
                 mView.getToolbarHelper().setRightText("213", null);
                 //设置滑动效果

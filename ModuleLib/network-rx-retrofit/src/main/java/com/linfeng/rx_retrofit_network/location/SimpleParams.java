@@ -38,13 +38,30 @@ public class SimpleParams extends HashMap<String, Object> {
      * @return
      */
     public boolean checkMessage(Context context) {
+        return checkMessage(context, null);
+    }
+
+    /**
+     * 检查params
+     *
+     * @param context
+     * @return
+     */
+    public boolean checkMessage(Context context, CheckParamsCallback checkParamsCallback) {
         Set<String> strings = keySet();
         for (String str : strings) {
             Object value = get(str);
             if (value == null || "".equals(value)) {
                 String s = checkParams.get(str);
+                //emptyMessage则说明,该参数不校验
                 if (!TextUtils.isEmpty(s)) {
-                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                    //传入回调,自定义处理
+                    if (checkParamsCallback != null) {
+                        checkParamsCallback.callBack(s);
+                    } else {
+                        //默认Toast提示.
+                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
+                    }
                     return false;
                 }
             }
@@ -52,8 +69,12 @@ public class SimpleParams extends HashMap<String, Object> {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return JSONFactory.toJson(this);
+    public interface CheckParamsCallback {
+        void callBack(String s);
     }
 }
+
+//    @Override
+//    public String toString() {
+//        return JSONFactory.toJson(this);
+//    }
