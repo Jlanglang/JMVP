@@ -1,4 +1,4 @@
-package com.baozi.mvp.ui;
+package com.baozi.mvp.view;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

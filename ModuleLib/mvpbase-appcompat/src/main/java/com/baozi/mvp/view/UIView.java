@@ -1,4 +1,4 @@
-package com.baozi.mvp.ui;
+package com.baozi.mvp.view;
 
 import android.content.res.Resources;
 import android.support.annotation.IdRes;

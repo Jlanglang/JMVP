@@ -13,8 +13,8 @@ import android.widget.FrameLayout;
 import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.ui.ToolbarView;
-import com.baozi.mvp.ui.UIView;
+import com.baozi.mvp.view.ToolbarView;
+import com.baozi.mvp.view.UIView;
 
 /**
  * 模版Fragment

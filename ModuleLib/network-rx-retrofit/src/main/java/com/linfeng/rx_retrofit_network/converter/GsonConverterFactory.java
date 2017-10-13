@@ -15,7 +15,7 @@ import retrofit2.Retrofit;
 public class GsonConverterFactory extends Converter.Factory {
 
     private Charset charset;
-    private static final Charset UTF_8  = Charset.forName("UTF-8");
+    private static final Charset UTF_8 = Charset.forName("UTF-8");
 
     public static GsonConverterFactory create() {
         return create(UTF_8);

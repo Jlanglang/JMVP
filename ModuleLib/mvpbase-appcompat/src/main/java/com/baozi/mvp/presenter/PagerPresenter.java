@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baozi.mvp.ui.PagerView;
+import com.baozi.mvp.view.PagerView;
 
 
 /**

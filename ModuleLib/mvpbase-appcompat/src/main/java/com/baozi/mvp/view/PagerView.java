@@ -1,4 +1,4 @@
-package com.baozi.mvp.ui;
+package com.baozi.mvp.view;
 
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;

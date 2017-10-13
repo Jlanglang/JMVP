@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baozi.mvp.factory.FragmentFactory;
-import com.baozi.mvp.ui.PagerFragmentView;
+import com.baozi.mvp.view.PagerFragmentView;
 
 import java.util.ArrayList;
 import java.util.List;

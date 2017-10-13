@@ -1,7 +1,7 @@
 package com.baozi.frame;
 
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.ui.BaseView;
+import com.baozi.mvp.view.BaseView;
 
 import rx.subscriptions.CompositeSubscription;
 

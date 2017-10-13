@@ -1,6 +1,6 @@
 package com.baozi.homemodle.contract;
 
-import com.baozi.mvp.ui.BaseFragmentView;
+import com.baozi.mvp.view.BaseFragmentView;
 
 /**
  * @author jlanglang  2017/3/30 16:51

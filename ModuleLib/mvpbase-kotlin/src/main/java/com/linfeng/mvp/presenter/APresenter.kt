@@ -11,7 +11,7 @@ import com.linfeng.mvp.view.BaseActivityView
 class APresenter : BasePresenter() {
 
     override fun onCreate() {
-        mView.getIntent()
+//        mView.getIntent()
     }
 
     override fun initData() {

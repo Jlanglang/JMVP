@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.baozi.mvp.MVPConfig;
 import com.baozi.mvp.R;
-import com.baozi.mvp.ui.UIView;
+import com.baozi.mvp.view.UIView;
 
 /**
  * @author jlanglang  2017/2/22 16:58

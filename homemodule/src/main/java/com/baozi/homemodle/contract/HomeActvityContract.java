@@ -3,7 +3,7 @@ package com.baozi.homemodle.contract;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
-import com.baozi.mvp.ui.BaseActivityView;
+import com.baozi.mvp.view.BaseActivityView;
 
 import java.util.List;
 

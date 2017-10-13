@@ -27,6 +27,7 @@ public class MainActivity extends TempletActivity<BasePresenter>
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         mPresenter.onAttch(this);
+        getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
         Observable.just(new ArrayList<String>())
                 .map(new Func1<ArrayList<String>, ArrayList<File>>() {
                     @Override

@@ -18,7 +18,7 @@ public class MainActivity extends TempletActivity<BasePresenter> {
 
     @NonNull
     @Override
-    public View initContentView(LayoutInflater inflater, Bundle savedInstanceState) {
+    public View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.home_activity_main, null);
     }
 

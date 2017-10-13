@@ -17,7 +17,7 @@ import com.baozi.mvp.helper.ToolbarHelper;
  * Created by Administrator on 2017/03/28
  */
 
-public class HomeActvityPresenterImpl extends JBasePresenter<HomeActvityContract.View>
+public class HomeActivityPresenterImpl extends JBasePresenter<HomeActvityContract.View>
         implements HomeActvityContract.Presenter {
 
     @Override

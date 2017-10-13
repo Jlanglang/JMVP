@@ -12,7 +12,7 @@ import com.linfeng.mvp.view.BaseView
  * *
  * @Change
  */
-abstract class BasePresenter(var mView: BaseView) {
+abstract class BasePresenter {
 
 //
 //    /**
@@ -46,7 +46,7 @@ abstract class BasePresenter(var mView: BaseView) {
      * 解除绑定
      */
     fun onDetach() {
-        mView = null!!
+//        mView = null!!
     }
 
 

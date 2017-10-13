@@ -3,7 +3,7 @@ package com.baozi.mvp.presenter;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.baozi.mvp.ui.BaseView;
+import com.baozi.mvp.view.BaseView;
 
 
 /**

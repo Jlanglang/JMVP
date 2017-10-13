@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
-import com.baozi.homemodle.presenter.HomeActvityPresenterImpl;
+import com.baozi.homemodle.presenter.HomeActivityPresenterImpl;
 import com.baozi.homemodle.ui.fragment.IndexLiveListFragment;
 import com.baozi.mvp.base.BaseActivity;
 import com.linfeng.common.utils.AutoOptions;
@@ -23,7 +23,7 @@ import java.util.List;
  * Created by baozi on 2017/3/20.
  */
 
-public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
+public class HomeActivity extends BaseActivity<HomeActivityPresenterImpl>
         implements HomeActvityContract.View {
 
     private ArrayList<Fragment> mFragments;
@@ -47,8 +47,8 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     }
 
     @Override
-    protected HomeActvityPresenterImpl initPresenter() {
-        return new HomeActvityPresenterImpl();
+    protected HomeActivityPresenterImpl initPresenter() {
+        return new HomeActivityPresenterImpl();
     }
 
     @Override
@@ -75,7 +75,6 @@ public class HomeActivity extends BaseActivity<HomeActvityPresenterImpl>
     public List<String> getTabs() {
         if (null == mTabs) {
             mTabs = new ArrayList<>();
-
             mTabs.add("直播");
             mTabs.add("推荐");
             mTabs.add("追番");

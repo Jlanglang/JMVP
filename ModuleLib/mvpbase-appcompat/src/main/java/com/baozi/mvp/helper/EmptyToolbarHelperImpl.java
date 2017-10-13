@@ -7,7 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.baozi.mvp.ui.UIView;
+import com.baozi.mvp.view.UIView;
 
 /**
  */

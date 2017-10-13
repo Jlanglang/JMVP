@@ -16,24 +16,16 @@ import com.linfeng.mvp.view.BaseActivityView
  * @author jlanglang  2016/1/5 9:42
  */
 abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseActivityView {
-    private var mViews: SparseArray<View>? = null
-    protected val mPresenter: T by lazy {
+    private var mViews: SparseArray<View> = SparseArray()
+    private val mPresenter: T by lazy {
         initPresenter()
     }
     override val context: Context
         get() = this
     private var mContentView: View? = null
 
-    init {
-        mViews = SparseArray<View>()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        //创建presenter
-//        mPresenter = initPresenter()
-        //绑定Activity
-//        mPresenter.onAttch(this)
         //初始化ContentView
         mContentView = initView(LayoutInflater.from(this), savedInstanceState)
         super.setContentView(mContentView)
@@ -123,12 +115,12 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
 //    }
 
 
-//    /**
-//     * onBackPressed();
-//     */
-//    override fun onBack() {
-//        onBackPressed()
-//    }
+    /**
+     * onBackPressed();
+     */
+    fun onBack() {
+        onBackPressed()
+    }
 //
 //    override fun getAppcompatActivity(): BaseActivity<*> {
 //        return this
@@ -136,27 +128,6 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
 //
 //    override fun getContext(): Context {
 //        return this
-//    }
-
-//    /**
-//     * 通过viewId获取控件
-//
-//     * @param viewId 资源id
-//     * *
-//     * @return
-//     */
-//    override fun <V : View> findView(@IdRes viewId: Int): V {
-//        var view: View? = mViews!!.get(viewId)
-//        if (view == null) {
-//            view = super.findViewById(viewId)
-//            mViews!!.put(viewId, view)
-//        }
-//        return view as V?
-//    }
-//
-//
-//    override fun findViewById(@IdRes id: Int): View {
-//        return findView(id)
 //    }
 
 
