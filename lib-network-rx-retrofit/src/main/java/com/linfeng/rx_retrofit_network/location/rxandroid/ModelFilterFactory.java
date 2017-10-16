@@ -4,16 +4,17 @@ package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 import com.linfeng.rx_retrofit_network.location.BaseResponse;
 
-import rx.Observable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableTransformer;
 
 /**
  * @author jlanglang  2016/11/15 16:14
  */
 public class ModelFilterFactory {
 
-    private static Observable.Transformer transformer = new SimpleTransformer();
+    private static ObservableTransformer transformer = new SimpleTransformer();
 
-    public static void setTransformer(Observable.Transformer transformer) {
+    public static void setTransformer(ObservableTransformer transformer) {
         if (transformer == null) return;
         ModelFilterFactory.transformer = transformer;
     }

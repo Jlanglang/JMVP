@@ -7,15 +7,21 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscriber;
 
 /**
  * @author jlanglang  2016/11/14 17:32
  * @版本 2.0
  * @Change
  */
-public abstract class SimpleSubscriber<T> extends Subscriber<T> {
+public abstract class SimpleSubscriber<T> implements Subscriber<T> {
+    @Override
+    public void onSubscribe(Subscription s) {
+        s.request(request());
+    }
+
     @Override
     public void onNext(T t) {
         if (t != null) {
@@ -47,13 +53,21 @@ public abstract class SimpleSubscriber<T> extends Subscriber<T> {
     }
 
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
     }
 
     public void errorMessage(String error) {
     }
 
-
     public abstract void call(T t);
+
+    /**
+     * 发送数,想控制发送数,可以重写该方法.
+     *
+     * @return 默认发送全部事件
+     */
+    public long request() {
+        return Long.MAX_VALUE;
+    }
 }

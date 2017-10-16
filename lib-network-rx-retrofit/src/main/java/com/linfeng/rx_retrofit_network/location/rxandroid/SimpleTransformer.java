@@ -5,34 +5,21 @@ import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.*;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Cancellable;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
+import org.reactivestreams.Subscriber;
 import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * @param <T>
  */
-public class SimpleTransformer<T> implements Observable.Transformer<BaseResponse<T>, T> {
+public class SimpleTransformer<T> implements ObservableTransformer<BaseResponse<T>, T> {
     private static final int Defautl_TIME_OUT = 5;
     private static final int DEFAUTL_RETRY = 5;
-
-    @Override
-    public Observable<T> call(Observable<BaseResponse<T>> observable) {
-        return observable
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .timeout(Defautl_TIME_OUT, TimeUnit.SECONDS)
-                .retry(DEFAUTL_RETRY)
-                .flatMap(new Func1<BaseResponse<T>, Observable<T>>() {
-                    @Override
-                    public Observable<T> call(BaseResponse<T> tBaseResponse) {
-                        return flatResponse(tBaseResponse);
-                    }
-                });
-    }
 
     /**
      * 处理请求结果,BaseResponse
@@ -41,22 +28,39 @@ public class SimpleTransformer<T> implements Observable.Transformer<BaseResponse
      * @return 过滤处理, 返回只有data的Observable
      */
     private Observable<T> flatResponse(final BaseResponse<T> response) {
-        return Observable.create(new Observable.OnSubscribe<T>() {
+        return Observable.create(new ObservableOnSubscribe<T>() {
             @Override
-            public void call(Subscriber<? super T> subscriber) {
-                if (!subscriber.isUnsubscribed()) {
+            public void subscribe(ObservableEmitter<T> e) throws Exception {
+                if (!e.isDisposed()) {
                     if (response.getCode() == 0) {//请求成功
-                        subscriber.onNext(response.getData());
+                        e.onNext(response.getData());
                     } else {//请求失败
-                        subscriber.onError(new APIException(response.getCode(), response.getMsg()));
+                        e.onError(new APIException(response.getCode(), response.getMsg()));
                         return;
                     }
                 }
-                if (!subscriber.isUnsubscribed()) {
+                if (!e.isDisposed()) {
                     //请求完成
-                    subscriber.onCompleted();
+                    e.onComplete();
                 }
             }
+///
         });
+    }
+
+    @Override
+    public ObservableSource<T> apply(Observable<BaseResponse<T>> upstream) {
+        return upstream
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(Schedulers.io())
+                .timeout(Defautl_TIME_OUT, TimeUnit.SECONDS)
+                .retry(DEFAUTL_RETRY)
+                .flatMap(new Function<BaseResponse<T>, ObservableSource<T>>() {
+                    @Override
+                    public ObservableSource<T> apply(BaseResponse<T> tBaseResponse) throws Exception {
+                        return flatResponse(tBaseResponse);
+                    }
+                });
     }
 }
