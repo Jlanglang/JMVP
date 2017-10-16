@@ -3,15 +3,15 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/homemodule/homemodule.iml" filepath="$PROJECT_DIR$/homemodule/homemodule.iml" />
-      <module fileurl="file://$PROJECT_DIR$/imageloder-glide/imageloder-glide.iml" filepath="$PROJECT_DIR$/imageloder-glide/imageloder-glide.iml" />
-      <module fileurl="file://$PROJECT_DIR$/jmvp/jmvp.iml" filepath="$PROJECT_DIR$/jmvp/jmvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/framework-jmvp/framework-jmvp.iml" filepath="$PROJECT_DIR$/framework-jmvp/framework-jmvp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-imageloder-glide/lib-imageloder-glide.iml" filepath="$PROJECT_DIR$/lib-imageloder-glide/lib-imageloder-glide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-mvpbase-appcompat/lib-mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/lib-mvpbase-appcompat/lib-mvpbase-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-network-rx-retrofit/lib-network-rx-retrofit.iml" filepath="$PROJECT_DIR$/lib-network-rx-retrofit/lib-network-rx-retrofit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" filepath="$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/module-home/module-home.iml" filepath="$PROJECT_DIR$/module-home/module-home.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvpbase-appcompat/mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/mvpbase-appcompat/mvpbase-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/mvpbase-kotlin/mvpbase-kotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" filepath="$PROJECT_DIR$/network-rx-retrofit/network-rx-retrofit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/utils-common/utils-common.iml" filepath="$PROJECT_DIR$/utils-common/utils-common.iml" />
     </modules>
   </component>
 </project>

@@ -21,7 +21,7 @@ allprojects {
         mavenCentral()
         repositories {
             flatDir {
-                dirs 'libs',"../jmvp/libs"
+                dirs 'libs',"../framework-jmvp/libs"
             }
         }
     }

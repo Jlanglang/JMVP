@@ -21,9 +21,9 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile project(':imageloder-glide')
-    compile project(':mvpbase-appcompat')
-    compile project(':network-rx-retrofit')
-    compile project(':utils-common')
+    compile project(':lib-imageloder-glide')
+    compile project(':lib-mvpbase-appcompat')
+    compile project(':lib-network-rx-retrofit')
+    compile project(':lib-utils-common')
     compile(name: 'TreeRecyclerView', ext: 'aar')
 }
