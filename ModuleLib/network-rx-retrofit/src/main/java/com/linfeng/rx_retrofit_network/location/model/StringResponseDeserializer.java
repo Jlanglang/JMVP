@@ -33,7 +33,7 @@ public class StringResponseDeserializer implements JsonDeserializer<BaseResponse
                     baseResponse.setData(s);
                     return baseResponse;
                 } else if (data.isJsonNull()) {
-
+                    //data为null,不处理
                 } else {
                     baseResponse.setData(data.getAsString());
                 }

@@ -59,19 +59,9 @@ public interface JApi {
      * 通用get
      *
      * @param url
-     * @param json
      * @return
      */
     @GET
-    Observable<BaseResponse<String>> BaseGet(@Url String url, @Query("json") String json);
-
-    /**
-     * 通用get
-     *
-     * @param url
-     * @return
-     */
-    @GET
-    Observable<BaseResponse<String>> BaseGet(@Url String url, @QueryMap JParams params);
+    Observable<BaseResponse<String>> BaseGet(@Url String url, @QueryMap SimpleParams params);
 
 }

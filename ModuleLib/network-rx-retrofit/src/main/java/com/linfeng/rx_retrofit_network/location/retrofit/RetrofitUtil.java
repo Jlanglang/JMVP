@@ -73,7 +73,7 @@ public class RetrofitUtil {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
-                    Log.i("RxJava", Des.decode("MAILIANC", message));
+//                    Log.i("RxJava", Des.decode("MAILIANC", message));
                 }
             });
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
