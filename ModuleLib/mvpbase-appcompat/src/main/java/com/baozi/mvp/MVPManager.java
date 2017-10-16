@@ -7,7 +7,7 @@ import android.support.annotation.DrawableRes;
  * Created by Administrator on 2017/8/15 0015.
  */
 
-public class MVPConfig {
+public class MVPManager {
     public static int statusColor;
     public static int statusDrawable;
     public static int toolbarBackgroundColor;
@@ -30,10 +30,10 @@ public class MVPConfig {
     }
 
     public static void setToolbarBackgroundColor(int toolbarBackgroundColor) {
-        MVPConfig.toolbarBackgroundColor = toolbarBackgroundColor;
+        MVPManager.toolbarBackgroundColor = toolbarBackgroundColor;
     }
 
     public static void setToolbarBackgroundDrawable(int toolbarBackgroundDrawable) {
-        MVPConfig.toolbarBackgroundDrawable = toolbarBackgroundDrawable;
+        MVPManager.toolbarBackgroundDrawable = toolbarBackgroundDrawable;
     }
 }

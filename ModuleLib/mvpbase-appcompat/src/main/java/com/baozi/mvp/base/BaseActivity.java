@@ -16,7 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.baozi.mvp.MVPConfig;
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.BaseActivityView;
 
@@ -33,7 +33,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        mViews = new SparseArray<>();
         //创建presenter
         mPresenter = initPresenter();
         //绑定Activity
@@ -71,12 +70,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             statusBarView = getWindow().findViewById(identifier);
         }
         if (statusBarView != null) {
-            statusBarView.setBackgroundResource(MVPConfig.statusDrawable);
+            statusBarView.setBackgroundResource(MVPManager.statusDrawable);
         }
     }
 
     protected boolean isStatusBar() {
-        return MVPConfig.isStatusBar();
+        return MVPManager.isStatusBar();
     }
 
     /**
@@ -241,7 +240,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return this;
     }
 
-
     private SparseArray<View> getViews() {
         if (mViews == null) {
             mViews = new SparseArray<>();
@@ -263,12 +261,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             getViews().put(viewId, view);
         }
         return (V) view;
-    }
-
-
-    @Override
-    public View findViewById(@IdRes int id) {
-        return findView(id);
     }
 
 

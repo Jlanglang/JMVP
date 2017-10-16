@@ -78,7 +78,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!isMaterialDesign() || getToolbarHelper() == null) {
+        if (!isMaterialDesign()) {
             return false;
         }
         return super.onCreateOptionsMenu(menu);

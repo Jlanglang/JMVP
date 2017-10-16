@@ -35,8 +35,6 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.templet_content, null);
-        //创建toolbar
-        mToolbarHelper = getToolbarHelper();
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView

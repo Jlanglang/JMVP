@@ -12,7 +12,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.baozi.mvp.MVPConfig;
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.view.UIView;
 
@@ -38,11 +38,11 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_custom);
         if (mToolbar != null) {
             initToolbar();
-            if (MVPConfig.toolbarBackgroundColor > 0) {
-                mToolbar.setBackgroundColor(mUIView.getResources().getColor(MVPConfig.toolbarBackgroundColor));
+            if (MVPManager.toolbarBackgroundColor > 0) {
+                mToolbar.setBackgroundColor(mUIView.getResources().getColor(MVPManager.toolbarBackgroundColor));
             }
-            if (MVPConfig.toolbarBackgroundDrawable > 0) {
-                mToolbar.setBackgroundResource(MVPConfig.toolbarBackgroundDrawable);
+            if (MVPManager.toolbarBackgroundDrawable > 0) {
+                mToolbar.setBackgroundResource(MVPManager.toolbarBackgroundDrawable);
             }
         }
     }
