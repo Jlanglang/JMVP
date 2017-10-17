@@ -10,14 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.baozi.widget.CarouselRecyclerView;
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.IndexLiveListFragmentContract;
-import com.baozi.treerecyclerview.adpater.wapper.HeaderAndFootWapper;
+import com.baozi.homemodle.event.TestEvent;
+import com.baozi.treerecyclerview.adpater.wrapper.HeaderAndFootWrapper;
 import com.baozi.treerecyclerview.base.BaseRecyclerAdapter;
 import com.baozi.treerecyclerview.base.ViewHolder;
+import com.baozi.widget.CarouselRecyclerView;
 import com.linfeng.common.utils.AutoUtils;
+import com.linfeng.rx_retrofit_network.location.rxbus.RxBus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,7 @@ import java.util.Arrays;
 public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLiveListFragmentContract.View>
         implements IndexLiveListFragmentContract.Presenter {
     private String[] mStrings = {"1", "2", "3"};
-    private HeaderAndFootWapper<String> mHeaderAndFootWapper;
+    private HeaderAndFootWrapper<String> mHeaderAndFootWapper;
 
     @Override
     public void onCreate() {
@@ -58,8 +60,10 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
 
     private void init() {
         BaseRecyclerAdapter<String> mSimpleRecyclerBaseAdapter = new BaseRecyclerAdapter<String>() {
+
             @Override
-            public void onBind(ViewHolder holder, String o, int position) {
+
+            public void onBindViewHolder(ViewHolder viewHolder, String s, int i) {
 
             }
 
@@ -76,7 +80,7 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             }
 
         };
-        mHeaderAndFootWapper = new HeaderAndFootWapper<String>(mSimpleRecyclerBaseAdapter);
+        mHeaderAndFootWapper = new HeaderAndFootWrapper<>(mSimpleRecyclerBaseAdapter);
 
         BaseRecyclerAdapter<String> carouselAdapter = new BaseRecyclerAdapter<String>() {
             @Override
@@ -85,7 +89,7 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
             }
 
             @Override
-            public void onBind(ViewHolder holder, String o, int position) {
+            public void onBindViewHolder(ViewHolder holder, String o, int position) {
                 ImageView itemView = (ImageView) holder.itemView;
                 itemView.setBackground(ContextCompat.getDrawable(mView.getContext(), R.mipmap.ic_launcher));
             }
@@ -102,10 +106,15 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
                 .setItemChangeCallBack(new CarouselRecyclerView.ItemChangeCallBack() {
                     @Override
                     public void change(ViewGroup indicator, int index) {
-
                     }
                 })
                 .create();
+        carouselAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickLitener() {
+            @Override
+            public void onItemClick(ViewHolder viewHolder, int i) {
+                RxBus.getDefault().post(new TestEvent());
+            }
+        });
         carouselAdapter.getItemManager().replaceAllItem(Arrays.asList(mStrings));
         mHeaderAndFootWapper.addHeaderView(contentView);
     }

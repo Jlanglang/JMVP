@@ -12,7 +12,7 @@ import io.reactivex.ObservableTransformer;
  */
 public class ModelFilterFactory {
 
-    private static ObservableTransformer transformer = new SimpleTransformer();
+    private static ObservableTransformer transformer = new NetWorkTransformer();
 
     public static void setTransformer(ObservableTransformer transformer) {
         if (transformer == null) return;

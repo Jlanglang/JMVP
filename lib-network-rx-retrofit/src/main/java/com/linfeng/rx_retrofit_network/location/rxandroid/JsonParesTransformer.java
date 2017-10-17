@@ -7,7 +7,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.functions.Function;
-import rx.functions.Func1;
 
 /**
  * Created by Jlanglang on 2017/8/31 0031.
@@ -24,7 +23,7 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
 //    @Override
 //    @SuppressWarnings("unchecked")
 //    public Observable<T> call(Observable<BaseResponse<String>> observable) {
-//        return  observable.compose(new SimpleTransformer<String>())
+//        return  observable.compose(new NetWorkTransformer<String>())
 //                .flatMap(new Func1<String, Observable<T>>() {
 //                    @Override
 //                    public Observable<T> call(String s) {
@@ -36,7 +35,7 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
 
     @Override
     public ObservableSource<T> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream.compose(new SimpleTransformer<String>())
+        return upstream.compose(new NetWorkTransformer<String>())
                 .flatMap(new Function<String, ObservableSource<T>>() {
                     @Override
                     public ObservableSource<T> apply(String s) throws Exception {

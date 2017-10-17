@@ -7,15 +7,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
-import rx.subjects.PublishSubject;
-import rx.subjects.SerializedSubject;
-import rx.subjects.Subject;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.functions.Predicate;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.PublishSubject;
+import io.reactivex.subjects.Subject;
+
 
 /**
  * RxBus
@@ -24,20 +25,22 @@ import rx.subjects.Subject;
 public class RxBus {
     private static volatile RxBus defaultInstance;
 
-    private Map<Class,List<Subscription>> subscriptionsByEventType = new HashMap<>();
+    private Map<Class, List<Disposable>> subscriptionsByEventType = new HashMap<>();
 
 
-    private Map<Object,List<Class>> eventTypesBySubscriber = new HashMap<>();
+    private Map<Object, List<Class>> eventTypesBySubscriber = new HashMap<>();
 
 
-    private Map<Class,List<SubscriberMethod>> subscriberMethodByEventType = new HashMap<>();
+    private Map<Class, List<SubscriberMethod>> subscriberMethodByEventType = new HashMap<>();
 
     // 主题
     private final Subject bus;
+
     // PublishSubject只会把在订阅发生的时间点之后来自原始Observable的数据发射给观察者
     public RxBus() {
-        bus = new SerializedSubject<>(PublishSubject.create());
+        bus = PublishSubject.create().toSerialized();
     }
+
     // 单例RxBus
     public static RxBus getDefault() {
         RxBus rxBus = defaultInstance;
@@ -55,14 +58,16 @@ public class RxBus {
 
     /**
      * 提供了一个新的事件,单一类型
+     *
      * @param o 事件数据
      */
-    public void post (Object o) {
+    public void post(Object o) {
         bus.onNext(o);
     }
 
     /**
      * 根据传递的 eventType 类型返回特定类型(eventType)的 被观察者
+     *
      * @param eventType 事件类型
      * @param <T>
      * @return
@@ -73,61 +78,72 @@ public class RxBus {
 
     /**
      * 提供了一个新的事件,根据code进行分发
+     *
      * @param code 事件code
      * @param o
      */
-    public void post(int code, Object o){
-        bus.onNext(new Message(code,o));
-
+    public void post(int code, Object o) {
+        bus.onNext(new Message(code, o));
     }
 
 
     /**
      * 根据传递的code和 eventType 类型返回特定类型(eventType)的 被观察者
-     * @param code 事件code
+     *
+     * @param code      事件code
      * @param eventType 事件类型
      * @param <T>
      * @return
      */
     public <T> Observable<T> toObservable(final int code, final Class<T> eventType) {
         return bus.ofType(Message.class)
-                .filter(new Func1<Message,Boolean>() {
-            @Override
-            public Boolean call(Message o) {
-                //过滤code和eventType都相同的事件
-                return o.getCode() == code && eventType.isInstance(o.getObject());
-            }
-        }).map(new Func1<Message,Object>() {
-            @Override
-            public Object call(Message o) {
-                return o.getObject();
-            }
-        }).cast(eventType);
+                .filter(new Predicate<Message>() {
+                    @Override
+                    public boolean test(Message o) throws Exception {
+                        //过滤code和eventType都相同的事件
+                        return o.getCode() == code && eventType.isInstance(o.getObject());
+                    }
+//                    @Override
+//            public Boolean call(Message o) {
+//                //过滤code和eventType都相同的事件
+//                return o.getCode() == code && eventType.isInstance(o.getObject());
+//            }
+                }).map(new Function<Message, Object>() {
+                    @Override
+                    public Object apply(Message o) throws Exception {
+                        return o.getObject();
+                    }
+//                    @Override
+//            public Object call(Message o) {
+//                return o.getObject();
+//            }
+                }).cast(eventType);
     }
 
 
     /**
      * 注册
+     *
      * @param subscriber 订阅者
      */
-    public void register(Object subscriber){
+    public void register(Object subscriber) {
         Class<?> subClass = subscriber.getClass();
         Method[] methods = subClass.getDeclaredMethods();
-        for(Method method : methods){
-            if(method.isAnnotationPresent(Subscribe.class)){
+        for (Method method : methods) {
+            if (method.isAnnotationPresent(Subscribe.class)) {
                 //获得参数类型
                 Class[] parameterType = method.getParameterTypes();
                 //参数不为空 且参数个数为1
-                if(parameterType != null && parameterType.length == 1){
+                if (parameterType != null && parameterType.length == 1) {
 
                     Class eventType = parameterType[0];
 
-                    addEventTypeToMap(subscriber,eventType);
+                    addEventTypeToMap(subscriber, eventType);
                     Subscribe sub = method.getAnnotation(Subscribe.class);
                     int code = sub.code();
                     ThreadMode threadMode = sub.threadMode();
 
-                    SubscriberMethod subscriberMethod = new SubscriberMethod(subscriber,method,eventType, code,threadMode);
+                    SubscriberMethod subscriberMethod = new SubscriberMethod(subscriber, method, eventType, code, threadMode);
                     addSubscriberToMap(eventType, subscriberMethod);
 
                     addSubscriber(subscriberMethod);
@@ -139,52 +155,55 @@ public class RxBus {
 
     /**
      * 将event的类型以订阅中subscriber为key保存到map里
+     *
      * @param subscriber 订阅者
-     * @param eventType event类型
+     * @param eventType  event类型
      */
-    private void addEventTypeToMap(Object subscriber, Class eventType){
+    private void addEventTypeToMap(Object subscriber, Class eventType) {
         List<Class> eventTypes = eventTypesBySubscriber.get(subscriber);
-        if(eventTypes == null){
+        if (eventTypes == null) {
             eventTypes = new ArrayList<>();
-            eventTypesBySubscriber.put(subscriber,eventTypes);
+            eventTypesBySubscriber.put(subscriber, eventTypes);
         }
 
-        if(!eventTypes.contains(eventType)){
+        if (!eventTypes.contains(eventType)) {
             eventTypes.add(eventType);
         }
     }
 
     /**
      * 将注解方法信息以event类型为key保存到map中
-     * @param eventType event类型
+     *
+     * @param eventType        event类型
      * @param subscriberMethod 注解方法信息
      */
-    private void addSubscriberToMap(Class eventType, SubscriberMethod subscriberMethod){
+    private void addSubscriberToMap(Class eventType, SubscriberMethod subscriberMethod) {
         List<SubscriberMethod> subscriberMethods = subscriberMethodByEventType.get(eventType);
-        if(subscriberMethods == null){
+        if (subscriberMethods == null) {
             subscriberMethods = new ArrayList<>();
-            subscriberMethodByEventType.put(eventType,subscriberMethods);
+            subscriberMethodByEventType.put(eventType, subscriberMethods);
         }
 
-        if(!subscriberMethods.contains(subscriberMethod)){
+        if (!subscriberMethods.contains(subscriberMethod)) {
             subscriberMethods.add(subscriberMethod);
         }
     }
 
 
     /**
-     *将订阅事件以event类型为key保存到map,用于取消订阅时用
-     * @param eventType event类型
+     * 将订阅事件以event类型为key保存到map,用于取消订阅时用
+     *
+     * @param eventType    event类型
      * @param subscription 订阅事件
      */
-    private void addSubscriptionToMap(Class eventType, Subscription subscription){
-        List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
-        if(subscriptions == null){
+    private void addSubscriptionToMap(Class eventType, Disposable subscription) {
+        List<Disposable> subscriptions = subscriptionsByEventType.get(eventType);
+        if (subscriptions == null) {
             subscriptions = new ArrayList<>();
-            subscriptionsByEventType.put(eventType,subscriptions);
+            subscriptionsByEventType.put(eventType, subscriptions);
         }
 
-        if(!subscriptions.contains(subscription)){
+        if (!subscriptions.contains(subscription)) {
             subscriptions.add(subscription);
         }
     }
@@ -192,29 +211,36 @@ public class RxBus {
 
     /**
      * 用RxJava添加订阅者
+     *
      * @param subscriberMethod
      */
-    public  void addSubscriber(final SubscriberMethod subscriberMethod){
-        Observable observable ;
-        if(subscriberMethod.code == -1){
+    public void addSubscriber(final SubscriberMethod subscriberMethod) {
+        Observable observable;
+        if (subscriberMethod.code == -1) {
             observable = toObservable(subscriberMethod.eventType);
-        }else{
-            observable = toObservable(subscriberMethod.code,subscriberMethod.eventType);
+        } else {
+            observable = toObservable(subscriberMethod.code, subscriberMethod.eventType);
         }
 
-        Subscription subscription = postToObservable(observable,subscriberMethod)
-        .subscribe(new Action1<Object>() {
-            @Override
-            public void call(Object o) {
-                callEvent(subscriberMethod.code,o);
-            }
-        });
-        addSubscriptionToMap(subscriberMethod.eventType ,subscription);
+        Disposable subscribe = postToObservable(observable, subscriberMethod)
+                .subscribe(new Consumer() {
+                    @Override
+                    public void accept(Object o) throws Exception {
+                        callEvent(subscriberMethod.code, o);
+                    }
+//
+//            @Override
+//            public void call(Object o) {
+//                callEvent(subscriberMethod.code,o);
+//            }
+                });
+        addSubscriptionToMap(subscriberMethod.eventType, subscribe);
     }
 
 
     /**
      * 用于处理订阅事件在那个线程中执行
+     *
      * @param observable
      * @param subscriberMethod
      * @return
@@ -230,7 +256,7 @@ public class RxBus {
                 observable.observeOn(Schedulers.newThread());
                 break;
             case CURRENT_THREAD:
-                observable.observeOn(Schedulers.immediate());
+                observable.observeOn(Schedulers.trampoline());
                 break;
             default:
                 throw new IllegalStateException("Unknown thread mode: " + subscriberMethod.threadMode);
@@ -241,18 +267,19 @@ public class RxBus {
 
     /**
      * 回调到订阅者的方法中
-     * @param code code
+     *
+     * @param code   code
      * @param object obj
      */
-    private void callEvent(int code, Object object){
+    private void callEvent(int code, Object object) {
         Class eventClass = object.getClass();
         List<SubscriberMethod> methods = subscriberMethodByEventType.get(eventClass);
-        if(methods != null && methods.size() > 0){
-            for(SubscriberMethod subscriberMethod : methods){
+        if (methods != null && methods.size() > 0) {
+            for (SubscriberMethod subscriberMethod : methods) {
 
                 Subscribe sub = subscriberMethod.method.getAnnotation(Subscribe.class);
                 int c = sub.code();
-                if(c == code){
+                if (c == code) {
                     subscriberMethod.invoke(object);
                 }
 
@@ -263,14 +290,15 @@ public class RxBus {
 
     /**
      * 取消注册
+     *
      * @param subscriber
      */
-    public void unRegister(Object subscriber){
+    public void unRegister(Object subscriber) {
         List<Class> subscribedTypes = eventTypesBySubscriber.get(subscriber);
         if (subscribedTypes != null) {
             for (Class<?> eventType : subscribedTypes) {
                 unSubscribeByEventType(eventType);
-                unSubscribeMethodByEventType(subscriber,eventType);
+                unSubscribeMethodByEventType(subscriber, eventType);
             }
             eventTypesBySubscriber.remove(subscriber);
         }
@@ -279,16 +307,17 @@ public class RxBus {
 
     /**
      * subscriptions unsubscribe
+     *
      * @param eventType
      */
-    private void unSubscribeByEventType(Class eventType){
-        List<Subscription> subscriptions = subscriptionsByEventType.get(eventType);
+    private void unSubscribeByEventType(Class eventType) {
+        List<Disposable> subscriptions = subscriptionsByEventType.get(eventType);
         if (subscriptions != null) {
-            Iterator<Subscription> iterator = subscriptions.iterator();
-            while(iterator.hasNext()){
-                Subscription subscription = iterator.next();
-                if(subscription !=null && !subscription.isUnsubscribed()){
-                    subscription.unsubscribe();
+            Iterator<Disposable> iterator = subscriptions.iterator();
+            while (iterator.hasNext()) {
+                Disposable subscription = iterator.next();
+                if (subscription != null && !subscription.isDisposed()) {
+                    subscription.dispose();
                     iterator.remove();
                 }
             }
@@ -297,16 +326,17 @@ public class RxBus {
 
     /**
      * 移除subscriber对应的subscriberMethods
+     *
      * @param subscriber
      * @param eventType
      */
-    private void unSubscribeMethodByEventType(Object subscriber, Class eventType){
+    private void unSubscribeMethodByEventType(Object subscriber, Class eventType) {
         List<SubscriberMethod> subscriberMethods = subscriberMethodByEventType.get(eventType);
-        if(subscriberMethods != null){
+        if (subscriberMethods != null) {
             Iterator<SubscriberMethod> iterator = subscriberMethods.iterator();
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 SubscriberMethod subscriberMethod = iterator.next();
-                if(subscriberMethod.subscriber.equals(subscriber)){
+                if (subscriberMethod.subscriber.equals(subscriber)) {
                     iterator.remove();
                 }
             }

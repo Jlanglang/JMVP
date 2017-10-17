@@ -5,9 +5,6 @@ import io.reactivex.ObservableTransformer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.internal.util.ConnectConsumer;
-import rx.Observable;
-import rx.functions.Action0;
-import rx.functions.Action1;
 
 /**
  * @author jlanglang  2017/7/2 10:39

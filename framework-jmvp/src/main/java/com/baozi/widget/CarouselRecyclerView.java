@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,11 +14,12 @@ import android.widget.LinearLayout;
 
 import java.util.concurrent.TimeUnit;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by baozi on 2017/6/14.
@@ -27,7 +29,7 @@ public class CarouselRecyclerView extends FrameLayout {
     private Context mContext;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView mRecyclerView;
-    private Subscription mSubscribe;
+    private CompositeDisposable mSubscribe = new CompositeDisposable();
     private ItemChangeCallBack mItemChangeCallBack;
     private ViewGroup mIndicator;
 
@@ -115,32 +117,34 @@ public class CarouselRecyclerView extends FrameLayout {
     }
 
     public void start() {
-        if (mSubscribe == null || mSubscribe.isUnsubscribed()) {
-            mSubscribe = Observable.interval(4, TimeUnit.SECONDS, Schedulers.trampoline())  // 5s的延迟，5s的循环时间
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<Long>() {
-                        @Override
-                        public void call(Long aLong) {
-                            // 进行轮播操作
-                            //向后翻动一页
-                            LinearLayoutManager linearManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
-                            //获取第一个可见view的位置
-                            int firstItemPosition = linearManager.findFirstVisibleItemPosition();
-                            int newIndex = ++firstItemPosition;
-                            if (mAdapter.getItemCount() < 2 && firstItemPosition == 1) {
-                                newIndex = 0;
-                            }
-                            mRecyclerView.smoothScrollToPosition(newIndex);
-                            mItemChangeCallBack.change(mIndicator, newIndex);
+//        if (!mSubscribe.isDisposed()) {
+        Disposable subscribe = Observable.interval(2, TimeUnit.SECONDS)  // 5s的延迟，5s的循环时间
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Long>() {
+                    @Override
+                    public void accept(Long aLong) {
+                        // 进行轮播操作
+                        //向后翻动一页
+                        LinearLayoutManager linearManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                        //获取第一个可见view的位置
+                        int firstItemPosition = linearManager.findFirstVisibleItemPosition();
+                        int newIndex = ++firstItemPosition;
+                        Log.i("index", newIndex + "");
+                        if (firstItemPosition == mAdapter.getItemCount()) {
+                            newIndex = 0;
                         }
-                    });
-        }
+                        mRecyclerView.smoothScrollToPosition(newIndex);
+                        mItemChangeCallBack.change(mIndicator, newIndex);
+                    }
+                });
+        mSubscribe.add(subscribe);
+//        }
     }
 
     private void stop() {
-        if (!mSubscribe.isUnsubscribed()) {
-            mSubscribe.unsubscribe();
+        if (!mSubscribe.isDisposed()) {
+            mSubscribe.clear();
         }
     }
 

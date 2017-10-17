@@ -10,7 +10,12 @@ import android.support.v7.widget.Toolbar;
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
+import com.baozi.homemodle.event.TestEvent;
 import com.baozi.mvp.helper.ToolbarHelper;
+import com.linfeng.common.utils.ToastUtil;
+import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleSubscriber;
+import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleTransformer;
+import com.linfeng.rx_retrofit_network.location.rxbus.RxBus;
 
 
 /**
@@ -30,6 +35,16 @@ public class HomeActivityPresenterImpl extends JBasePresenter<HomeActvityContrac
 
         viewPager.setAdapter(new HomePageAdapter(mView.getAppcompatActivity().getSupportFragmentManager()));
         tabLayout.setupWithViewPager(viewPager);
+
+        RxBus.getDefault().toObservable(TestEvent.class)
+                .compose(new SimpleTransformer<TestEvent>())
+                .subscribe(new SimpleSubscriber<TestEvent>() {
+                    @Override
+                    public void call(TestEvent testEvent) {
+                        ToastUtil.showToast(mView.getContext(), testEvent.code + "");
+                        mDisposable.dispose();
+                    }
+                });
     }
 
     @Override

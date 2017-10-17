@@ -26,7 +26,7 @@ public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseR
     @Override
     public ObservableSource<List<T>> apply(Observable<BaseResponse<String>> upstream) {
         return upstream
-                .compose(new SimpleTransformer<String>())
+                .compose(new NetWorkTransformer<String>())
                 .flatMap(new Function<String, ObservableSource<List<T>>>() {
                     @Override
                     public ObservableSource<List<T>> apply(String s) throws Exception {

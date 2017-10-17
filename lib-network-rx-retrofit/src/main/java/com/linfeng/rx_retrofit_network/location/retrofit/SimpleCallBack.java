@@ -6,8 +6,8 @@ import java.net.UnknownHostException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
-import retrofit2.adapter.rxjava.HttpException;
 
 /**
  * Created by baozi on 2017/6/21.

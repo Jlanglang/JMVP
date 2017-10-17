@@ -7,19 +7,23 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-import retrofit2.adapter.rxjava.HttpException;
+import io.reactivex.Observer;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 /**
  * @author jlanglang  2016/11/14 17:32
  * @版本 2.0
  * @Change
  */
-public abstract class SimpleSubscriber<T> implements Subscriber<T> {
+public abstract class SimpleSubscriber<T> implements Observer<T> {
+
+    public Disposable mDisposable;
+
     @Override
-    public void onSubscribe(Subscription s) {
-        s.request(request());
+    public void onSubscribe(@NonNull Disposable d) {
+        mDisposable = d;
     }
 
     @Override

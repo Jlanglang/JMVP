@@ -25,5 +25,5 @@ dependencies {
     compile project(':lib-mvpbase-appcompat')
     compile project(':lib-network-rx-retrofit')
     compile project(':lib-utils-common')
-    compile(name: 'TreeRecyclerView', ext: 'aar')
+    compile( name: 'TreeRecyclerView', ext: 'aar')
 }

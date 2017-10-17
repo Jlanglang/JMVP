@@ -33,7 +33,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("pleace exends BaseActivity.TempletActivity  theme must be Noactionbar");
+            throw new IllegalStateException("please extends BaseActivity.TempletActivity theme must be NoActionbar");
         }
         mRootView = inflater.inflate(R.layout.templet_content, null);
         //创建toolbar

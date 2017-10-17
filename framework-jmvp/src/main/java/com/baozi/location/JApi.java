@@ -6,6 +6,7 @@ import com.linfeng.rx_retrofit_network.location.SimpleParams;
 
 import java.util.HashMap;
 
+import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,7 +16,6 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
-import rx.Observable;
 
 /**
  * Created by Jlanglang on 2017/8/29 0029.
