@@ -15,7 +15,6 @@ import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
-import com.linfeng.rx_retrofit_network.location.APIException;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 import com.linfeng.rx_retrofit_network.location.rxandroid.JsonParesTransformer;
@@ -65,7 +64,6 @@ public class MainActivity extends TempletActivity<BasePresenter>
             public void initData() {
                 NetWorkManager.init("报错了");
                 NetWorkManager.putErrorMsg(NullPointerException.class, "数据为空");
-                NetWorkManager.putErrorMsg(APIException.class, "数据为空");
                 NetWorkManager.putApiCallback(100, new APIExceptionCallBack() {
                     @Override
                     public void callback(BaseResponse baseResponse) {

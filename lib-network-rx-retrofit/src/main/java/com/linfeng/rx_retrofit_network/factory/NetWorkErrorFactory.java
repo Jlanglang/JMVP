@@ -20,10 +20,10 @@ public class NetWorkErrorFactory {
         if (throwableClass.equals(APIException.class)) {
             return throwable.getMessage();
         }
-        //如果该异常未定义.获取默认
+
         String errorMsg = NetWorkManager.getErrorMsg(throwableClass);
         if ("".equals(errorMsg)) {
-            //获取默认异常
+            //如果该异常未定义.获取默认
             return NetWorkManager.getErrorMsg(Exception.class);
         }
         return errorMsg;

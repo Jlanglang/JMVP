@@ -1,6 +1,7 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 import com.linfeng.rx_retrofit_network.NetWorkManager;
+import com.linfeng.rx_retrofit_network.location.APIException;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 import com.linfeng.rx_retrofit_network.location.APISucesssCallback;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
@@ -36,21 +37,24 @@ public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse
                 .filter(new Predicate<BaseResponse<T>>() {
                     @Override
                     public boolean test(@NonNull BaseResponse<T> tBaseResponse) throws Exception {
+                        //如果数据为空,抛出空指针异常
                         if (tBaseResponse.getData() == null) {
                             throw new NullPointerException();
                         }
+                        //拿到后台返回code
                         int code = tBaseResponse.getCode();
+                        //通过code获取注册的接口回调.
                         APIExceptionCallBack apiCallback = NetWorkManager.getApiCallback(code);
                         if (apiCallback != null) {
                             if (apiCallback instanceof APISucesssCallback) {
-                                return true;
+                                return true;//请求成功
                             } else {
+                                //请求失败,抛出自定义异常.触发注册的自定义接口回调
                                 apiCallback.callback(tBaseResponse);
-                                return false;
+                                throw new APIException(tBaseResponse.getCode(), tBaseResponse.getMsg());
                             }
                         }
-                        //如果该code,获取不到APIExceptionCallBack,说明该code不需要处理
-                        return true;
+                        return true;//如果该code,获取不到APIExceptionCallBack,说明该code不需要处理
                     }
                 })
                 .map(new Function<BaseResponse<T>, T>() {
