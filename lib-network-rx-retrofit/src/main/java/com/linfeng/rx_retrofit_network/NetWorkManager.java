@@ -10,12 +10,30 @@ import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 import java.util.HashMap;
 
 public final class NetWorkManager {
+    /**
+     * 单例
+     */
     private final static NetWorkManager netWorkManager = new NetWorkManager();
+    /**
+     * 提示消息集合
+     */
     private final static HashMap<Class<? extends Throwable>, String> errorMap;
+    /**
+     * code状态码处理回调
+     */
     private final static SparseArray<APIExceptionCallBack> apiExcePitonCallBacks;
+    /**
+     * 私钥
+     */
     private static String privateKey;
+    /**
+     * 公钥
+     */
     private static String publicKey;
 
+    /**
+     * 初始化集合.
+     */
     static {
         errorMap = new HashMap<>();
         apiExcePitonCallBacks = new SparseArray<>();
@@ -58,7 +76,9 @@ public final class NetWorkManager {
         return Instance.key;
     }
 
-
+    /**
+     * 加密对象单例.
+     */
     private static class Instance {
         private static EncodeDecodeKey key = getKey();
 

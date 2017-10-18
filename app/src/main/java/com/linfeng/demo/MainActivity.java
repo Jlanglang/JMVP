@@ -2,26 +2,22 @@ package com.linfeng.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
+import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
+import com.linfeng.rx_retrofit_network.location.rxandroid.NetWorkTransformer;
 
-import java.io.File;
-import java.util.ArrayList;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 
-import rx.Observable;
-import rx.functions.Func1;
-
-import static com.linfeng.demo.R.layout.activity_main;
 
 public class MainActivity extends TempletActivity<BasePresenter>
         implements MainContract.View {
@@ -62,7 +58,14 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
             @Override
             public void initData() {
+                Observable.just(new BaseResponse<>())
+                        .compose(new NetWorkTransformer<Object>())
+                        .subscribe(new Consumer<Object>() {
+                            @Override
+                            public void accept(Object o) throws Exception {
 
+                            }
+                        });
             }
 
             @Override

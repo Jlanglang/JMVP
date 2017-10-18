@@ -30,11 +30,12 @@ public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse
      * @return 过滤处理, 返回只有data的Observable
      */
     private Observable<T> flatResponse(final BaseResponse<T> response) {
+
         return Observable.just(response)
                 .filter(new Predicate<BaseResponse<T>>() {
                     @Override
                     public boolean test(@NonNull BaseResponse<T> tBaseResponse) throws Exception {
-                        if (tBaseResponse.getData() == null) {
+                        if (tBaseResponse.getData() == null) {//如果
                             throw new NullPointerException();
                         }
                         int code = tBaseResponse.getCode();
@@ -47,6 +48,7 @@ public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse
                                 return false;
                             }
                         }
+                        //如果该code,获取不到APIExceptionCallBack,说明该code不需要处理
                         return true;
                     }
                 })
