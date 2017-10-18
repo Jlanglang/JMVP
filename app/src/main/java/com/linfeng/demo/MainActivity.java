@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.baozi.frame.JBasePresenter;
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
@@ -17,11 +18,10 @@ import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APIException;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
-import com.linfeng.rx_retrofit_network.location.rxandroid.ErrorToastConsumer;
-import com.linfeng.rx_retrofit_network.location.rxandroid.NetWorkTransformer;
+import com.linfeng.rx_retrofit_network.location.rxandroid.JsonParesTransformer;
+import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleObserver;
 
 import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
 
 
 public class MainActivity extends TempletActivity<BasePresenter>
@@ -37,7 +37,7 @@ public class MainActivity extends TempletActivity<BasePresenter>
     //这里偷懒,就不去单独写个PresenterImpl了
     @Override
     protected BasePresenter initPresenter() {
-        return new BasePresenter<MainContract.View>() {
+        return new JBasePresenter<MainContract.View>() {
             private boolean isRTL;
 
             @Override
@@ -73,17 +73,18 @@ public class MainActivity extends TempletActivity<BasePresenter>
                     }
                 });
                 //假数据
-                BaseResponse<Object> objectBaseResponse = new BaseResponse<>();
-                objectBaseResponse.setData(new Object());
+                BaseResponse<String> objectBaseResponse = new BaseResponse<>();
+                objectBaseResponse.setData(new String());
                 objectBaseResponse.setCode(100);
+
                 Observable.just(objectBaseResponse)
-                        .compose(new NetWorkTransformer<Object>())
-                        .subscribe(new Consumer<Object>() {
+                        .compose(new JsonParesTransformer<>(Object.class))
+                        .subscribe(new SimpleObserver<Object>(mCompositeDisposable) {
                             @Override
-                            public void accept(Object o) throws Exception {
+                            public void call(Object o) {
 
                             }
-                        }, new ErrorToastConsumer(mView.getContext()));
+                        });
             }
 
             @Override

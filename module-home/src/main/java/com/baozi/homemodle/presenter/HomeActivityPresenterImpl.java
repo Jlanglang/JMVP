@@ -13,7 +13,7 @@ import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.event.TestEvent;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.linfeng.common.utils.ToastUtil;
-import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleSubscriber;
+import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleObserver;
 import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleTransformer;
 import com.linfeng.rx_retrofit_network.location.rxbus.RxBus;
 
@@ -38,7 +38,7 @@ public class HomeActivityPresenterImpl extends JBasePresenter<HomeActvityContrac
 
         RxBus.getDefault().toObservable(TestEvent.class)
                 .compose(new SimpleTransformer<TestEvent>())
-                .subscribe(new SimpleSubscriber<TestEvent>() {
+                .subscribe(new SimpleObserver<TestEvent>() {
                     @Override
                     public void call(TestEvent testEvent) {
                         ToastUtil.showToast(mView.getContext(), testEvent.code + "");

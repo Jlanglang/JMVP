@@ -5,6 +5,7 @@ import com.linfeng.rx_retrofit_network.factory.NetWorkErrorFactory;
 
 import io.reactivex.Observer;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -12,13 +13,24 @@ import io.reactivex.disposables.Disposable;
  * @版本 2.0
  * @Change
  */
-public abstract class SimpleSubscriber<T> implements Observer<T> {
-
+public abstract class SimpleObserver<T> implements Observer<T> {
     protected Disposable mDisposable;
+    private CompositeDisposable mCompositeDisposable;
+
+    public SimpleObserver() {
+
+    }
+
+    public SimpleObserver(CompositeDisposable compositeDisposable) {
+        mCompositeDisposable = compositeDisposable;
+    }
 
     @Override
     public void onSubscribe(@NonNull Disposable d) {
         mDisposable = d;
+        if (!d.isDisposed() && !mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.add(d);
+        }
     }
 
     @Override

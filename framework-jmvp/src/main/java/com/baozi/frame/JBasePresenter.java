@@ -1,8 +1,8 @@
 package com.baozi.frame;
 
-import android.content.Intent;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.BaseView;
+
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
@@ -10,12 +10,12 @@ import io.reactivex.disposables.CompositeDisposable;
  */
 public abstract class JBasePresenter<T extends BaseView> extends BasePresenter<T> {
 
-    protected CompositeDisposable mCompositeSubscription = new CompositeDisposable();
+    protected CompositeDisposable mCompositeDisposable = new CompositeDisposable();
 
     @Override
     public void cancelNetWork() {
-        if (mCompositeSubscription != null) {
-            mCompositeSubscription.dispose();
+        if (mCompositeDisposable != null) {
+            mCompositeDisposable.dispose();
         }
     }
 }

@@ -16,10 +16,6 @@ import retrofit2.HttpException;
 
 public final class NetWorkManager {
     /**
-     * 单例
-     */
-    private final static NetWorkManager netWorkManager = new NetWorkManager();
-    /**
      * 提示消息集合
      */
     private final static HashMap<Class<? extends Throwable>, String> errorMsgMap;

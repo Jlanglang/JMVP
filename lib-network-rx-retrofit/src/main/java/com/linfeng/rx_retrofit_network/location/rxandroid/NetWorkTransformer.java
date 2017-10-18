@@ -17,6 +17,8 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * 网络请求通用设置转换器
+ *
  * @param <T>
  */
 public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse<T>, T> {
@@ -57,23 +59,6 @@ public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse
                         return tBaseResponse.getData();
                     }
                 });
-//        return Observable.create(new ObservableOnSubscribe<T>() {
-//            @Override
-//            public void subscribe(ObservableEmitter<T> e) throws Exception {
-//                if (!e.isDisposed()) {
-//                    if (response.getData() == null) {
-//                        throw new APIException(response.getCode(), response.getMsg());
-//                    } else if (response.getCode() == 0) {//请求成功
-//                        e.onNext(response.getData());
-//                    } else {//请求失败
-////                        e.onError(new APIException(response.getCode(), response.getMsg()));
-//                        throw new APIException(response.getCode(), response.getMsg());
-//                    }
-//                    //请求完成
-//                    e.onComplete();
-//                }
-//            }
-//        });
     }
 
     @Override

@@ -20,19 +20,6 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
         this.zClass = zClass;
     }
 
-//    @Override
-//    @SuppressWarnings("unchecked")
-//    public Observable<T> call(Observable<BaseResponse<String>> observable) {
-//        return  observable.compose(new NetWorkTransformer<String>())
-//                .flatMap(new Func1<String, Observable<T>>() {
-//                    @Override
-//                    public Observable<T> call(String s) {
-//                        return (Observable) Observable
-//                                .just(JSONFactory.fromJson(s, zClass));
-//                    }
-//                });
-//    }
-
     @Override
     public ObservableSource<T> apply(Observable<BaseResponse<String>> upstream) {
         return upstream.compose(new NetWorkTransformer<String>())
@@ -42,11 +29,6 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
                         return  Observable
                                 .just(JSONFactory.fromJson(s, zClass));
                     }
-//                    @Override
-//                    public Observable<T> call(String s) {
-//                        return (Observable) Observable
-//                                .just(JSONFactory.fromJson(s, zClass));
-//                    }
                 });
     }
 }
