@@ -1,5 +1,7 @@
 package com.linfeng.rx_retrofit_network.converter;
 
+import android.support.annotation.NonNull;
+
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeFactory;
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
 
@@ -25,7 +27,7 @@ public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     }
 
     @Override
-    public RequestBody convert(T value) throws IOException {
+    public RequestBody convert(@NonNull T value) throws IOException {
         String json = EncodeDecodeFactory.encode(JSONFactory.toJson(value));
         return RequestBody.create(MEDIA_TYPE, json);
     }

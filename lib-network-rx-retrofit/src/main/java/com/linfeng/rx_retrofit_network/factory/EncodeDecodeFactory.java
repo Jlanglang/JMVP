@@ -1,26 +1,32 @@
 package com.linfeng.rx_retrofit_network.factory;
 
-import com.linfeng.rx_retrofit_network.NetWorkConfig;
+import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.des.Des;
 
+/**
+ * 加密解密工厂
+ */
 public class EncodeDecodeFactory {
     public static String encode(String data) {
-        if (NetWorkConfig.getKey().isNotEncode()) {
+        //不加密
+        if (NetWorkManager.getKey().isNotEncode()) {
             return data;
         }
-        if (NetWorkConfig.getKey().isRSA()) {
+        //RSA
+        if (NetWorkManager.getKey().isRSA()) {
 
         }
-        return Des.encode(NetWorkConfig.getKey().getPrivateKey(), data);
+        //DES
+        return Des.encode(NetWorkManager.getKey().getPrivateKey(), data);
     }
 
     public static String decode(String data) {
-        if (!NetWorkConfig.getKey().isNotEncode()) {
+        if (!NetWorkManager.getKey().isNotEncode()) {
             return data;
         }
-        if (NetWorkConfig.getKey().isRSA()) {
+        if (NetWorkManager.getKey().isRSA()) {
 
         }
-        return Des.decode(NetWorkConfig.getKey().getPrivateKey(), data);
+        return Des.decode(NetWorkManager.getKey().getPrivateKey(), data);
     }
 }

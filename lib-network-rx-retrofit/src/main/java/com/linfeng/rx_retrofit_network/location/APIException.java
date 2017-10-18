@@ -5,12 +5,16 @@ package com.linfeng.rx_retrofit_network.location;
  * eg：登陆时验证码错误；参数为传递等
  */
 public class APIException extends Exception {
-    public int code;
-    public String message;
+    private int code;
+    private String message;
 
     public APIException(int code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public int getCode() {
+        return code;
     }
 
     @Override

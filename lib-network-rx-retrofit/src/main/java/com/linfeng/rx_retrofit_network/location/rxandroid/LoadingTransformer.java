@@ -1,10 +1,11 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
+import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
-import io.reactivex.internal.util.ConnectConsumer;
 
 /**
  * @author jlanglang  2017/7/2 10:39
@@ -38,38 +39,22 @@ public class LoadingTransformer<T> implements ObservableTransformer<T, T> {
 //    }
 
     @Override
-    public ObservableSource<T> apply(io.reactivex.Observable<T> upstream) {
+    public ObservableSource<T> apply(Observable<T> upstream) {
         return upstream.doOnSubscribe(new Consumer<Disposable>() {
-
             @Override
             public void accept(Disposable disposable) throws Exception {
                 mLoading.show();
             }
-//
-//            @Override
-//            public void call() {
-//                mLoading.show();
-//            }
-        }).doOnError(new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                mLoading.dismiss();
-            }
-
-//            @Override
-//            public void call(Throwable throwable) {
-//                mLoading.dismiss();
-//            }
         }).doOnNext(new Consumer<T>() {
             @Override
             public void accept(T t) throws Exception {
                 mLoading.dismiss();
             }
-//
-//            @Override
-//            public void call(T t) {
-//                mLoading.dismiss();
-//            }
+        }).doOnDispose(new Action() {
+            @Override
+            public void run() throws Exception {
+                mLoading.dismiss();
+            }
         });
     }
 

@@ -20,8 +20,8 @@ public class SimpleTransformer<T> implements ObservableTransformer<T, T> {
         return upstream
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io());
-//                .timeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
-//                .retry(DEFAULT_RETRY);
+                .unsubscribeOn(Schedulers.io())
+                .timeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
+                .retry(DEFAULT_RETRY);
     }
 }
