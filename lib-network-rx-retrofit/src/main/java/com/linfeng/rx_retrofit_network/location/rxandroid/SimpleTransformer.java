@@ -10,8 +10,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SimpleTransformer<T> implements ObservableTransformer<T, T> {
-    private static final int DEFAULT_TIME_OUT = 5;
-    private static final int DEFAULT_RETRY = 5;
 
     @Override
     public ObservableSource<T> apply(io.reactivex.Observable<T> upstream) {
@@ -19,7 +17,5 @@ public class SimpleTransformer<T> implements ObservableTransformer<T, T> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
-//                .timeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
-//                .retry(DEFAULT_RETRY);
     }
 }

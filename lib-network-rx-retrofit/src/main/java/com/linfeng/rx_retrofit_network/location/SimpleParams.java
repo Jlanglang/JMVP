@@ -3,6 +3,7 @@ package com.linfeng.rx_retrofit_network.location;
 import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
+
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import java.util.Set;
  */
 
 public class SimpleParams extends HashMap<String, Object> {
+
     private HashMap<Object, String> checkParams = new HashMap<>();
 
     public static SimpleParams create() {
@@ -25,6 +27,12 @@ public class SimpleParams extends HashMap<String, Object> {
         return this;
     }
 
+    /**
+     * @param key          key
+     * @param value        value
+     * @param emptyMessage 当value为null或者""时,提示内容
+     * @return SimpleParams
+     */
     public SimpleParams putP(String key, Object value, String emptyMessage) {
         this.putP(key, value);
         checkParams.put(key, emptyMessage);
@@ -34,18 +42,20 @@ public class SimpleParams extends HashMap<String, Object> {
     /**
      * 检查params
      *
-     * @param context
-     * @return
+     * @param context 上下文
+     * @return 是否通过校验
      */
     public boolean checkMessage(Context context) {
         return checkMessage(context, null);
     }
 
     /**
+     * /**
      * 检查params
      *
-     * @param context
-     * @return
+     * @param context             上下文
+     * @param checkParamsCallback 自定义当校验参数为null时的处理
+     * @return 是否通过校验
      */
     public boolean checkMessage(Context context, CheckParamsCallback checkParamsCallback) {
         Set<String> strings = keySet();
@@ -69,12 +79,14 @@ public class SimpleParams extends HashMap<String, Object> {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return JSONFactory.toJson(this);
+    }
+
     public interface CheckParamsCallback {
         void callBack(String s);
     }
 }
 
-//    @Override
-//    public String toString() {
-//        return JSONFactory.toJson(this);
-//    }
+

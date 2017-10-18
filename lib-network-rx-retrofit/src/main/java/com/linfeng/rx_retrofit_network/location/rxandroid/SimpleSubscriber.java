@@ -55,8 +55,7 @@ public abstract class SimpleSubscriber<T> implements Observer<T> {
     public void onComplete() {
     }
 
-    //
-    public void errorMessage(String error) {
+    public void errorMessage(String errorMsg) {
 
     }
 

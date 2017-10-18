@@ -7,12 +7,17 @@ import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.baozi.mvp.base.TempletActivity;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.linfeng.demo.contract.MainContract;
+import com.linfeng.rx_retrofit_network.NetWorkManager;
+import com.linfeng.rx_retrofit_network.location.APIException;
+import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
+import com.linfeng.rx_retrofit_network.location.rxandroid.ErrorToastConsumer;
 import com.linfeng.rx_retrofit_network.location.rxandroid.NetWorkTransformer;
 
 import io.reactivex.Observable;
@@ -58,14 +63,27 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
             @Override
             public void initData() {
-                Observable.just(new BaseResponse<>())
+                NetWorkManager.init("报错了");
+                NetWorkManager.putErrorMsg(NullPointerException.class, "数据为空");
+                NetWorkManager.putErrorMsg(APIException.class, "数据为空");
+                NetWorkManager.putApiCallback(100, new APIExceptionCallBack() {
+                    @Override
+                    public void callback(BaseResponse baseResponse) {
+                        Toast.makeText(mView.getContext(), "错误100", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                //假数据
+                BaseResponse<Object> objectBaseResponse = new BaseResponse<>();
+                objectBaseResponse.setData(new Object());
+                objectBaseResponse.setCode(100);
+                Observable.just(objectBaseResponse)
                         .compose(new NetWorkTransformer<Object>())
                         .subscribe(new Consumer<Object>() {
                             @Override
                             public void accept(Object o) throws Exception {
 
                             }
-                        });
+                        }, new ErrorToastConsumer(mView.getContext()));
             }
 
             @Override

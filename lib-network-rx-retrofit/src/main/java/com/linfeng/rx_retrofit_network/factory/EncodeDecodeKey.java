@@ -43,10 +43,16 @@ public class EncodeDecodeKey {
         return publicKey;
     }
 
+    /**
+     * @return 是否为RSA加密, 当公钥为null时, 非RSA加密
+     */
     boolean isRSA() {
         return isRSA;
     }
 
+    /**
+     * @return 是否加密, 当公钥私钥都为null时,不加密
+     */
     boolean isNotEncode() {
         return isNotEncode;
     }

@@ -7,7 +7,12 @@ import android.util.SparseArray;
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
 
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
+
+import retrofit2.HttpException;
 
 public final class NetWorkManager {
     /**
@@ -17,11 +22,11 @@ public final class NetWorkManager {
     /**
      * 提示消息集合
      */
-    private final static HashMap<Class<? extends Throwable>, String> errorMap;
+    private final static HashMap<Class<? extends Throwable>, String> errorMsgMap;
     /**
      * code状态码处理回调
      */
-    private final static SparseArray<APIExceptionCallBack> apiExcePitonCallBacks;
+    private final static SparseArray<APIExceptionCallBack> apiExceptionCallBacks;
     /**
      * 私钥
      */
@@ -32,44 +37,82 @@ public final class NetWorkManager {
     private static String publicKey;
 
     /**
-     * 初始化集合.
+     * 初始化Network.
      */
     static {
-        errorMap = new HashMap<>();
-        apiExcePitonCallBacks = new SparseArray<>();
+        errorMsgMap = new HashMap<>();
+        errorMsgMap.put(UnknownHostException.class, "请打开网络");
+        errorMsgMap.put(SocketTimeoutException.class, "请求超时");
+        errorMsgMap.put(ConnectException.class, "连接失败");
+        errorMsgMap.put(HttpException.class, "网络错误");
+
+        apiExceptionCallBacks = new SparseArray<>();
     }
 
     private NetWorkManager() {
 
     }
 
-    public static NetWorkManager init(String defaultMsg) {
-        return putErrorMsg(Exception.class, defaultMsg);
+    /**
+     * 设置默认失败提示
+     *
+     * @param defaultMsg String
+     */
+    public static void init(String defaultMsg) {
+        putErrorMsg(Exception.class, defaultMsg);
     }
 
-    public static NetWorkManager initKey(String key1, String key2) {
+    /**
+     * 初始化密钥
+     *
+     * @param key1 私钥
+     * @param key2 公钥
+     */
+    public static void initKey(String key1, String key2) {
         privateKey = key1;
         publicKey = key2;
-        return netWorkManager;
     }
 
-    public static NetWorkManager putErrorMsg(@NonNull Class<? extends Throwable> t, String msg) {
-        errorMap.put(t, msg);
-        return netWorkManager;
+    /**
+     * 注册 异常时提示消息
+     *
+     * @param t   异常类型
+     * @param msg 消息
+     */
+    public static void putErrorMsg(@NonNull Class<? extends Throwable> t, String msg) {
+        errorMsgMap.put(t, msg);
     }
 
+    /**
+     * 获取异常时提示消息
+     *
+     * @param t 异常类型
+     * @return 消息
+     */
     public static String getErrorMsg(@NonNull Class<? extends Throwable> t) {
-        String s = errorMap.get(t);
+        String s = errorMsgMap.get(t);
         return s == null ? "" : s;
     }
 
-    public static NetWorkManager putApiCallback(int code, APIExceptionCallBack callBack) {
-        apiExcePitonCallBacks.put(code, callBack);
-        return netWorkManager;
+    /**
+     * 添加自定义code状态处理
+     *
+     * @param code     服务返回code状态
+     * @param callBack 回调
+     * @return
+     */
+    public static void putApiCallback(int code, APIExceptionCallBack callBack) {
+        apiExceptionCallBacks.put(code, callBack);
     }
 
+    /**
+     * 获取状态处理回调
+     *
+     * @param code 服务器返回状态码
+     * @return APIExceptionCallBack回调接口
+     */
     public static APIExceptionCallBack getApiCallback(int code) {
-        return apiExcePitonCallBacks.get(code);
+        return apiExceptionCallBacks.get(code);
     }
 
     public static EncodeDecodeKey getKey() {
@@ -77,7 +120,7 @@ public final class NetWorkManager {
     }
 
     /**
-     * 加密对象单例.
+     * 加密对象单例
      */
     private static class Instance {
         private static EncodeDecodeKey key = getKey();
