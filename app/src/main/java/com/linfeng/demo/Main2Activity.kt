@@ -1,12 +1,10 @@
 package com.linfeng.demo
 
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import rx.Observable
-import rx.functions.Func1
+import io.reactivex.Observable
 import java.io.File
 
 
@@ -27,7 +25,7 @@ class Main2Activity : AppCompatActivity() {
 
         Observable.just(File("")).map { t -> BitmapFactory.decodeFile(t.path) }
                 .map { t -> t }
-                .flatMap(Func1<Bitmap, Observable<Boolean>> { t -> Observable.just(t == null) })
+                .flatMap({ t -> Observable.just(t == null) })
                 .subscribe { }
     }
 }

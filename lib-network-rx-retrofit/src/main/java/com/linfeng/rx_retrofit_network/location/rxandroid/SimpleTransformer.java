@@ -1,7 +1,5 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
-import java.util.concurrent.TimeUnit;
-
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -20,8 +18,8 @@ public class SimpleTransformer<T> implements ObservableTransformer<T, T> {
         return upstream
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .unsubscribeOn(Schedulers.io())
-                .timeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
-                .retry(DEFAULT_RETRY);
+                .unsubscribeOn(Schedulers.io());
+//                .timeout(DEFAULT_TIME_OUT, TimeUnit.SECONDS)
+//                .retry(DEFAULT_RETRY);
     }
 }
