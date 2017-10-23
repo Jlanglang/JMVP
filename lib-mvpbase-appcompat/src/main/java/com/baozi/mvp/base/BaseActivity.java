@@ -36,9 +36,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         //创建presenter
         mPresenter = initPresenter();
         //绑定Activity
-        mPresenter.onAttch(this);
+        mPresenter.onAttach(this);
         //初始化ContentView
-        mContentView = initView(LayoutInflater.from(this), savedInstanceState);
+        mContentView = initView(getLayoutInflater(), savedInstanceState);
         super.setContentView(mContentView);
         //初始化Activity
         init(savedInstanceState);
@@ -273,7 +273,19 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     @NonNull
-    protected abstract View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState);
+    protected View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
+        int layout = initView(savedInstanceState);
+        return inflater.inflate(layout, null);
+    }
+
+    /**
+     * 建议不要包含toolbar
+     *
+     * @param savedInstanceState
+     * @return 布局layout
+     */
+    @LayoutRes
+    protected abstract int initView(Bundle savedInstanceState);
 
     /**
      * 子类实现Presenter,且必须继承BasePresenter

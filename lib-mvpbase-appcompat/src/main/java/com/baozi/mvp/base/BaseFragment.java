@@ -48,7 +48,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         if (mPresenter == null || !isInit) {
             mPresenter = initPresenter();
         }
-        mPresenter.onAttch(this);
+        mPresenter.onAttach(this);
     }
 
     /**

@@ -35,36 +35,23 @@ public abstract class SimpleObserver<T> implements Observer<T> {
 
     @Override
     public void onNext(T t) {
-//        if (t != null) {
         call(t);
-//        } else {
-//            errorMessage("连接失败");
-//        }
     }
 
     @Override
     public void onError(Throwable e) {
-//        String errorMsg;
-//        if (e instanceof APIException) {
-//            APIException exception = (APIException) e;
-//            errorMsg = exception.message;
-//        } else if (e instanceof UnknownHostException) {
-//            errorMsg = "请打开网络";
-//        } else if (e instanceof SocketTimeoutException) {
-//            errorMsg = "请求超时";
-//        } else if (e instanceof ConnectException) {
-//            errorMsg = "连接失败";
-//        } else if (e instanceof HttpException) {
-//            errorMsg = "请求超时";
-//        } else {
-//            errorMsg = "请求失败";
-//        }
         errorMessage(NetWorkErrorFactory.getError(e));
         e.printStackTrace();
+        if (!mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.remove(mDisposable);
+        }
     }
 
     @Override
     public void onComplete() {
+        if (!mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
+            mCompositeDisposable.remove(mDisposable);
+        }
     }
 
     public void errorMessage(String errorMsg) {

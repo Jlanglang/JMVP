@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
  */
 
 public class FragmentFactory {
-
     public static Fragment getFragment(Class<Fragment> zClass) {
         try {
             return zClass.newInstance();

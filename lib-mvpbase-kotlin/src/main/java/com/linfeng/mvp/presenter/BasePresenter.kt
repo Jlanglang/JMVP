@@ -12,16 +12,11 @@ import com.linfeng.mvp.view.BaseView
  * *
  * @Change
  */
-abstract class BasePresenter {
-
-//
-//    /**
-//    * 绑定View
-//     */
-//    fun onAttch(view: T) {
-//        this.mView = view
-//    }
-
+abstract class BasePresenter<T : BaseView>() {
+    lateinit var mView: T
+    fun attach(t: Any) {
+        mView = t as T
+    }
 
     /**
      * 做初始化的操作,需要在view的视图初始化完成之后才能调用
@@ -39,23 +34,23 @@ abstract class BasePresenter {
      * 在这里结束异步操作
      */
     fun onDestroy() {
-        cancleNetWork()
+        cancelNetWork()
     }
 
     /**
      * 解除绑定
      */
     fun onDetach() {
-//        mView = null!!
+
     }
 
 
     /**
      * 取消网络请求回调
      */
-    abstract fun cancleNetWork()
+    abstract fun cancelNetWork()
 
-    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
     }
 
@@ -83,4 +78,6 @@ abstract class BasePresenter {
 
     }
 
+
 }
+

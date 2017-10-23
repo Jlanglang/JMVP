@@ -7,6 +7,6 @@ import android.content.Intent
  * @版本 2.0
  * @Change
  */
-interface BaseActivityView : BaseView {
+interface BaseActivityView : UIView {
     fun getIntent(): Intent
 }

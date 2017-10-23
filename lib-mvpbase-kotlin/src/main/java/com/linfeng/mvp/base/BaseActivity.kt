@@ -3,32 +3,31 @@ package com.baozi.mvp.base
 import android.content.Context
 import android.os.Bundle
 import android.os.Looper
-import android.support.annotation.LayoutRes
+import android.support.annotation.IdRes
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.baozi.mvp.presenter.BasePresenter
+import com.linfeng.mvp.property.PresenterProperty
 import com.linfeng.mvp.view.BaseActivityView
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
-abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseActivityView {
-    private var mViews: SparseArray<View> = SparseArray()
-    private val mPresenter: T by lazy {
-        initPresenter()
-    }
-    override val context: Context
-        get() = this
-    private var mContentView: View? = null
+abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), BaseActivityView {
+    override var jContext: Context = this
+    var mPresenter by PresenterProperty<T>(this)
+
+    private lateinit var mContentView: View
+    private val mViews = SparseArray<View>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mPresenter = initPresenter()
         //初始化ContentView
-        mContentView = initView(LayoutInflater.from(this), savedInstanceState)
-        super.setContentView(mContentView)
+        mContentView = initView(layoutInflater, savedInstanceState)
         //初始化Activity
         init(savedInstanceState)
         //初始化presenter
@@ -38,20 +37,14 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
             mPresenter.initData()
             false
         }
-
+        jContext.applicationContext
     }
 
-    override fun setContentView(@LayoutRes layoutResID: Int) {
-
+    override fun getContentView(): View {
+        return mContentView
     }
 
-    override fun setContentView(view: View) {
-
-    }
-
-    override fun setContentView(view: View, params: ViewGroup.LayoutParams) {
-
-    }
+    abstract fun initPresenter(): T
 
     override fun onStart() {
         mPresenter.onStart()
@@ -93,42 +86,53 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
         super.onSaveInstanceState(outState)
     }
 
-//    /**
-//     * 跳转fragment
-//
-//     * @param tofragment
-//     */
-//    override fun startFragment(tofragment: Fragment) {
-//        startFragment(tofragment, null)
-//    }
-//
-//    /**
-//     * @param tofragment 跳转的fragment
-//     * *
-//     * @param tag        fragment的标签
-//     */
-//    override fun startFragment(tofragment: Fragment, tag: String?) {
-//        val fragmentTransaction = getSupportFragmentManager().beginTransaction()
-//        fragmentTransaction.add(android.R.id.content, tofragment, tag)
-//        fragmentTransaction.addToBackStack(tag)
-//        fragmentTransaction.commitAllowingStateLoss()
-//    }
+    /**
+     * 跳转fragment
 
+     * @param tofragment
+     */
+    override fun startFragment(tofragment: Fragment) {
+        startFragment(tofragment, null)
+    }
+
+    /**
+     * @param tofragment 跳转的fragment
+     * *
+     * @param tag        fragment的标签
+     */
+    override fun startFragment(tofragment: Fragment, tag: String?) {
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.add(android.R.id.content, tofragment, tag)
+        fragmentTransaction.addToBackStack(tag)
+        fragmentTransaction.commitAllowingStateLoss()
+    }
+
+    /**
+     * 通过viewId获取控件
+
+     * @param viewId 资源id
+     * *
+     * @return
+     */
+    override fun <V : View> findView(@IdRes viewId: Int): V {
+        var view: View? = mViews.get(viewId)
+        if (view == null) {
+            view = super.findViewById(viewId) ?: throw IllegalStateException("this id not find")
+            mViews.put(viewId, view)
+        }
+        return view as V
+    }
 
     /**
      * onBackPressed();
      */
-    fun onBack() {
+    override fun onBack() {
         onBackPressed()
     }
-//
-//    override fun getAppcompatActivity(): BaseActivity<*> {
-//        return this
-//    }
-//
-//    override fun getContext(): Context {
-//        return this
-//    }
+
+    fun getAppcompatActivity(): BaseActivity<T> {
+        return this
+    }
 
 
     /**
@@ -141,7 +145,18 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
      * *
      * @return
      */
-    protected abstract fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View
+    protected fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View {
+        val initView = initView(savedInstanceState)
+        return inflater.inflate(initView, null)
+    }
+
+    /**
+     * 初始化ContentView
+     * 建议不要包含toolbar
+     * @param savedInstanceState
+     * @return
+     */
+    protected abstract fun initView(savedInstanceState: Bundle?): Int
 
     /**
      * 运行在initView之后
@@ -153,12 +168,5 @@ abstract class BaseActivity<out T : BasePresenter> : AppCompatActivity(), BaseAc
     protected fun init(savedInstanceState: Bundle?) {
 
     }
-
-    /**
-     * 子类实现Presenter,且必须继承BasePrensenter
-
-     * @return
-     */
-    protected abstract fun initPresenter(): T
 
 }

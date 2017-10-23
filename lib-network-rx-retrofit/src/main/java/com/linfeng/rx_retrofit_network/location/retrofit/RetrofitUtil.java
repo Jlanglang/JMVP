@@ -1,7 +1,6 @@
 package com.linfeng.rx_retrofit_network.location.retrofit;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
-import com.linfeng.rx_retrofit_network.location.des.Des;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -42,7 +40,7 @@ public class RetrofitUtil {
      * 服务器地址
      */
     private static String API_HOST;
-    private static Application mContext;
+    private static Context mContext;
     private static final HashMap<Class, Object> apis = new HashMap<>();
 
     public static <T> T getApi(Class<T> c) {
@@ -54,11 +52,11 @@ public class RetrofitUtil {
         return (T) o;
     }
 
-    public static void init(String baseUrl, Application context) {
+    public static void init(String baseUrl, Context context) {
         if (TextUtils.isEmpty(baseUrl)) {
-            return;
+            throw new RuntimeException("baseUrl can't empty");
         }
-        mContext = context;
+        mContext = context.getApplicationContext();
         API_HOST = baseUrl;
     }
 
@@ -258,8 +256,21 @@ public class RetrofitUtil {
      */
     public static boolean isOpenInternet(Context context) {
         ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-        boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
-        return wifi || intenter;
+        if (con != null) {
+            boolean wifi;
+            boolean internet;
+            try {
+                wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+            } catch (Exception e) {
+                wifi = false;
+            }
+            try {
+                internet = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+            } catch (Exception e) {
+                internet = false;
+            }
+            return wifi || internet;
+        }
+        return false;
     }
 }

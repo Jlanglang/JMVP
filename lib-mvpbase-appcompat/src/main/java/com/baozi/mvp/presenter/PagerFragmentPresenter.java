@@ -64,6 +64,7 @@ public class PagerFragmentPresenter extends PagerPresenter {
                 tab = tablayout.newTab();
                 tab.setText(tabString[i]);
                 tab.setIcon(tabImage[i]);
+                tablayout.addTab(tab, i);
             }
         }
         mView.getViewPager().setOffscreenPageLimit(mView.getFragments().length);

@@ -11,5 +11,5 @@ import android.content.Context
  * Created by baozi on 2016/11/24.
  */
 interface BaseView {
-    val context: Context
+    var jContext: Context
 }

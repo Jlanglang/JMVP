@@ -5,7 +5,7 @@
       <GradleProjectSettings>
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="J:/android-studio/plugins/gradle" />
+        <option name="gradleHome" value="$APPLICATION_HOME_DIR$/plugins/gradle" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/lib-sqlite-object-box" />
             <option value="$PROJECT_DIR$/lib-utils-common" />
             <option value="$PROJECT_DIR$/module-home" />
+            <option value="$PROJECT_DIR$/module-kotlindemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -18,7 +18,7 @@ public abstract class BasePresenter<T extends BaseView> {
     /**
      * 绑定View
      */
-    public void onAttch(T view) {
+    public void onAttach(T view) {
         this.mView = view;
     }
 

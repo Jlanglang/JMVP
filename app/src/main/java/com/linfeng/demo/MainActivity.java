@@ -92,6 +92,7 @@ public class MainActivity extends TempletActivity<BasePresenter>
         };
     }
 
+
     //重写该方法,设置ToolbarLayout
     @Override
     public int initToolbarLayout() {
@@ -116,6 +117,4 @@ public class MainActivity extends TempletActivity<BasePresenter>
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
 }
