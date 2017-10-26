@@ -28,5 +28,10 @@ public interface PagerView extends BaseView {
     @LayoutRes
     int getTabLayoutItem();
 
+    /**
+     * 是否需要切换动画
+     *
+     * @return
+     */
     boolean isAnimation();
 }

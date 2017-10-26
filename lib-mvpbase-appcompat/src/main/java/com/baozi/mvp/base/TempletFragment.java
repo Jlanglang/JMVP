@@ -14,7 +14,6 @@ import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.ToolbarView;
-import com.baozi.mvp.view.UIView;
 
 /**
  * 模版Fragment
@@ -22,7 +21,7 @@ import com.baozi.mvp.view.UIView;
  * @param <T>
  */
 public abstract class TempletFragment<T extends BasePresenter> extends BaseFragment<T>
-        implements UIView, ToolbarView {
+        implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View rootView;
 
@@ -38,15 +37,11 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
         //ContentView容器
         FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
         //真正的创建contentView
-        View contentView = onCreateContentView(inflater, savedInstanceState);
+        View contentView = super.initView(inflater, savedInstanceState);
         contentGroup.removeAllViews();
         contentGroup.addView(contentView);
         return rootView;
     }
-
-
-    @NonNull
-    protected abstract View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState);
 
     /**
      * 默认使用base_toolbar
@@ -55,7 +50,7 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
      * @return
      */
     @Override
-    public int initToolbarLayout() {
+    public int getToolbarLayout() {
         return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
 
@@ -83,15 +78,15 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
     }
 
 
-    /**
-     * 切换MaterialDesign风格.
-     *
-     * @param isMaterialDesign
-     */
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
-    }
+//    /**
+//     * 切换MaterialDesign风格.
+//     *
+//     * @param isMaterialDesign
+//     */
+//    @Override
+//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+//        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
+//    }
 
     @Override
     public boolean isMaterialDesign() {
@@ -113,7 +108,7 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
     @Override
     public ToolbarHelper getToolbarHelper() {
         if (mToolbarHelper == null) {
-            mToolbarHelper = ToolbarHelper.Create(this, rootView, initToolbarLayout());
+            mToolbarHelper = ToolbarHelper.Create(this, rootView);
         }
         return mToolbarHelper;
     }

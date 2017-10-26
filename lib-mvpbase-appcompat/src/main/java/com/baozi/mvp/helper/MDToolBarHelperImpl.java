@@ -2,7 +2,7 @@ package com.baozi.mvp.helper;
 
 import android.view.View;
 
-import com.baozi.mvp.view.UIView;
+import com.baozi.mvp.view.ToolbarView;
 
 /**
  * @author jlanglang  2017/3/7 16:29
@@ -11,17 +11,23 @@ import com.baozi.mvp.view.UIView;
  */
 public class MDToolBarHelperImpl extends BaseToolBarHelperImpl {
 
-    public MDToolBarHelperImpl(UIView uiView, View rootView, int toolbarLayout) {
+    public MDToolBarHelperImpl(ToolbarView uiView, View rootView, int toolbarLayout) {
         super(uiView, rootView, toolbarLayout);
     }
 
     @Override
     public void initToolbar() {
-        ToolbarHelper.SimpleInitToolbar(mUIView.getContext(), mToolbar, true);
+        ToolbarHelper.SimpleInitToolbar(mToolbarView.getContext(), mToolbar, true);
     }
 
     @Override
-    public void setTextsize(int size) {
+    public void setToolbarOptions(ToolbarOptions options) {
+        super.setToolbarOptions(options);
+
+    }
+
+    @Override
+    public void setTextSize(int size) {
 
     }
 

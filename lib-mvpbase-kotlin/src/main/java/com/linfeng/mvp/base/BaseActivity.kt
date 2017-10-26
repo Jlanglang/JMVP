@@ -17,7 +17,7 @@ import com.linfeng.mvp.view.BaseActivityView
  * @author jlanglang  2016/1/5 9:42
  */
 abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), BaseActivityView {
-    override var jContext: Context = this
+    override var mContext: Context = this
     var mPresenter by PresenterProperty<T>(this)
 
     private lateinit var mContentView: View
@@ -37,7 +37,7 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), BaseAct
             mPresenter.initData()
             false
         }
-        jContext.applicationContext
+        mContext.applicationContext
     }
 
     override fun getContentView(): View {

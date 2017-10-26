@@ -3,6 +3,7 @@ package com.baozi.mvp.view;
 import android.support.annotation.LayoutRes;
 
 import com.baozi.mvp.helper.ToolbarHelper;
+import com.baozi.mvp.helper.ToolbarOptions;
 
 /**
  * @author jlanglang  2017/3/4 17:44
@@ -10,7 +11,7 @@ import com.baozi.mvp.helper.ToolbarHelper;
  * @Change
  */
 
-public interface ToolbarView extends UIView {
+public interface ToolbarView extends BaseView {
     /**
      * 获得ToolbarHelper,Presenter可以通过ToolbarHelper的来控制toolbar
      */
@@ -29,13 +30,19 @@ public interface ToolbarView extends UIView {
      * @return
      */
     @LayoutRes
-    int initToolbarLayout();
+    int getToolbarLayout();
+
+//    /**
+//     * MaterialDesign风格,普通风格之间转换
+//     *
+//     * @param isMaterialDesign
+//     */
+//    void setMaterialDesignEnabled(boolean isMaterialDesign);
 
     /**
-     * MaterialDesign风格,普通风格之间转换
-     *
-     * @param isMaterialDesign
+     * 回退
      */
-    void setMaterialDesignEnabled(boolean isMaterialDesign);
+    void onBack();
 
+    ToolbarOptions getToolbarOptions();
 }

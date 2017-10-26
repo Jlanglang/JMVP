@@ -1,8 +1,8 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
-import android.content.Context;
 import android.widget.Toast;
 
+import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.factory.NetWorkErrorFactory;
 
 import io.reactivex.functions.Consumer;
@@ -12,14 +12,12 @@ import io.reactivex.functions.Consumer;
  */
 
 public class ErrorToastConsumer implements Consumer<Throwable> {
-    private Context applicationContext;
-
-    public ErrorToastConsumer(Context context) {
-        applicationContext = context.getApplicationContext();
-    }
-
     @Override
     public void accept(Throwable e) throws Exception {
-        Toast.makeText(applicationContext, NetWorkErrorFactory.getError(e), Toast.LENGTH_SHORT).show();
+        String error = NetWorkErrorFactory.getError(e);
+        if ("".equals(error)) {
+            return;
+        }
+        Toast.makeText(NetWorkManager.mContext, error, Toast.LENGTH_SHORT).show();
     }
 }

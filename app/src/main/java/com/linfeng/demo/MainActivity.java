@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -29,8 +28,8 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
     @NonNull
     @Override
-    protected View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_main, null);
+    protected int initView(Bundle savedInstanceState) {
+        return R.layout.activity_main;
     }
 
     //这里偷懒,就不去单独写个PresenterImpl了
@@ -62,14 +61,14 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
             @Override
             public void initData() {
-                NetWorkManager.init("报错了");
+//                NetWorkManager.init("报错了");
                 NetWorkManager.putErrorMsg(NullPointerException.class, "数据为空");
-                NetWorkManager.putApiCallback(100, new APIExceptionCallBack() {
+                NetWorkManager.putApiCallback( new APIExceptionCallBack() {
                     @Override
                     public void callback(BaseResponse baseResponse) {
                         Toast.makeText(mView.getContext(), "错误100", Toast.LENGTH_SHORT).show();
                     }
-                });
+                },100);
                 //假数据
                 BaseResponse<String> objectBaseResponse = new BaseResponse<>();
                 objectBaseResponse.setData(new String());
@@ -95,7 +94,7 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
     //重写该方法,设置ToolbarLayout
     @Override
-    public int initToolbarLayout() {
+    public int getToolbarLayout() {
         return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
 

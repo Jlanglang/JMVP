@@ -22,10 +22,10 @@ public class NetWorkErrorFactory {
         }
 
         String errorMsg = NetWorkManager.getErrorMsg(throwableClass);
-        if ("".equals(errorMsg)) {
+        if (null == errorMsg) {
             //如果该异常未定义.获取默认
             return NetWorkManager.getErrorMsg(Exception.class);
         }
-        return errorMsg;
+        return "error";
     }
 }

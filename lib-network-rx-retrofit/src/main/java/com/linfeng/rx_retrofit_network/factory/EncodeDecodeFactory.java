@@ -33,7 +33,7 @@ public class EncodeDecodeFactory {
      * @return 内容
      */
     public static String decode(String data) {
-        if (!NetWorkManager.getKey().isNotEncode()) {
+        if (NetWorkManager.getKey().isNotEncode()) {
             return data;
         }
         if (NetWorkManager.getKey().isRSA()) {

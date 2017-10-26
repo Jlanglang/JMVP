@@ -11,11 +11,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.helper.ToolbarHelper;
+import com.baozi.mvp.helper.ToolbarOptions;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.ToolbarView;
-import com.baozi.mvp.view.UIView;
 
 /**
  * 模版Activity
@@ -23,7 +24,7 @@ import com.baozi.mvp.view.UIView;
  * @param <T>
  */
 public abstract class TempletActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements UIView, ToolbarView {
+        implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private View mRootView;
     private View mContentView;
@@ -33,15 +34,15 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("please extends BaseActivity.TempletActivity theme must be NoActionbar");
+            throw new IllegalStateException("please extends BaseActivity.TempletActivity Theme must be NoActionbar");
         }
         mRootView = inflater.inflate(R.layout.templet_content, null);
         //创建toolbar
         mToolbarHelper = getToolbarHelper();
         //ContentView容器
         FrameLayout mContentParent = (FrameLayout) mRootView.findViewById(R.id.templet_content);
-        //真正的创建contentView
-        mContentView = onCreateContentView(inflater, savedInstanceState);
+
+        mContentView = super.initView(inflater, savedInstanceState);
         mContentParent.removeAllViews();
         mContentParent.addView(mContentView);
         return mRootView;
@@ -57,9 +58,6 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         return mContentView;
     }
 
-    @NonNull
-    protected abstract View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState);
-
     /**
      * 默认使用base_toolbar
      * 如果不需要toolbar,请复写,并返回0.或者-1
@@ -67,10 +65,19 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
      * @return
      */
     @Override
-    public int initToolbarLayout() {
+    public int getToolbarLayout() {
         return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     }
 
+    @Override
+    protected int getStatusBarDrawable() {
+        return getToolbarOptions().getStatusDrawable();
+    }
+
+    @Override
+    public ToolbarOptions getToolbarOptions() {
+        return MVPManager.getToolbarOptions();
+    }
 
     /**
      * 此方法用于初始化菜单，其中menu参数就是即将要显示的Menu实例。 返回true则显示该menu,false 则不显示;
@@ -138,15 +145,15 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         return this;
     }
 
-    /**
-     * 切换MaterialDesign风格.
-     *
-     * @param isMaterialDesign
-     */
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
-    }
+//    /**
+//     * 切换MaterialDesign风格.
+//     *
+//     * @param isMaterialDesign
+//     */
+//    @Override
+//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+//        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
+//    }
 
     @Override
     public boolean isMaterialDesign() {
@@ -168,7 +175,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     @Override
     public ToolbarHelper getToolbarHelper() {
         if (mToolbarHelper == null) {
-            mToolbarHelper = ToolbarHelper.Create(this, mRootView, initToolbarLayout());
+            mToolbarHelper = ToolbarHelper.Create(this, mRootView);
         }
         return mToolbarHelper;
     }

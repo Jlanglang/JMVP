@@ -3,7 +3,7 @@ package com.linfeng.rx_retrofit_network.location.rxandroid;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APIException;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
-import com.linfeng.rx_retrofit_network.location.APISucesssCallback;
+import com.linfeng.rx_retrofit_network.location.APISuccessCallback;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 
 import java.util.concurrent.TimeUnit;
@@ -46,7 +46,7 @@ public class NetWorkTransformer<T> implements ObservableTransformer<BaseResponse
                         //通过code获取注册的接口回调.
                         APIExceptionCallBack apiCallback = NetWorkManager.getApiCallback(code);
                         if (apiCallback != null) {
-                            if (apiCallback instanceof APISucesssCallback) {
+                            if (apiCallback instanceof APISuccessCallback) {
                                 return true;//请求成功
                             } else {
                                 //请求失败,抛出自定义异常.触发注册的自定义接口回调

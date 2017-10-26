@@ -3,11 +3,13 @@ package com.linfeng.rx_retrofit_network.converter;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.nio.charset.Charset;
-//
+
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
+
+//
 
 /**
  * Created by dayaa on 16/1/20.

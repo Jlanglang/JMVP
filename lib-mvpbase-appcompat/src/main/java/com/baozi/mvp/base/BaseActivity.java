@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
+import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -14,7 +16,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
@@ -49,7 +50,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
             @Override
             public boolean queueIdle() {
-                if (isStatusBar()) {
+                if (getStatusBarDrawable() > 0) {
                     initStatusBar();
                     getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                         @Override
@@ -70,12 +71,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             statusBarView = getWindow().findViewById(identifier);
         }
         if (statusBarView != null) {
-            statusBarView.setBackgroundResource(MVPManager.statusDrawable);
+            statusBarView.setBackgroundResource(getStatusBarDrawable());
         }
     }
 
-    protected boolean isStatusBar() {
-        return MVPManager.isStatusBar();
+    @DrawableRes
+    @ColorRes
+    protected int getStatusBarDrawable() {
+        return MVPManager.getToolbarOptions().getStatusDrawable();
     }
 
     /**
@@ -99,21 +102,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     public View getContentView() {
         return mContentView;
-    }
-
-    @Override
-    public void setContentView(@LayoutRes int layoutResID) {
-
-    }
-
-    @Override
-    public void setContentView(View view) {
-
-    }
-
-    @Override
-    public void setContentView(View view, ViewGroup.LayoutParams params) {
-
     }
 
     @Override
@@ -257,7 +245,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public <V extends View> V findView(@IdRes int viewId) {
         View view = getViews().get(viewId);
         if (view == null) {
-            view = super.findViewById(viewId);
+            view = findViewById(viewId);
             getViews().put(viewId, view);
         }
         return (V) view;

@@ -28,28 +28,32 @@ public abstract class SimpleObserver<T> implements Observer<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
         mDisposable = d;
-        if (!d.isDisposed() && !mCompositeDisposable.isDisposed()) {
+        if (mCompositeDisposable != null && !d.isDisposed() && !mCompositeDisposable.isDisposed()) {
             mCompositeDisposable.add(d);
         }
     }
 
     @Override
     public void onNext(T t) {
+//        if (t != null) {
         call(t);
+//        } else {
+//            errorMessage("连接失败");
+//        }
     }
 
     @Override
     public void onError(Throwable e) {
         errorMessage(NetWorkErrorFactory.getError(e));
         e.printStackTrace();
-        if (!mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
+        if (mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
             mCompositeDisposable.remove(mDisposable);
         }
     }
 
     @Override
     public void onComplete() {
-        if (!mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
+        if (mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
             mCompositeDisposable.remove(mDisposable);
         }
     }

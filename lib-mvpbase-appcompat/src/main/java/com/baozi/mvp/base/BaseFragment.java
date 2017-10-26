@@ -197,7 +197,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      *
      * @return Fragment视图
      */
-    protected abstract View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState);
+    protected View initView(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
+        int layout = initView(savedInstanceState);
+        return inflater.inflate(layout, null);
+    }
+
+    /**
+     * 创建Fragment视图
+     *
+     * @return Fragment视图
+     */
+    protected abstract int initView(@Nullable Bundle savedInstanceState);
 
     /**
      * 运行在initView之后
@@ -217,6 +227,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void startFragment(Fragment tofragment) {
         startFragment(tofragment, null);
     }
+
     /**
      * @param tofragment 跳转的fragment
      * @param tag        fragment的标签

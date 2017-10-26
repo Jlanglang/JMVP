@@ -25,7 +25,7 @@ import kotlin.properties.Delegates
  */
 abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
     var mPresenter: T by PresenterProperty<T>(this)
-    override var jContext by Delegates.notNull<Context>()
+    override var mContext by Delegates.notNull<Context>()
     lateinit var mBundle: Bundle
     private val mViews = SparseArray<View>()
     private var mContentView: View? = null
@@ -39,7 +39,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      */
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        jContext = context!!
+        mContext = context!!
         //应该只创建一次Presenter.
         if (!isInit) {
             mPresenter = initPresenter()
@@ -145,7 +145,6 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
         mPresenter.onDetach()
         super.onDetach()
     }
-
     override fun onDestroy() {
         mPresenter.onDestroy()
         super.onDestroy()
@@ -228,7 +227,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * 跳转Activity
      */
     fun startActivity(zclass: Class<*>) {
-        val intent = Intent(jContext, zclass)
+        val intent = Intent(mContext, zclass)
         startActivity(intent)
     }
 
@@ -236,7 +235,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * 跳转Activity
      */
     fun startActivity(zclass: Class<*>, bundle: Bundle, flag: Int) {
-        val intent = Intent(jContext, zclass)
+        val intent = Intent(mContext, zclass)
         intent.putExtras(bundle)
         intent.addFlags(flag)
         startActivity(intent)
@@ -246,14 +245,11 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * 跳转Activity
      */
     fun startActivity(zclass: Class<*>, flag: Int) {
-        val intent = Intent(jContext, zclass)
+        val intent = Intent(mContext, zclass)
         intent.addFlags(flag)
         startActivity(intent)
     }
 
-    override fun getContext(): Context {
-        return jContext
-    }
 
     fun getBundle(): Bundle {
         return mBundle
@@ -264,11 +260,11 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
     }
 
     override fun getWindow(): Window {
-        return if (activity == null) (jContext as Activity).window else activity.window
+        return if (activity == null) (mContext as Activity).window else activity.window
     }
 
     fun getAppcompatActivity(): AppCompatActivity {
-        return jContext as AppCompatActivity
+        return mContext as AppCompatActivity
     }
 
     fun getSupportActionBar(): ActionBar? {

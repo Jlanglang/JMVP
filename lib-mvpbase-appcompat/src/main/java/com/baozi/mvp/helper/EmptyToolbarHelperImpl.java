@@ -7,13 +7,13 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.baozi.mvp.view.UIView;
+import com.baozi.mvp.view.ToolbarView;
 
 /**
  */
 class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
-    EmptyToolbarHelperImpl(@NonNull UIView uiView, View rootView, int toolbarLayout) {
+    EmptyToolbarHelperImpl(@NonNull ToolbarView uiView, View rootView, int toolbarLayout) {
         super(uiView, rootView, toolbarLayout);
     }
 
@@ -28,7 +28,7 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setTextsize(int size) {
+    public void setTextSize(int size) {
 
     }
 
@@ -37,10 +37,10 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
     }
 
-    @Override
-    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-
-    }
+//    @Override
+//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
+//
+//    }
 
     public void setTitle(@NonNull String str) {
 

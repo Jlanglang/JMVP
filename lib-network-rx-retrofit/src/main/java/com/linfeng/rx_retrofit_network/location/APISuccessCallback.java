@@ -6,7 +6,7 @@ import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
  * Created by baozi on 2017/10/18.
  */
 
-public enum APISucesssCallback implements APIExceptionCallBack {
+public enum APISuccessCallback implements APIExceptionCallBack {
     INSTANCE;
 
     @Override

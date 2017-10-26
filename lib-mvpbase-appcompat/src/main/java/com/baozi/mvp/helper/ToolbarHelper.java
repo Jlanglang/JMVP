@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
@@ -14,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.baozi.mvp.R;
-import com.baozi.mvp.view.UIView;
+import com.baozi.mvp.view.ToolbarView;
 
 /**
  * @author jlanglang  2017/2/21 16:31
@@ -30,7 +29,8 @@ public abstract class ToolbarHelper {
 
     }
 
-    public static ToolbarHelper Create(@NonNull UIView uiView, View rootView, @LayoutRes int toolbarLayout) {
+    public static ToolbarHelper Create(@NonNull ToolbarView uiView, View rootView) {
+        int toolbarLayout = uiView.getToolbarLayout();
         if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
             return new TempletToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
@@ -99,7 +99,14 @@ public abstract class ToolbarHelper {
      */
     public abstract Toolbar getToolbar();
 
-    public abstract void setMaterialDesignEnabled(boolean isMaterialDesign);
+    /**
+     * 获取Toolbar配置
+     *
+     * @return
+     */
+    public abstract void setToolbarOptions(ToolbarOptions toolbarOptions);
+
+//    public abstract void setMaterialDesignEnabled(boolean isMaterialDesign);
 
     /**
      * 设置title
@@ -138,4 +145,6 @@ public abstract class ToolbarHelper {
 
     public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
 
+
+    public abstract void setCanBack(boolean canback);
 }

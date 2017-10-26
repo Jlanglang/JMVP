@@ -1,11 +1,13 @@
 package com.linfeng.rx_retrofit_network;
 
 
+import android.app.Application;
 import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
+import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
 
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
@@ -32,17 +34,18 @@ public final class NetWorkManager {
      */
     private static String publicKey;
 
+    public static Application mContext;
+
     /**
      * 初始化Network.
      */
     static {
+        apiExceptionCallBacks = new SparseArray<>();
         errorMsgMap = new HashMap<>();
         errorMsgMap.put(UnknownHostException.class, "请打开网络");
         errorMsgMap.put(SocketTimeoutException.class, "请求超时");
         errorMsgMap.put(ConnectException.class, "连接失败");
         errorMsgMap.put(HttpException.class, "网络错误");
-
-        apiExceptionCallBacks = new SparseArray<>();
     }
 
     private NetWorkManager() {
@@ -51,11 +54,10 @@ public final class NetWorkManager {
 
     /**
      * 设置默认失败提示
-     *
-     * @param defaultMsg String
      */
-    public static void init(String defaultMsg) {
-        putErrorMsg(Exception.class, defaultMsg);
+    public static void init(String baseUrl, Application context) {
+        mContext = context;
+        RetrofitUtil.init(baseUrl, context);
     }
 
     /**
@@ -86,19 +88,22 @@ public final class NetWorkManager {
      * @return 消息
      */
     public static String getErrorMsg(@NonNull Class<? extends Throwable> t) {
-        String s = errorMsgMap.get(t);
-        return s == null ? "" : s;
+        return errorMsgMap.get(t);
     }
 
     /**
      * 添加自定义code状态处理
      *
-     * @param code     服务返回code状态
      * @param callBack 回调
+     * @param codes    服务返回code状态
      * @return
      */
-    public static void putApiCallback(int code, APIExceptionCallBack callBack) {
-        apiExceptionCallBacks.put(code, callBack);
+    public static void putApiCallback(APIExceptionCallBack callBack, int... codes) {
+        int length = codes.length;
+        for (int i = 0; i < length; i++) {
+            int code = codes[i];
+            apiExceptionCallBacks.put(code, callBack);
+        }
     }
 
     /**

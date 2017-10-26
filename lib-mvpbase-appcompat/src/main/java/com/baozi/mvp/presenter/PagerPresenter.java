@@ -112,7 +112,7 @@ public class PagerPresenter {
             return mView.getPager().size();
         }
 
-        // PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
+        // 例如PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
         @Override
         public void destroyItem(ViewGroup view, int position, Object object) {
             view.removeView(mView.getPager().get(position));
