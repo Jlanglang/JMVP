@@ -9,9 +9,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.baozi.frame.JBasePresenter;
-import com.baozi.mvp.base.TempletActivity;
-import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.templet.TempletActivity;
+import com.baozi.mvp.templet.helper.ToolbarHelper;
 import com.linfeng.demo.contract.MainContract;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;

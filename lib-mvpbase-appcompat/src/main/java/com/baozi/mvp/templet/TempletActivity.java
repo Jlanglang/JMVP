@@ -43,9 +43,9 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         mToolbarHelper = getToolbarHelper();
 //        mRootView.addView();
 //        //ContentView容器
-//        LoadingPager loadingPager = (LoadingPager) mRootView.findViewById(R.id.templet_content);
+        LoadingPager loadingPager = (LoadingPager) mRootView.findViewById(R.id.templet_content);
         mContentView = super.initView(inflater, savedInstanceState);
-//        loadingPager.setSuccessPage(mContentView);
+        loadingPager.setSuccessPage(mContentView);
         return mRootView;
     }
 
