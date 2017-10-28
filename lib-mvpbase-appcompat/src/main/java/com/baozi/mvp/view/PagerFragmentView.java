@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
  */
 
 public interface PagerFragmentView extends PagerView {
+
     ViewPager getViewPager();
 
     FragmentManager getFgManager();

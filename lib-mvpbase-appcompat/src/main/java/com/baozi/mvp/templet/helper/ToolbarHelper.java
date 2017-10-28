@@ -1,4 +1,4 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.helper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.baozi.mvp.R;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -32,14 +33,16 @@ public abstract class ToolbarHelper {
     public static ToolbarHelper Create(@NonNull ToolbarView uiView, View rootView) {
         int toolbarLayout = uiView.getToolbarLayout();
         if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
-            return new TempletToolbarHelperImpl(uiView, rootView, toolbarLayout);
+            return new ToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
             return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == 0) {
+        } else
+//            if (toolbarLayout == 0)
+        {
             return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
-        } else {
-            throw new IllegalStateException("Unknown toolbarLayout ID,You should extends BaseActvity,BaseFragment," +
-                    "Don't extends TempletAcitvity,TempletFrgament");
+//        } else {
+//            throw new IllegalStateException("Unknown toolbarLayout ID,You should extends BaseActvity,BaseFragment," +
+//                    "Don't extends TempletAcitvity,TempletFrgament");
         }
     }
 
@@ -52,6 +55,7 @@ public abstract class ToolbarHelper {
      * @param context 继承Appcompat的activity的上下文
      * @param toolbar 将要设置的Toolbar
      */
+
     public static void SimpleInitToolbar(Context context, @NonNull Toolbar toolbar, boolean isMaterialDesign) {
         if (context instanceof AppCompatActivity) {
             AppCompatActivity activity = (AppCompatActivity) context;

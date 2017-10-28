@@ -1,4 +1,4 @@
-package com.baozi.mvp.base;
+package com.baozi.mvp.templet;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,11 +8,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 
 import com.baozi.mvp.R;
-import com.baozi.mvp.helper.ToolbarHelper;
+import com.baozi.mvp.base.BaseFragment;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.templet.weight.LoadingPager;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -33,13 +34,15 @@ public abstract class TempletFragment<T extends BasePresenter> extends BaseFragm
     @NonNull
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.templet_content, null);
-        //ContentView容器
-        FrameLayout contentGroup = (FrameLayout) rootView.findViewById(R.id.templet_content);
-        //真正的创建contentView
+        rootView = inflater.inflate(R.layout.templet_layout, null);
+        //初始化一次
+        mToolbarHelper = getToolbarHelper();
+//        //ContentView容器
+        LoadingPager loadingPager = (LoadingPager) rootView.findViewById(R.id.templet_content);
+//        //真正的创建contentView
         View contentView = super.initView(inflater, savedInstanceState);
-        contentGroup.removeAllViews();
-        contentGroup.addView(contentView);
+//        contentGroup.removeAllViews();
+        loadingPager.setSuccessPage(contentView);
         return rootView;
     }
 

@@ -1,4 +1,4 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.helper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -16,6 +16,7 @@ import android.view.View;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -37,12 +38,12 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
         mAppBarLayout.removeAllViews();
         //将toolbarLayout添加到AppBarLayout中
-        View inflate = LayoutInflater.from(toolbarView.getContext()).inflate(toolbarLayout, mAppBarLayout, true);
+        View inflate = LayoutInflater.from(mContext).inflate(toolbarLayout, mAppBarLayout, true);
         //如果find不为null,则设置toolbar
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_custom);
         if (mToolbar != null) {
             initToolbar();
-            ToolbarOptions mToolbarOptions = toolbarView.getToolbarOptions();
+            ToolbarOptions mToolbarOptions = mToolbarView.getToolbarOptions();
             if (mToolbarOptions == null) {
                 mToolbarOptions = MVPManager.getToolbarOptions();
             }

@@ -1,4 +1,4 @@
-package com.baozi.mvp.base;
+package com.baozi.mvp.templet;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,13 +9,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
-import com.baozi.mvp.helper.ToolbarHelper;
-import com.baozi.mvp.helper.ToolbarOptions;
+import com.baozi.mvp.base.BaseActivity;
+import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.templet.weight.LoadingPager;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -26,7 +28,7 @@ import com.baozi.mvp.view.ToolbarView;
 public abstract class TempletActivity<T extends BasePresenter> extends BaseActivity<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
-    private View mRootView;
+    private ViewGroup mRootView;
     private View mContentView;
 
     @NonNull
@@ -36,15 +38,14 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
         if (supportActionBar != null) {
             throw new IllegalStateException("please extends BaseActivity.TempletActivity Theme must be NoActionbar");
         }
-        mRootView = inflater.inflate(R.layout.templet_content, null);
-        //创建toolbar
+        mRootView = (ViewGroup) inflater.inflate(R.layout.templet_layout, null);
+        //初始化一次
         mToolbarHelper = getToolbarHelper();
-        //ContentView容器
-        FrameLayout mContentParent = (FrameLayout) mRootView.findViewById(R.id.templet_content);
-
+//        mRootView.addView();
+//        //ContentView容器
+//        LoadingPager loadingPager = (LoadingPager) mRootView.findViewById(R.id.templet_content);
         mContentView = super.initView(inflater, savedInstanceState);
-        mContentParent.removeAllViews();
-        mContentParent.addView(mContentView);
+//        loadingPager.setSuccessPage(mContentView);
         return mRootView;
     }
 
@@ -86,7 +87,7 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!isMaterialDesign()) {
-            return isMaterialDesign();
+            return false;
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -170,6 +171,8 @@ public abstract class TempletActivity<T extends BasePresenter> extends BaseActiv
     }
 
     /**
+     * 请在ui线程中调用
+     *
      * @return
      */
     @Override

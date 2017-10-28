@@ -1,7 +1,8 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.helper;
 
 import android.view.View;
 
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**

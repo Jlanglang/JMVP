@@ -1,4 +1,4 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.helper;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
@@ -7,6 +7,7 @@ import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -37,7 +38,11 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
     }
 
-//    @Override
+    @Override
+    public void setToolbarOptions(ToolbarOptions options) {
+        super.setToolbarOptions(options);
+    }
+    //    @Override
 //    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
 //
 //    }

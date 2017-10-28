@@ -1,6 +1,6 @@
 package com.baozi.mvp;
 
-import com.baozi.mvp.helper.ToolbarOptions;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 
 /**
  * Created by Administrator on 2017/8/15 0015.

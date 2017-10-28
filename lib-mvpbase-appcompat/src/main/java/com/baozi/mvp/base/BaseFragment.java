@@ -27,6 +27,7 @@ import com.baozi.mvp.view.BaseFragmentView;
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         implements BaseFragmentView {
+    protected String TAG = this.getClass().getSimpleName();
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
@@ -50,7 +51,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         mPresenter.onAttach(this);
     }
-
     /**
      * 运行在onAttach之后
      * 可以接受别人传递过来的参数,实例化对象.

@@ -1,4 +1,4 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.helper;
 
 import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorInt;
@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.baozi.mvp.R;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -20,7 +21,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @Change
  */
 
-class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
+class ToolbarHelperImpl extends BaseToolBarHelperImpl {
     private TextView mLeftTextView;
     private TextView mRightTextView;
     private ImageButton mLeftButton;
@@ -38,7 +39,7 @@ class TempletToolbarHelperImpl extends BaseToolBarHelperImpl {
     private int mOtherTextSize;
 
 
-    TempletToolbarHelperImpl(ToolbarView uiView, View rootView, @LayoutRes int toolbar) {
+    ToolbarHelperImpl(ToolbarView uiView, View rootView, @LayoutRes int toolbar) {
         super(uiView, rootView, toolbar);
     }
 

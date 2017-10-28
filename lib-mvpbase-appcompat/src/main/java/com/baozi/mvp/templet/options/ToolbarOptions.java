@@ -1,4 +1,4 @@
-package com.baozi.mvp.helper;
+package com.baozi.mvp.templet.options;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
@@ -116,7 +116,7 @@ public class ToolbarOptions {
         return backDrawable;
     }
 
-    public ToolbarOptions setBackDrawable(@DrawableRes @ColorInt int backDrawable) {
+    public ToolbarOptions setBackDrawable(@DrawableRes  int backDrawable) {
         this.backDrawable = backDrawable;
         return this;
     }

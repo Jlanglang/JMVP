@@ -26,6 +26,7 @@ import com.baozi.mvp.view.BaseActivityView;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements BaseActivityView {
+    protected String TAG = this.getClass().getSimpleName();
     protected T mPresenter;
     private SparseArray<View> mViews;
     private View mContentView;

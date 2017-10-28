@@ -2,8 +2,8 @@ package com.baozi.mvp.view;
 
 import android.support.annotation.LayoutRes;
 
-import com.baozi.mvp.helper.ToolbarHelper;
-import com.baozi.mvp.helper.ToolbarOptions;
+import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 
 /**
  * @author jlanglang  2017/3/4 17:44
