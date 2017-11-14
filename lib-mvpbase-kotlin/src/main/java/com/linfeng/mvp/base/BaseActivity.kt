@@ -18,8 +18,7 @@ import com.linfeng.mvp.view.BaseActivityView
  */
 abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), BaseActivityView {
     override var mContext: Context = this
-    var mPresenter by PresenterProperty<T>(this)
-
+    protected var mPresenter by PresenterProperty<T>(this)
     private lateinit var mContentView: View
     private val mViews = SparseArray<View>()
 

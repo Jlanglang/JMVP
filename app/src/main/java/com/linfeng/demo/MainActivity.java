@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import com.baozi.frame.JBasePresenter;
@@ -36,22 +35,8 @@ public class MainActivity extends TempletActivity<BasePresenter>
     @Override
     protected BasePresenter initPresenter() {
         return new JBasePresenter<MainContract.View>() {
-            private boolean isRTL;
-
             @Override
             public void onCreate() {
-                mView.findView(R.id.tv_title).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (!isRTL) {
-                            isRTL = true;
-                            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
-                        } else {
-                            isRTL = false;
-                            getWindow().getDecorView().setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
-                        }
-                    }
-                });
                 mView.getToolbarHelper().setTitle("首页");
                 mView.getToolbarHelper().setRightText("213", null);
                 //设置滑动效果
@@ -61,14 +46,13 @@ public class MainActivity extends TempletActivity<BasePresenter>
 
             @Override
             public void initData() {
-//                NetWorkManager.init("报错了");
                 NetWorkManager.putErrorMsg(NullPointerException.class, "数据为空");
-                NetWorkManager.putApiCallback( new APIExceptionCallBack() {
+                NetWorkManager.putApiCallback(new APIExceptionCallBack() {
                     @Override
                     public void callback(BaseResponse baseResponse) {
                         Toast.makeText(mView.getContext(), "错误100", Toast.LENGTH_SHORT).show();
                     }
-                },100);
+                }, 100);
                 //假数据
                 BaseResponse<String> objectBaseResponse = new BaseResponse<>();
                 objectBaseResponse.setData(new String());

@@ -5,7 +5,6 @@ import android.util.Log
 import com.baozi.module_kotlindemo.model.DemoView
 import com.baozi.module_kotlindemo.presenter.DemoPresenter
 import com.baozi.mvp.base.BaseActivity
-import com.linfeng.mvp.application.BaseApp
 
 class DemoActivity : BaseActivity<DemoPresenter>(), DemoView {
 
@@ -18,7 +17,6 @@ class DemoActivity : BaseActivity<DemoPresenter>(), DemoView {
     }
 
     override fun B() {
-        BaseApp.app.applicationContext
         Log.i("log", "调用了方法B")
         mPresenter.onDetach()
     }

@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 /**
  * Created by baozi on 2017/10/20.
  */
-class PresenterProperty<T : BasePresenter<*>>(val baseView: BaseView) : ReadWriteProperty<Any?, T> {
+class PresenterProperty<T : BasePresenter<*>>(private val baseView: BaseView) : ReadWriteProperty<Any?, T> {
     private var presenter: T? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {

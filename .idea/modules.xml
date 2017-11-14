@@ -8,7 +8,6 @@
       <module fileurl="file://$PROJECT_DIR$/lib-mvpbase-appcompat/lib-mvpbase-appcompat.iml" filepath="$PROJECT_DIR$/lib-mvpbase-appcompat/lib-mvpbase-appcompat.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-network-rx-retrofit/lib-network-rx-retrofit.iml" filepath="$PROJECT_DIR$/lib-network-rx-retrofit/lib-network-rx-retrofit.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-sqlite-object-box/lib-sqlite-object-box.iml" filepath="$PROJECT_DIR$/lib-sqlite-object-box/lib-sqlite-object-box.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" filepath="$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" />
       <module fileurl="file://$PROJECT_DIR$/module-home/module-home.iml" filepath="$PROJECT_DIR$/module-home/module-home.iml" />
       <module fileurl="file://$PROJECT_DIR$/module-kotlindemo/module-kotlindemo.iml" filepath="$PROJECT_DIR$/module-kotlindemo/module-kotlindemo.iml" />
