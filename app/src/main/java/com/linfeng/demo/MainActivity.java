@@ -49,8 +49,10 @@ public class MainActivity extends TempletActivity<BasePresenter>
                 NetWorkManager.putErrorMsg(NullPointerException.class, "数据为空");
                 NetWorkManager.putApiCallback(new APIExceptionCallBack() {
                     @Override
-                    public void callback(BaseResponse baseResponse) {
+                    public String callback(BaseResponse baseResponse) {
                         Toast.makeText(mView.getContext(), "错误100", Toast.LENGTH_SHORT).show();
+                        //返回null,则只处理code,不弹消息.
+                        return null;
                     }
                 }, 100);
                 //假数据
@@ -64,11 +66,6 @@ public class MainActivity extends TempletActivity<BasePresenter>
                             @Override
                             public void call(Object o) {
 
-                            }
-
-                            @Override
-                            public void errorMessage(String errorMsg) {
-                                super.errorMessage(errorMsg);
                             }
                         });
             }
