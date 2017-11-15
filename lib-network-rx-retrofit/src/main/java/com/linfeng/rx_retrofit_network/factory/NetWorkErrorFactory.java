@@ -14,18 +14,18 @@ public class NetWorkErrorFactory {
      * @param throwable 异常
      * @return 异常提示消息
      */
-    public static String getError(Throwable throwable) {
+    public static String disposeError(Throwable throwable) {
         Class<? extends Throwable> throwableClass = throwable.getClass();
-        //自定义异常
+        //处理Api自定义异常处理,说明请求成功
         if (throwableClass.equals(APIException.class)) {
             return throwable.getMessage();
         }
-
+        //处理error异常,http异常
         String errorMsg = NetWorkManager.getErrorMsg(throwableClass);
         if (null == errorMsg) {
             //如果该异常未定义.获取默认
             return NetWorkManager.getErrorMsg(Exception.class);
         }
-        return "error";
+        return errorMsg;
     }
 }

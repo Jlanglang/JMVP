@@ -1,6 +1,10 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 
+import android.text.TextUtils;
+import android.widget.Toast;
+
+import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.factory.NetWorkErrorFactory;
 
 import io.reactivex.Observer;
@@ -17,10 +21,6 @@ public abstract class SimpleObserver<T> implements Observer<T> {
     protected Disposable mDisposable;
     private CompositeDisposable mCompositeDisposable;
 
-    public SimpleObserver() {
-
-    }
-
     public SimpleObserver(CompositeDisposable compositeDisposable) {
         mCompositeDisposable = compositeDisposable;
     }
@@ -28,39 +28,49 @@ public abstract class SimpleObserver<T> implements Observer<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
         mDisposable = d;
-        if (mCompositeDisposable != null && !d.isDisposed() && !mCompositeDisposable.isDisposed()) {
+        if (isDisposed()) {
             mCompositeDisposable.add(d);
         }
     }
 
     @Override
     public void onNext(T t) {
-//        if (t != null) {
-        call(t);
-//        } else {
-//            errorMessage("连接失败");
-//        }
+        if (t != null) {
+            call(t);
+        }
     }
 
     @Override
     public void onError(Throwable e) {
-        errorMessage(NetWorkErrorFactory.getError(e));
+        showErrorMsg(e, NetWorkErrorFactory.disposeError(e));
         e.printStackTrace();
-        if (mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
-            mCompositeDisposable.remove(mDisposable);
-        }
+//        if (isDisposed()) {
+//            mCompositeDisposable.remove(mDisposable);
+//        }
+    }
+
+    private boolean isDisposed() {
+        return mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed();
     }
 
     @Override
     public void onComplete() {
-        if (mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed()) {
-            mCompositeDisposable.remove(mDisposable);
+//        if (isDisposed()) {
+//            mCompositeDisposable.remove(mDisposable);
+//        }
+    }
+
+    /**
+     * 默认提示
+     *
+     * @param e
+     * @param errorMsg
+     */
+    public void showErrorMsg(Throwable e, String errorMsg) {
+        if (!TextUtils.isEmpty(errorMsg)) {
+            Toast.makeText(NetWorkManager.mContext, errorMsg, Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void errorMessage(String errorMsg) {
-
-    }
-
-    public abstract void call(T t);
+    public abstract void call(@NonNull T t);
 }

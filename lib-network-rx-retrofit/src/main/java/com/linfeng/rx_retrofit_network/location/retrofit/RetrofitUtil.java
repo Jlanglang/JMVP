@@ -1,6 +1,7 @@
 package com.linfeng.rx_retrofit_network.location.retrofit;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.net.ConnectivityManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
 
 import java.io.ByteArrayOutputStream;
@@ -15,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,7 +43,7 @@ public class RetrofitUtil {
      * 服务器地址
      */
     private static String API_HOST;
-    private static Context mContext;
+    private static Application mContext;
     private static final HashMap<Class, Object> apis = new HashMap<>();
 
     public static <T> T getApi(Class<T> c) {
@@ -52,12 +55,14 @@ public class RetrofitUtil {
         return (T) o;
     }
 
-    public static void init(String baseUrl, Context context) {
+    public static synchronized void init(String baseUrl, Application context) {
         if (TextUtils.isEmpty(baseUrl)) {
-            throw new RuntimeException("baseUrl can't empty");
+            return;
         }
-        mContext = context.getApplicationContext();
+        mContext = context;
         API_HOST = baseUrl;
+        Instance.retrofit = Instance.getRetrofit();
+        apis.clear();
     }
 
     public static Retrofit getInstance() {
@@ -71,7 +76,7 @@ public class RetrofitUtil {
             HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
                 @Override
                 public void log(String message) {
-//                    Log.i("RxJava", Des.decode("MAILIANC", message));
+                    Log.i("RxJava", message);
                 }
             });
             interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -109,17 +114,19 @@ public class RetrofitUtil {
                             .build();
                 }
             };
-            OkHttpClient client = new OkHttpClient.Builder()
+            OkHttpClient.Builder client = new OkHttpClient.Builder()
                     //拦截log
                     .addInterceptor(interceptor)
                     //拦截并设置缓存
                     .addNetworkInterceptor(cacheInterceptor)
                     //拦截并设置缓存
                     .addInterceptor(cacheInterceptor)
-                    .cache(new Cache(mContext.getCacheDir(), 10240 * 1024))
-                    .build();
+                    .cache(new Cache(mContext.getCacheDir(), 10240 * 1024));
+            for (Interceptor i : NetWorkManager.mInterceptors) {
+                client.addInterceptor(i);
+            }
             return new Retrofit.Builder()
-                    .client(client)
+                    .client(client.build())
                     .baseUrl(API_HOST)
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -256,21 +263,8 @@ public class RetrofitUtil {
      */
     public static boolean isOpenInternet(Context context) {
         ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        if (con != null) {
-            boolean wifi;
-            boolean internet;
-            try {
-                wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-            } catch (Exception e) {
-                wifi = false;
-            }
-            try {
-                internet = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
-            } catch (Exception e) {
-                internet = false;
-            }
-            return wifi || internet;
-        }
-        return false;
+        boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+        boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+        return wifi || intenter;
     }
 }

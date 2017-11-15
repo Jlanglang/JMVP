@@ -7,10 +7,11 @@ import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
  */
 
 public enum APISuccessCallback implements APIExceptionCallBack {
+
     INSTANCE;
 
     @Override
-    public void callback(BaseResponse baseResponse) {
-
+    public String callback(BaseResponse baseResponse) {
+        return null;
     }
 }

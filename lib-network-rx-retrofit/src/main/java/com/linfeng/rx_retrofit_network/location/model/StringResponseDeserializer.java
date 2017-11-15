@@ -7,7 +7,6 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
-import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 
 import java.lang.reflect.Type;
 
@@ -20,12 +19,12 @@ public class StringResponseDeserializer implements JsonDeserializer<BaseResponse
         if (json.isJsonObject()) {
             JsonObject asJsonObject = json.getAsJsonObject();
             JsonElement data = asJsonObject.get("data");
-            JsonElement status = asJsonObject.get("status");
+//            JsonElement status = asJsonObject.get("status");
             JsonElement code = asJsonObject.get("code");
-            JsonElement msg = asJsonObject.get("msg");
+            JsonElement msg = asJsonObject.get("message");
 
             baseResponse.setCode(code.getAsInt());
-            baseResponse.setStatus(status.getAsBoolean());
+//            baseResponse.setStatus(status.getAsBoolean());
             baseResponse.setMsg(msg.getAsString() == null ? "" : msg.getAsString());
             if (data != null) {
                 if (data.isJsonArray() || data.isJsonObject()) {
@@ -33,7 +32,7 @@ public class StringResponseDeserializer implements JsonDeserializer<BaseResponse
                     baseResponse.setData(s);
                     return baseResponse;
                 } else if (data.isJsonNull()) {
-                    //data为null,不处理
+                    //data为null,不做处理
                 } else {
                     baseResponse.setData(data.getAsString());
                 }

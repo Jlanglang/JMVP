@@ -13,8 +13,7 @@ public class SimpleTransformer<T> implements ObservableTransformer<T, T> {
 
     @Override
     public ObservableSource<T> apply(io.reactivex.Observable<T> upstream) {
-        return upstream
-                .subscribeOn(Schedulers.io())
+        return upstream.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .unsubscribeOn(Schedulers.io());
     }

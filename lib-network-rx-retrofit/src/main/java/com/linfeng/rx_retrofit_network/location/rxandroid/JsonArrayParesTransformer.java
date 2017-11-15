@@ -9,7 +9,9 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Jlanglang on 2017/8/31 0031.
@@ -25,8 +27,8 @@ public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseR
 
     @Override
     public ObservableSource<List<T>> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream
-                .compose(new NetWorkTransformer<String>())
+        return upstream.compose(new NetWorkTransformer<String>())
+                .observeOn(Schedulers.computation())
                 .flatMap(new Function<String, ObservableSource<List<T>>>() {
                     @Override
                     public ObservableSource<List<T>> apply(String s) throws Exception {
@@ -34,13 +36,7 @@ public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseR
                         List<T> list = JSONFactory.fromJson(s, parameterType);
                         return Observable.just(list);
                     }
-                });
-//                .flatMap(new Func1<String, Observable<List<T>>>() {
-//                    @Override
-//                    public Observable<List<T>> call(String s) {
-//
-//                    }
-//                });
-//                ;
+                })
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

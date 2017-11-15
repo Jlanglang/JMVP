@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Set;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Set;
 
 public class SimpleParams extends HashMap<String, Object> {
 
-    private HashMap<Object, String> checkParams = new HashMap<>();
+    private LinkedHashMap<Object, String> checkParams = new LinkedHashMap<>();
 
     public static SimpleParams create() {
         return new SimpleParams();
@@ -34,7 +35,7 @@ public class SimpleParams extends HashMap<String, Object> {
      * @return SimpleParams
      */
     public SimpleParams putP(String key, Object value, String emptyMessage) {
-        this.putP(key, value);
+        this.put(key, value);
         checkParams.put(key, emptyMessage);
         return this;
     }
@@ -61,19 +62,27 @@ public class SimpleParams extends HashMap<String, Object> {
         Set<String> strings = keySet();
         for (String str : strings) {
             Object value = get(str);
-            if (value == null || "".equals(value)) {
-                String s = checkParams.get(str);
-                //emptyMessage则说明,该参数不校验
-                if (!TextUtils.isEmpty(s)) {
-                    //传入回调,自定义处理
-                    if (checkParamsCallback != null) {
-                        checkParamsCallback.callBack(s);
-                    } else {
-                        //默认Toast提示.
-                        Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
-                    }
-                    return false;
+            //defValue为为默认值，如果当前获取不到数据就返回它
+            if (value instanceof String && !TextUtils.isEmpty((CharSequence) value)) {
+                continue;
+            } else if (value instanceof Integer && (Integer) value != 0) {
+                continue;
+            } else if (value instanceof Float && (Float) value != 0) {
+                continue;
+            } else if (value instanceof Long && (Long) value != 0) {
+                continue;
+            }
+            String s = checkParams.get(str);
+            //emptyMessage则说明,该参数不校验
+            if (!TextUtils.isEmpty(s)) {
+                //传入回调,自定义处理
+                if (checkParamsCallback != null) {
+                    checkParamsCallback.callBack(s);
+                } else {
+                    //默认Toast提示.
+                    Toast.makeText(context, s, Toast.LENGTH_SHORT).show();
                 }
+                return false;
             }
         }
         return true;

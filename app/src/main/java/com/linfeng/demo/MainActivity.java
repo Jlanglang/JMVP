@@ -65,6 +65,11 @@ public class MainActivity extends TempletActivity<BasePresenter>
                             public void call(Object o) {
 
                             }
+
+                            @Override
+                            public void errorMessage(String errorMsg) {
+                                super.errorMessage(errorMsg);
+                            }
                         });
             }
 

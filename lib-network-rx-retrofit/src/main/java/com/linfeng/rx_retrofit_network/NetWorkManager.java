@@ -7,16 +7,19 @@ import android.util.SparseArray;
 
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
 import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
+import com.linfeng.rx_retrofit_network.location.APISuccessCallback;
 import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
 
-import java.net.ConnectException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 import java.util.HashMap;
+import java.util.HashSet;
 
-import retrofit2.HttpException;
+import okhttp3.Interceptor;
 
+/**
+ * 网络管理类
+ */
 public final class NetWorkManager {
+    public final static int API_COMMON_EXCEPTION_CODE = Integer.MIN_VALUE;
     /**
      * 提示消息集合
      */
@@ -35,6 +38,7 @@ public final class NetWorkManager {
     private static String publicKey;
 
     public static Application mContext;
+    public static HashSet<Interceptor> mInterceptors = new HashSet<>();
 
     /**
      * 初始化Network.
@@ -42,22 +46,25 @@ public final class NetWorkManager {
     static {
         apiExceptionCallBacks = new SparseArray<>();
         errorMsgMap = new HashMap<>();
-        errorMsgMap.put(UnknownHostException.class, "请打开网络");
-        errorMsgMap.put(SocketTimeoutException.class, "请求超时");
-        errorMsgMap.put(ConnectException.class, "连接失败");
-        errorMsgMap.put(HttpException.class, "网络错误");
+//        errorMsgMap.put(UnknownHostException.class, "请打开网络");
+//        errorMsgMap.put(SocketTimeoutException.class, "请求超时");
+//        errorMsgMap.put(ConnectException.class, "连接失败");
+//        errorMsgMap.put(HttpException.class, "网络错误");
     }
+
+    private static boolean mOpenApiException;
 
     private NetWorkManager() {
 
     }
 
     /**
-     * 设置默认失败提示
+     * 初始化
      */
-    public static void init(String baseUrl, Application context) {
+    public static void init(String baseUrl, int successCode, Application context) {
         mContext = context;
         RetrofitUtil.init(baseUrl, context);
+        putApiCallback(APISuccessCallback.INSTANCE, successCode);
     }
 
     /**
@@ -69,6 +76,10 @@ public final class NetWorkManager {
     public static void initKey(String key1, String key2) {
         privateKey = key1;
         publicKey = key2;
+    }
+
+    public static void addInterceptor(Interceptor interceptor) {
+        mInterceptors.add(interceptor);
     }
 
     /**
@@ -107,6 +118,16 @@ public final class NetWorkManager {
     }
 
     /**
+     * 添加全局code状态处理
+     *
+     * @param callBack 回调
+     * @return
+     */
+    public static void putCommonAPIExceptionCallback(APIExceptionCallBack callBack) {
+        apiExceptionCallBacks.put(API_COMMON_EXCEPTION_CODE, callBack);
+    }
+
+    /**
      * 获取状态处理回调
      *
      * @param code 服务器返回状态码
@@ -118,6 +139,14 @@ public final class NetWorkManager {
 
     public static EncodeDecodeKey getKey() {
         return Instance.key;
+    }
+
+    public static boolean isOpenApiException() {
+        return mOpenApiException;
+    }
+
+    public static void setOpenApiException(boolean openApiException) {
+        mOpenApiException = openApiException;
     }
 
     /**

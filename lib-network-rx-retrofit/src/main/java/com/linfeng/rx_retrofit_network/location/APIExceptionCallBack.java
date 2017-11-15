@@ -7,5 +7,9 @@ import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
  */
 
 public interface APIExceptionCallBack {
-    void callback(BaseResponse baseResponse);
+    /**
+     * @param baseResponse 网络请求数据
+     * @return error 消息
+     */
+    String callback(BaseResponse baseResponse);
 }
