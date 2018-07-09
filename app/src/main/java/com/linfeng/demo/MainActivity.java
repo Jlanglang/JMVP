@@ -57,7 +57,7 @@ public class MainActivity extends TempletActivity<BasePresenter>
                 }, 100);
                 //假数据
                 BaseResponse<String> objectBaseResponse = new BaseResponse<>();
-                objectBaseResponse.setData(new String());
+                objectBaseResponse.setData("");
                 objectBaseResponse.setCode(100);
 
                 Observable.just(objectBaseResponse)

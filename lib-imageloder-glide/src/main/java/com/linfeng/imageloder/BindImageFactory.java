@@ -8,8 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.linfeng.imageloder.transformation.GlideCircleTransform;
-import com.linfeng.imageloder.transformation.GlideRoundTransform;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 
 import java.io.File;
 import java.util.concurrent.ExecutionException;
@@ -19,7 +18,7 @@ import java.util.concurrent.ExecutionException;
  * @版本 2.0
  * @Change
  */
-
+@Deprecated
 public class BindImageFactory {
 
 
@@ -30,24 +29,28 @@ public class BindImageFactory {
     public static void bindImage(Context context, String path, ImageView imageView) {
         Glide.with(context)
                 .load(path)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(imageView);
     }
 
     public static void bindImage(Context context, int res, ImageView imageView) {
         Glide.with(context)
                 .load(res)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(imageView);
     }
 
     public static void bindImage(Fragment fragment, String path, ImageView imageView) {
         Glide.with(fragment)
                 .load(path)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(imageView);
     }
 
     public static void bindImage(Fragment fragment, int res, ImageView imageView) {
         Glide.with(fragment)
                 .load(res)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(imageView);
     }
 
@@ -58,26 +61,21 @@ public class BindImageFactory {
     public static void loadingImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(loadingImage)
-                .error(errorImageView)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(mImageView);
     }
 
     public static void loadingRoundImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView, int round) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(loadingImage)
-                .error(errorImageView)
-                .transform(new GlideRoundTransform(mContext, round))
+                .apply(ImageLoaderUtil.getOptions().transform(new RoundedCorners(round)))
                 .into(mImageView);
     }
 
     public static void loadingCircleImage(Context mContext, String path, ImageView mImageView, int loadingImage, int errorImageView) {
         Glide.with(mContext)
                 .load(path)
-                .placeholder(loadingImage)
-                .error(errorImageView)
-                .transform(new GlideCircleTransform(mContext))
+                .apply(ImageLoaderUtil.getOptions().transform(new CenterCrop()))
                 .into(mImageView);
     }
 
@@ -88,14 +86,15 @@ public class BindImageFactory {
     public static void bindRoundImage(Context context, String url, ImageView imageView) {
         Glide.with(context)
                 .load(url)
-                .transform(new CenterCrop(context), new GlideRoundTransform(context))
+                .apply(ImageLoaderUtil.getOptions().centerCrop()
+                        .transform(new RoundedCorners(5)))
                 .into(imageView);
     }
 
     public static void bindRoundImage(Context context, int res, ImageView imageView) {
         Glide.with(context)
                 .load(res)
-                .transform(new CenterCrop(context), new GlideRoundTransform(context))
+                .apply(ImageLoaderUtil.getOptions())
                 .into(imageView);
     }
 
@@ -107,14 +106,16 @@ public class BindImageFactory {
     public static void bindCircleImage(Context context, String path, ImageView imageView) {
         Glide.with(context)
                 .load(path)
-                .transform(new GlideCircleTransform(context))
+                .apply(ImageLoaderUtil.getOptions().centerCrop()
+                        .transform(new CenterCrop()))
                 .into(imageView);
     }
 
     public static void bindCircleImage(Context context, int res, ImageView imageView) {
         Glide.with(context)
                 .load(res)
-                .transform(new GlideCircleTransform(context))
+                .apply(ImageLoaderUtil.getOptions().centerCrop()
+                        .transform(new CenterCrop()))
                 .into(imageView);
     }
 
@@ -123,15 +124,19 @@ public class BindImageFactory {
      * ----------------------------------------------------------------------------------------------------
      */
     public static Bitmap getImage(Context context, @DrawableRes int res, int width, int height) throws ExecutionException, InterruptedException {
-        return Glide.with(context).load(res)
+        return Glide.with(context)
                 .asBitmap()
+                .load(res)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(width, height)
                 .get();
     }
 
     public static Bitmap getImage(Context context, String url, int width, int height) throws ExecutionException, InterruptedException {
-        return Glide.with(context).load(url)
+        return Glide.with(context)
                 .asBitmap()
+                .load(url)
+                .apply(ImageLoaderUtil.getOptions())
                 .into(width, height)
                 .get();
     }

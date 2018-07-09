@@ -10,6 +10,7 @@ import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
 import com.baozi.mvp.presenter.BasePresenter
+import com.linfeng.mvp.animation.JMvpContract
 import com.linfeng.mvp.property.PresenterProperty
 import com.linfeng.mvp.view.BaseActivityView
 

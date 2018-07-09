@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-//apply plugin: 'io.objectbox'
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.linfeng.demo"
         minSdkVersion 17
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -21,10 +21,10 @@ android {
 
 }
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile project(':framework-jmvp')
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile files('lib/BASE64.jar')
+    implementation project(':framework-jmvp')
+    implementation files('lib/BASE64.jar')
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
