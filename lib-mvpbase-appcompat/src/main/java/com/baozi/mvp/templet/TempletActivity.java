@@ -25,6 +25,7 @@ import com.baozi.mvp.view.ToolbarView;
  *
  * @param <T>
  */
+@Deprecated
 public abstract class TempletActivity<T extends BasePresenter> extends BaseActivity<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;

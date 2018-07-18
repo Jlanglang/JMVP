@@ -29,10 +29,10 @@ public class HomeActivity extends BaseActivity<HomeActivityPresenterImpl>
     private ArrayList<Fragment> mFragments;
     private ArrayList<String> mTabs;
 
-    @NonNull
+
     @Override
-    protected View initView(LayoutInflater inflater, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_activity_index, null);
+    protected int initView(Bundle savedInstanceState) {
+        return R.layout.home_activity_index;
     }
 
     @Override

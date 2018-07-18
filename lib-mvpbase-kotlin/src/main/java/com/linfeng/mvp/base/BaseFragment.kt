@@ -1,4 +1,4 @@
-package com.baozi.mvp.base
+package com.linfeng.mvp.base
 
 import android.app.Activity
 import android.content.Context
@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Looper
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
-import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.util.SparseArray
@@ -15,18 +14,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import com.baozi.mvp.presenter.BasePresenter
+import com.linfeng.mvp.annotation.JMvpContract
+import com.linfeng.mvp.presenter.BasePresenter
 import com.linfeng.mvp.property.PresenterProperty
-import com.linfeng.mvp.view.UIView
+import java.lang.reflect.ParameterizedType
 import kotlin.properties.Delegates
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
-abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
-    var mPresenter: T by PresenterProperty<T>(this)
+abstract class BaseFragment<T : BasePresenter<*>> : Fragment() {
     override var mContext by Delegates.notNull<Context>()
-    lateinit var mBundle: Bundle
+
+    protected var mPresenter: T by PresenterProperty(this)
+    protected lateinit var mBundle: Bundle
     private val mViews = SparseArray<View>()
     private var mContentView: View? = null
     private var isInit: Boolean = false
@@ -49,21 +50,20 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
     /**
      * 运行在onAttach之后
      * 可以接受别人传递过来的参数,实例化对象.
-
      * @param savedInstanceState
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //获取bundle,并保存起来
-        if (savedInstanceState != null) {
-            mBundle = savedInstanceState.getBundle("bundle")
+        mBundle = if (savedInstanceState != null) {
+            savedInstanceState.getBundle("bundle")
         } else {
-            mBundle = if (arguments == null) Bundle() else arguments
+            if (arguments == null) Bundle() else arguments!!
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle?) {
-        outState!!.putBundle("bundle", mBundle)
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putBundle("bundle", mBundle)
         super.onSaveInstanceState(outState)
     }
 
@@ -79,7 +79,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * *
      * @return
      */
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         if (null == mContentView) {
             mContentView = initView(inflater, savedInstanceState)
         } else {
@@ -106,19 +106,19 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
             mPresenter.onCreate()
             //可见时再加载数据刷新视图
             Looper.myQueue().addIdleHandler {
-                mPresenter.initData()
+                mPresenter.onRefreshData()
                 false
             }
-            onPresentersCreate()
+//            onPresentersCreate()
         }
     }
 
-    /**
-     * 扩展除了默认的presenter的其他Presenter初始化
-     */
-    protected fun onPresentersCreate() {
-
-    }
+//    /**
+//     * 扩展除了默认的presenter的其他Presenter初始化
+//     */
+//    protected fun onPresentersCreate() {
+//
+//    }
 
     override fun onStart() {
         mPresenter.onStart()
@@ -145,6 +145,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
         mPresenter.onDetach()
         super.onDetach()
     }
+
     override fun onDestroy() {
         mPresenter.onDestroy()
         super.onDestroy()
@@ -164,7 +165,7 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * fragment进行回退
      */
     override fun onBack() {
-        fragmentManager.popBackStackImmediate()
+        fragmentManager?.popBackStackImmediate()
     }
 
 
@@ -191,7 +192,13 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * @return 布局layout
      */
     @LayoutRes
-    protected abstract fun initView(savedInstanceState: Bundle?): Int
+    protected fun initView(savedInstanceState: Bundle?): Int {
+        val annotation = this.javaClass.getAnnotation(JMvpContract::class.java)
+        if (annotation != null) {
+            return annotation.layout
+        }
+        return 0
+    }
 
     /**
      * 运行在initView之后
@@ -217,10 +224,10 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
      * @param tag        fragment的标签
      */
     override fun startFragment(tofragment: Fragment, tag: String?) {
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.hide(this).add(android.R.id.content, tofragment, tag)
-        fragmentTransaction.addToBackStack(tag)
-        fragmentTransaction.commitAllowingStateLoss()
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.hide(this)?.add(android.R.id.content, tofragment, tag)
+        fragmentTransaction?.addToBackStack(tag)
+        fragmentTransaction?.commitAllowingStateLoss()
     }
 
     /**
@@ -251,25 +258,25 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
     }
 
 
-    fun getBundle(): Bundle {
-        return mBundle
-    }
+//    fun getBundle(): Bundle {
+//        return mBundle
+//    }
+//
+//    fun getFragment(): BaseFragment1<*> {
+//        return this
+//    }
 
-    fun getFragment(): BaseFragment<*> {
-        return this
-    }
-
-    override fun getWindow(): Window {
-        return if (activity == null) (mContext as Activity).window else activity.window
+    override fun getWindow(): Window? {
+        return (mContext as Activity).window
     }
 
     fun getAppcompatActivity(): AppCompatActivity {
         return mContext as AppCompatActivity
     }
 
-    fun getSupportActionBar(): ActionBar? {
-        return getAppcompatActivity().supportActionBar
-    }
+//    fun getSupportActionBar(): ActionBar? {
+//        return getAppcompatActivity().supportActionBar
+//    }
 
     override fun setSupportActionBar(toolbar: Toolbar?) {
         getAppcompatActivity().setSupportActionBar(toolbar)
@@ -296,6 +303,10 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
 
      * @return
      */
-    protected abstract fun initPresenter(): T
 
+    protected fun initPresenter(): T {
+        // 通过反射机制获取子类传递过来的实体类的类型信息
+        val type = this.javaClass.genericSuperclass as ParameterizedType
+        return (type.actualTypeArguments[0] as Class<T>).newInstance()
+    }
 }

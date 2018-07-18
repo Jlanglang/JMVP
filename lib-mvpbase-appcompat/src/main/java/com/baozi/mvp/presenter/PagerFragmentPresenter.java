@@ -2,7 +2,6 @@ package com.baozi.mvp.presenter;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baozi.mvp.factory.FragmentFactory;
 import com.baozi.mvp.view.PagerFragmentView;
 
 import java.util.ArrayList;
@@ -24,6 +22,17 @@ import java.util.List;
 public class PagerFragmentPresenter extends PagerPresenter {
     private List<Fragment> fragments;
     private PagerFragmentView mView;
+
+    public static Fragment getFragment(Class<Fragment> zClass) {
+        try {
+            return zClass.newInstance();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public PagerFragmentPresenter(PagerFragmentView mView) {
         super(mView);
@@ -99,7 +108,7 @@ public class PagerFragmentPresenter extends PagerPresenter {
             fragments = new ArrayList<>();
             Class<Fragment>[] fragments = mView.getFragments();
             for (int i = 0; i < fragments.length; i++) {
-                Fragment fragment = FragmentFactory.getFragment(fragments[i]);
+                Fragment fragment = getFragment(fragments[i]);
                 this.fragments.add(fragment);
             }
         }
@@ -108,32 +117,25 @@ public class PagerFragmentPresenter extends PagerPresenter {
 
     @Override
     protected FragmentStatePagerAdapter getAdapter() {
-        return new JFragmentPagerAdapter(mView.getFgManager());
-    }
-
-    private class JFragmentPagerAdapter extends FragmentStatePagerAdapter {
-
-        public JFragmentPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            if (getFragments().get(position) == null) {
-                Fragment fragment = FragmentFactory.getFragment(mView.getFragments()[position]);
-                getFragments().set(position, fragment);
+        return new FragmentStatePagerAdapter(mView.getFgManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                if (getFragments().get(position) == null) {
+                    Fragment fragment = getFragment(mView.getFragments()[position]);
+                    getFragments().set(position, fragment);
+                }
+                return getFragments().get(position);
             }
-            return getFragments().get(position);
-        }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mView.getTabString()[position];
-        }
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return mView.getTabString()[position];
+            }
 
-        @Override
-        public int getCount() {
-            return getFragments().size();
-        }
+            @Override
+            public int getCount() {
+                return getFragments().size();
+            }
+        };
     }
 }

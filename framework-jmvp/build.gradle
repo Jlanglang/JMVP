@@ -20,7 +20,7 @@ android {
 
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     api project(':lib-imageloder-glide')
     api project(':lib-mvpbase-appcompat')
     api project(':lib-network-rx-retrofit')

@@ -32,17 +32,11 @@ public interface ToolbarView extends BaseView {
     @LayoutRes
     int getToolbarLayout();
 
-//    /**
-//     * MaterialDesign风格,普通风格之间转换
-//     *
-//     * @param isMaterialDesign
-//     */
-//    void setMaterialDesignEnabled(boolean isMaterialDesign);
 
     /**
      * 回退
      */
-    void onBack();
+    void onBackPressed();
 
     ToolbarOptions getToolbarOptions();
 }

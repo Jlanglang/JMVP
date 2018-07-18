@@ -12,4 +12,5 @@ import android.content.Context
  */
 interface BaseView {
     var mContext: Context
+    val isFinish: Boolean
 }

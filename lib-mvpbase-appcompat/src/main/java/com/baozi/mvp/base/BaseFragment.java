@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.MessageQueue;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -18,16 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.view.BaseFragmentView;
+import com.baozi.mvp.view.UIView;
 
 
 /**
  * @author jlanglang  2016/8/5 9:42
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment
-        implements BaseFragmentView {
-    protected String TAG = this.getClass().getSimpleName();
+        implements UIView {
+    public String TAG = this.getClass().getSimpleName();
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
@@ -51,6 +50,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         mPresenter.onAttach(this);
     }
+
     /**
      * 运行在onAttach之后
      * 可以接受别人传递过来的参数,实例化对象.
@@ -115,15 +115,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         if (mPresenter != null && !isInit) {
             isInit = true;
             mPresenter.onCreate();
-            //可见时再加载数据刷新视图
-            Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-                @Override
-                public boolean queueIdle() {
-                    mPresenter.initData();
-                    return false;
-                }
-            });
             onPresentersCreate();
+            mPresenter.onRefreshData();
         }
     }
 
@@ -135,9 +128,28 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
+    public void onNewThrowable(Throwable throwable) {
+
+    }
+
+    @Override
     public void onStart() {
         mPresenter.onStart();
         super.onStart();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (null != mPresenter) {
+            if (hidden) {
+                //相当于Fragment的onResume
+                mPresenter.onResume();
+            } else {
+                //相当于Fragment的onPause
+                mPresenter.onPause();
+            }
+        }
     }
 
     @Override
@@ -167,9 +179,26 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroyView() {
         mPresenter.onDestroy();
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    public void onResume() {
+        mPresenter.onResume();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        mPresenter.onPause();
+        super.onPause();
     }
 
     @Override
@@ -187,10 +216,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * fragment进行回退
      */
     @Override
-    public void onBack() {
+    public void onBackPressed() {
         getFragmentManager().popBackStackImmediate();
     }
-
 
     /**
      * 创建Fragment视图
@@ -221,21 +249,66 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     /**
      * 跳转fragment
      *
-     * @param tofragment
+     * @param fragment
      */
     @Override
-    public void startFragment(Fragment tofragment) {
-        startFragment(tofragment, null);
+    public void startFragment(Fragment fragment) {
+        startFragment(fragment, null);
     }
 
     /**
-     * @param tofragment 跳转的fragment
-     * @param tag        fragment的标签
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
      */
     @Override
-    public void startFragment(Fragment tofragment, String tag) {
+    public void startFragment(Fragment fragment, String tag) {
+        startFragment(fragment, tag, true);
+    }
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, boolean isAdd) {
+        startFragment(fragment, tag,
+                MVPManager.getEnterAnim(),
+                MVPManager.getExitAnim(),
+                MVPManager.getEnterPopAnim(),
+                MVPManager.getExitPopAnim(), isAdd);
+    }
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enter, int popExit) {
+        startFragment(fragment, tag, enter, popExit, true);
+    }
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack) {
+        startFragment(fragment, tag,
+                enter,
+                0,
+                0,
+                popExit, isAddBack);
+    }
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack) {
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.hide(this).add(android.R.id.content, tofragment, tag);
+        fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit);
+        fragmentTransaction.add(android.R.id.content, fragment, tag).hide(this);
         fragmentTransaction.addToBackStack(tag);
         fragmentTransaction.commitAllowingStateLoss();
     }
@@ -243,16 +316,25 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass) {
-        Intent intent = new Intent(mContext, zclass);
+    public void startActivity(Class aClass) {
+        Intent intent = new Intent(mContext, aClass);
         startActivity(intent);
     }
 
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass, Bundle bundle, int flag) {
-        Intent intent = new Intent(mContext, zclass);
+    public void startActivity(Class aClass, Bundle bundle) {
+        Intent intent = new Intent(mContext, aClass);
+        intent.putExtras(bundle);
+        startActivity(intent);
+    }
+
+    /**
+     * 跳转Activity
+     */
+    public void startActivity(Class aClass, Bundle bundle, int flag) {
+        Intent intent = new Intent(mContext, aClass);
         intent.putExtras(bundle);
         intent.addFlags(flag);
         startActivity(intent);
@@ -261,8 +343,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     /**
      * 跳转Activity
      */
-    public void startActivity(Class zclass, int flag) {
-        Intent intent = new Intent(mContext, zclass);
+    public void startActivity(Class aClass, int flag) {
+        Intent intent = new Intent(mContext, aClass);
         intent.addFlags(flag);
         startActivity(intent);
     }
@@ -272,12 +354,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return mContext;
     }
 
-    @Override
     public Bundle getBundle() {
         return mBundle;
     }
 
-    @Override
     public BaseFragment getFragment() {
         return this;
     }
@@ -322,6 +402,20 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
             getViews().put(viewId, view);
         }
         return (V) view;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return !isAdded();
+    }
+
+    @Override
+    public void finishActivity() {
+        if (getActivity() == null) {
+            ((Activity) mContext).finish();
+        } else {
+            getActivity().finish();
+        }
     }
 
     /**

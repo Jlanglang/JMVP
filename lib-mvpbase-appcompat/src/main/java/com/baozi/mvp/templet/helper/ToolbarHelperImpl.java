@@ -46,7 +46,8 @@ class ToolbarHelperImpl extends BaseToolBarHelperImpl {
     @Override
     public void initToolbar() {
         mLeftTextView = (TextView) mToolbar.findViewById(R.id.tv_left);
-        mRightTextView = (TextView) mToolbar.findViewById(R.id.tv_right);
+        mRightTextView = (TextView)
+                mToolbar.findViewById(R.id.tv_right);
         mLeftButton = (ImageButton) mToolbar.findViewById(R.id.ib_left);
         mRightButton = (ImageButton) mToolbar.findViewById(R.id.ib_right);
         mTitleView = (TextView) mToolbar.findViewById(R.id.tv_title);
@@ -83,7 +84,7 @@ class ToolbarHelperImpl extends BaseToolBarHelperImpl {
             setLeftButton(backDrawable, new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mToolbarView.onBack();
+                    mToolbarView.onBackPressed();
                 }
             });
         }
@@ -100,22 +101,6 @@ class ToolbarHelperImpl extends BaseToolBarHelperImpl {
         mTitleView.setTextSize(size);
     }
 
-//    /**
-//     * 应该保证在调用Activity.setSupportActionBar()之后使用.
-//     *
-//     * @param isMaterialDesign
-//     */
-//    @Override
-//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-//        super.setMaterialDesignEnabled(isMaterialDesign);
-//        int visibility = isMaterialDesign ? View.GONE : View.VISIBLE;
-//        if (null != mRightText) {
-//            mRightTextView.setVisibility(visibility);
-//        }
-//        if (null != mRightButton) {
-//            mRightButton.setVisibility(visibility);
-//        }
-//    }
 
     public void setTitle(@NonNull String titleView) {
         mTitleView.setText(titleView);

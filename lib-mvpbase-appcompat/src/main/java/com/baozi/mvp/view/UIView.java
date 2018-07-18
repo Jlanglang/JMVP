@@ -31,16 +31,17 @@ public interface UIView extends BaseView {
      * @param <V>
      * @return
      */
+
     <V extends View> V findView(@IdRes int viewId);
 
     /**
      * 回退
      */
 
-    void onBack();
+    void onBackPressed();
 
     /**
-     * 获取Acitivity
+     * 获取Activity
      *
      * @return
      */
@@ -54,22 +55,39 @@ public interface UIView extends BaseView {
     View getContentView();
 
     /**
-     * Frgament跳转.
+     * 处理异常
      *
-     * @param tofragment
+     * @param throwable
      */
-    void startFragment(Fragment tofragment);
+    void onNewThrowable(Throwable throwable);
 
     /**
      * Frgament跳转.
      *
-     * @param tofragment
+     * @param fragment
      */
-    void startFragment(Fragment tofragment, String tag);
+    void startFragment(Fragment fragment);
+
+    /**
+     * Frgament跳转.
+     *
+     * @param fragment
+     */
+    void startFragment(Fragment fragment, String tag);
+
+    void startFragment(Fragment fragment, String tag, boolean isAdd);
+
+    void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim);
+
+    void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack);
+
+    void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack);
 
     Window getWindow();
 
     ActionBar getSupportActionBar();
 
     void setSupportActionBar(@Nullable Toolbar toolbar);
+
+    void finishActivity();
 }

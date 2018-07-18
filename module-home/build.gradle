@@ -37,6 +37,7 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.12'
     implementation project(':framework-jmvp')
+    api 'com.github.Jlanglang:TreeRecyclerView:1.1.2'
 }

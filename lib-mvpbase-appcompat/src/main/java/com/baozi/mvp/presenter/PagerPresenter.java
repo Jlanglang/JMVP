@@ -19,7 +19,7 @@ import com.baozi.mvp.view.PagerView;
 public class PagerPresenter {
 
     private PagerView mView;
-    private JPagerAdapter mAdapter;
+    private PagerAdapter mAdapter;
 
     public PagerPresenter(PagerView mView) {
         this.mView = mView;
@@ -84,44 +84,41 @@ public class PagerPresenter {
 
     private void initViewPager() {
         ViewPager viewPager = mView.getViewPager();
-        viewPager.setAdapter(new JPagerAdapter());
+        viewPager.setAdapter(getAdapter());
     }
 
     protected PagerAdapter getAdapter() {
         if (mAdapter == null) {
-            mAdapter = new JPagerAdapter();
+            mAdapter = new PagerAdapter() {
+                // 当要显示的图片可以进行缓存的时候，会调用这个方法进行显示图片的初始化，我们将要显示的ImageView加入到ViewGroup中，然后作为返回值返回即可
+                @Override
+                public Object instantiateItem(ViewGroup view, int position) {
+                    view.addView(mView.getPager().get(position));
+                    return mView.getPager().get(position);
+                }
+
+                @Override
+                public int getItemPosition(Object object) {
+                    return POSITION_NONE;
+                }
+
+                @Override
+                public int getCount() {
+                    return mView.getPager().size();
+                }
+
+                // 例如PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
+                @Override
+                public void destroyItem(ViewGroup view, int position, Object object) {
+                    view.removeView(mView.getPager().get(position));
+                }
+
+                @Override
+                public boolean isViewFromObject(View view, Object object) {
+                    return view == object;
+                }
+            };
         }
         return mAdapter;
     }
-
-    private class JPagerAdapter extends PagerAdapter {
-        // 当要显示的图片可以进行缓存的时候，会调用这个方法进行显示图片的初始化，我们将要显示的ImageView加入到ViewGroup中，然后作为返回值返回即可
-        @Override
-        public Object instantiateItem(ViewGroup view, int position) {
-            view.addView(mView.getPager().get(position));
-            return mView.getPager().get(position);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-
-        @Override
-        public int getCount() {
-            return mView.getPager().size();
-        }
-
-        // 例如PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
-        @Override
-        public void destroyItem(ViewGroup view, int position, Object object) {
-            view.removeView(mView.getPager().get(position));
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-    }
-
 }

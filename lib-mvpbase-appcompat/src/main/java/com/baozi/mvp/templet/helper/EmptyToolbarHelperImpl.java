@@ -4,23 +4,29 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.baozi.mvp.templet.options.ToolbarOptions;
-import com.baozi.mvp.view.ToolbarView;
 
 /**
  */
-class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
+class EmptyToolbarHelperImpl extends ToolbarHelper {
 
-    EmptyToolbarHelperImpl(@NonNull ToolbarView uiView, View rootView, int toolbarLayout) {
-        super(uiView, rootView, toolbarLayout);
+    @Override
+    public boolean setScrollFlag(int viewId, int flag) {
+        return false;
     }
 
     @Override
-    public void initToolbar() {
+    public <V extends View> V findViewFromAppBar(int viewId) {
+        return null;
+    }
 
+    @Override
+    public AppBarLayout getAppBarLayout() {
+        return null;
     }
 
     @Override
@@ -29,23 +35,10 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setTextSize(int size) {
+    public void setToolbarOptions(ToolbarOptions toolbarOptions) {
 
     }
 
-    @Override
-    public void setTitleSize(int size) {
-
-    }
-
-    @Override
-    public void setToolbarOptions(ToolbarOptions options) {
-        super.setToolbarOptions(options);
-    }
-    //    @Override
-//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-//
-//    }
 
     public void setTitle(@NonNull String str) {
 
@@ -93,6 +86,11 @@ class EmptyToolbarHelperImpl extends BaseToolBarHelperImpl {
 
     @Override
     public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
+
+    }
+
+    @Override
+    public void setCanBack(boolean canback) {
 
     }
 }

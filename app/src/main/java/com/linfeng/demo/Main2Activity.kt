@@ -7,7 +7,6 @@ import android.widget.Toast
 import io.reactivex.Observable
 import java.io.File
 
-
 class Main2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,10 +15,10 @@ class Main2Activity : AppCompatActivity() {
     }
 
     override fun onStart() {
+        super.onStart()
         Observable.just("").map { s -> if (s == null) "" else "123" }
                 .filter { s -> s == "" }
-                .subscribe {
-                    s ->
+                .subscribe { s ->
                     Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
                 }
 

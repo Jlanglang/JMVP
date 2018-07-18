@@ -2,12 +2,15 @@ package com.baozi.mvp.templet.options;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
+
+import com.baozi.mvp.templet.helper.ToolbarHelper;
 
 /**
  * Created by baozi on 2017/10/25.
  */
 
-public class ToolbarOptions {
+public class ToolbarOptions implements Cloneable {
     //其他字体大小,颜色
     private int otherTextSize;
     @ColorInt
@@ -20,7 +23,8 @@ public class ToolbarOptions {
     private int toolbarHeight;
     @ColorInt
     private int toolbarColor;
-    //    private int toolbarLayout;
+    @LayoutRes
+    private int toolbarLayout = ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
     @DrawableRes
     private int toolbarDrawable;
     @DrawableRes
@@ -30,6 +34,7 @@ public class ToolbarOptions {
     private int backDrawable;
 
     private boolean noBack;
+    private float elevation;
 
     public static ToolbarOptions Create() {
         return new ToolbarOptions();
@@ -38,6 +43,7 @@ public class ToolbarOptions {
     private ToolbarOptions() {
 
     }
+
     @DrawableRes
     public int getStatusDrawable() {
         return statusDrawable;
@@ -56,6 +62,7 @@ public class ToolbarOptions {
         this.otherTextSize = otherTextSize;
         return this;
     }
+
     @ColorInt
     public int getOtherTextColor() {
         return otherTextColor;
@@ -93,6 +100,7 @@ public class ToolbarOptions {
         this.toolbarHeight = toolbarHeight;
         return this;
     }
+
     @ColorInt
     public int getToolbarColor() {
         return toolbarColor;
@@ -102,6 +110,7 @@ public class ToolbarOptions {
         this.toolbarColor = toolbarColor;
         return this;
     }
+
     @DrawableRes
     public int getToolbarDrawable() {
         return toolbarDrawable;
@@ -111,12 +120,13 @@ public class ToolbarOptions {
         this.toolbarDrawable = toolbarDrawable;
         return this;
     }
+
     @DrawableRes
     public int getBackDrawable() {
         return backDrawable;
     }
 
-    public ToolbarOptions setBackDrawable(@DrawableRes  int backDrawable) {
+    public ToolbarOptions setBackDrawable(@DrawableRes int backDrawable) {
         this.backDrawable = backDrawable;
         return this;
     }
@@ -130,23 +140,29 @@ public class ToolbarOptions {
         return this;
     }
 
+    public int getToolbarLayout() {
+        return toolbarLayout;
+    }
+
+    public ToolbarOptions setToolbarLayout(@LayoutRes int toolbarLayout) {
+        this.toolbarLayout = toolbarLayout;
+        return this;
+    }
+
     public ToolbarOptions clone() {
         try {
             return (ToolbarOptions) super.clone();
         } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return ToolbarOptions.Create()
-                .setBackDrawable(backDrawable)
-                .setOtherTextColor(otherTextColor)
-                .setOtherTextSize(otherTextSize)
-                .setTitleColor(titleColor)
-                .setTitleSize(titleSize)
-                .setToolbarColor(toolbarColor)
-                .setToolbarHeight(toolbarHeight)
-                .setToolbarDrawable(toolbarDrawable)
-                .setNoBack(noBack);
-//                .setToolbarLayout(toolbarLayout)
     }
 
+    public ToolbarOptions setElevation(float elevation) {
+        this.elevation = elevation;
+        return this;
+    }
+
+    public float getElevation() {
+        return elevation;
+    }
 }

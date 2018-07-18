@@ -2,6 +2,7 @@ package com.baozi.mvp.templet.helper;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -37,6 +38,7 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         //初始化AppBarLayout
         mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
         mAppBarLayout.removeAllViews();
+
         //将toolbarLayout添加到AppBarLayout中
         View inflate = LayoutInflater.from(mContext).inflate(toolbarLayout, mAppBarLayout, true);
         //如果find不为null,则设置toolbar
@@ -63,6 +65,11 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         }
         if (options.getToolbarDrawable() != 0) {
             mToolbar.setBackgroundResource(toolbarDrawable);
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mAppBarLayout.setElevation(options.getElevation());
+            mAppBarLayout.setTranslationZ(options.getElevation());
+            mAppBarLayout.invalidate();
         }
         if (toolbarHeight > 0) {
             float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toolbarHeight,
@@ -125,14 +132,13 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         return mToolbar;
     }
 
-    public abstract void setTextSize(int size);
+    public void setTextSize(int size) {
+    }
 
-    public abstract void setTitleSize(int size);
 
-//    @Override
-//    public void setMaterialDesignEnabled(boolean isMaterialDesign) {
-//
-//    }
+    public void setTitleSize(int size) {
+    }
+
 
     public void setTitle(@NonNull String str) {
 

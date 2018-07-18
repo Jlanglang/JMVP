@@ -8,25 +8,22 @@ import android.view.View;
 
 import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
-import com.baozi.mvp.base.TempletActivity;
-import com.baozi.mvp.helper.ToolbarHelper;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.templet.TempletActivity;
 import com.linfeng.common.utils.AutoUtils;
 
 
 public class MainActivity extends TempletActivity<BasePresenter> {
-
-    @NonNull
-    @Override
-    public View onCreateContentView(LayoutInflater inflater, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.home_activity_main, null);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        AutoUtils.init(this,false,720,1280);
         AutoUtils.auto(this);
+    }
+
+    @Override
+    protected int initView(Bundle savedInstanceState) {
+        return R.layout.home_activity_main;
     }
 
     @Override
@@ -48,8 +45,4 @@ public class MainActivity extends TempletActivity<BasePresenter> {
         };
     }
 
-    @Override
-    public int initToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_MD_TABLAYOUT;
-    }
 }

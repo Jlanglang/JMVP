@@ -22,7 +22,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @Change
  */
 public abstract class ToolbarHelper {
-    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_templet_defuatl;
+    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_template_default;
     public static final int TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl;
     public static final int TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout;
 
@@ -36,13 +36,8 @@ public abstract class ToolbarHelper {
             return new ToolbarHelperImpl(uiView, rootView, toolbarLayout);
         } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
             return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
-        } else
-//            if (toolbarLayout == 0)
-        {
-            return new EmptyToolbarHelperImpl(uiView, rootView, toolbarLayout);
-//        } else {
-//            throw new IllegalStateException("Unknown toolbarLayout ID,You should extends BaseActvity,BaseFragment," +
-//                    "Don't extends TempletAcitvity,TempletFrgament");
+        } else {
+            return new EmptyToolbarHelperImpl();
         }
     }
 
@@ -151,4 +146,5 @@ public abstract class ToolbarHelper {
 
 
     public abstract void setCanBack(boolean canback);
+
 }

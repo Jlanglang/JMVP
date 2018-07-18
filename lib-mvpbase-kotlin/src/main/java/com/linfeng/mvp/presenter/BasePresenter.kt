@@ -1,21 +1,38 @@
-package com.baozi.mvp.presenter
+package com.linfeng.mvp.presenter
 
 import android.content.Intent
 import android.os.Bundle
-import com.linfeng.mvp.view.BaseView
+import android.view.View
+
+import com.baozi.mvp.view.UIView
 
 
 /**
  * @author jlanglang  2016/11/11 15:10
- * *
  * @版本 2.0
- * *
  * @Change
  */
-abstract class BasePresenter<T : BaseView>() {
-    lateinit var mView: T
-    fun attach(t: Any) {
-        mView = t as T
+abstract class BasePresenter<T : UIView> {
+
+
+    var view: T
+        protected set
+
+    abstract val contentView: View
+
+    /**
+     * 绑定View
+     */
+    fun onAttach(view: T) {
+        this.view = view
+    }
+
+
+    /**
+     * 解除绑定
+     */
+    fun onDetach() {
+        //        mView = null;
     }
 
     /**
@@ -26,29 +43,23 @@ abstract class BasePresenter<T : BaseView>() {
 
     /**
      * 运行在onCreate()之后,可能在onStart()之后调用.
-     * 建议加载数据,处理数据刷新页面的操作放在这里
+     * 建议初始化数据,刷新的网络请求
      */
-    abstract fun initData()
-
-    /**
-     * 在这里结束异步操作
-     */
-    fun onDestroy() {
-        cancelNetWork()
-    }
-
-    /**
-     * 解除绑定
-     */
-    fun onDetach() {
-
-    }
-
+    abstract fun onRefreshData()
 
     /**
      * 取消网络请求回调
      */
     abstract fun cancelNetWork()
+
+    /**
+     * 本地网络异常
+     */
+    abstract fun netWorkError(throwable: Throwable)
+
+    fun onDestroy() {
+        cancelNetWork()
+    }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
@@ -78,6 +89,4 @@ abstract class BasePresenter<T : BaseView>() {
 
     }
 
-
 }
-

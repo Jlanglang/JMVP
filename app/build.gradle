@@ -23,7 +23,7 @@ android {
 dependencies {
     implementation project(':framework-jmvp')
     implementation files('lib/BASE64.jar')
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 repositories {
     mavenCentral()

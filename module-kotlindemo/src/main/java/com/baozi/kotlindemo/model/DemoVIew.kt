@@ -1,4 +1,4 @@
-package com.baozi.module_kotlindemo.model
+package com.baozi.kotlindemo.model
 
 import com.linfeng.mvp.view.BaseActivityView
 

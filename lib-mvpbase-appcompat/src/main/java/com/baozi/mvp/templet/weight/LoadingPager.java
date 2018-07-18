@@ -7,10 +7,14 @@ import android.support.annotation.IdRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.baozi.mvp.MVPManager;
+
+import java.util.List;
+
 /**
- * 测试版,慎用
  */
 public class LoadingPager extends FrameLayout {
     private Context context;
@@ -26,7 +30,28 @@ public class LoadingPager extends FrameLayout {
     public static final int STATE_LOADING = 2;
     public static final int STATE_SUCCESS = 3;
     private int mCurrentState;
-    private boolean isOpenLoading;
+    private boolean isShowLoading;
+
+    private OnRefreshListener refreshListener;
+
+    public LoadingPager(Context context) {
+        super(context);
+        this.context = context;
+    }
+
+    public LoadingPager(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+    public LoadingPager(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public LoadingPager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
+    }
 
     public View getSuccessPage() {
         return mSuccessPage;
@@ -36,9 +61,12 @@ public class LoadingPager extends FrameLayout {
         if (successPage == null || mSuccessPage != null) {
             return;
         }
-        addView(successPage);
+        addView(successPage, 0
+                , new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mSuccessPage = successPage;
+        initView();
     }
+
 
     public void setRefreshClick(@IdRes int id) {
         View viewById = findViewById(id);
@@ -52,25 +80,11 @@ public class LoadingPager extends FrameLayout {
         }
     }
 
-    public LoadingPager(Context context) {
-        super(context);
-        this.context = context;
-        initView();
-    }
-
-    public LoadingPager(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.context = context;
-        initView();
-    }
-
-    public LoadingPager(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public LoadingPager(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+    public void setViewClick(@IdRes int id, OnClickListener onClickListener) {
+        View viewById = findViewById(id);
+        if (viewById != null) {
+            viewById.setOnClickListener(onClickListener);
+        }
     }
 
     /**
@@ -99,23 +113,23 @@ public class LoadingPager extends FrameLayout {
     }
 
     private void initView() {
-        if (!isOpenLoading()) {
-            return;
+        if (isShowLoading()) {
+            mLoadingPage = initPage(mLoadingPage, loadingLayout);
         }
-        initPage(mEmptyPage, getEmptyLayout());
-        initPage(mErrorPage, getErrorLayout());
-        initPage(mLoadingPage, getLoadingLayout());
+        mEmptyPage = initPage(mEmptyPage, emptyLayout);
+        mErrorPage = initPage(mErrorPage, errorLayout);
+        triggerInit();
     }
 
-    private void initPage(View view, int layout) {
+    private View initPage(View view, int layout) {
         //如果已经添加则直接return
         if (indexOfChild(view) != -1) {
-            return;
+            return view;
         }
         //如果未添加但view不为null.则添加
         if (view != null) {
-            addView(view, 0);
-            return;
+            addView(view);
+            return view;
         }
         //如果未添加且为null,则创建并添加
         if (layout == 0) {
@@ -123,40 +137,39 @@ public class LoadingPager extends FrameLayout {
         } else {
             view = LayoutInflater.from(context).inflate(layout, this, false);
         }
-        addView(view, 0);
+        addView(view);
+        return view;
     }
 
-    public boolean isOpenLoading() {
-        return isOpenLoading;
+    public boolean isShowLoading() {
+        return isShowLoading;
     }
 
-    public void setOpenLoading(boolean openLoading) {
-        if (!openLoading) {
-            removeView(mErrorPage);
-            removeView(mEmptyPage);
+    public void setShowLoading(boolean showLoading) {
+        if (!showLoading) {
             removeView(mLoadingPage);
         } else {
-            initView();
+            mLoadingPage = initPage(mLoadingPage, loadingLayout);
         }
-        isOpenLoading = openLoading;
+        isShowLoading = showLoading;
     }
 
     public void setEmptyPage(View emptyPage) {
         removeView(mEmptyPage);
         mEmptyPage = emptyPage;
-        addView(mEmptyPage, 0);
+        addView(mEmptyPage);
     }
 
     public void setErrorPage(View errorPage) {
         removeView(mErrorPage);
         mErrorPage = errorPage;
-        addView(mErrorPage, 0);
+        addView(mErrorPage);
     }
 
     public void setLoadingPage(View loadingPage) {
         removeView(mLoadingPage);
         mLoadingPage = loadingPage;
-        addView(mLoadingPage, 0);
+        addView(mLoadingPage);
     }
 
     public void setEmptyLayout(int emptyLayout) {
@@ -183,30 +196,38 @@ public class LoadingPager extends FrameLayout {
         return emptyLayout;
     }
 
+    public OnRefreshListener getRefreshListener() {
+        return refreshListener;
+    }
+
+    public void setRefreshListener(OnRefreshListener refreshListener) {
+        this.refreshListener = refreshListener;
+    }
+
     /**
      * 加载前刷新页面
      */
     private void refreshUIByState() {
-        if (!isOpenLoading()) {
-            return;
+        if (isShowLoading) {
+            mLoadingPage.setVisibility(mCurrentState == STATE_LOADING ? View.VISIBLE : View.GONE);
         }
-        mLoadingPage.setVisibility(mCurrentState == STATE_LOADING ? View.VISIBLE : View.GONE);
         mErrorPage.setVisibility(mCurrentState == STATE_ERROR ? View.VISIBLE : View.GONE);
         mEmptyPage.setVisibility(mCurrentState == STATE_EMPTY ? View.VISIBLE : View.GONE);
-        if (mSuccessPage != null && getChildCount() <= 4) {
-            mSuccessPage.setVisibility(mCurrentState == STATE_SUCCESS ? View.VISIBLE : View.GONE);
-        }
     }
 
     /**
-     * 刷新页面以及触发加载数据
+     * 刷新页面状态
      */
     public void triggerInit() {
         if (mCurrentState != STATE_LOADING) {
             mCurrentState = STATE_LOADING;
+            if (refreshListener != null) {
+                refreshListener.onRefresh();
+            }
             refreshUIByState();
         }
     }
+
 
     /**
      * 根据请求结果显示页面
@@ -220,4 +241,32 @@ public class LoadingPager extends FrameLayout {
         mCurrentState = stateEmpty;
         refreshUIByState();
     }
+
+    public void showEmpty() {
+        show(STATE_EMPTY);
+    }
+
+    public void showError(Throwable throwable) {
+        if (throwable == null) {
+            show(STATE_ERROR);
+            return;
+        }
+        List<Class> throwables = MVPManager.getContentOptions().getThrowables();
+        if (throwables != null && throwables.indexOf(throwable.getClass()) != -1) {
+            show(STATE_ERROR);
+        }
+    }
+
+    public void showSuccess() {
+        show(STATE_SUCCESS);
+    }
+
+    public void showLoading() {
+        show(STATE_LOADING);
+    }
+
+    public interface OnRefreshListener {
+        void onRefresh();
+    }
+
 }

@@ -15,6 +15,10 @@ android {
         versionCode 1
         versionName "1.0"
     }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
 }
 dependencies {
     api 'com.android.support:appcompat-v7:27.1.1'

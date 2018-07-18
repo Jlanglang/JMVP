@@ -3,10 +3,8 @@ package com.linfeng.mvp.view
 import android.content.Intent
 
 /**
- * @author jlanglang  2017/7/7 16:39
- * @版本 2.0
- * @Change
+ * Created by baozi on 2016/11/24.
  */
-interface BaseActivityView : UIView {
-    fun getIntent(): Intent
+interface BaseActivityView {
+    fun getIntent()
 }

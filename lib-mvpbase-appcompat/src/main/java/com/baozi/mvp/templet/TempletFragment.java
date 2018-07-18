@@ -21,6 +21,7 @@ import com.baozi.mvp.view.ToolbarView;
  *
  * @param <T>
  */
+@Deprecated
 public abstract class TempletFragment<T extends BasePresenter> extends BaseFragment<T>
         implements ToolbarView {
     private ToolbarHelper mToolbarHelper;

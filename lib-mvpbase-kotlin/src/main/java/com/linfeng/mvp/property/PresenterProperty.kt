@@ -1,12 +1,14 @@
 package com.linfeng.mvp.property
 
-import com.baozi.mvp.presenter.BasePresenter
+import com.linfeng.mvp.presenter.BasePresenter
+import com.linfeng.mvp.presenter.BasePresenter1
 import com.linfeng.mvp.view.BaseView
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
  * Created by baozi on 2017/10/20.
+ *
  */
 class PresenterProperty<T : BasePresenter<*>>(private val baseView: BaseView) : ReadWriteProperty<Any?, T> {
     private var presenter: T? = null

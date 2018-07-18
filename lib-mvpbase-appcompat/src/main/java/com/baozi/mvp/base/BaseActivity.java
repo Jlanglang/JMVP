@@ -1,15 +1,15 @@
 package com.baozi.mvp.base;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.MessageQueue;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -19,14 +19,14 @@ import android.view.View;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.view.BaseActivityView;
+import com.baozi.mvp.view.UIView;
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
-        implements BaseActivityView {
-    public final String TAG = this.getClass().getSimpleName();
+        implements UIView {
+    //public String TAG = this.getClass().getSimpleName();tag不要用反射的形式取
     protected T mPresenter;
     private SparseArray<View> mViews;
     private View mContentView;
@@ -41,29 +41,35 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter.onAttach(this);
         //初始化ContentView
         mContentView = initView(getLayoutInflater(), savedInstanceState);
-        super.setContentView(mContentView);
+        if (mContentView != null) {
+            super.setContentView(mContentView);
+        }
+    }
+
+    @Override
+    public void onNewThrowable(Throwable throwable) {
+
+    }
+
+    @SuppressLint("ResourceType")
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
         //初始化Activity
         init(savedInstanceState);
         //初始化presenter
         mPresenter.onCreate();
         onPresentersCreate();
-        //延时加载数据.
-        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-            @Override
-            public boolean queueIdle() {
-                if (getStatusBarDrawable() > 0) {
+        if (getStatusBarDrawable() > 0) {
+            initStatusBar();
+            getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+                @Override
+                public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     initStatusBar();
-                    getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-                        @Override
-                        public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                            initStatusBar();
-                        }
-                    });
                 }
-                mPresenter.initData();
-                return false;
-            }
-        });
+            });
+        }
+        mPresenter.onRefreshData();
     }
 
     protected void initStatusBar() {
@@ -96,13 +102,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      *
      * @return
      */
-    protected void init(Bundle savedInstanceState) {
+    protected void init(@Nullable Bundle savedInstanceState) {
 
     }
 
     @Override
+    @Nullable
     public View getContentView() {
-        return mContentView;
+        return mContentView != null ? mContentView : findViewById(android.R.id.content);
     }
 
     @Override
@@ -164,14 +171,65 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     }
 
     /**
-     * @param tofragment 跳转的fragment
-     * @param tag        fragment的标签
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
      */
     @Override
-    public void startFragment(Fragment tofragment, String tag) {
+    public void startFragment(Fragment fragment, String tag) {
+        startFragment(fragment, tag, true);
+    }
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, boolean isAdd) {
+        startFragment(fragment, tag,
+                MVPManager.getEnterAnim(),
+                MVPManager.getExitAnim(),
+                MVPManager.getEnterPopAnim(),
+                MVPManager.getExitPopAnim(), isAdd);
+    }
+
+
+    /**
+     * @param fragment 跳转的fragment
+     * @param tag      fragment的标签
+     */
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enter, int popExit) {
+        startFragment(fragment, tag, enter, popExit, true);
+    }
+
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack) {
+        startFragment(fragment, tag,
+                enter,
+                0,
+                0,
+                popExit, isAddBack);
+    }
+
+    @Override
+    public void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(android.R.id.content, tofragment, tag);
-        fragmentTransaction.addToBackStack(tag);
+        fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit);
+        fragmentTransaction.add(android.R.id.content, fragment, tag);
+        if (isAddBack) {
+            fragmentTransaction.addToBackStack(tag);
+        }
+        fragmentTransaction.commitAllowingStateLoss();
+    }
+
+
+    /**
+     * @param rootFragment Activity内部fragment
+     * @param containerId  fragment父容器
+     */
+    public void replaceFragment(Fragment rootFragment, int containerId) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.add(containerId, rootFragment);
         fragmentTransaction.commitAllowingStateLoss();
     }
 
@@ -211,12 +269,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         startActivity(intent);
     }
 
-    /**
-     * onBackPressed();
-     */
     @Override
-    public void onBack() {
-        onBackPressed();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mPresenter.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -261,10 +317,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @param savedInstanceState
      * @return
      */
-    @NonNull
-    protected View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
+    protected View initView(@NonNull LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         int layout = initView(savedInstanceState);
-        return inflater.inflate(layout, null);
+        try {
+            return inflater.inflate(layout, null);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean isFinish() {
+        return isFinishing();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 
     /**
@@ -274,7 +343,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return 布局layout
      */
     @LayoutRes
-    protected abstract int initView(Bundle savedInstanceState);
+    protected abstract int initView(@Nullable Bundle savedInstanceState);
 
     /**
      * 子类实现Presenter,且必须继承BasePresenter
