@@ -32,7 +32,7 @@ interface ToolbarView : BaseView {
     @get:LayoutRes
     val toolbarLayout: Int
 
-    val toolbarOptions: ToolbarOptions
+    val toolbarOptions: ToolbarOptions?
 
 
     /**

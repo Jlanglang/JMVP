@@ -4,11 +4,8 @@ import android.content.Context
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.view.View
-
 import com.linfeng.mvp.templet.weight.LoadingPager
-
-import java.util.Arrays
-import java.util.TreeSet
+import java.util.*
 
 /**
  * Created by baozi on 2017/10/25.
@@ -126,7 +123,6 @@ class ContentOptions : Cloneable {
     }
 
     companion object {
-
         fun create(): ContentOptions {
             return ContentOptions()
         }

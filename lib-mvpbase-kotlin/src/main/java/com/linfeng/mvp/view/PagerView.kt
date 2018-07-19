@@ -16,15 +16,15 @@ interface PagerView : BaseView {
 
     val pager: List<View>
 
-    val tablayout: TabLayout
+    val tablayout: TabLayout?
 
-    val tabString: Array<String>
+    val tabString: Array<String>?
 
     @get:DrawableRes
-    val tabDrawables: IntArray
+    val tabDrawables: IntArray?
 
     @get:LayoutRes
-    val tabLayoutItem: Int
+    val tabLayoutItem: Int?
 
     /**
      * 是否需要切换动画

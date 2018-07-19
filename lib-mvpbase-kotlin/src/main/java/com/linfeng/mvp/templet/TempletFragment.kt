@@ -2,18 +2,13 @@ package com.linfeng.mvp.templet
 
 import android.os.Bundle
 import android.support.v7.widget.Toolbar
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-
-import com.baozi.mvp.R
-import com.baozi.mvp.base.BaseFragment
-import com.baozi.mvp.presenter.BasePresenter
-import com.baozi.mvp.templet.helper.ToolbarHelper
-import com.baozi.mvp.templet.weight.LoadingPager
-import com.baozi.mvp.view.ToolbarView
+import android.view.*
+import com.linfeng.mvp.R
+import com.linfeng.mvp.base.BaseFragment
+import com.linfeng.mvp.presenter.BasePresenter
+import com.linfeng.mvp.templet.helper.ToolbarHelper
+import com.linfeng.mvp.templet.weight.LoadingPager
+import com.linfeng.mvp.view.ToolbarView
 
 /**
  * 模版Fragment
@@ -21,9 +16,9 @@ import com.baozi.mvp.view.ToolbarView
  * @param <T>
 </T> */
 @Deprecated("")
-abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarView {
-    private var mToolbarHelper: ToolbarHelper? = null
-    private var rootView: View? = null
+abstract class TempletFragment<T : BasePresenter<*>> : BaseFragment<T>(), ToolbarView {
+    //    private lateinit var mToolbarHelper: ToolbarHelper
+    private lateinit var rootView: View
 
     /**
      * 默认使用base_toolbar
@@ -31,7 +26,7 @@ abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarVi
      *
      * @return
      */
-    val toolbarLayout: Int
+    override val toolbarLayout: Int
         get() = ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL
 
 
@@ -45,7 +40,7 @@ abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarVi
     //        getToolbarHelper().setMaterialDesignEnabled(isMaterialDesign);
     //    }
 
-    val isMaterialDesign: Boolean
+    override val isMaterialDesign: Boolean
         get() = false
 
     /**
@@ -53,39 +48,35 @@ abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarVi
      *
      * @return mToolbar 可能为null.
      */
-    val toolbar: Toolbar
-        get() = toolbarHelper.getToolbar()
+    val toolbar: Toolbar?
+        get() = toolbarHelper.toolbar
 
     /**
      * @return
      */
-    val toolbarHelper: ToolbarHelper
-        get() {
-            if (mToolbarHelper == null) {
-                mToolbarHelper = ToolbarHelper.Create(this, rootView)
-            }
-            return mToolbarHelper
-        }
+    override val toolbarHelper: ToolbarHelper by lazy {
+        ToolbarHelper.Create(this, rootView)
+    }
 
     /**
      * @param inflater
      * @param savedInstanceState
      * @return
      */
-    fun initView(inflater: LayoutInflater, savedInstanceState: Bundle): View {
+    override fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View {
         rootView = inflater.inflate(R.layout.templet_layout, null)
         //初始化一次
-        mToolbarHelper = toolbarHelper
+//        mToolbarHelper = toolbarHelper
         //        //ContentView容器
-        val loadingPager = rootView!!.findViewById(R.id.templet_content) as LoadingPager
+        val loadingPager = rootView.findViewById(R.id.templet_content) as LoadingPager
         //        //真正的创建contentView
         val contentView = super.initView(inflater, savedInstanceState)
         //        contentGroup.removeAllViews();
-        loadingPager.setSuccessPage(contentView)
+        loadingPager.successPage = contentView
         return rootView
     }
 
-    fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -93,7 +84,7 @@ abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarVi
     /**
      * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
      */
-    fun onOptionsMenuClosed(menu: Menu) {
+    override fun onOptionsMenuClosed(menu: Menu) {
         super.onOptionsMenuClosed(menu)
     }
 
@@ -101,9 +92,10 @@ abstract class TempletFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarVi
      * 菜单项被点击时调用，也就是菜单项的监听方法。
      * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
      */
-    fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return super.onOptionsItemSelected(item)
     }
 
-    protected abstract fun initPresenter(): T
+    abstract override fun initPresenter(): T
 }
+

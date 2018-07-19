@@ -1,15 +1,14 @@
 package com.linfeng.mvp.presenter
 
 import android.view.View
+import com.linfeng.mvp.view.BaseView
+import com.linfeng.mvp.view.UIView
 
 /**
  * Created by baozi on 2017/12/20.
  */
 
-class EmptyPresenter : BasePresenter<*>() {
-
-    override val contentView: View?
-        get() = null
+class EmptyPresenter : BasePresenter<UIView>() {
 
     override fun onCreate() {}
 

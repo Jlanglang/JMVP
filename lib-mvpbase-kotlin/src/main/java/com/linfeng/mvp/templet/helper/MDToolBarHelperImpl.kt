@@ -2,8 +2,8 @@ package com.linfeng.mvp.templet.helper
 
 import android.view.View
 
-import com.baozi.mvp.templet.options.ToolbarOptions
-import com.baozi.mvp.view.ToolbarView
+import com.linfeng.mvp.templet.options.ToolbarOptions
+import com.linfeng.mvp.view.ToolbarView
 
 /**
  * @author jlanglang  2017/3/7 16:29
@@ -13,11 +13,11 @@ import com.baozi.mvp.view.ToolbarView
 class MDToolBarHelperImpl(uiView: ToolbarView, rootView: View, toolbarLayout: Int) : BaseToolBarHelperImpl(uiView, rootView, toolbarLayout) {
 
     override fun initToolbar() {
-        ToolbarHelper.SimpleInitToolbar(mToolbarView.getContext(), toolbar!!, true)
+        ToolbarHelper.SimpleInitToolbar(mToolbarView.mContext, toolbar, true)
     }
 
-    override fun setToolbarOptions(options: ToolbarOptions?) {
-        super.setToolbarOptions(options)
+    override fun setToolbarOptions(toolbarOptions: ToolbarOptions) {
+        super.setToolbarOptions(toolbarOptions)
 
     }
 

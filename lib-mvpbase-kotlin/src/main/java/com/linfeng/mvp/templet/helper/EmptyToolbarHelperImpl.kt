@@ -7,7 +7,7 @@ import android.support.design.widget.AppBarLayout
 import android.support.v7.widget.Toolbar
 import android.view.View
 
-import com.baozi.mvp.templet.options.ToolbarOptions
+import com.linfeng.mvp.templet.options.ToolbarOptions
 
 /**
  */

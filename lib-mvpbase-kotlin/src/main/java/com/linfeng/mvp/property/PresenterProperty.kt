@@ -3,6 +3,7 @@ package com.linfeng.mvp.property
 import com.linfeng.mvp.presenter.BasePresenter
 import com.linfeng.mvp.presenter.BasePresenter1
 import com.linfeng.mvp.view.BaseView
+import com.linfeng.mvp.view.UIView
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -10,7 +11,7 @@ import kotlin.reflect.KProperty
  * Created by baozi on 2017/10/20.
  *
  */
-class PresenterProperty<T : BasePresenter<*>>(private val baseView: BaseView) : ReadWriteProperty<Any?, T> {
+class PresenterProperty<T : BasePresenter<*>>(private val uiView: UIView) : ReadWriteProperty<Any?, T> {
     private var presenter: T? = null
 
     override fun getValue(thisRef: Any?, property: KProperty<*>): T {
@@ -19,6 +20,6 @@ class PresenterProperty<T : BasePresenter<*>>(private val baseView: BaseView) : 
 
     override fun setValue(thisRef: Any?, property: KProperty<*>, value: T) {
         this.presenter = value
-        value.attach(baseView)
+        value.attach(uiView)
     }
 }

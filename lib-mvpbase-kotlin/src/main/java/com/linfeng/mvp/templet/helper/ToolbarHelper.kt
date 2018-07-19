@@ -6,14 +6,12 @@ import android.support.annotation.DrawableRes
 import android.support.annotation.IdRes
 import android.support.annotation.StringRes
 import android.support.design.widget.AppBarLayout
-import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.View
-
-import com.baozi.mvp.R
-import com.baozi.mvp.templet.options.ToolbarOptions
-import com.baozi.mvp.view.ToolbarView
+import com.linfeng.mvp.R
+import com.linfeng.mvp.templet.options.ToolbarOptions
+import com.linfeng.mvp.view.ToolbarView
 
 /**
  * @author jlanglang  2017/2/21 16:31
@@ -27,14 +25,14 @@ abstract class ToolbarHelper {
      *
      * @return
      */
-    abstract val appBarLayout: AppBarLayout
+    abstract val appBarLayout: AppBarLayout?
 
     /**
      * 获取Toolbar
      *
      * @return
      */
-    abstract val toolbar: Toolbar
+    abstract val toolbar: Toolbar?
 
     /**
      * 设置滑动Flag
@@ -52,7 +50,7 @@ abstract class ToolbarHelper {
      * @param <V>
      * @return
     </V> */
-    abstract fun <V : View> findViewFromAppBar(@IdRes viewId: Int): V
+    abstract fun <V : View> findViewFromAppBar(@IdRes viewId: Int): V?
 
     /**
      * 获取Toolbar配置
@@ -109,7 +107,7 @@ abstract class ToolbarHelper {
         val TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout
 
         fun Create(uiView: ToolbarView, rootView: View): ToolbarHelper {
-            val toolbarLayout = uiView.getToolbarLayout()
+            val toolbarLayout = uiView.toolbarLayout
             return if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
                 ToolbarHelperImpl(uiView, rootView, toolbarLayout)
             } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
@@ -129,17 +127,15 @@ abstract class ToolbarHelper {
          * @param toolbar 将要设置的Toolbar
          */
 
-        fun SimpleInitToolbar(context: Context, toolbar: Toolbar, isMaterialDesign: Boolean) {
+        fun SimpleInitToolbar(context: Context, toolbar: Toolbar?, isMaterialDesign: Boolean) {
             if (context is AppCompatActivity) {
-                toolbar.setContentInsetsAbsolute(0, 0)
+                toolbar?.setContentInsetsAbsolute(0, 0)
                 context.setSupportActionBar(toolbar)
-                val supportActionBar = context.supportActionBar
-                if (supportActionBar != null) {
-                    supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign)
-                    supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign)
-                    supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign)
-                    supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign)
-                }
+                val supportActionBar = context.supportActionBar ?: return
+                supportActionBar.setDisplayShowCustomEnabled(isMaterialDesign)
+                supportActionBar.setDisplayHomeAsUpEnabled(isMaterialDesign)
+                supportActionBar.setDisplayShowTitleEnabled(isMaterialDesign)
+                supportActionBar.setDisplayShowHomeEnabled(isMaterialDesign)
             }
         }
     }

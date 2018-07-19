@@ -5,29 +5,25 @@ import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-
-import com.baozi.mvp.MVPManager
-import com.baozi.mvp.R
-import com.baozi.mvp.base.BaseFragment
-import com.baozi.mvp.presenter.BasePresenter
-import com.baozi.mvp.templet.helper.ToolbarHelper
-import com.baozi.mvp.templet.options.ContentOptions
-import com.baozi.mvp.templet.options.ToolbarOptions
-import com.baozi.mvp.view.ToolbarView
+import com.linfeng.mvp.MVPManager
+import com.linfeng.mvp.R
+import com.linfeng.mvp.base.BaseFragment
+import com.linfeng.mvp.presenter.BasePresenter
+import com.linfeng.mvp.templet.helper.ToolbarHelper
+import com.linfeng.mvp.templet.options.ContentOptions
+import com.linfeng.mvp.templet.options.ToolbarOptions
+import com.linfeng.mvp.view.ToolbarView
 
 /**
  * 模版Fragment
  *
  * @param <T>
 </T> */
-abstract class TemplateFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarView {
-    private var mToolbarHelper: ToolbarHelper? = null
-    private var rootView: ViewGroup? = null
+abstract class TemplateFragment<T : BasePresenter<*>> : BaseFragment<T>(), ToolbarView {
+    //    private lateinit var mToolbarHelper: ToolbarHelper
+    private lateinit var rootView: ViewGroup
 
 
     /**
@@ -36,16 +32,16 @@ abstract class TemplateFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarV
      *
      * @return
      */
-    val toolbarLayout: Int
+    override val toolbarLayout: Int
         get() = ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL
 
-    val toolbarOptions: ToolbarOptions
-        get() = MVPManager.getToolbarOptions()
+    override val toolbarOptions: ToolbarOptions
+        get() = MVPManager.toolbarOptions
 
     protected val contentOptions: ContentOptions
-        get() = MVPManager.getContentOptions()
+        get() = MVPManager.contentOptions
 
-    val isMaterialDesign: Boolean
+    override val isMaterialDesign: Boolean
         get() = false
 
     /**
@@ -53,32 +49,29 @@ abstract class TemplateFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarV
      *
      * @return mToolbar 可能为null.
      */
-    val toolbar: Toolbar
-        get() = toolbarHelper.getToolbar()
+    val toolbar: Toolbar?
+        get() = toolbarHelper.toolbar
 
     /**
      * @return
      */
-    val toolbarHelper: ToolbarHelper
-        get() {
-            if (mToolbarHelper == null) {
-                mToolbarHelper = ToolbarHelper.Create(this, rootView)
-            }
-            return mToolbarHelper
-        }
+    override val toolbarHelper: ToolbarHelper by lazy {
+        ToolbarHelper.Create(this, rootView)
+    }
 
     /**
      * @param inflater
      * @param savedInstanceState
      * @return
      */
-    fun initView(inflater: LayoutInflater, savedInstanceState: Bundle): View {
+    override fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.templet_layout, null) as ViewGroup
-        //初始化一次
-        mToolbarHelper = toolbarHelper
-        val view = wrapperContentView(super.initView(inflater, savedInstanceState))
+//        //初始化一次
+//        mToolbarHelper = toolbarHelper
 
-        rootView!!.addView(view, 1)
+        val initView = super.initView(inflater, savedInstanceState) ?: return rootView
+        val view = wrapperContentView(initView)
+        rootView.addView(view, 1)
 
         val layoutParams = view.layoutParams as CoordinatorLayout.LayoutParams
         layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
@@ -88,26 +81,19 @@ abstract class TemplateFragment<T : BasePresenter> : BaseFragment<T>(), ToolbarV
         return rootView
     }
 
-    fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    /**
-     * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
-     */
-    fun onOptionsMenuClosed(menu: Menu) {
-        super.onOptionsMenuClosed(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        super.onCreateOptionsMenu(menu, inflater)
+//    }
 
     /**
      * 菜单项被点击时调用，也就是菜单项的监听方法。
      * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
      */
-    fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return super.onOptionsItemSelected(item)
+//    }
 
-    protected abstract fun initPresenter(): T
+//    protected abstract fun initPresenter(): T
 
     protected open fun wrapperContentView(view: View): View {
         return view

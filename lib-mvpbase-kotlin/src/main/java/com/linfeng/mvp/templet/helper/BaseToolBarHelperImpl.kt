@@ -12,29 +12,25 @@ import android.util.SparseArray
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
-
-import com.baozi.mvp.MVPManager
-import com.baozi.mvp.R
-import com.baozi.mvp.templet.options.ToolbarOptions
-import com.baozi.mvp.view.ToolbarView
+import com.linfeng.mvp.MVPManager
+import com.linfeng.mvp.R
+import com.linfeng.mvp.templet.options.ToolbarOptions
+import com.linfeng.mvp.view.ToolbarView
 
 /**
  * @author jlanglang  2017/2/22 16:58
  */
-abstract class BaseToolBarHelperImpl(internal var mToolbarView: ToolbarView, rootView: View, toolbarLayout: Int) : ToolbarHelper() {
+abstract class BaseToolBarHelperImpl(var mToolbarView: ToolbarView, rootView: View, toolbarLayout: Int) : ToolbarHelper() {
     override var toolbar: Toolbar? = null
-        internal set
-    internal var mContext: Context
-    override val appBarLayout: AppBarLayout?
-    private val mViews: SparseArray<View>
+    override var appBarLayout: AppBarLayout? = null
+    protected open var mContext: Context = mToolbarView.mContext
+    private val mViews: SparseArray<View> = SparseArray()
 
     init {
-        mContext = mToolbarView.getContext()
-        mViews = SparseArray()
 
         //初始化AppBarLayout
         appBarLayout = rootView.findViewById(R.id.app_bar) as AppBarLayout
-        appBarLayout!!.removeAllViews()
+        appBarLayout?.removeAllViews()
 
         //将toolbarLayout添加到AppBarLayout中
         val inflate = LayoutInflater.from(mContext).inflate(toolbarLayout, appBarLayout, true)
@@ -42,37 +38,32 @@ abstract class BaseToolBarHelperImpl(internal var mToolbarView: ToolbarView, roo
         toolbar = inflate.findViewById(R.id.tl_custom) as Toolbar
         if (toolbar != null) {
             initToolbar()
-            var mToolbarOptions = mToolbarView.getToolbarOptions()
-            if (mToolbarOptions == null) {
-                mToolbarOptions = MVPManager.getToolbarOptions()
-            }
+            val mToolbarOptions = mToolbarView.toolbarOptions ?: MVPManager.toolbarOptions
             setToolbarOptions(mToolbarOptions)
         }
     }
 
-    override fun setToolbarOptions(options: ToolbarOptions?) {
-        if (options == null || toolbar == null) {
-            return
-        }
-        val toolbarColor = options!!.getToolbarColor()
-        val toolbarDrawable = options!!.getToolbarDrawable()
-        val toolbarHeight = options!!.getToolbarHeight()
+    override fun setToolbarOptions(toolbarOptions: ToolbarOptions) {
+        val toolbar = toolbar ?: return
+        val toolbarColor = toolbarOptions.getToolbarColor()
+        val toolbarDrawable = toolbarOptions.getToolbarDrawable()
+        val toolbarHeight = toolbarOptions.getToolbarHeight()
         if (toolbarColor != 0) {
-            toolbar!!.setBackgroundColor(toolbarColor)
+            toolbar.setBackgroundColor(toolbarColor)
         }
-        if (options!!.getToolbarDrawable() !== 0) {
-            toolbar!!.setBackgroundResource(toolbarDrawable)
+        if (toolbarOptions.getToolbarDrawable() != 0) {
+            toolbar.setBackgroundResource(toolbarDrawable)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            appBarLayout!!.elevation = options!!.getElevation()
-            appBarLayout!!.translationZ = options!!.getElevation()
+            appBarLayout!!.elevation = toolbarOptions.getElevation()
+            appBarLayout!!.translationZ = toolbarOptions.getElevation()
             appBarLayout!!.invalidate()
         }
         if (toolbarHeight > 0) {
             val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, toolbarHeight.toFloat(),
                     mContext.resources.displayMetrics)
-            toolbar!!.layoutParams.height = Math.round(px)
-            toolbar!!.requestLayout()
+            toolbar.layoutParams.height = Math.round(px)
+            toolbar.requestLayout()
         }
     }
 

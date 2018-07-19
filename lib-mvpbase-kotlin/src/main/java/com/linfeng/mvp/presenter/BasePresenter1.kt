@@ -48,7 +48,6 @@ abstract class BasePresenter1<T : BaseView> {
     open fun onDetach() {
 
     }
-
     /**
      * 弄成抽象，是为了提醒你，取消回调
      * 取消网络请求回调

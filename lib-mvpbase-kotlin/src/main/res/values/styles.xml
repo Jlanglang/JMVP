@@ -1,0 +1,36 @@
+<resources>
+    Base application theme.
+
+    <style name="appbar_layout" parent="android:Widget">
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="base_toolbar" parent="@style/toolbar"/>
+
+    <style name="toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+    </style>
+    <!-- ToolBar样式 .-->
+    <style name="toolbar_theme" parent="@style/ThemeOverlay.AppCompat.Dark">
+        <!--&lt;!&ndash;修改toolbar的Title颜色.正确&ndash;&gt;-->
+        <!--<item name="android:textColorPrimary">@android:color/holo_red_dark</item>-->
+        <!--&lt;!&ndash;修改toolbar的subtitle(小标题)颜色.正确&ndash;&gt;-->
+        <!--<item name="subtitleTextColor">@android:color/holo_red_dark</item>-->
+        <!--&lt;!&ndash;修改toolbar折叠图标颜色.这个也正确,用这个吧&ndash;&gt;-->
+        <!--<item name="colorControlNormal">@android:color/holo_red_dark</item>-->
+    </style>
+    <!-- ToolBar菜单样式.-->
+    <style name="popup_theme" parent="@style/ThemeOverlay.AppCompat.Light">
+        <!--这个不对-->
+        <!--<item name="android:actionMenuTextColor">@android:color/holo_red_dark</item>-->
+        <!--<item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>-->
+        <!--设置背景-->
+        <!--<item name="android:background">@android:color/white</item>-->
+        <!--设置字体颜色-->
+        <!--<item name="android:textColor">@android:color/black</item>-->
+        <item name="overlapAnchor">false</item>  <!--设置不覆盖锚点-->
+    </style>
+
+    <!--<style name="base_toolbar" parent="toolbar"/>-->
+</resources>

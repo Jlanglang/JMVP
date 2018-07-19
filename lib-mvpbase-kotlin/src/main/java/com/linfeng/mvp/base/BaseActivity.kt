@@ -3,31 +3,41 @@ package com.linfeng.mvp.base
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.res.Resources
 import android.os.Bundle
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.v4.app.Fragment
+import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
-import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.View
+import android.view.Window
 import com.linfeng.mvp.MVPManager
 import com.linfeng.mvp.annotation.JMvpContract
 import com.linfeng.mvp.presenter.BasePresenter
 import com.linfeng.mvp.property.PresenterProperty
+import com.linfeng.mvp.view.UIView
 import java.lang.reflect.ParameterizedType
 
 /**
  * @author jlanglang  2016/1/5 9:42
  */
-abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
+open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
+
+
+    override var mContext: Context
+        get() = this //To change initializer of created properties use File | Settings | File Templates.
+        set(value) {}
+    override var isFinish: Boolean = false
+//        get() = isFinish //To change initializer of created properties use File | Settings | File Templates.
 
     var mPresenter by PresenterProperty<T>(this)
-    private var mViews: SparseArray<View>? = null
+    //    private var mViews: SparseArray<View>? = null
     //    private var mContentView: View? = null
     private var statusBarView: View? = null
 
-    protected val statusBarDrawable: Int
+    protected open val statusBarDrawable: Int
         @DrawableRes
         @ColorRes
         get() = MVPManager.toolbarOptions.getStatusDrawable()
@@ -37,15 +47,6 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
     override fun getContentView(): View {
         return mContentView
     }
-
-    val appcompatActivity: BaseActivity<*>
-        get() = this
-
-    val context: Context
-        get() = this
-
-    val isFinish: Boolean
-        get() = isFinishing
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,7 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
 //        }
     }
 
-    fun onNewThrowable(throwable: Throwable) {
+    override fun onNewThrowable(throwable: Throwable) {
 
     }
 
@@ -149,34 +150,17 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
         super.onSaveInstanceState(outState)
     }
 
-    /**
-     * 跳转fragment
-     *
-     * @param tofragment
-     */
-    override fun startFragment(tofragment: Fragment) {
-        startFragment(tofragment, null)
+    override fun onBack() {
+        onBackPressed()
     }
 
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    fun startFragment(fragment: Fragment, tag: String?, isAdd: Boolean = true) {
-        startFragment(fragment, tag,
-                MVPManager.enterAnim,
-                MVPManager.exitAnim,
-                MVPManager.enterPopAnim,
-                MVPManager.exitPopAnim, isAdd)
-    }
+    override fun resources(): Resources = resources
 
-    fun startFragment(fragment: Fragment, tag: String, enter: Int, popExit: Int, isAddBack: Boolean = true) {
-        startFragment(fragment, tag,
-                enter,
-                0,
-                0,
-                popExit, isAddBack)
-    }
+    override fun appcompatActivity(): AppCompatActivity = this
+
+    override fun window(): Window = window
+
+    override fun supportActionBar(): ActionBar = supportActionBar!!
     /**
      * @param fragment 跳转的fragment
      * @param tag      fragment的标签
@@ -185,7 +169,7 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
      * @param fragment 跳转的fragment
      * @param tag      fragment的标签
      */
-    fun startFragment(fragment: Fragment, tag: String?, enterAnim: Int, exitAnim: Int, popEnter: Int, popExit: Int, isAddBack: Boolean) {
+    override fun startFragment(fragment: Fragment, tag: String?, enterAnim: Int, exitAnim: Int, popEnter: Int, popExit: Int, isAddBack: Boolean) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit)
         fragmentTransaction.add(android.R.id.content, fragment, tag)
@@ -195,6 +179,9 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
         fragmentTransaction.commitAllowingStateLoss()
     }
 
+    override fun startFragment(fragment: Fragment) {
+        startFragment(fragment, null)
+    }
 
     /**
      * @param rootFragment Activity内部fragment
@@ -247,21 +234,6 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
         mPresenter.onActivityResult(requestCode, resultCode, data)
     }
 
-//    /**
-//     * 通过viewId获取控件
-//     *
-//     * @param viewId 资源id
-//     * @return
-//     */
-//    fun <V : View> findView(@IdRes viewId: Int): V {
-//        var view: View? = views.get(viewId)
-//        if (view == null) {
-//            view = findViewById(viewId)
-//            views.put(viewId, view)
-//        }
-//        return view as V?
-//    }
-
     /**
      * 初始化ContentView
      * 建议不要包含toolbar
@@ -291,7 +263,7 @@ abstract class BaseActivity<T : BasePresenter<*>> : AppCompatActivity() {
         return 0
     }
 
-    fun finishActivity() {
+    override fun finishActivity() {
         finish()
     }
 
