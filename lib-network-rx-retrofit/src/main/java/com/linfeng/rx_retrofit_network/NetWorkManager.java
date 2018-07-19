@@ -2,15 +2,13 @@ package com.linfeng.rx_retrofit_network;
 
 
 import android.app.Application;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
-import com.linfeng.rx_retrofit_network.location.APIExceptionCallBack;
-import com.linfeng.rx_retrofit_network.location.APISuccessCallback;
+import com.linfeng.rx_retrofit_network.location.APICallBack;
+import com.linfeng.rx_retrofit_network.location.onExceptionListener;
 import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
 
-import java.util.HashMap;
 import java.util.HashSet;
 
 import okhttp3.Interceptor;
@@ -19,15 +17,11 @@ import okhttp3.Interceptor;
  * 网络管理类
  */
 public final class NetWorkManager {
-    public final static int API_COMMON_EXCEPTION_CODE = Integer.MIN_VALUE;
-    /**
-     * 提示消息集合
-     */
-    private final static HashMap<Class<? extends Throwable>, String> errorMsgMap;
+    private static onExceptionListener errorListener;
     /**
      * code状态码处理回调
      */
-    private final static SparseArray<APIExceptionCallBack> apiExceptionCallBacks;
+    private static APICallBack apiExceptionCallBacks;
     /**
      * 私钥
      */
@@ -37,22 +31,21 @@ public final class NetWorkManager {
      */
     private static String publicKey;
 
-    public static Application mContext;
+
+    private static Application mContext;
     public static HashSet<Interceptor> mInterceptors = new HashSet<>();
 
-    /**
-     * 初始化Network.
-     */
-    static {
-        apiExceptionCallBacks = new SparseArray<>();
-        errorMsgMap = new HashMap<>();
-//        errorMsgMap.put(UnknownHostException.class, "请打开网络");
-//        errorMsgMap.put(SocketTimeoutException.class, "请求超时");
-//        errorMsgMap.put(ConnectException.class, "连接失败");
-//        errorMsgMap.put(HttpException.class, "网络错误");
-    }
+//    /**
+//     * 初始化Network.
+//     */
+//    static {
+//        apiExceptionCallBacks = new SparseArray<>();
+//    }
 
     private static boolean mOpenApiException;
+
+
+    private static int mSuccessCode;
 
     private NetWorkManager() {
 
@@ -63,8 +56,8 @@ public final class NetWorkManager {
      */
     public static void init(String baseUrl, int successCode, Application context) {
         mContext = context;
+        mSuccessCode = successCode;
         RetrofitUtil.init(baseUrl, context);
-        putApiCallback(APISuccessCallback.INSTANCE, successCode);
     }
 
     /**
@@ -85,56 +78,50 @@ public final class NetWorkManager {
     /**
      * 注册 异常时提示消息
      *
-     * @param t   异常类型
      * @param msg 消息
      */
-    public static void putErrorMsg(@NonNull Class<? extends Throwable> t, String msg) {
-        errorMsgMap.put(t, msg);
+    public static void setExceptionListener(onExceptionListener msg) {
+        errorListener = msg;
     }
 
     /**
      * 获取异常时提示消息
      *
-     * @param t 异常类型
      * @return 消息
      */
-    public static String getErrorMsg(@NonNull Class<? extends Throwable> t) {
-        return errorMsgMap.get(t);
-    }
-
-    /**
-     * 添加自定义code状态处理
-     *
-     * @param callBack 回调
-     * @param codes    服务返回code状态
-     * @return
-     */
-    public static void putApiCallback(APIExceptionCallBack callBack, int... codes) {
-        int length = codes.length;
-        for (int i = 0; i < length; i++) {
-            int code = codes[i];
-            apiExceptionCallBacks.put(code, callBack);
-        }
+    public static onExceptionListener getExceptionListener() {
+        return errorListener;
     }
 
     /**
      * 添加全局code状态处理
      *
      * @param callBack 回调
-     * @return
+     * @type 保证唯一性
      */
-    public static void putCommonAPIExceptionCallback(APIExceptionCallBack callBack) {
-        apiExceptionCallBacks.put(API_COMMON_EXCEPTION_CODE, callBack);
+    public static void setApiCallBack(APICallBack callBack) {
+        apiExceptionCallBacks = callBack;
+//        apiExceptionCallBacks.put(type, callBack);
     }
+
+//    /**
+//     * 获取状态处理回调
+//     *
+//     * @param type 服务器返回状态码
+//     * @return APIExceptionCallBack回调接口
+//     */
+//    public static APICallBack getApiCallback(int type) {
+//        return apiExceptionCallBacks.get(type);
+//    }
+//
 
     /**
      * 获取状态处理回调
      *
-     * @param code 服务器返回状态码
      * @return APIExceptionCallBack回调接口
      */
-    public static APIExceptionCallBack getApiCallback(int code) {
-        return apiExceptionCallBacks.get(code);
+    public static APICallBack getApiCallback() {
+        return apiExceptionCallBacks;
     }
 
     public static EncodeDecodeKey getKey() {
@@ -147,6 +134,22 @@ public final class NetWorkManager {
 
     public static void setOpenApiException(boolean openApiException) {
         mOpenApiException = openApiException;
+    }
+//
+//    public static boolean isIsOpenNetWork() {
+//        return isOpenNetWork;
+//    }
+//
+//    public static void setIsOpenNetWork(boolean isOpenNetWork) {
+//        NetWorkManager.isOpenNetWork = isOpenNetWork;
+//    }
+
+    public static int getSuccessCode() {
+        return mSuccessCode;
+    }
+
+    public static Application getContext() {
+        return mContext;
     }
 
     /**

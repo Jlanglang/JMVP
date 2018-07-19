@@ -13,10 +13,10 @@ import java.lang.reflect.Type;
  */
 
 public class JSONFactory {
-    private static Type type = new TypeToken<BaseResponse<String>>() {
+    private static final Type type = new TypeToken<BaseResponse<String>>() {
     }.getType();
 
-    private static Gson gson = new GsonBuilder()
+    private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(type, new StringResponseDeserializer())
             .create();
 

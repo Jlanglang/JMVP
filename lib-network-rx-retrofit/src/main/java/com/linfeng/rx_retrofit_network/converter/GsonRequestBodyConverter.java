@@ -14,7 +14,6 @@ import okhttp3.RequestBody;
 import retrofit2.Converter;
 
 /**
- * Created by dayaa on 16/1/20.
  */
 public class GsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private Type type;

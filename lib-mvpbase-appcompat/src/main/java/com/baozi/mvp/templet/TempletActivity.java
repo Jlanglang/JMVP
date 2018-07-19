@@ -14,9 +14,9 @@ import android.view.ViewGroup;
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseActivity;
+import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.templet.helper.ToolbarHelper;
 import com.baozi.mvp.templet.options.ToolbarOptions;
-import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.templet.weight.LoadingPager;
 import com.baozi.mvp.view.ToolbarView;
 

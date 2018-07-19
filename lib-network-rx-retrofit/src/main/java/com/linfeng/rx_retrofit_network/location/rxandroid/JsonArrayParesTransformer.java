@@ -4,13 +4,13 @@ import com.linfeng.rx_retrofit_network.factory.JSONFactory;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 import com.linfeng.rx_retrofit_network.location.model.ParameterTypeImpl;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -27,15 +27,13 @@ public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseR
 
     @Override
     public ObservableSource<List<T>> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream.compose(new NetWorkTransformer<String>())
+        return upstream.compose(new NetWorkTransformer<>())
                 .observeOn(Schedulers.computation())
-                .flatMap(new Function<String, ObservableSource<List<T>>>() {
-                    @Override
-                    public ObservableSource<List<T>> apply(String s) throws Exception {
-                        ParameterTypeImpl parameterType = new ParameterTypeImpl(List.class, zClass);
-                        List<T> list = JSONFactory.fromJson(s, parameterType);
-                        return Observable.just(list);
-                    }
+                .flatMap(s -> {
+                    s = "".equals(s) ? "[]" : s;
+                    ParameterTypeImpl parameterType = new ParameterTypeImpl(List.class, new Type[]{zClass});
+                    List<T> list = JSONFactory.fromJson(s, parameterType);
+                    return Observable.just(list);
                 })
                 .observeOn(AndroidSchedulers.mainThread());
     }

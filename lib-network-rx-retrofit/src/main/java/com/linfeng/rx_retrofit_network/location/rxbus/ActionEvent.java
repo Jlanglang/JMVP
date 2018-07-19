@@ -5,6 +5,10 @@ package com.linfeng.rx_retrofit_network.location.rxbus;
  */
 
 public class ActionEvent {
+    private int code;
+
+    private Object action;
+
     public int getCode() {
         return code;
     }
@@ -13,8 +17,6 @@ public class ActionEvent {
         this.code = code;
     }
 
-    private int code;
-
     public Object getAction() {
         return action;
     }
@@ -22,6 +24,4 @@ public class ActionEvent {
     public void setAction(Object action) {
         this.action = action;
     }
-
-    private Object action;
 }

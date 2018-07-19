@@ -7,7 +7,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -24,14 +23,10 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
 
     @Override
     public ObservableSource<T> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream.compose(new NetWorkTransformer<String>())
+        return upstream.compose(new NetWorkTransformer<>())
                 .observeOn(Schedulers.computation())
-                .flatMap(new Function<String, ObservableSource<T>>() {
-                    @Override
-                    public ObservableSource<T> apply(String s) throws Exception {
-                        return Observable.just(JSONFactory.fromJson(s, zClass));
-                    }
-                })
-                .observeOn(AndroidSchedulers .mainThread());
+                .flatMap(s -> Observable
+                        .just(JSONFactory.fromJson("".equals(s) ? "{}" : s, zClass)))
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

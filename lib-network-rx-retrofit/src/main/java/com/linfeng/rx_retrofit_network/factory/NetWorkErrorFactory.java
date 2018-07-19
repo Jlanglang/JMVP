@@ -2,6 +2,7 @@ package com.linfeng.rx_retrofit_network.factory;
 
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APIException;
+import com.linfeng.rx_retrofit_network.location.onExceptionListener;
 
 /**
  * Created by baozi on 2017/10/18.
@@ -21,11 +22,10 @@ public class NetWorkErrorFactory {
             return throwable.getMessage();
         }
         //处理error异常,http异常
-        String errorMsg = NetWorkManager.getErrorMsg(throwableClass);
-        if (null == errorMsg) {
-            //如果该异常未定义.获取默认
-            return NetWorkManager.getErrorMsg(Exception.class);
+        onExceptionListener exceptionListener = NetWorkManager.getExceptionListener();
+        if (exceptionListener != null) {
+            return exceptionListener.onError(throwable);
         }
-        return errorMsg;
+        return "";
     }
 }

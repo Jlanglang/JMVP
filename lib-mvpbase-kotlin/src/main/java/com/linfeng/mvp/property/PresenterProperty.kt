@@ -1,8 +1,6 @@
 package com.linfeng.mvp.property
 
 import com.linfeng.mvp.presenter.BasePresenter
-import com.linfeng.mvp.presenter.BasePresenter1
-import com.linfeng.mvp.view.BaseView
 import com.linfeng.mvp.view.UIView
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty

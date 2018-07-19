@@ -24,14 +24,13 @@ public class SimpleParams extends HashMap<String, Object> {
     }
 
     public SimpleParams putP(String key, Object value) {
-        this.putP(key, value, "");
-        return this;
+        return putP(key, value, "");
     }
 
     /**
      * @param key          key
      * @param value        value
-     * @param emptyMessage 当value为null或者""时,提示内容
+     * @param emptyMessage 当value为null或者""时,提示emptyMessage
      * @return SimpleParams
      */
     public SimpleParams putP(String key, Object value, String emptyMessage) {
@@ -39,6 +38,28 @@ public class SimpleParams extends HashMap<String, Object> {
         checkParams.put(key, emptyMessage);
         return this;
     }
+
+    /**
+     * @param key         key
+     * @param value       value
+     * @param canNotValue 如果value和该值一样则不添加
+     * @return
+     */
+    public SimpleParams putP(String key, Object value, Object canNotValue, String emptyMessage) {
+        if (value == canNotValue) return this;
+        return putP(key, value, "");
+    }
+
+    /**
+     * @param key         key
+     * @param value       value
+     * @param canNotValue 如果value和该值一样则不添加
+     * @return
+     */
+    public SimpleParams putP(String key, Object value, Object canNotValue) {
+        return putP(key, value, canNotValue, "");
+    }
+
 
     /**
      * 检查params
@@ -71,6 +92,10 @@ public class SimpleParams extends HashMap<String, Object> {
                 continue;
             } else if (value instanceof Long && (Long) value != 0) {
                 continue;
+            } else if (value instanceof SimpleParams) {
+                if (!((SimpleParams) value).checkMessage(context)) {
+                    return false;
+                }
             }
             String s = checkParams.get(str);
             //emptyMessage则说明,该参数不校验

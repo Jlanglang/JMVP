@@ -6,18 +6,20 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.linfeng.rx_retrofit_network.BuildConfig;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.converter.GsonConverterFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -39,6 +41,8 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * Created by Sunflower on 2015/11/4.
  */
 public class RetrofitUtil {
+
+
     /**
      * 服务器地址
      */
@@ -46,6 +50,7 @@ public class RetrofitUtil {
     private static Application mContext;
     private static final HashMap<Class, Object> apis = new HashMap<>();
 
+    @SuppressWarnings("unchecked")
     public static <T> T getApi(Class<T> c) {
         Object o = apis.get(c);
         if (o == null) {
@@ -73,16 +78,9 @@ public class RetrofitUtil {
         private static Retrofit retrofit = getRetrofit();
 
         private static Retrofit getRetrofit() {
-            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
-                @Override
-                public void log(String message) {
-                    Log.i("RxJava", message);
-                }
-            });
-            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             Interceptor cacheInterceptor = new Interceptor() {
                 @Override
-                public Response intercept(Chain chain) throws IOException {
+                public Response intercept(@NonNull Chain chain) throws IOException {
                     //拿到请求体
                     Request request = chain.request();
                     //读接口上的@Headers里的注解配置
@@ -107,7 +105,7 @@ public class RetrofitUtil {
                         //...如果无网络,则根据@headers注解的设置进行缓存.
                     }
                     Response response = chain.proceed(request);
-                    Log.i("httpInterceptor", cacheControl);
+//                    Log.i("httpInterceptor", cacheControl);
                     return response.newBuilder()
                             .header("Cache-Control", cacheControl)
                             .removeHeader("Pragma")
@@ -115,8 +113,7 @@ public class RetrofitUtil {
                 }
             };
             OkHttpClient.Builder client = new OkHttpClient.Builder()
-                    //拦截log
-                    .addInterceptor(interceptor)
+//                    .proxy(Proxy.NO_PROXY)//禁用代理，防止抓包
                     //拦截并设置缓存
                     .addNetworkInterceptor(cacheInterceptor)
                     //拦截并设置缓存
@@ -125,6 +122,11 @@ public class RetrofitUtil {
             for (Interceptor i : NetWorkManager.mInterceptors) {
                 client.addInterceptor(i);
             }
+            if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+                client.addInterceptor(interceptor);
+            }
             return new Retrofit.Builder()
                     .client(client.build())
                     .baseUrl(API_HOST)
@@ -132,7 +134,6 @@ public class RetrofitUtil {
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build();
         }
-
     }
 
     /**
@@ -182,8 +183,7 @@ public class RetrofitUtil {
     /**
      * 次方法获取的bitmap为原始大小,图片文件过大可能造成oom
      *
-     * @param images
-     * @return
+     * @param images 图片集合
      */
     public static HashMap<String, RequestBody> creatRequestBodyImagesFiles(List<String> images) {
         if (images == null) {
@@ -207,8 +207,7 @@ public class RetrofitUtil {
     /**
      * 建议调用此方法前,先将bitmap压缩.
      *
-     * @param images
-     * @return
+     * @param images 图片集合
      */
     public static HashMap<String, RequestBody> creatRequestBodyBitmap(List<Bitmap> images) {
         if (images == null) {
@@ -230,7 +229,7 @@ public class RetrofitUtil {
 
     private RequestBody buildMultipartFormRequestBody(List<File> files, String filesKey, HashMap<String, String> params) {
         if (params == null) {
-            params = new HashMap();
+            params = new HashMap<>();
         }
         MultipartBody.Builder builder = new MultipartBody.Builder();
         Set<String> strings = params.keySet();
@@ -259,12 +258,15 @@ public class RetrofitUtil {
     /**
      * 判断网络是否打开
      *
-     * @return
+     * @return 是否打开网络
      */
-    public static boolean isOpenInternet(Context context) {
+    private static boolean isOpenInternet(Context context) {
         ConnectivityManager con = (ConnectivityManager) context.getSystemService(Activity.CONNECTIVITY_SERVICE);
-        boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
-        boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
-        return wifi || intenter;
+        if (con != null) {
+            boolean wifi = con.getNetworkInfo(ConnectivityManager.TYPE_WIFI).isConnectedOrConnecting();
+            boolean intenter = con.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).isConnectedOrConnecting();
+            return wifi || intenter;
+        }
+        return false;
     }
 }

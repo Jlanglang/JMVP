@@ -30,25 +30,6 @@ public class LoadDialogTransformer<T> implements ObservableTransformer<T, T> {
         });
     }
 
-//    @Override
-//    public Observable<T> call(final Observable<T> o) {
-//        return o.doOnSubscribe(new Action0() {
-//            @Override
-//            public void call() {
-//                show();
-//            }
-//        }).doOnError(new Action1<Throwable>() {
-//            @Override
-//            public void call(Throwable throwable) {
-//                dismiss();
-//            }
-//        }).doOnNext(new Action1<T>() {
-//            @Override
-//            public void call(T t) {
-//                dismiss();
-//            }
-//        });
-//    }
 
     private void dismiss() {
         mDialog.dismiss();

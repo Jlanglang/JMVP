@@ -75,14 +75,6 @@ interface UIView : BaseView {
      *
      * @param fragment
      */
-//    fun startFragment(fragment: Fragment, tag: String?)
-
-//    fun startFragment(fragment: Fragment, tag: String?, isAdd: Boolean)
-
-//    fun startFragment(fragment: Fragment, tag: String?, enterAnim: Int, popExit: Int)
-
-//    fun startFragment(fragment: Fragment, tag: String?, enter: Int, popExit: Int, isAddBack: Boolean)
-
     fun startFragment(fragment: Fragment, tag: String? = null, enterAnim: Int = 0, exitAnim: Int = 0, popEnter: Int = 0
                       , popExit: Int = 0, isAddBack: Boolean = true)
 

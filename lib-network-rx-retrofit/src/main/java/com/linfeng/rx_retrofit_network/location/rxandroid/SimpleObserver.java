@@ -21,6 +21,10 @@ public abstract class SimpleObserver<T> implements Observer<T> {
     protected Disposable mDisposable;
     private CompositeDisposable mCompositeDisposable;
 
+    public SimpleObserver() {
+        this(null);
+    }
+
     public SimpleObserver(CompositeDisposable compositeDisposable) {
         mCompositeDisposable = compositeDisposable;
     }
@@ -28,36 +32,30 @@ public abstract class SimpleObserver<T> implements Observer<T> {
     @Override
     public void onSubscribe(@NonNull Disposable d) {
         mDisposable = d;
-        if (isDisposed()) {
+        try {
             mCompositeDisposable.add(d);
+        } catch (Exception ignored) {
+
         }
     }
 
     @Override
     public void onNext(T t) {
-        if (t != null) {
-            call(t);
-        }
+        call(t);
     }
 
     @Override
     public void onError(Throwable e) {
         showErrorMsg(e, NetWorkErrorFactory.disposeError(e));
-        e.printStackTrace();
-//        if (isDisposed()) {
-//            mCompositeDisposable.remove(mDisposable);
-//        }
     }
 
-    private boolean isDisposed() {
-        return mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed();
-    }
+//    private boolean isDisposed() {
+//        return mCompositeDisposable != null && !mDisposable.isDisposed() && !mCompositeDisposable.isDisposed();
+//    }
 
     @Override
     public void onComplete() {
-//        if (isDisposed()) {
-//            mCompositeDisposable.remove(mDisposable);
-//        }
+
     }
 
     /**
@@ -66,9 +64,10 @@ public abstract class SimpleObserver<T> implements Observer<T> {
      * @param e
      * @param errorMsg
      */
+    @Deprecated
     public void showErrorMsg(Throwable e, String errorMsg) {
         if (!TextUtils.isEmpty(errorMsg)) {
-            Toast.makeText(NetWorkManager.mContext, errorMsg, Toast.LENGTH_SHORT).show();
+            Toast.makeText(NetWorkManager.getContext(), errorMsg, Toast.LENGTH_SHORT).show();
         }
     }
 

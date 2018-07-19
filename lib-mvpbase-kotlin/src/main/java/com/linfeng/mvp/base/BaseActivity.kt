@@ -25,12 +25,11 @@ import java.lang.reflect.ParameterizedType
  */
 open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
 
-
     override var mContext: Context
         get() = this //To change initializer of created properties use File | Settings | File Templates.
         set(value) {}
     override var isFinish: Boolean = false
-//        get() = isFinish //To change initializer of created properties use File | Settings | File Templates.
+        get() = isFinishing
 
     var mPresenter by PresenterProperty<T>(this)
     //    private var mViews: SparseArray<View>? = null
@@ -42,7 +41,7 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
         @ColorRes
         get() = MVPManager.toolbarOptions.getStatusDrawable()
 
-    private lateinit var mContentView: View
+    protected lateinit var mContentView: View
 
     override fun getContentView(): View {
         return mContentView

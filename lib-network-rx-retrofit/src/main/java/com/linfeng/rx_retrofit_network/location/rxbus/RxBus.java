@@ -30,7 +30,6 @@ public class RxBus {
 
     private Map<Object, List<Class>> eventTypesBySubscriber = new HashMap<>();
 
-
     private Map<Class, List<SubscriberMethod>> subscriberMethodByEventType = new HashMap<>();
 
     // 主题
@@ -86,7 +85,6 @@ public class RxBus {
         bus.onNext(new Message(code, o));
     }
 
-
     /**
      * 根据传递的code和 eventType 类型返回特定类型(eventType)的 被观察者
      *
@@ -97,29 +95,11 @@ public class RxBus {
      */
     public <T> Observable<T> toObservable(final int code, final Class<T> eventType) {
         return bus.ofType(Message.class)
-                .filter(new Predicate<Message>() {
-                    @Override
-                    public boolean test(Message o) throws Exception {
-                        //过滤code和eventType都相同的事件
-                        return o.getCode() == code && eventType.isInstance(o.getObject());
-                    }
-//                    @Override
-//            public Boolean call(Message o) {
-//                //过滤code和eventType都相同的事件
-//                return o.getCode() == code && eventType.isInstance(o.getObject());
-//            }
-                }).map(new Function<Message, Object>() {
-                    @Override
-                    public Object apply(Message o) throws Exception {
-                        return o.getObject();
-                    }
-//                    @Override
-//            public Object call(Message o) {
-//                return o.getObject();
-//            }
-                }).cast(eventType);
+                .filter((Predicate<Message>) o -> {
+                    //过滤code和eventType都相同的事件
+                    return o.getCode() == code && eventType.isInstance(o.getObject());
+                }).map((Function<Message, Object>) o -> o.getObject()).cast(eventType);
     }
-
 
     /**
      * 注册
@@ -228,11 +208,6 @@ public class RxBus {
                     public void accept(Object o) throws Exception {
                         callEvent(subscriberMethod.code, o);
                     }
-//
-//            @Override
-//            public void call(Object o) {
-//                callEvent(subscriberMethod.code,o);
-//            }
                 });
         addSubscriptionToMap(subscriberMethod.eventType, subscribe);
     }
