@@ -25,4 +25,5 @@ dependencies {
     api project(':lib-mvpbase-appcompat')
     api project(':lib-network-rx-retrofit')
     api project(':lib-utils-common')
+    api 'com.github.Jlanglang:TreeRecyclerView:1.2.8.3'
 }
