@@ -26,7 +26,7 @@ import com.baozi.mvp.view.UIView;
  */
 public abstract class BaseActivity<T extends BasePresenter> extends AppCompatActivity
         implements UIView {
-    //public String TAG = this.getClass().getSimpleName();tag不要用反射的形式取
+    public final String TAG = this.getClass().getSimpleName();//tag不要用反射的形式取
     protected T mPresenter;
     private SparseArray<View> mViews;
     private View mContentView;

@@ -30,9 +30,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
+
+
+    private boolean isInit;
+    private boolean first = true;
+
     private SparseArray<View> mViews;
     private View mContentView;
-    private boolean isInit;
 
 
     /**
@@ -111,12 +115,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         super.onActivityCreated(savedInstanceState);
         //View做一些初始化操作.
         init(savedInstanceState);
+        if (mPresenter == null) {
+            return;
+        }
         //初始化Presenter,应该只初始化一次
-        if (mPresenter != null && !isInit) {
+        if (!isInit) {
             isInit = true;
             mPresenter.onCreate();
             onPresentersCreate();
-            mPresenter.onRefreshData();
+            if (!isLazy()) {
+                mPresenter.onRefreshData();
+            }
         }
     }
 
@@ -142,7 +151,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (null != mPresenter) {
-            if (hidden) {
+            if (!hidden) {
                 //相当于Fragment的onResume
                 mPresenter.onResume();
             } else {
@@ -155,8 +164,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        if (!isInit()) {//视图未加载
+            return;
+        }
         if (null != mPresenter) {
             if (isVisibleToUser) {
+                if (isLazy() && isFirst()) {//懒加载
+                    first = false;
+                    mPresenter.onRefreshData();
+                    return;
+                }
                 //相当于Fragment的onResume
                 mPresenter.onResume();
             } else {
@@ -182,11 +199,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onDestroyView() {
         mPresenter.onDestroy();
         super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
     @Override
@@ -309,7 +321,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit);
         fragmentTransaction.add(android.R.id.content, fragment, tag).hide(this);
-        fragmentTransaction.addToBackStack(tag);
+        if (isAddBack) {
+            fragmentTransaction.addToBackStack(tag);
+        }
         fragmentTransaction.commitAllowingStateLoss();
     }
 
@@ -425,5 +439,30 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      */
     protected abstract T initPresenter();
 
+    /**
+     * 视图是否加载
+     *
+     * @return
+     */
+    public boolean isInit() {
+        return isInit;
+    }
 
+    /**
+     * 是否第一次加载
+     *
+     * @return
+     */
+    public boolean isFirst() {
+        return first;
+    }
+
+    /**
+     * 是否懒加载
+     *
+     * @return
+     */
+    public boolean isLazy() {
+        return false;
+    }
 }

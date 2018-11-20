@@ -1,5 +1,6 @@
 package com.baozi.mvp.presenter;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -91,14 +92,17 @@ public class PagerPresenter {
         if (mAdapter == null) {
             mAdapter = new PagerAdapter() {
                 // 当要显示的图片可以进行缓存的时候，会调用这个方法进行显示图片的初始化，我们将要显示的ImageView加入到ViewGroup中，然后作为返回值返回即可
+
+                @NonNull
                 @Override
-                public Object instantiateItem(ViewGroup view, int position) {
-                    view.addView(mView.getPager().get(position));
-                    return mView.getPager().get(position);
+                public Object instantiateItem(@NonNull ViewGroup view, int position) {
+                    View page = mView.getPager().get(position);
+                    view.addView(page);
+                    return page;
                 }
 
                 @Override
-                public int getItemPosition(Object object) {
+                public int getItemPosition(@NonNull Object object) {
                     return POSITION_NONE;
                 }
 
@@ -109,12 +113,12 @@ public class PagerPresenter {
 
                 // 例如PagerAdapter只缓存三张要显示的图片，如果滑动的图片超出了缓存的范围，就会调用这个方法，将图片销毁
                 @Override
-                public void destroyItem(ViewGroup view, int position, Object object) {
+                public void destroyItem(@NonNull ViewGroup view, int position, @NonNull Object object) {
                     view.removeView(mView.getPager().get(position));
                 }
 
                 @Override
-                public boolean isViewFromObject(View view, Object object) {
+                public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
                     return view == object;
                 }
             };

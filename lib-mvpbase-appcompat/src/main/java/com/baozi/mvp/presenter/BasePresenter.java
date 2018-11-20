@@ -29,16 +29,13 @@ public abstract class BasePresenter<T extends UIView> {
      * 解除绑定
      */
     public void onDetach() {
-//        mView = null;
     }
 
     public T getView() {
         return mView;
     }
 
-    public View getContentView() {
-        return mView.getContentView();
-    }
+    public abstract View getContentView();
 
     /**
      * 做初始化的操作,需要在view的视图初始化完成之后才能调用

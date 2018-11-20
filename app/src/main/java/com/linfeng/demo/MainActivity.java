@@ -2,13 +2,12 @@ package com.linfeng.demo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.view.KeyEvent;
 
-import com.baozi.frame.JBasePresenter;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.templet.TemplateActivity;
-import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.templet.options.ToolbarOptions;
 
 
 public class MainActivity extends TemplateActivity<BasePresenter> {
@@ -22,38 +21,12 @@ public class MainActivity extends TemplateActivity<BasePresenter> {
     //这里偷懒,就不去单独写个PresenterImpl了
     @Override
     protected BasePresenter initPresenter() {
-        return new JBasePresenter<MainActivity>() {
-            @Override
-            public void onCreate() {
-                mView.getToolbarHelper().setTitle("首页");
-                mView.getToolbarHelper().setRightText("213", null);
-                //设置滑动效果
-                mView.getToolbarHelper().setScrollFlag(R.id.tl_custom, AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL |
-                        AppBarLayout.LayoutParams.SCROLL_FLAG_ENTER_ALWAYS);
-            }
-
-            @Override
-            public void onRefreshData() {
-
-            }
-
-            @Override
-            public void netWorkError(Throwable throwable) {
-
-            }
-        };
+        return new EmptyPresenter();
     }
 
-    //重写该方法,设置ToolbarLayout
     @Override
-    public int getToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
-    }
-
-
-    @Override
-    public boolean isMaterialDesign() {
-        return true;
+    public ToolbarOptions getToolbarOptions() {
+        return super.getToolbarOptions().setNoBack(true);
     }
 
     @Override

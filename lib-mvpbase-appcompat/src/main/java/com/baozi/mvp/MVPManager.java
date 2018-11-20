@@ -13,7 +13,7 @@ import com.baozi.mvp.templet.options.ToolbarOptions;
 
 public class MVPManager {
     private static ToolbarOptions mToolbarOptions;
-    private static ContentOptions mTemplateContentOptions;
+    private static ContentOptions mTempletContentOptions;
     @AnimRes
     @AnimatorRes
     private static int enterAnim;
@@ -74,14 +74,14 @@ public class MVPManager {
     }
 
     public static ContentOptions getContentOptions() {
-        if (mTemplateContentOptions == null) {
-            mTemplateContentOptions = ContentOptions.create();
+        if (mTempletContentOptions == null) {
+            mTempletContentOptions = ContentOptions.create();
         }
-        return mTemplateContentOptions.clone();
+        return mTempletContentOptions.clone();
     }
 
     public static void setContentOptions(ContentOptions templetContentOptions) {
-        mTemplateContentOptions = templetContentOptions;
+        mTempletContentOptions = templetContentOptions;
     }
 
 }

@@ -18,6 +18,7 @@ import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.templet.options.ContentOptions;
 import com.baozi.mvp.templet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
@@ -37,18 +38,19 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
         if (supportActionBar != null) {
             throw new IllegalStateException("please extends BaseActivity.TemplateActivity Theme must be NoActionbar");
         }
-        mRootView = (ViewGroup) inflater.inflate(R.layout.template_layout, null);
+        mRootView = (ViewGroup) inflater.inflate(R.layout.templet_layout, null);
         //初始化一次
         mToolbarHelper = getToolbarHelper();
         View baseView = super.initView(inflater, savedInstanceState);
         View templateView = wrapperContentView(baseView);
         mRootView.addView(templateView, 1);
-
-        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) templateView.getLayoutParams();
-        layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
-        layoutParams.setBehavior(new AppBarLayout.ScrollingViewBehavior());
-        templateView.requestLayout();
+        ViewGroup.LayoutParams layoutParams = templateView.getLayoutParams();
+        if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
+            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
+            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
+            ((CoordinatorLayout.LayoutParams) layoutParams).setBehavior(new AppBarLayout.ScrollingViewBehavior());
+            templateView.requestLayout();
+        }
         return mRootView;
     }
 
@@ -177,7 +179,9 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
         return mToolbarHelper;
     }
 
-    @Override
-    protected abstract T initPresenter();
 
+
+    protected ContentOptions getContentOptions() {
+        return MVPManager.getContentOptions();
+    }
 }

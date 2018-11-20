@@ -38,13 +38,19 @@ public abstract class TemplateLoadingFragment<T extends BasePresenter> extends T
         if (isShowError) {
             mLoadingPager.showError(throwable);
         }
-        onNewThrowable(throwable);
     }
 
     @Override
     public void showError(Throwable throwable) {
         showError(throwable, true);
     }
+
+    @Override
+    public void onNewThrowable(Throwable throwable) {
+        super.onNewThrowable(throwable);
+        showError(throwable);
+    }
+
 
     @Override
     public void showLoading() {
@@ -58,6 +64,7 @@ public abstract class TemplateLoadingFragment<T extends BasePresenter> extends T
 
     @Override
     public void triggerInit() {
+        showLoading();
         mPresenter.onRefreshData();
     }
 
@@ -66,7 +73,4 @@ public abstract class TemplateLoadingFragment<T extends BasePresenter> extends T
         return mLoadingPager;
     }
 
-    protected ContentOptions getContentOptions() {
-        return MVPManager.getContentOptions();
-    }
 }

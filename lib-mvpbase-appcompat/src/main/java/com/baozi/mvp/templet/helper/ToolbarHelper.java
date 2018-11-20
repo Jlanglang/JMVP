@@ -22,7 +22,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @Change
  */
 public abstract class ToolbarHelper {
-    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_template_defuatl;
+    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_template_default;
     public static final int TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl;
     public static final int TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout;
 

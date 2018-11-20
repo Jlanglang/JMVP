@@ -15,26 +15,24 @@ import java.util.List;
 /**
  * Created by baozi on 2017/11/20.
  */
-public abstract class LoadDataPresenter<D, T> {
-    public enum LoadType {
-        SINGLE, MIX
-    }
-
-    protected LoadType loadType = LoadType.SINGLE;
-    private LoadDataModel<T> loadDataModel;
+public abstract class LoadDataPresenter<D, M> {
+    private LoadDataModel<M> loadDataModel;
     protected LoadMoreView loadMoreView;
 
     protected int pageNum = 1;
     protected int pageSize = 10;
     protected int lastVisibleIndex = 5;
     protected int minPages = 10;
+
+
     private boolean isCanLoadMore = true;
     private boolean isLoading;
+    private boolean isRefresh;
     private SwipeRefreshLayout refreshLayout;
 
     private List<LoadCompleteListener<D>> completeListeners = new ArrayList<>();
 
-    public LoadDataPresenter(LoadMoreView loadMoreView, LoadDataModel<T> loadDataModel) {
+    public LoadDataPresenter(LoadMoreView loadMoreView, LoadDataModel<M> loadDataModel) {
         this.loadDataModel = loadDataModel;
         this.loadMoreView = loadMoreView;
     }
@@ -66,19 +64,11 @@ public abstract class LoadDataPresenter<D, T> {
     }
 
 
-    protected void initRefresh() {
+    private void initRefresh() {
         refreshLayout = loadMoreView.getSwipeRefreshLayout();
         if (refreshLayout != null) {
             refreshLayout.setOnRefreshListener(this::refresh);
         }
-    }
-
-    public LoadType getLoadType() {
-        return loadType;
-    }
-
-    public void setLoadType(LoadType loadType) {
-        this.loadType = loadType;
     }
 
     public void loadMore() {
@@ -90,11 +80,12 @@ public abstract class LoadDataPresenter<D, T> {
     }
 
     public void refresh() {
+        if (isRefresh) {
+            return;
+        }
         isLoading = false;
         isCanLoadMore = true;
-        if (refreshLayout != null) {
-            refreshLayout.setRefreshing(true);
-        }
+        setRefresh(true);
         for (LoadCompleteListener<D> listener : completeListeners) {
             listener.onRefreshStart();
         }
@@ -102,9 +93,9 @@ public abstract class LoadDataPresenter<D, T> {
     }
 
 
-    protected abstract void loadMoreCallBack(T t);
+    protected abstract void loadMoreCallBack(M m);
 
-    protected abstract void refreshCallBack(T t);
+    protected abstract void refreshCallBack(M m);
 
     /**
      * 请下拉刷新完成时调用
@@ -112,18 +103,17 @@ public abstract class LoadDataPresenter<D, T> {
      * @param list
      */
     public void refreshComplete(List<D> list) {
-        if (loadType == LoadType.SINGLE && !list.isEmpty()) {
-            pageSize = list.size();
-        }
         pageNum = 1;
-        if (refreshLayout != null) {
-            refreshLayout.setRefreshing(false);
+        setRefresh(false);
+        boolean intercept = false;
+        for (LoadCompleteListener<D> listener : completeListeners) {
+            intercept = listener.doOnNext(true, intercept, list);
+        }
+        if (intercept) {
+            return;
         }
         for (LoadCompleteListener<D> listener : completeListeners) {
-            boolean intercept = listener.doOnNext(true, list);
-            if (!intercept) {
-                listener.onNext(true, list);
-            }
+            listener.onNext(true, list);
         }
     }
 
@@ -139,11 +129,15 @@ public abstract class LoadDataPresenter<D, T> {
         } else {
             isCanLoadMore = false;
         }
+        boolean intercept = false;
         for (LoadCompleteListener<D> listener : completeListeners) {
-            boolean intercept = listener.doOnNext(false, list);
-            if (!intercept) {
-                listener.onNext(false, list);
-            }
+            intercept = listener.doOnNext(false, intercept, list);
+        }
+        if (intercept) {
+            return;
+        }
+        for (LoadCompleteListener<D> listener : completeListeners) {
+            listener.onNext(false, list);
         }
     }
 
@@ -152,9 +146,8 @@ public abstract class LoadDataPresenter<D, T> {
      * 请刷新失败时调用
      */
     public void refreshError(Throwable throwable) {
-        if (refreshLayout != null) {
-            refreshLayout.setRefreshing(false);
-        }
+//        isRefresh = false;
+        setRefresh(false);
         refreshComplete(Collections.emptyList());
         for (LoadCompleteListener<D> listener : completeListeners) {
             listener.onError(true, throwable);
@@ -201,8 +194,14 @@ public abstract class LoadDataPresenter<D, T> {
         public void onNext(boolean isRefresh, @NonNull List<D> list) {
         }
 
-        public boolean doOnNext(boolean isRefresh, @NonNull List<D> list) {
-            return false;
+        /**
+         * @param isRefresh 是否刷新
+         * @param intercept 上一层监听的拦截结果
+         * @param list      返回结果
+         * @return
+         */
+        public boolean doOnNext(boolean isRefresh, boolean intercept, @NonNull List<D> list) {
+            return intercept;
         }
 
         public void onError(boolean isRefresh, Throwable throwable) {
@@ -247,8 +246,23 @@ public abstract class LoadDataPresenter<D, T> {
         return isCanLoadMore;
     }
 
+    protected void setCanLoadMore(boolean canLoadMore) {
+        isCanLoadMore = canLoadMore;
+    }
+
     public boolean isLoading() {
         return isLoading;
+    }
+
+    public void setRefresh(boolean refresh) {
+        isRefresh = refresh;
+        if (refreshLayout != null) {
+            refreshLayout.setRefreshing(refresh);
+        }
+    }
+
+    public boolean isRefrsh() {
+        return isRefresh;
     }
 
     public void setLoading(boolean loading) {
