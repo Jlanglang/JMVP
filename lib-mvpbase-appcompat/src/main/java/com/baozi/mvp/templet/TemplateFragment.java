@@ -39,7 +39,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
     @NonNull
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
-        rootView = (ViewGroup) inflater.inflate(R.layout.templet_layout, null);
+        rootView = (ViewGroup) inflater.inflate(R.layout.template_layout, null);
         //初始化一次
         mToolbarHelper = getToolbarHelper();
         View view = wrapperContentView(super.initView(inflater, savedInstanceState));

@@ -44,6 +44,16 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         mHeaderAndFootWapper.getItemManager().addItems(strings);
     }
 
+    @Override
+    public void onRefreshData() {
+
+    }
+
+    @Override
+    public void netWorkError(Throwable throwable) {
+
+    }
+
     private void initRecyclerView() {
         RecyclerView recyclerView = mView.findView(R.id.rl_content);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -109,7 +119,7 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
                     }
                 })
                 .create();
-        carouselAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickLitener() {
+        carouselAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ViewHolder viewHolder, int i) {
                 RxBus.getDefault().post(new TestEvent());
@@ -119,10 +129,6 @@ public class IndexLiveListFragmentPresenterImpl extends JBasePresenter<IndexLive
         mHeaderAndFootWapper.addHeaderView(contentView);
     }
 
-    @Override
-    public void initData() {
-
-    }
 
     @Override
     public void onDestroy() {

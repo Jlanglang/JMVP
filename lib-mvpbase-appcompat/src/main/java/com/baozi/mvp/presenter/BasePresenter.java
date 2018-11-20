@@ -36,7 +36,9 @@ public abstract class BasePresenter<T extends UIView> {
         return mView;
     }
 
-    public abstract View getContentView();
+    public View getContentView() {
+        return mView.getContentView();
+    }
 
     /**
      * 做初始化的操作,需要在view的视图初始化完成之后才能调用

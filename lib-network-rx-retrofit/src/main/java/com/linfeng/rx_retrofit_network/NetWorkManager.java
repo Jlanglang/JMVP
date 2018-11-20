@@ -2,7 +2,6 @@ package com.linfeng.rx_retrofit_network;
 
 
 import android.app.Application;
-import android.util.SparseArray;
 
 import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
 import com.linfeng.rx_retrofit_network.location.APICallBack;
@@ -35,12 +34,6 @@ public final class NetWorkManager {
     private static Application mContext;
     public static HashSet<Interceptor> mInterceptors = new HashSet<>();
 
-//    /**
-//     * 初始化Network.
-//     */
-//    static {
-//        apiExceptionCallBacks = new SparseArray<>();
-//    }
 
     private static boolean mOpenApiException;
 
@@ -101,19 +94,8 @@ public final class NetWorkManager {
      */
     public static void setApiCallBack(APICallBack callBack) {
         apiExceptionCallBacks = callBack;
-//        apiExceptionCallBacks.put(type, callBack);
     }
 
-//    /**
-//     * 获取状态处理回调
-//     *
-//     * @param type 服务器返回状态码
-//     * @return APIExceptionCallBack回调接口
-//     */
-//    public static APICallBack getApiCallback(int type) {
-//        return apiExceptionCallBacks.get(type);
-//    }
-//
 
     /**
      * 获取状态处理回调
@@ -135,14 +117,6 @@ public final class NetWorkManager {
     public static void setOpenApiException(boolean openApiException) {
         mOpenApiException = openApiException;
     }
-//
-//    public static boolean isIsOpenNetWork() {
-//        return isOpenNetWork;
-//    }
-//
-//    public static void setIsOpenNetWork(boolean isOpenNetWork) {
-//        NetWorkManager.isOpenNetWork = isOpenNetWork;
-//    }
 
     public static int getSuccessCode() {
         return mSuccessCode;

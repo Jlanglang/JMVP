@@ -11,7 +11,7 @@ import io.reactivex.functions.Consumer;
 /**
  * Created by baozi on 2017/10/18.
  */
-
+@Deprecated
 public enum ToastConsumer implements Consumer<Throwable> {
     INSTANCE;
 
@@ -19,7 +19,7 @@ public enum ToastConsumer implements Consumer<Throwable> {
     public void accept(Throwable e) throws Exception {
         String error = NetWorkErrorFactory.disposeError(e);
         if (!TextUtils.isEmpty(error)) {
-            Toast.makeText(NetWorkManager.mContext, error, Toast.LENGTH_SHORT).show();
+            Toast.makeText(NetWorkManager.getContext(), error, Toast.LENGTH_SHORT).show();
         }
     }
 }

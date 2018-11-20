@@ -7,4 +7,4 @@ import com.baozi.homemodle.contract.HomeActvityContract;
 
 public class HomeActvityModelImpl implements HomeActvityContract.Model{
 
-}
+} 

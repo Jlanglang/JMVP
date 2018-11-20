@@ -12,9 +12,4 @@
         android:orientation="vertical"
         app:elevation="0dp"/>
 
-    <com.baozi.mvp.templet.weight.LoadingPager
-        android:id="@+id/templet_content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 </android.support.design.widget.CoordinatorLayout>

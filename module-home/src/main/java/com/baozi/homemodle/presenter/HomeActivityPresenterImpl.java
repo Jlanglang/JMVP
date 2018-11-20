@@ -11,7 +11,7 @@ import com.baozi.frame.JBasePresenter;
 import com.baozi.homemodle.R;
 import com.baozi.homemodle.contract.HomeActvityContract;
 import com.baozi.homemodle.event.TestEvent;
-import com.baozi.mvp.helper.ToolbarHelper;
+import com.baozi.mvp.templet.helper.ToolbarHelper;
 import com.linfeng.common.utils.ToastUtil;
 import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleObserver;
 import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleTransformer;
@@ -48,8 +48,15 @@ public class HomeActivityPresenterImpl extends JBasePresenter<HomeActvityContrac
     }
 
     @Override
-    public void initData() {
+    public void onRefreshData() {
+
     }
+
+    @Override
+    public void netWorkError(Throwable throwable) {
+
+    }
+
 
     private class HomePageAdapter extends FragmentStatePagerAdapter {
         FragmentManager mFragmentManager;

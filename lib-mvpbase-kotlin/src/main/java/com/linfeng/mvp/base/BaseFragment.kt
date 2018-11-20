@@ -87,8 +87,8 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
             mContentView = initView(inflater, savedInstanceState)
         } else {
             //缓存的ContentView需要判断是否已有parent， 如果有parent需要从parent删除，否则会抛出异常。
-            val parent: ViewGroup = mContentView!!.parent as ViewGroup
-            parent.removeView(mContentView)
+            val parent = mContentView?.parent as? ViewGroup
+            parent?.removeView(mContentView)
         }
         return mContentView
     }
@@ -112,16 +112,9 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
                 mPresenter.onRefreshData()
                 false
             }
-//            onPresentersCreate()
         }
     }
 
-//    /**
-//     * 扩展除了默认的presenter的其他Presenter初始化
-//     */
-//    protected fun onPresentersCreate() {
-//
-//    }
 
     override fun onStart() {
         mPresenter.onStart()

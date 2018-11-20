@@ -61,8 +61,7 @@ public class LoadingPager extends FrameLayout {
         if (successPage == null || mSuccessPage != null) {
             return;
         }
-        addView(successPage, 0
-                , new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        addView(successPage, 0, new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         mSuccessPage = successPage;
         initView();
     }
