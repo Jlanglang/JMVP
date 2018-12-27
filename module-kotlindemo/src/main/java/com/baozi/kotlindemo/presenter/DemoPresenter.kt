@@ -1,12 +1,12 @@
 package com.baozi.kotlindemo.presenter
 
-import com.baozi.kotlindemo.model.DemoView
+import com.baozi.kotlindemo.DemoActivity
 import com.linfeng.mvp.presenter.BasePresenter
 
 /**
  * Created by baozi on 2017/10/20.
  */
-class DemoPresenter : BasePresenter<DemoView>() {
+class DemoPresenter : BasePresenter<DemoActivity>() {
     override fun onRefreshData() {
 
     }

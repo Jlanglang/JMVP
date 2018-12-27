@@ -19,7 +19,6 @@ import com.linfeng.mvp.presenter.BasePresenter
 import com.linfeng.mvp.property.PresenterProperty
 import com.linfeng.mvp.view.UIView
 import java.lang.reflect.ParameterizedType
-import kotlin.properties.Delegates
 
 /**
  * @author jlanglang  2016/1/5 9:42
@@ -27,7 +26,7 @@ import kotlin.properties.Delegates
 abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
 
 
-    override var mContext by Delegates.notNull<Context>()
+    override lateinit var mContext: Context
     protected open var mPresenter: T by PresenterProperty(this)
     protected open lateinit var mBundle: Bundle
     //    private val mViews = SparseArray<View>()
@@ -41,9 +40,9 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
 
      * @param context
      */
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
-        mContext = context!!
+        mContext = context
         //应该只创建一次Presenter.
         if (!isInit) {
             mPresenter = initPresenter()

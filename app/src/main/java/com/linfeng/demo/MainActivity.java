@@ -3,15 +3,36 @@ package com.linfeng.demo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.EditText;
 
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.templet.TemplateActivity;
 import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.linfeng.rx_retrofit_network.location.rxbus.RxBus;
 
 
 public class MainActivity extends TemplateActivity<BasePresenter> {
 
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        startService(new Intent(this, SocketService.class));
+        EditText et_title = findView(R.id.et_title);
+        et_title.setOnKeyListener((v, keyCode, event) -> {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                RxBus.getDefault().post(10086, et_title.getText().toString());
+            }
+            return false;
+        });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
 
     @Override
     protected int initView(Bundle savedInstanceState) {
@@ -26,7 +47,9 @@ public class MainActivity extends TemplateActivity<BasePresenter> {
 
     @Override
     public ToolbarOptions getToolbarOptions() {
-        return super.getToolbarOptions().setNoBack(true);
+        return super.getToolbarOptions().setNoBack(true)
+                .setToolbarDrawable(R.drawable.shape)
+                .setStatusDrawable(R.drawable.shape);
     }
 
     @Override

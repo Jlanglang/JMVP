@@ -7,7 +7,6 @@ import com.linfeng.mvp.base.BaseActivity
 
 @JMvpContract(layout = R.layout.activity_demo)
 class DemoActivity : BaseActivity<DemoPresenter>() {
-
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
 

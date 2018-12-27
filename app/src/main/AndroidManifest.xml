@@ -41,6 +41,8 @@
         <meta-data
             android:name="design_height"
             android:value="1280"/>
+
+        <service android:name=".SocketService" />
     </application>
 
 </manifest>

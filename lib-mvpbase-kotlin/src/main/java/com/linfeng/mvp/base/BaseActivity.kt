@@ -25,15 +25,12 @@ import java.lang.reflect.ParameterizedType
  */
 open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
 
-    override var mContext: Context
-        get() = this //To change initializer of created properties use File | Settings | File Templates.
-        set(value) {}
+    override var mContext: Context = this
+
     override var isFinish: Boolean = false
         get() = isFinishing
 
     var mPresenter by PresenterProperty<T>(this)
-    //    private var mViews: SparseArray<View>? = null
-    //    private var mContentView: View? = null
     private var statusBarView: View? = null
 
     protected open val statusBarDrawable: Int
@@ -51,13 +48,9 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
         super.onCreate(savedInstanceState)
         //创建presenter
         mPresenter = initPresenter()
-        //绑定Activity
-//        mPresenter.onAttach(this)
         //初始化ContentView
         mContentView = initView(layoutInflater, savedInstanceState)
-//        if (mContentView != null) {
         super.setContentView(mContentView)
-//        }
     }
 
     override fun onNewThrowable(throwable: Throwable) {
@@ -271,7 +264,5 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
         val type = this.javaClass.genericSuperclass as ParameterizedType
         return (type.actualTypeArguments[0] as Class<T>).newInstance()
     }
-
-
 }
 
