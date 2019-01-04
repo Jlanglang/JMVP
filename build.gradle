@@ -21,8 +21,7 @@ buildscript {
 
 allprojects {
     repositories {
-//        jcenter()
-        //Firebase Crashlytics
+        jcenter()
         maven {
             url 'https://maven.fabric.io/public'
         }

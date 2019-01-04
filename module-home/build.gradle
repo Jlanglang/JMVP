@@ -9,7 +9,9 @@ android {
     buildToolsVersion "27.0.3"
 
     defaultConfig {
-        applicationId "com.baozi.homemodle"
+        if (IsBuildMudle.toBoolean()) {
+            applicationId "com.baozi.homemodle"
+        }
         minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
@@ -27,9 +29,13 @@ android {
     sourceSets {
         main {
             if (IsBuildMudle.toBoolean()) {
-                manifest.srcFile 'src/main/release/AndroidManifest.xml'
-            } else {
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
+            } else {
+                manifest.srcFile 'src/main/release/AndroidManifest.xml'
+                //集成开发模式下排除debug文件夹中的所有Java文件
+                java {
+                    exclude 'debug/**'
+                }
             }
         }
     }

@@ -1,7 +1,8 @@
-package com.linfeng.demo;
+package com.baozi.homemodle.ui.activity;
 
 import android.os.Bundle;
 
+import com.baozi.homemodle.R;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.templet.TemplateActivity;
@@ -16,15 +17,10 @@ public class MainActivity extends TemplateActivity<BasePresenter> {
         super.onCreate(savedInstanceState);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
 
     @Override
     protected int initView(Bundle savedInstanceState) {
-        return R.layout.activity_main;
+        return R.layout.home_activity_main;
     }
 
     //这里偷懒,就不去单独写个PresenterImpl了
