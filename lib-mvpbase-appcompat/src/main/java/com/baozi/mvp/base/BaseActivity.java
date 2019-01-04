@@ -326,7 +326,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
-    @Override
     public boolean isFinish() {
         return isFinishing();
     }

@@ -9,6 +9,5 @@ import com.linfeng.mvp.base.BaseActivity
 class DemoActivity : BaseActivity<DemoPresenter>() {
     override fun init(savedInstanceState: Bundle?) {
         super.init(savedInstanceState)
-
     }
 }

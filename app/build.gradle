@@ -25,8 +25,10 @@ android {
 }
 dependencies {
     implementation project(':framework-jmvp')
-    implementation files('lib/BASE64.jar')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    if (!IsBuildMudle.toBoolean()) {
+        implementation project(':module-home')
+    }
 }
 repositories {
     mavenCentral()

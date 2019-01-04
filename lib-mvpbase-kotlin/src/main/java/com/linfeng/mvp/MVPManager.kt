@@ -11,9 +11,9 @@ import com.linfeng.mvp.templet.options.ToolbarOptions
  */
 
 object MVPManager {
-    var toolbarOptions: ToolbarOptions = ToolbarOptions.Create()
+    val toolbarOptions: ToolbarOptions = ToolbarOptions.Create()
         get() = field.clone()
-    var contentOptions: ContentOptions = ContentOptions.create()
+    val contentOptions: ContentOptions = ContentOptions.create()
         get() = field.clone()
     @AnimRes
     @AnimatorRes
@@ -35,7 +35,8 @@ object MVPManager {
         private set
 
     fun setFragmentAnim(@AnimatorRes @AnimRes enter: Int,
-                        @AnimatorRes @AnimRes exit: Int, @AnimatorRes @AnimRes popEnter: Int,
+                        @AnimatorRes @AnimRes exit: Int,
+                        @AnimatorRes @AnimRes popEnter: Int,
                         @AnimatorRes @AnimRes popExit: Int) {
         enterAnim = enter
         exitAnim = exit

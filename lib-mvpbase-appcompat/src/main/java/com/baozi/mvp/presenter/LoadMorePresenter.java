@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by baozi on 2017/11/20.
  */
-public abstract class LoadDataPresenter<D, M> {
+public abstract class LoadMorePresenter<D, M> {
     private LoadDataModel<M> loadDataModel;
     protected LoadMoreView loadMoreView;
 
@@ -32,7 +32,7 @@ public abstract class LoadDataPresenter<D, M> {
 
     private List<LoadCompleteListener<D>> completeListeners = new ArrayList<>();
 
-    public LoadDataPresenter(LoadMoreView loadMoreView, LoadDataModel<M> loadDataModel) {
+    public LoadMorePresenter(LoadMoreView loadMoreView, LoadDataModel<M> loadDataModel) {
         this.loadDataModel = loadDataModel;
         this.loadMoreView = loadMoreView;
     }

@@ -29,10 +29,9 @@ abstract class BaseFragment<T : BasePresenter<*>> : Fragment(), UIView {
     override lateinit var mContext: Context
     protected open var mPresenter: T by PresenterProperty(this)
     protected open lateinit var mBundle: Bundle
-    //    private val mViews = SparseArray<View>()
     private var mContentView: View? = null
     private var isInit: Boolean = false
-    override var isFinish: Boolean = false
+    var isFinish: Boolean = false
         get() = isDetached
 
     /**

@@ -39,17 +39,6 @@ interface UIView : BaseView {
 
     fun supportActionBar(): ActionBar?
 
-//    /**
-//     * 根据id获得控件
-//     * 需要调用在initView()之后,否则会出现NullPointerException
-//     *
-//     * @param viewId
-//     * @param <V>
-//     * @return
-//    </V> */
-
-//    fun <V : View> findView(@IdRes viewId: Int): V
-
     /**
      * 回退
      */

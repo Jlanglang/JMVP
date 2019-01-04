@@ -8,17 +8,17 @@ import com.linfeng.mvp.presenter.BasePresenter
  */
 class DemoPresenter : BasePresenter<DemoActivity>() {
     override fun onRefreshData() {
-
     }
 
     override fun netWorkError(throwable: Throwable) {
 
     }
 
-    override fun cancelNetWork() {
+    override fun cancelRequest() {
 
     }
 
     override fun onCreate() {
+
     }
 }

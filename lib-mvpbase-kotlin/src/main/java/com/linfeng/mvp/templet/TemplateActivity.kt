@@ -25,16 +25,8 @@ import com.linfeng.mvp.view.ToolbarView
  * @param <T>
 </T> */
 abstract class TemplateActivity<T : BasePresenter<*>> : BaseActivity<T>(), ToolbarView {
-    //    private lateinit var mToolbarHelper: ToolbarHelper
-    private lateinit var mRootView: ViewGroup
 
-//    /**
-//     * 如果调用在initView()之前,可能为null
-//     *
-//     * @return
-//     */
-//    var contentView: View
-//        get() = mRootView
+    private lateinit var mRootView: ViewGroup
 
     /**
      * 默认使用base_toolbar

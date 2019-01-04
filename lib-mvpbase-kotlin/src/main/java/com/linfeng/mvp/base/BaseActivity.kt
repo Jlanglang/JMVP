@@ -27,7 +27,7 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
 
     override var mContext: Context = this
 
-    override var isFinish: Boolean = false
+    var isFinish: Boolean = false
         get() = isFinishing
 
     var mPresenter by PresenterProperty<T>(this)

@@ -16,7 +16,7 @@ class EmptyPresenter : BasePresenter<UIView>() {
 
     }
 
-    override fun cancelNetWork() {
+    override fun cancelRequest() {
 
     }
 

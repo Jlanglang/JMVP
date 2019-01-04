@@ -25,12 +25,11 @@ abstract class BasePresenter<T : UIView> {
         this.view = view as T
     }
 
-
     /**
      * 解除绑定
      */
     open fun onDetach() {
-        //mView = null;
+
     }
 
     /**
@@ -53,7 +52,7 @@ abstract class BasePresenter<T : UIView> {
      * 弄成抽象，是为了提醒你，取消回调
      * 取消网络请求回调
      */
-    abstract fun cancelNetWork()
+    abstract fun cancelRequest()
 
     /**
      * 本地网络异常
@@ -63,7 +62,7 @@ abstract class BasePresenter<T : UIView> {
     }
 
     open fun onDestroy() {
-        cancelNetWork()
+        cancelRequest()
     }
 
     open fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

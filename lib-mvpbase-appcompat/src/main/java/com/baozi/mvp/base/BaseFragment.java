@@ -418,7 +418,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return (V) view;
     }
 
-    @Override
     public boolean isFinish() {
         return !isAdded();
     }
