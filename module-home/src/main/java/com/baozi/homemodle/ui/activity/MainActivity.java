@@ -11,13 +11,6 @@ import com.baozi.mvp.templet.options.ToolbarOptions;
 
 public class MainActivity extends TemplateActivity<BasePresenter> {
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
     @Override
     protected int initView(Bundle savedInstanceState) {
         return R.layout.home_activity_main;
