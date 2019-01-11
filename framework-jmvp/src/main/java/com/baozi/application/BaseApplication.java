@@ -7,7 +7,7 @@ import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APICallBack;
 import com.linfeng.rx_retrofit_network.location.SimpleParams;
 import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
-import com.linfeng.rx_retrofit_network.location.rxandroid.NetWorkTransformer;
+import com.linfeng.rx_retrofit_network.location.rxandroid.JsonParesTransformer;
 import com.linfeng.rx_retrofit_network.location.rxandroid.SimpleObserver;
 
 public class BaseApplication extends Application {
@@ -33,7 +33,7 @@ public class BaseApplication extends Application {
                         .putP("key2", "")
                         .putP("key3", "")
         )
-                .compose(new NetWorkTransformer<String>())//这里的泛型,写你需要解析的javabaen
+                .compose(new JsonParesTransformer<>(String.class))//这里构造传入你需要解析的javabaen的class
                 .subscribe(new SimpleObserver<String>() {
                     @Override
                     public void call(String s) {
