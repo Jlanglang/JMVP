@@ -146,7 +146,6 @@ public abstract class LoadMorePresenter<D, M> {
      * 请刷新失败时调用
      */
     public void refreshError(Throwable throwable) {
-//        isRefresh = false;
         setRefresh(false);
         refreshComplete(Collections.emptyList());
         for (LoadCompleteListener<D> listener : completeListeners) {

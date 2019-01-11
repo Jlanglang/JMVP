@@ -26,7 +26,7 @@ import com.baozi.mvp.view.UIView;
  */
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         implements UIView {
-    public String TAG = this.getClass().getSimpleName();
+    public final String TAG = this.getClass().getSimpleName();
     protected T mPresenter;
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;

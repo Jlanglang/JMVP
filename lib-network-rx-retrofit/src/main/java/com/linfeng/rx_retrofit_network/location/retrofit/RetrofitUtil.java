@@ -181,7 +181,7 @@ public class RetrofitUtil {
     }
 
     /**
-     * 次方法获取的bitmap为原始大小,图片文件过大可能造成oom
+     * 此方法获取的bitmap为原始大小,图片文件过大可能造成oom
      *
      * @param images 图片集合
      */
