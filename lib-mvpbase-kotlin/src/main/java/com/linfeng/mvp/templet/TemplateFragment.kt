@@ -65,9 +65,6 @@ abstract class TemplateFragment<T : BasePresenter<*>> : BaseFragment<T>(), Toolb
      */
     override fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View? {
         rootView = inflater.inflate(R.layout.templet_layout, null) as ViewGroup
-//        //初始化一次
-//        mToolbarHelper = toolbarHelper
-
         val initView = super.initView(inflater, savedInstanceState) ?: return rootView
         val view = wrapperContentView(initView)
         rootView.addView(view, 1)
@@ -79,20 +76,6 @@ abstract class TemplateFragment<T : BasePresenter<*>> : BaseFragment<T>(), Toolb
         view.requestLayout()
         return rootView
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-//        super.onCreateOptionsMenu(menu, inflater)
-//    }
-
-    /**
-     * 菜单项被点击时调用，也就是菜单项的监听方法。
-     * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
-     */
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return super.onOptionsItemSelected(item)
-//    }
-
-//    protected abstract fun initPresenter(): T
 
     protected open fun wrapperContentView(view: View): View {
         return view
