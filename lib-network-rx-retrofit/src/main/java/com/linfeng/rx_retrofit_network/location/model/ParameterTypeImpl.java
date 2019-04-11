@@ -9,7 +9,6 @@ public class ParameterTypeImpl implements ParameterizedType {
 
     public ParameterTypeImpl(Class raw, Type[] args) {
         this.raw = raw;
-//        this.args = args != null ? new Class[]{args} : new Type[0];
         this.args = args == null ? new Type[0] : args;
     }
 

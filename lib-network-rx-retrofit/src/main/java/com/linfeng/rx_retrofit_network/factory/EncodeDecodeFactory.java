@@ -20,7 +20,7 @@ public class EncodeDecodeFactory {
         }
         //RSA
         if (NetWorkManager.getKey().isRSA()) {
-
+            return data;
         }
         //DES
         return Des.encode(NetWorkManager.getKey().getPrivateKey(), data);
@@ -37,7 +37,7 @@ public class EncodeDecodeFactory {
             return data;
         }
         if (NetWorkManager.getKey().isRSA()) {
-
+            return data;
         }
         return Des.decode(NetWorkManager.getKey().getPrivateKey(), data);
     }

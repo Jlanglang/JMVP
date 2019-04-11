@@ -38,7 +38,7 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
         @ColorRes
         get() = MVPManager.toolbarOptions.getStatusDrawable()
 
-    protected lateinit var mContentView: View
+    lateinit var mContentView: View
 
     override fun getContentView(): View {
         return mContentView
@@ -67,14 +67,14 @@ open class BaseActivity<T : BasePresenter<*>> : AppCompatActivity(), UIView {
         onPresentersCreate()
         if (statusBarDrawable > 0) {
             initStatusBar()
-            window?.decorView?.addOnLayoutChangeListener { v, left, top, right, bottom, oldLeft, oldTop, oldRight, oldBottom ->
+            window?.decorView?.addOnLayoutChangeListener { _, _, _, _, _, _, _, _, _ ->
                 initStatusBar()
             }
         }
         mPresenter.onRefreshData()
     }
 
-    protected fun initStatusBar() {
+    open fun initStatusBar() {
         if (statusBarView == null) {
             val identifier = resources.getIdentifier("statusBarBackground", "id", "android")
             statusBarView = window?.findViewById(identifier)

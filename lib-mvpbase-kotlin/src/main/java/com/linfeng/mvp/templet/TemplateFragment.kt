@@ -22,7 +22,6 @@ import com.linfeng.mvp.view.ToolbarView
  * @param <T>
 </T> */
 abstract class TemplateFragment<T : BasePresenter<*>> : BaseFragment<T>(), ToolbarView {
-    //    private lateinit var mToolbarHelper: ToolbarHelper
     private lateinit var rootView: ViewGroup
 
 
@@ -56,7 +55,7 @@ abstract class TemplateFragment<T : BasePresenter<*>> : BaseFragment<T>(), Toolb
      * @return
      */
     override val toolbarHelper: ToolbarHelper by lazy {
-        ToolbarHelper.Create(this, rootView)
+        ToolbarHelper.create(this, rootView)
     }
 
     /**

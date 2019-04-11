@@ -63,7 +63,7 @@ abstract class TemplateActivity<T : BasePresenter<*>> : BaseActivity<T>(), Toolb
      * @return
      */
     override val toolbarHelper: ToolbarHelper by lazy {
-        ToolbarHelper.Create(this, mRootView)
+        ToolbarHelper.create(this, mRootView)
     }
 
     override fun initView(inflater: LayoutInflater, savedInstanceState: Bundle?): View {
@@ -85,7 +85,7 @@ abstract class TemplateActivity<T : BasePresenter<*>> : BaseActivity<T>(), Toolb
         return mRootView
     }
 
-    protected fun wrapperContentView(view: View): View {
+    open fun wrapperContentView(view: View): View {
         return view
     }
 
@@ -127,22 +127,5 @@ abstract class TemplateActivity<T : BasePresenter<*>> : BaseActivity<T>(), Toolb
         }
         return super.onPrepareOptionsPanel(view, menu)
     }
-
-//    /**
-//     * 每次菜单被关闭时调用.（菜单被关闭有三种情形，menu按钮被再次点击、back按钮被点击或者用户选择了某一个菜单项）
-//     */
-//    fun onOptionsMenuClosed(menu: Menu) {
-//        super.onOptionsMenuClosed(menu)
-//    }
-//
-//    /**
-//     * 菜单项被点击时调用，也就是菜单项的监听方法。
-//     * 通过这几个方法，可以得知，对于Activity，同一时间只能显示和监听一个Menu 对象.
-//     */
-//    fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return super.onOptionsItemSelected(item)
-//    }
-
-//    protected abstract fun initPresenter(): T
 
 }

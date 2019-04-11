@@ -3,6 +3,10 @@ package com.baozi.application;
 import android.app.Application;
 
 import com.baozi.location.JApiImpl;
+import com.baozi.mvp.MVPManager;
+import com.baozi.mvp.templet.options.ContentOptions;
+import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.bumptech.glide.request.RequestOptions;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.location.APICallBack;
 import com.linfeng.rx_retrofit_network.location.SimpleParams;
@@ -40,5 +44,30 @@ public class BaseApplication extends Application {
                         //成功的回调
                     }
                 });
+
+
+        RequestOptions requestOptions = new RequestOptions()
+                .centerCrop()
+                .dontAnimate()
+                .dontTransform()
+                .autoClone();
+
+        MVPManager.setContentOptions(
+                ContentOptions.create()
+                        .setEmptyLayout(0)
+                        .setErrorLayout(0)
+                        .setLoadingLayout(0)
+                        .setOpenLoading(false)
+        );
+        MVPManager.setToolbarOptions(
+                ToolbarOptions.Create()
+                        .setToolbarColor(0)
+                        .setToolbarDrawable(0)
+                        .setToolbarHeight(0)
+                        .setToolbarLayout(0)
+                        .setBackDrawable(0)
+                        .setNoBack(false)
+        );
+
     }
 }

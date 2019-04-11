@@ -13,7 +13,7 @@ import com.linfeng.mvp.view.ToolbarView
 class MDToolBarHelperImpl(uiView: ToolbarView, rootView: View, toolbarLayout: Int) : BaseToolBarHelperImpl(uiView, rootView, toolbarLayout) {
 
     override fun initToolbar() {
-        ToolbarHelper.SimpleInitToolbar(mToolbarView.mContext, toolbar, true)
+        ToolbarHelper.simpleInitToolbar(mToolbarView.mContext, toolbar, true)
     }
 
     override fun setToolbarOptions(toolbarOptions: ToolbarOptions) {

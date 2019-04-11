@@ -1,4 +1,4 @@
-if(IsBuildMudle.toBoolean()){
+if(IsBuildModule.toBoolean()){
     apply plugin: 'com.android.application'
 }else{
     apply plugin: 'com.android.library'
@@ -9,7 +9,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        if (IsBuildMudle.toBoolean()) {
+        if (IsBuildModule.toBoolean()) {
             applicationId "com.baozi.homemodle"
         }
         minSdkVersion 16
@@ -28,7 +28,7 @@ android {
 
     sourceSets {
         main {
-            if (IsBuildMudle.toBoolean()) {
+            if (IsBuildModule.toBoolean()) {
                 manifest.srcFile 'src/main/debug/AndroidManifest.xml'
             } else {
                 manifest.srcFile 'src/main/release/AndroidManifest.xml'

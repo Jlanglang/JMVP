@@ -46,7 +46,7 @@ internal class ToolbarHelperImpl(uiView: ToolbarView, rootView: View, @LayoutRes
         mRightButton = toolbar.findViewById(R.id.ib_right)
         mTitleView = toolbar.findViewById(R.id.tv_title)
 
-        ToolbarHelper.SimpleInitToolbar(mToolbarView.mContext, toolbar, false)
+        ToolbarHelper.simpleInitToolbar(mToolbarView.mContext, toolbar, false)
     }
 
     override fun setToolbarOptions(toolbarOptions: ToolbarOptions) {

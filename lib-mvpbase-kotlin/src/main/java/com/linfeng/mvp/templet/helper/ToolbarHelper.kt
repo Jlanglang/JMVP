@@ -106,7 +106,7 @@ abstract class ToolbarHelper {
         val TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl
         val TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout
 
-        fun Create(uiView: ToolbarView, rootView: View): ToolbarHelper {
+        fun create(uiView: ToolbarView, rootView: View): ToolbarHelper {
             val toolbarLayout = uiView.toolbarLayout
             return if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
                 ToolbarHelperImpl(uiView, rootView, toolbarLayout)
@@ -127,7 +127,7 @@ abstract class ToolbarHelper {
          * @param toolbar 将要设置的Toolbar
          */
 
-        fun SimpleInitToolbar(context: Context, toolbar: Toolbar?, isMaterialDesign: Boolean) {
+        fun simpleInitToolbar(context: Context, toolbar: Toolbar?, isMaterialDesign: Boolean) {
             if (context is AppCompatActivity) {
                 toolbar?.setContentInsetsAbsolute(0, 0)
                 context.setSupportActionBar(toolbar)

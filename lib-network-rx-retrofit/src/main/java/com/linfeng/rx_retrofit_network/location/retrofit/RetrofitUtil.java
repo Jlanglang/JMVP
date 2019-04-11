@@ -53,7 +53,7 @@ public class RetrofitUtil {
     @SuppressWarnings("unchecked")
     public static <T> T getApi(Class<T> c) {
         Object o = apis.get(c);
-        if (o == null) {
+        if (null == o) {
             o = getInstance().create(c);
             apis.put(c, o);
         }
@@ -246,7 +246,7 @@ public class RetrofitUtil {
                     RequestBody.create(null, "[]"));
         }
         for (int i = 0; i < size; i++) {
-            //TODO 根据文件名设置contentType
+            //根据文件名设置contentType
             builder.addPart(Headers.of("Content-Disposition",
                     "form-data; name=\"" + filesKey + "\"; fileName=\"" + System.currentTimeMillis() + "\""),
                     RequestBody.create(MediaType.parse("multipart/form-data"), files.get(i)));

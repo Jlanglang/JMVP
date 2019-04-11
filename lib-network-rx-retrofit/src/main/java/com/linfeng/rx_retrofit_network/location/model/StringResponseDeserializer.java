@@ -21,7 +21,6 @@ public class StringResponseDeserializer implements JsonDeserializer<BaseResponse
         if (json.isJsonObject()) {
             JsonObject asJsonObject = json.getAsJsonObject();
             JsonElement code = asJsonObject.get("code");
-            //JsonElement status = asJsonObject.get("status");
             boolean isMsg = asJsonObject.has("msg");//因为自有日志平台上报log后的结果为{"msg":"ok","code":0},加这样一个过滤
             baseResponse.setCode(code.getAsInt());
             if (isMsg) {
@@ -31,7 +30,6 @@ public class StringResponseDeserializer implements JsonDeserializer<BaseResponse
             }
             JsonElement data = asJsonObject.get("data");
             JsonElement msg = asJsonObject.get("message");
-            //baseResponse.setStatus(status.getAsBoolean());
             baseResponse.setMsg(msg.getAsString() == null ? "" : msg.getAsString());
             if (data != null && !data.isJsonNull()) {
                 if (data.isJsonArray() || data.isJsonObject()) {

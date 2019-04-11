@@ -27,13 +27,12 @@ class ContentOptions : Cloneable {
     private var clickIds: MutableSet<Int>? = null
 
 
-    var throwables: List<Class<*>>? = null
-        private set
+    private var throwables: List<Class<*>>? = null
 
-    fun addClickId(@IdRes clickid: Int): ContentOptions {
+    fun addClickId(@IdRes clickId: Int): ContentOptions {
         if (clickIds == null) {
             clickIds = TreeSet()
-            clickIds!!.add(clickid)
+            clickIds!!.add(clickId)
         }
         return this
     }
