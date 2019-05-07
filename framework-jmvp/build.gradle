@@ -24,7 +24,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     api project(':lib-imageloder-glide')
     api project(':lib-mvpbase-appcompat')
-    implementation 'com.github.Jlanglang:JRxRetrofit:1.0.1'
+    api 'com.github.Jlanglang:JRxRetrofit:1.0.1'
     api project(':lib-utils-common')
     api 'com.github.Jlanglang:TreeRecyclerView:1.2.8.3'
 }

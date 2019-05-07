@@ -2,7 +2,7 @@ package com.baozi.application;
 
 import android.app.Application;
 
-import com.linfeng.rx_retrofit_network.NetWorkManager;
+import com.baozi.linfeng.NetWorkManager;
 
 import java.io.IOException;
 import java.util.zip.Inflater;

@@ -4,12 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.baozi.homemodle.R;
+import com.baozi.linfeng.location.SimpleParams;
+import com.baozi.linfeng.location.rxandroid.NetWorkTransformer;
 import com.baozi.location.JApiImpl;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.templet.TemplateActivity;
-import com.linfeng.rx_retrofit_network.location.SimpleParams;
-import com.linfeng.rx_retrofit_network.location.rxandroid.NetWorkTransformer;
 
 import io.reactivex.functions.Consumer;
 
@@ -25,7 +25,7 @@ public class MainActivity extends TemplateActivity<BasePresenter> {
                         SimpleParams.create().putP("userName", "admin")
                                 .putP("strPwd", 123456)
                 )
-                .compose(new NetWorkTransformer<String>())
+                .compose(new NetWorkTransformer())
                 .subscribe(new Consumer<String>() {
                     @Override
                     public void accept(String stringBaseResponse) throws Exception {

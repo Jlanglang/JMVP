@@ -1,7 +1,7 @@
 package com.baozi.location;
 
 
-import com.linfeng.rx_retrofit_network.location.SimpleParams;
+import com.baozi.linfeng.location.SimpleParams;
 
 import java.util.HashMap;
 
