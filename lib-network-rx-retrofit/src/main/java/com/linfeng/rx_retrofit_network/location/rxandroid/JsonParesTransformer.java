@@ -1,7 +1,6 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
-import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
@@ -14,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
  * 简书:http://www.jianshu.com/u/6bac141ea5fe
  */
 
-public class JsonParesTransformer<T> implements ObservableTransformer<BaseResponse<String>, T> {
+public class JsonParesTransformer<T> implements ObservableTransformer<String, T> {
     private final Class<T> zClass;
 
     public JsonParesTransformer(Class<T> zClass) {
@@ -22,8 +21,8 @@ public class JsonParesTransformer<T> implements ObservableTransformer<BaseRespon
     }
 
     @Override
-    public ObservableSource<T> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream.compose(new NetWorkTransformer<>())
+    public ObservableSource<T> apply(Observable<String> upstream) {
+        return upstream.compose(new NetWorkTransformer())
                 .observeOn(Schedulers.computation())
                 .flatMap(s -> Observable
                         .just(JSONFactory.fromJson("".equals(s) ? "{}" : s, zClass)))

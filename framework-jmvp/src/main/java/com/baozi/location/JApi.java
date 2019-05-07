@@ -1,7 +1,6 @@
 package com.baozi.location;
 
 
-import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 import com.linfeng.rx_retrofit_network.location.SimpleParams;
 
 import java.util.HashMap;
@@ -13,7 +12,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PartMap;
-import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
 
@@ -33,7 +31,7 @@ public interface JApi {
      */
     @POST
     @Multipart
-    Observable<BaseResponse<String>> BasePost(@Url String url, @PartMap HashMap<String, RequestBody> params);
+    Observable<String> BasePost(@Url String url, @PartMap HashMap<String, RequestBody> params);
 
     /**
      * 通用POST
@@ -43,7 +41,7 @@ public interface JApi {
      * @return
      */
     @POST
-    Observable<BaseResponse<String>> BasePost(@Url String url, @Body String json);
+    Observable<String> BasePost(@Url String url, @Body String json);
 
     /**
      * 通用POST
@@ -53,7 +51,7 @@ public interface JApi {
      * @return
      */
     @POST
-    Observable<BaseResponse<String>> BasePost(@Url String url, @Body SimpleParams json);
+    Observable<String> BasePost(@Url String url, @Body SimpleParams json);
 
     /**
      * 通用get
@@ -62,6 +60,6 @@ public interface JApi {
      * @return
      */
     @GET
-    Observable<BaseResponse<String>> BaseGet(@Url String url, @QueryMap SimpleParams params);
+    Observable<String> BaseGet(@Url String url, @QueryMap SimpleParams params);
 
 }

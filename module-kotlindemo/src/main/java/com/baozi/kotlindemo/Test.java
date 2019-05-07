@@ -1,6 +1,20 @@
 package com.baozi.kotlindemo;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
+
 class Test {
+    void test() {
+        new A().funA(1, "");
+        new A().funB(new Function0<Unit>() {
+            @Override
+            public Unit invoke() {
+                return null;
+            }
+        });
+    }
+
+
     public class City implements Wheel {
         Area area;
 

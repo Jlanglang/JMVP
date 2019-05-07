@@ -8,5 +8,6 @@
         <item name="colorAccent">#3F51B5</item>
         <item name="colorControlNormal">#FFF</item>
         <item name="android:windowBackground">@android:color/transparent</item>
+        <!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色-->
     </style>
 </resources>

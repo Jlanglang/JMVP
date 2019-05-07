@@ -3,14 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
-    android:background="#fff"
+    android:background="@drawable/a"
     android:layout_width="match_parent"
+    android:theme="@style/Base_theme"
     android:layout_height="match_parent"
     tools:context="com.baozi.homemodle.ui.activity.MainActivity">
 
-    <com.baozi.homemodle.ui.activity.TestView
-        android:id="@+id/tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-       />
 </RelativeLayout>

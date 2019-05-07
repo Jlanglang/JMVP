@@ -1,7 +1,6 @@
 package com.linfeng.rx_retrofit_network.location.rxandroid;
 
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
-import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
 import com.linfeng.rx_retrofit_network.location.model.ParameterTypeImpl;
 
 import java.lang.reflect.Type;
@@ -17,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by Jlanglang on 2017/8/31 0031.
  * 简书:http://www.jianshu.com/u/6bac141ea5fe
  */
-public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseResponse<String>, List<T>> {
+public class JsonArrayParesTransformer<T> implements ObservableTransformer<String, List<T>> {
     private Class<T> zClass;
 
     public JsonArrayParesTransformer(Class<T> zClass) {
@@ -26,8 +25,8 @@ public class JsonArrayParesTransformer<T> implements ObservableTransformer<BaseR
 
 
     @Override
-    public ObservableSource<List<T>> apply(Observable<BaseResponse<String>> upstream) {
-        return upstream.compose(new NetWorkTransformer<>())
+    public ObservableSource<List<T>> apply(Observable<String> upstream) {
+        return upstream.compose(new NetWorkTransformer())
                 .observeOn(Schedulers.computation())
                 .flatMap(s -> {
                     s = "".equals(s) ? "[]" : s;

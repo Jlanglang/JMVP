@@ -8,6 +8,7 @@ import com.linfeng.rx_retrofit_network.location.APICallBack;
 import com.linfeng.rx_retrofit_network.location.onExceptionListener;
 import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
 
+import java.net.Proxy;
 import java.util.HashSet;
 
 import okhttp3.Interceptor;
@@ -39,6 +40,7 @@ public final class NetWorkManager {
 
 
     private static int mSuccessCode;
+    private static Proxy proxy;
 
     private NetWorkManager() {
 
@@ -96,7 +98,6 @@ public final class NetWorkManager {
         apiExceptionCallBacks = callBack;
     }
 
-
     /**
      * 获取状态处理回调
      *
@@ -118,12 +119,30 @@ public final class NetWorkManager {
         mOpenApiException = openApiException;
     }
 
+    @Deprecated
     public static int getSuccessCode() {
         return mSuccessCode;
     }
 
     public static Application getContext() {
         return mContext;
+    }
+
+
+    public static String getCodeKey() {
+        return null;
+    }
+
+    public static String getDataKey() {
+        return null;
+    }
+
+    public static String getMsgKey() {
+        return null;
+    }
+
+    public static Proxy getProxy() {
+        return proxy;
     }
 
     /**

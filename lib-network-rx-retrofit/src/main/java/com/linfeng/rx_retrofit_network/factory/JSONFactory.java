@@ -2,8 +2,8 @@ package com.linfeng.rx_retrofit_network.factory;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import com.linfeng.rx_retrofit_network.location.model.BaseResponse;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.linfeng.rx_retrofit_network.location.model.StringResponseDeserializer;
 
 import java.lang.reflect.Type;
@@ -13,12 +13,11 @@ import java.lang.reflect.Type;
  */
 
 public class JSONFactory {
-    private static final Type type = new TypeToken<BaseResponse<String>>() {
-    }.getType();
 
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter(type, new StringResponseDeserializer())
+    public static final Gson gson = new GsonBuilder()
+            .registerTypeAdapter(String.class, new StringResponseDeserializer())
             .create();
+    public static final JsonParser jsonParser = new JsonParser();
 
     private JSONFactory() {
 
@@ -36,4 +35,15 @@ public class JSONFactory {
         return gson.fromJson(json, typeOfT);
     }
 
+    public static JsonElement parseJson(String json) {
+        return jsonParser.parse(json);
+    }
+
+    public static String getValue(JsonElement json, String key) {
+        JsonElement jsonElement = json.getAsJsonObject().get(key);
+        if (jsonElement.isJsonNull()) {
+            return "";
+        }
+        return jsonElement.toString();
+    }
 }

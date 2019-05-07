@@ -3,6 +3,7 @@ package com.linfeng.rx_retrofit_network.location.model;
 /**
  * Created by baozi on 2016/12/5.
  */
+@Deprecated
 public class BaseResponse<T> {
 
     private int code;//请求状态码,比如1000是成功,其他是失败原因
