@@ -7,6 +7,7 @@ import com.linfeng.rx_retrofit_network.factory.EncodeDecodeKey;
 import com.linfeng.rx_retrofit_network.location.APICallBack;
 import com.linfeng.rx_retrofit_network.location.onExceptionListener;
 import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
+import com.linfeng.rx_retrofit_network.location.rxandroid.RxParseInfo;
 
 import java.net.Proxy;
 import java.util.HashSet;
@@ -31,16 +32,18 @@ public final class NetWorkManager {
      */
     private static String publicKey;
 
-
     private static Application mContext;
+
     public static HashSet<Interceptor> mInterceptors = new HashSet<>();
 
+    public static HashSet<RxParseInfo> parseInterceptors = new HashSet<>();
 
     private static boolean mOpenApiException;
 
+    private static String mSuccessCode;
 
-    private static int mSuccessCode;
-    private static Proxy proxy;
+    private static Proxy proxy; // 代理
+
 
     private NetWorkManager() {
 
@@ -49,7 +52,7 @@ public final class NetWorkManager {
     /**
      * 初始化
      */
-    public static void init(String baseUrl, int successCode, Application context) {
+    public static void init(String baseUrl, String successCode, Application context) {
         mContext = context;
         mSuccessCode = successCode;
         RetrofitUtil.init(baseUrl, context);
@@ -119,8 +122,7 @@ public final class NetWorkManager {
         mOpenApiException = openApiException;
     }
 
-    @Deprecated
-    public static int getSuccessCode() {
+    public static String getSuccessCode() {
         return mSuccessCode;
     }
 
@@ -129,20 +131,17 @@ public final class NetWorkManager {
     }
 
 
-    public static String getCodeKey() {
-        return null;
-    }
-
-    public static String getDataKey() {
-        return null;
-    }
-
-    public static String getMsgKey() {
-        return null;
-    }
-
     public static Proxy getProxy() {
         return proxy;
+    }
+
+
+    public static HashSet<RxParseInfo> getRxParseInfos() {
+        return parseInterceptors;
+    }
+
+    public static void addParseInterceptor(RxParseInfo parseInterceptor) {
+        parseInterceptors.add(parseInterceptor);
     }
 
     /**

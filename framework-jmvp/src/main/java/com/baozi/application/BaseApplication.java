@@ -23,7 +23,7 @@ public class BaseApplication extends Application {
         //比如www.baidu.com
         //3个参数,hostUrl,成功码,context
         NetWorkManager.addInterceptor(new InflaterRequestInterceptor());
-        NetWorkManager.init("http://rpm.locatesys.cn/", 0, this);
+        NetWorkManager.init("http://rpm.locatesys.cn/", "0", this);
     }
 
     public class InflaterRequestInterceptor implements Interceptor {

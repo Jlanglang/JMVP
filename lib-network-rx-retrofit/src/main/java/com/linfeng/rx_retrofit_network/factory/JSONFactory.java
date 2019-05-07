@@ -1,5 +1,7 @@
 package com.linfeng.rx_retrofit_network.factory;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -40,10 +42,14 @@ public class JSONFactory {
     }
 
     public static String getValue(JsonElement json, String key) {
+        if (TextUtils.isEmpty(key)) {
+            return null;
+        }
         JsonElement jsonElement = json.getAsJsonObject().get(key);
         if (jsonElement.isJsonNull()) {
             return "";
         }
         return jsonElement.toString();
     }
+
 }

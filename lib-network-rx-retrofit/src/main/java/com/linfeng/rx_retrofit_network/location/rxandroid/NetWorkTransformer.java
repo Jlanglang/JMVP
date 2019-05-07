@@ -3,11 +3,13 @@ package com.linfeng.rx_retrofit_network.location.rxandroid;
 import android.text.TextUtils;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.linfeng.rx_retrofit_network.NetWorkManager;
 import com.linfeng.rx_retrofit_network.factory.JSONFactory;
 import com.linfeng.rx_retrofit_network.location.APICallBack;
 import com.linfeng.rx_retrofit_network.location.APIException;
 
+import java.util.HashSet;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -35,14 +37,20 @@ public class NetWorkTransformer implements ObservableTransformer<String, String>
                 .retry(DEFAULT_RETRY)
                 .map(response -> {
                     JsonElement jsonElement = JSONFactory.parseJson(response);
-                    //拿到后台返回code
-                    String codeKey = NetWorkManager.getCodeKey();
-                    String code = JSONFactory.getValue(jsonElement, codeKey);
+                    JsonObject asJsonObject = jsonElement.getAsJsonObject();
 
+                    RxParseInfo parseInfo = getParseInfo(asJsonObject);
+                    if (parseInfo == null) {
+                        return response;
+                    }
+
+                    //拿到后台返回code
+                    String code = JSONFactory.getValue(jsonElement, parseInfo.getCodeKey());
+                    String msg = JSONFactory.getValue(jsonElement, parseInfo.getMsgKey());
+                    String data = JSONFactory.getValue(jsonElement, parseInfo.getDataKey());
                     //如果请求成功,直接返回数据
-                    if (code.equals(NetWorkManager.getSuccessCode() + "")) {
-                        String dataKey = NetWorkManager.getDataKey();
-                        return JSONFactory.getValue(jsonElement, dataKey);
+                    if (TextUtils.equals(code, NetWorkManager.getSuccessCode())) {
+                        return data;
                     }
 
                     String errorMsg = null;
@@ -54,14 +62,26 @@ public class NetWorkTransformer implements ObservableTransformer<String, String>
                             errorMsg = callbackMsg;
                         }
                     }
-                    //如果开启ApiException,抛出服务器返回的异常
-                    if (NetWorkManager.isOpenApiException()) {
-                        String msgKey = NetWorkManager.getMsgKey();
-                        errorMsg = JSONFactory.getValue(jsonElement, msgKey);
+
+                    //如果callback不处理,并打开isOpenApiException,则抛出服务器返回msg信息
+                    if (TextUtils.isEmpty(errorMsg) && NetWorkManager.isOpenApiException()) {
+                        errorMsg = msg;
                     }
                     //抛出异常,走到onError.
                     throw new APIException(code, errorMsg);
                 });
     }
 
+    private RxParseInfo getParseInfo(JsonObject asJsonObject) throws Exception {
+        HashSet<RxParseInfo> parseInterceptors = NetWorkManager.getRxParseInfos();
+        for (RxParseInfo p : parseInterceptors) { // 优先判断自定义添加的解析
+            if (p.hasKey(asJsonObject)) {
+                return p;
+            }
+        }
+        if (RxParseInfo.DEFAULT.hasKey(asJsonObject)) { // 判断默认的,如果不符合,说明配置错误.
+            return RxParseInfo.DEFAULT;
+        }
+        return null;
+    }
 }
