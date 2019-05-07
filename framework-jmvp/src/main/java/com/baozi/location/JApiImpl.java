@@ -1,8 +1,7 @@
 package com.baozi.location;
 
 
-import com.linfeng.rx_retrofit_network.location.retrofit.RetrofitUtil;
-
+import com.baozi.linfeng.location.retrofit.RetrofitUtil;
 
 /**
  * Created by Jlanglang on 2017/8/29 0029.
@@ -14,5 +13,4 @@ public class JApiImpl {
     public static JApi getJApi() {
         return RetrofitUtil.getApi(JApi.class);
     }
-
 }
