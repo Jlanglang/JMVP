@@ -10,13 +10,6 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/demo" />
-            <option value="$PROJECT_DIR$/framework-jmvp" />
-            <option value="$PROJECT_DIR$/lib-imageloder-glide" />
-            <option value="$PROJECT_DIR$/lib-mvpbase-kotlin" />
-            <option value="$PROJECT_DIR$/lib-utils-common" />
-            <option value="$PROJECT_DIR$/module-home" />
-            <option value="$PROJECT_DIR$/module-kotlindemo" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

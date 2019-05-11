@@ -3,13 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/demo/demo.iml" filepath="$PROJECT_DIR$/demo/demo.iml" />
-      <module fileurl="file://$PROJECT_DIR$/framework-jmvp/framework-jmvp.iml" filepath="$PROJECT_DIR$/framework-jmvp/framework-jmvp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-imageloder-glide/lib-imageloder-glide.iml" filepath="$PROJECT_DIR$/lib-imageloder-glide/lib-imageloder-glide.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" filepath="$PROJECT_DIR$/lib-mvpbase-kotlin/lib-mvpbase-kotlin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" filepath="$PROJECT_DIR$/lib-utils-common/lib-utils-common.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module-home/module-home.iml" filepath="$PROJECT_DIR$/module-home/module-home.iml" />
-      <module fileurl="file://$PROJECT_DIR$/module-kotlindemo/module-kotlindemo.iml" filepath="$PROJECT_DIR$/module-kotlindemo/module-kotlindemo.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvpDemo.iml" filepath="$PROJECT_DIR$/mvpDemo.iml" />
     </modules>
   </component>
