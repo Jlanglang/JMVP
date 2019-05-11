@@ -9,7 +9,6 @@ import com.baozi.mvp.model.LoadDataModel;
 import com.baozi.mvp.view.LoadMoreView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -67,7 +66,12 @@ public abstract class LoadMorePresenter<D, M> {
     private void initRefresh() {
         refreshLayout = loadMoreView.getSwipeRefreshLayout();
         if (refreshLayout != null) {
-            refreshLayout.setOnRefreshListener(this::refresh);
+            refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    refresh();
+                }
+            });
         }
     }
 
@@ -122,7 +126,7 @@ public abstract class LoadMorePresenter<D, M> {
      *
      * @param list
      */
-    public void loadMoreComplete(@NonNull List<D> list) {
+    public void loadMoreComplete(List<D> list) {
         isLoading = false;
         if (checkCanLoadMore(list)) {
             pageNum++;
@@ -147,7 +151,7 @@ public abstract class LoadMorePresenter<D, M> {
      */
     public void refreshError(Throwable throwable) {
         setRefresh(false);
-        refreshComplete(Collections.emptyList());
+        refreshComplete(null);
         for (LoadCompleteListener<D> listener : completeListeners) {
             listener.onError(true, throwable);
         }
@@ -157,7 +161,7 @@ public abstract class LoadMorePresenter<D, M> {
      * 请加载失败时调用
      */
     public void loadMoreError(Throwable throwable) {
-        loadMoreComplete(Collections.emptyList());
+        loadMoreComplete(null);
         for (LoadCompleteListener<D> listener : completeListeners) {
             listener.onError(false, throwable);
         }

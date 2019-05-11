@@ -2,7 +2,6 @@ package com.baozi.mvp.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.baozi.mvp.view.UIView;
 
@@ -23,6 +22,7 @@ public abstract class BasePresenter<T extends UIView> {
     public void onAttach(T view) {
         this.mView = view;
     }
+
     /**
      * 解除绑定
      */
@@ -32,8 +32,6 @@ public abstract class BasePresenter<T extends UIView> {
     public T getView() {
         return mView;
     }
-
-    public abstract View getContentView();
 
     /**
      * 做初始化的操作,需要在view的视图初始化完成之后才能调用
@@ -48,7 +46,7 @@ public abstract class BasePresenter<T extends UIView> {
     public abstract void onRefreshData();
 
     /**
-     * 取消网络请求回调
+     * 在这里取消网络请求回调
      */
     public abstract void cancelNetWork();
 

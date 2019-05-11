@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -42,7 +43,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     /**
      * 绑定activity
      *
-     * @param context
+     * @param context 
      */
     @Override
     public void onAttach(Context context) {
@@ -91,7 +92,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      */
     @Nullable
     @Override
-    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (null == mContentView) {
             mContentView = initView(inflater, savedInstanceState);
         } else {
@@ -418,6 +419,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return (V) view;
     }
 
+    /**
+     * 是否关闭
+     */
     public boolean isFinish() {
         return !isAdded();
     }
