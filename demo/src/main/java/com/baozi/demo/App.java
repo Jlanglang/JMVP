@@ -11,6 +11,10 @@ public class App extends Application {
         MVPManager.setToolbarOptions(
                 MVPManager.getToolbarOptions()
                         .setStatusDrawable(R.drawable.bg_toolbar)//设置状态栏的颜色
+                        .setToolbarDrawable(R.drawable.bg_toolbar)
+                        .setToolbarHeight(48)
+                        .setOtherTextColor(getResources().getColor(android.R.color.black))
+                        .setTitleColor(getResources().getColor(android.R.color.holo_red_dark))
         );
 
     }

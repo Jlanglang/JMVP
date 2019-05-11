@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.baozi.demo.R;
-import com.baozi.demo.persenter.MainPresenter;
+import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.base.BaseActivity;
 
-public class DemoBaseActivity extends BaseActivity<MainPresenter> {
+public class DemoBaseActivity extends BaseActivity<DemoPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class DemoBaseActivity extends BaseActivity<MainPresenter> {
     }
 
     @Override
-    protected MainPresenter initPresenter() {
-        return new MainPresenter();
+    protected DemoPresenter initPresenter() {
+        return new DemoPresenter();
     }
 }

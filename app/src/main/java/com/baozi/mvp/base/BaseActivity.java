@@ -315,6 +315,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         try {
             return inflater.inflate(layout, null);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
