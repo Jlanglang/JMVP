@@ -34,7 +34,6 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".service.CustomTestService" />
     </application>
 
 </manifest>

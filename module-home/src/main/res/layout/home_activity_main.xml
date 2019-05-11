@@ -3,10 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
-    android:background="@drawable/a"
     android:layout_width="match_parent"
+    android:background="#fff"
     android:theme="@style/Base_theme"
     android:layout_height="match_parent"
     tools:context="com.baozi.homemodle.ui.activity.MainActivity">
-
+    <TextView
+        android:text="我没更新"
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

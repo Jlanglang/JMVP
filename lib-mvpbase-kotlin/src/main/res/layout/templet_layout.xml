@@ -12,7 +12,7 @@
         android:orientation="vertical"
         app:elevation="0dp"/>
 
-    <com.baozi.mvp.templet.weight.LoadingPager
+    <com.baozi.mvp.tempalet.weight.LoadingPager
         android:id="@+id/templet_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

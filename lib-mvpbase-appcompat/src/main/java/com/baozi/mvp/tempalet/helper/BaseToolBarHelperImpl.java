@@ -1,9 +1,7 @@
-package com.baozi.mvp.templet.helper;
+package com.baozi.mvp.tempalet.helper;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +15,7 @@ import android.view.View;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -30,13 +28,13 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     private AppBarLayout mAppBarLayout;
     private SparseArray<View> mViews;
 
-    public BaseToolBarHelperImpl(@NonNull ToolbarView toolbarView, View rootView, int toolbarLayout) {
+    public BaseToolBarHelperImpl(@NonNull ToolbarView toolbarView, int toolbarLayout) {
         mToolbarView = toolbarView;
         mContext = toolbarView.getContext();
         mViews = new SparseArray<>();
 
         //初始化AppBarLayout
-        mAppBarLayout = (AppBarLayout) rootView.findViewById(R.id.app_bar);
+        mAppBarLayout = toolbarView.getContentView().findViewById(R.id.app_bar);
         mAppBarLayout.removeAllViews();
 
         //将toolbarLayout添加到AppBarLayout中
@@ -80,7 +78,7 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public void setCanBack(boolean canback) {
+    public void setCanBack(boolean canBack) {
 
     }
 
@@ -150,47 +148,15 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public void setLeftText(@StringRes int strId, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setLeftText(@NonNull String str, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setLeftButton(Drawable drawable, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setLeftButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setRightText(@NonNull String str, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setRightText(@StringRes int strId, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
-    public void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener) {
-
-    }
-
-    @Override
     public AppBarLayout getAppBarLayout() {
         return mAppBarLayout;
+    }
+
+    public <T extends View> T findView(int id) {
+        return mToolbar.findViewById(id);
+    }
+
+    @Override
+    public void addActions(View view) {
     }
 }

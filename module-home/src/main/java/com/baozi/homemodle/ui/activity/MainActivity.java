@@ -1,44 +1,50 @@
 package com.baozi.homemodle.ui.activity;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
+import android.view.KeyEvent;
+import android.widget.TextView;
 
 import com.baozi.homemodle.R;
-import com.baozi.linfeng.location.SimpleParams;
-import com.baozi.linfeng.location.rxandroid.NetWorkTransformer;
-import com.baozi.location.JApiImpl;
+import com.baozi.homemodle.service.CustomTestService;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
-import com.baozi.mvp.templet.TemplateActivity;
-
-import io.reactivex.functions.Consumer;
+import com.baozi.mvp.tempalet.TemplateActivity;
 
 
 public class MainActivity extends TemplateActivity<BasePresenter> {
-    View statusBarView;
+
+    private TextView view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        JApiImpl.getJApi()
-                .BasePost("Home/UserLoginApp",
-                        SimpleParams.create().putP("userName", "admin")
-                                .putP("strPwd", 123456)
-                )
-                .compose(new NetWorkTransformer())
-                .subscribe(new Consumer<String>() {
-                    @Override
-                    public void accept(String stringBaseResponse) throws Exception {
-                        String data = stringBaseResponse;
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        throwable.printStackTrace();
-                    }
-                });
+        setContentView(R.layout.home_activity_main);
+        view = findView(R.id.tv_content);
+        Intent intent = new Intent(this, CustomTestService.class);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(intent);
+        }
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                view.setText("我更新了,哈哈哈哈,,哈哈哈哈,哈哈哈哈,哈哈哈哈,哈哈哈哈");
+                view.requestLayout();
+            }
+        }.start();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return super.onKeyDown(keyCode, event);
+    }
 
     @Override
     protected int initView(Bundle savedInstanceState) {

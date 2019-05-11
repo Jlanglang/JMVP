@@ -1,4 +1,4 @@
-package com.baozi.mvp.templet.weight;
+package com.baozi.mvp.tempalet.weight;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -21,10 +21,10 @@ public class LoadingPager extends FrameLayout {
     private View mErrorPage;
     private View mLoadingPage;
     private View mEmptyPage;
+    private View mSuccessPage;
     private int emptyLayout;
     private int errorLayout;
     private int loadingLayout;
-    private View mSuccessPage;
     public static final int STATE_EMPTY = 0;
     public static final int STATE_ERROR = 1;
     public static final int STATE_LOADING = 2;

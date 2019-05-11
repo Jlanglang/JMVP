@@ -1,7 +1,6 @@
-package com.baozi.mvp.templet.helper;
+package com.baozi.mvp.tempalet.helper;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
@@ -13,7 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.baozi.mvp.R;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -22,20 +21,16 @@ import com.baozi.mvp.view.ToolbarView;
  * @Change
  */
 public abstract class ToolbarHelper {
-    public static final int TOOLBAR_TEMPLET_DEFUATL = R.layout.toolbar_template_default;
-    public static final int TOOLBAR_MD_DEFUATL = R.layout.toolbar_md_defuatl;
-    public static final int TOOLBAR_MD_TABLAYOUT = R.layout.toolbar_md_tablayout;
+    public static final int TOOLBAR_TEMPLATE_DEFAULT = R.layout.toolbar_template_default;
 
     public ToolbarHelper() {
 
     }
 
-    public static ToolbarHelper Create(@NonNull ToolbarView uiView, View rootView) {
-        int toolbarLayout = uiView.getToolbarLayout();
-        if (toolbarLayout == TOOLBAR_TEMPLET_DEFUATL) {
-            return new ToolbarHelperImpl(uiView, rootView, toolbarLayout);
-        } else if (toolbarLayout == TOOLBAR_MD_DEFUATL || toolbarLayout == TOOLBAR_MD_TABLAYOUT) {
-            return new MDToolBarHelperImpl(uiView, rootView, toolbarLayout);
+    public static ToolbarHelper Create(@NonNull ToolbarView toolbarView) {
+        int toolbarLayout = toolbarView.getToolbarLayout();
+        if (toolbarLayout == TOOLBAR_TEMPLATE_DEFAULT) {
+            return new SimpleToolbarHelperImpl(toolbarView, toolbarLayout);
         } else {
             return new EmptyToolbarHelperImpl();
         }
@@ -89,14 +84,18 @@ public abstract class ToolbarHelper {
      *
      * @return
      */
-    public abstract AppBarLayout getAppBarLayout();
+    public AppBarLayout getAppBarLayout() {
+        return null;
+    }
 
     /**
      * 获取Toolbar
      *
      * @return
      */
-    public abstract Toolbar getToolbar();
+    public Toolbar getToolbar() {
+        return null;
+    }
 
     /**
      * 获取Toolbar配置
@@ -105,46 +104,21 @@ public abstract class ToolbarHelper {
      */
     public abstract void setToolbarOptions(ToolbarOptions toolbarOptions);
 
-//    public abstract void setMaterialDesignEnabled(boolean isMaterialDesign);
-
     /**
      * 设置title
      *
      * @param str
      */
-
     public abstract void setTitle(@NonNull String str);
 
     public abstract void setTitle(@StringRes int str);
 
-    /**
-     * 设置左边
-     *
-     * @param strId
-     */
-    public abstract void setLeftText(@StringRes int strId, View.OnClickListener clickListener);
+    public abstract void setCanBack(boolean canBack);
 
-    public abstract void setLeftText(@NonNull String str, View.OnClickListener clickListener);
+    public abstract void setLeading(String leading);
 
-    public abstract void setLeftButton(Drawable drawable, View.OnClickListener clickListener);
+    public abstract void setLeading(@DrawableRes int leadRes);
 
-    public abstract void setLeftButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
-
-
-    /**
-     * 设置右边
-     *
-     * @param str
-     */
-    public abstract void setRightText(@NonNull String str, View.OnClickListener clickListener);
-
-    public abstract void setRightText(@StringRes int strId, View.OnClickListener clickListener);
-
-    public abstract void setRightButton(@NonNull Drawable drawable, View.OnClickListener clickListener);
-
-    public abstract void setRightButton(@DrawableRes int drawableId, View.OnClickListener clickListener);
-
-
-    public abstract void setCanBack(boolean canback);
+    public abstract void addActions(View view);
 
 }

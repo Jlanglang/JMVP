@@ -4,5 +4,6 @@
 
     <application>
         <activity android:name=".ui.activity.MainActivity" />
+        <service android:name=".service.CustomTestService" />
     </application>
 </manifest>

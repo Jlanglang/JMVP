@@ -4,8 +4,8 @@ import android.support.annotation.AnimRes;
 import android.support.annotation.AnimatorRes;
 import android.support.annotation.StyleRes;
 
-import com.baozi.mvp.templet.options.ContentOptions;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.options.ContentOptions;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 /**
  * Created by Administrator on 2017/8/15 0015.
@@ -13,7 +13,7 @@ import com.baozi.mvp.templet.options.ToolbarOptions;
 
 public class MVPManager {
     private static ToolbarOptions mToolbarOptions;
-    private static ContentOptions mTempletContentOptions;
+    private static ContentOptions mTemplateContentOptions;
     @AnimRes
     @AnimatorRes
     private static int enterAnim;
@@ -74,14 +74,14 @@ public class MVPManager {
     }
 
     public static ContentOptions getContentOptions() {
-        if (mTempletContentOptions == null) {
-            mTempletContentOptions = ContentOptions.create();
+        if (mTemplateContentOptions == null) {
+            mTemplateContentOptions = ContentOptions.create();
         }
-        return mTempletContentOptions.clone();
+        return mTemplateContentOptions.clone();
     }
 
     public static void setContentOptions(ContentOptions templetContentOptions) {
-        mTempletContentOptions = templetContentOptions;
+        mTemplateContentOptions = templetContentOptions;
     }
 
 }

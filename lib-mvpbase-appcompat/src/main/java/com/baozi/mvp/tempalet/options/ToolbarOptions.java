@@ -1,10 +1,10 @@
-package com.baozi.mvp.templet.options;
+package com.baozi.mvp.tempalet.options;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 
-import com.baozi.mvp.templet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.helper.ToolbarHelper;
 
 /**
  * Created by baozi on 2017/10/25.
@@ -24,7 +24,7 @@ public class ToolbarOptions implements Cloneable {
     @ColorInt
     private int toolbarColor;
     @LayoutRes
-    private int toolbarLayout = ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
+    private int toolbarLayout = ToolbarHelper.TOOLBAR_TEMPLATE_DEFAULT;
     @DrawableRes
     private int toolbarDrawable;
     @DrawableRes

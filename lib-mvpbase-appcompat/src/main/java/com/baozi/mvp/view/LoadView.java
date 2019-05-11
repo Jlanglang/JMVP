@@ -1,6 +1,6 @@
 package com.baozi.mvp.view;
 
-import com.baozi.mvp.templet.weight.LoadingPager;
+import com.baozi.mvp.tempalet.weight.LoadingPager;
 
 /**
  * Created by baozi on 2017/12/8.

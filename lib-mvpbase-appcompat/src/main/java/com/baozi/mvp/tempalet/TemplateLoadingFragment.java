@@ -1,35 +1,28 @@
-package com.baozi.mvp.templet;
+package com.baozi.mvp.tempalet;
 
 import android.view.View;
 
-import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.templet.options.ContentOptions;
-import com.baozi.mvp.templet.weight.LoadingPager;
+import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.LoadView;
 
 /**
  * Created by baozi on 2017/12/20.
  */
 
-public abstract class TemplateLoadingActivity<T extends BasePresenter> extends TemplateActivity<T>
+public abstract class TemplateLoadingFragment<T extends BasePresenter> extends TemplateFragment<T>
         implements LoadView {
     private LoadingPager mLoadingPager;
 
     @Override
     protected View wrapperContentView(View view) {
-        mLoadingPager = getContentOptions().buildLoadingPager(this, view);
+        mLoadingPager = getContentOptions().buildLoadingPager(mContext, view);
         mLoadingPager.setRefreshListener(new LoadingPager.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 triggerInit();
             }
         });
-        return mLoadingPager;
-    }
-
-    @Override
-    public LoadingPager getLoadPager() {
         return mLoadingPager;
     }
 
@@ -71,6 +64,11 @@ public abstract class TemplateLoadingActivity<T extends BasePresenter> extends T
     public void triggerInit() {
         showLoading();
         mPresenter.onRefreshData();
+    }
+
+    @Override
+    public LoadingPager getLoadPager() {
+        return mLoadingPager;
     }
 
 }

@@ -1,9 +1,10 @@
 package com.baozi.mvp.view;
 
 import android.support.annotation.LayoutRes;
+import android.view.View;
 
-import com.baozi.mvp.templet.helper.ToolbarHelper;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 /**
  * @author jlanglang  2017/3/4 17:44
@@ -37,6 +38,9 @@ public interface ToolbarView extends BaseView {
      * 回退
      */
     void onBackPressed();
+
+
+    View getContentView();
 
     ToolbarOptions getToolbarOptions();
 }

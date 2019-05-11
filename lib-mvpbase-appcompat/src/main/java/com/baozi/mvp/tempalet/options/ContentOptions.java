@@ -1,11 +1,11 @@
-package com.baozi.mvp.templet.options;
+package com.baozi.mvp.tempalet.options;
 
 import android.content.Context;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
-import com.baozi.mvp.templet.weight.LoadingPager;
+import com.baozi.mvp.tempalet.weight.LoadingPager;
 
 import java.util.Arrays;
 import java.util.List;

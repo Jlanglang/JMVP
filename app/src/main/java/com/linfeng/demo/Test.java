@@ -5,7 +5,6 @@ public class Test {
     class Bean{
         String a=null;
         String b=null;
-
     }
 
     public void test() {

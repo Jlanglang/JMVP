@@ -1,4 +1,4 @@
-package com.baozi.mvp.templet;
+package com.baozi.mvp.tempalet;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,9 +17,9 @@ import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.templet.helper.ToolbarHelper;
-import com.baozi.mvp.templet.options.ContentOptions;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.options.ContentOptions;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -174,11 +174,10 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     @Override
     public ToolbarHelper getToolbarHelper() {
         if (mToolbarHelper == null) {
-            mToolbarHelper = ToolbarHelper.Create(this, mRootView);
+            mToolbarHelper = ToolbarHelper.Create(this);
         }
         return mToolbarHelper;
     }
-
 
 
     protected ContentOptions getContentOptions() {

@@ -1,4 +1,4 @@
-package com.baozi.mvp.templet;
+package com.baozi.mvp.tempalet;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,9 +16,9 @@ import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseFragment;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.templet.helper.ToolbarHelper;
-import com.baozi.mvp.templet.options.ContentOptions;
-import com.baozi.mvp.templet.options.ToolbarOptions;
+import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.options.ContentOptions;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -65,7 +65,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
      */
     @Override
     public int getToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_TEMPLET_DEFUATL;
+        return ToolbarHelper.TOOLBAR_TEMPLATE_DEFAULT;
     }
 
     @Override
@@ -119,7 +119,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
     @Override
     public ToolbarHelper getToolbarHelper() {
         if (mToolbarHelper == null) {
-            mToolbarHelper = ToolbarHelper.Create(this, rootView);
+            mToolbarHelper = ToolbarHelper.Create(this);
         }
         return mToolbarHelper;
     }
