@@ -62,4 +62,9 @@ class EmptyToolbarHelperImpl extends ToolbarHelper {
     public void setLeading(int leadRes) {
 
     }
+
+    @Override
+    public void addActions(View view) {
+
+    }
 }

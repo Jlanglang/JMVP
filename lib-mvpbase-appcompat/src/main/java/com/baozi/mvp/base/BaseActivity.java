@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.baozi.mvp.MVPManager;
+import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.UIView;
 
@@ -237,36 +238,28 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 跳转Activity
      */
     public void startActivity(Class aClass) {
-        Intent intent = new Intent(this, aClass);
-        startActivity(intent);
+        StartFactory.startActivity(this, aClass);
     }
 
     /**
      * 跳转Activity
      */
     public void startActivity(Class aClass, Bundle bundle) {
-        Intent intent = new Intent(this, aClass);
-        intent.putExtras(bundle);
-        startActivity(intent);
+        StartFactory.startActivity(this, aClass, bundle);
     }
 
     /**
      * 跳转Activity
      */
     public void startActivity(Class aClass, Bundle bundle, int flag) {
-        Intent intent = new Intent(this, aClass);
-        intent.putExtras(bundle);
-        intent.addFlags(flag);
-        startActivity(intent);
+        StartFactory.startActivity(this, aClass, bundle, flag);
     }
 
     /**
      * 跳转Activity
      */
     public void startActivity(Class aClass, int flag) {
-        Intent intent = new Intent(this, aClass);
-        intent.addFlags(flag);
-        startActivity(intent);
+        StartFactory.startActivity(this, aClass, flag);
     }
 
     @Override

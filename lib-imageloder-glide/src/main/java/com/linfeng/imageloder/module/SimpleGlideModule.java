@@ -34,8 +34,6 @@ public class SimpleGlideModule extends AppGlideModule {
     @Override
 
     public void applyOptions(Context context, GlideBuilder glideBuilder) {
-//        glideBuilder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
-//        Log.i("SimpleGlideModule", "MyGlideModule初始化了");
         MemorySizeCalculator calculator = new MemorySizeCalculator.Builder(context).build();
         int defaultMemoryCacheSize = calculator.getMemoryCacheSize();
         int defaultBitmapPoolSize = calculator.getBitmapPoolSize();

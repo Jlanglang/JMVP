@@ -23,8 +23,6 @@ public abstract class BasePresenter<T extends UIView> {
     public void onAttach(T view) {
         this.mView = view;
     }
-
-
     /**
      * 解除绑定
      */
@@ -66,6 +64,7 @@ public abstract class BasePresenter<T extends UIView> {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
     }
+
 
     public void onSaveInstanceState(Bundle outState) {
 

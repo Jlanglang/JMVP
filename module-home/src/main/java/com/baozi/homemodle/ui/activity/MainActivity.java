@@ -24,6 +24,11 @@ public class MainActivity extends TemplateActivity<BasePresenter> {
     }
 
     @Override
+    public void onNewThrowable(Throwable throwable) {
+        super.onNewThrowable(throwable);
+    }
+
+    @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         super.init(savedInstanceState);
         view = findView(R.id.tv_content);

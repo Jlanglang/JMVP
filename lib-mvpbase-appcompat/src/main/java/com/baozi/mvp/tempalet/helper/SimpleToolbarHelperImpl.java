@@ -26,7 +26,6 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     @ColorInt
     private int mOtherTextColor;
     private int mOtherTextSize;
-    private LinearLayout startActions;
     private LinearLayout endActions;
 
 
@@ -37,7 +36,6 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     @Override
     public void initToolbar() {
         mTitleView = findView(R.id.tv_title);
-        startActions = findView(R.id.ll_start_group);
         endActions = findView(R.id.ll_end_group);
         ToolbarHelper.SimpleInitToolbar(mToolbarView.getContext(), mToolbar, false);
     }
@@ -49,6 +47,9 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
         mTitleColor = options.getTitleColor();
         mOtherTextColor = options.getOtherTextColor();
         mOtherTextSize = options.getOtherTextSize();
+        if (mOtherTextColor != 0 || mOtherTextSize != 0) {
+            notifyToolbarText();
+        }
         boolean noBack = options.isNoBack();
         if (mTitleSize != 0) {
             mTitleView.setTextSize(mTitleSize);
@@ -62,6 +63,21 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
                 backDrawable = R.drawable.back;
             }
             setLeading(backDrawable);
+        }
+    }
+
+    private void notifyToolbarText() {
+        int childCount = mToolbar.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View childAt = mToolbar.getChildAt(childCount);
+            if (childAt instanceof TextView) {
+                if (mOtherTextColor != 0) {
+                    ((TextView) childAt).setTextColor(mOtherTextColor);
+                }
+                if (mOtherTextSize != 0) {
+                    ((TextView) childAt).setTextSize(mOtherTextSize);
+                }
+            }
         }
     }
 
@@ -125,6 +141,14 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     @Override
     public void addActions(View view) {
         if (endActions != null && view != null) {
+            if (view instanceof TextView) {
+                if (mOtherTextColor != 0) {
+                    ((TextView) view).setTextColor(mOtherTextColor);
+                }
+                if (mOtherTextSize != 0) {
+                    ((TextView) view).setTextSize(mOtherTextSize);
+                }
+            }
             endActions.addView(view);
         }
     }
