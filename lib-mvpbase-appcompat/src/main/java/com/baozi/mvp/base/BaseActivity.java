@@ -350,6 +350,4 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     protected abstract T initPresenter();
-
-
 }

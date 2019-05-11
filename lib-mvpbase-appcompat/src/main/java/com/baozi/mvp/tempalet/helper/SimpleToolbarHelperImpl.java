@@ -18,7 +18,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @Change
  */
 
-class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
+public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     private TextView mTitleView;
     private int mTitleSize;
     @ColorInt
