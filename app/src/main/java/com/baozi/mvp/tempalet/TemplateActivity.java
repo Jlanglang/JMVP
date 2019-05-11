@@ -2,6 +2,7 @@ package com.baozi.mvp.tempalet;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.app.ActionBar;
@@ -36,7 +37,7 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
-            throw new IllegalStateException("please extends BaseActivity.TemplateActivity Theme must be NoActionbar");
+            throw new IllegalStateException("请使用NoActionbar的Theme,否则使用该模板无意义");
         }
         mRootView = (ViewGroup) inflater.inflate(R.layout.template_layout, null);
         //初始化一次
@@ -158,10 +159,11 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     }
 
     /**
-     * 如果设置的主题不是NoActionBar或者initToolbar()返回是0,则返回null.
+     * 如果设置的主题不是NoActionBar,或者initToolbar()是0,则返回null.
      *
      * @return mToolbar 可能为null.
      */
+    @Nullable
     public Toolbar getToolbar() {
         return getToolbarHelper().getToolbar();
     }

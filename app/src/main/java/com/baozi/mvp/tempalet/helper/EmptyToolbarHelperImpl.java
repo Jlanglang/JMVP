@@ -9,8 +9,9 @@ import android.view.View;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 /**
+ *
  */
-class EmptyToolbarHelperImpl extends ToolbarHelper {
+public class EmptyToolbarHelperImpl extends ToolbarHelper {
 
     @Override
     public boolean setScrollFlag(int viewId, int flag) {

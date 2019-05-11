@@ -10,7 +10,7 @@ public class App extends Application {
         super.onCreate();
         MVPManager.setToolbarOptions(
                 MVPManager.getToolbarOptions()
-                        .setStatusDrawable(R.drawable.bg_toolbar)
+                        .setStatusDrawable(R.drawable.bg_toolbar)//设置状态栏的颜色
         );
 
     }

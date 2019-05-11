@@ -18,13 +18,24 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        findView(R.id.tv_content).setOnClickListener(new View.OnClickListener() {
+        findView(R.id.bt_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.login();
+                mPresenter.toDemoAt("1");
             }
         });
-
+        findView(R.id.bt_template).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.toDemoAt("2");
+            }
+        });
+        findView(R.id.bt_loading).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.toDemoAt("3");
+            }
+        });
     }
 
     @Override
