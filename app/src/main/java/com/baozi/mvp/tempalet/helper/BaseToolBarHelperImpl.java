@@ -28,7 +28,7 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     private AppBarLayout mAppBarLayout;
     private SparseArray<View> mViews;
 
-    public BaseToolBarHelperImpl(@NonNull ToolbarView toolbarView, int toolbarLayout) {
+    public BaseToolBarHelperImpl(@NonNull ToolbarView toolbarView) {
         mToolbarView = toolbarView;
         mContext = toolbarView.getContext();
         mViews = new SparseArray<>();
@@ -38,7 +38,7 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         mAppBarLayout.removeAllViews();
 
         //将toolbarLayout添加到AppBarLayout中
-        View inflate = LayoutInflater.from(mContext).inflate(toolbarLayout, mAppBarLayout, true);
+        View inflate = LayoutInflater.from(mContext).inflate(toolbarView.getToolbarLayout(), mAppBarLayout, true);
         //如果find不为null,则设置toolbar
         mToolbar = (Toolbar) inflate.findViewById(R.id.tl_custom);
         if (mToolbar != null) {

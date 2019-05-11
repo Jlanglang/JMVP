@@ -30,7 +30,7 @@ public abstract class ToolbarHelper {
     public static ToolbarHelper Create(@NonNull ToolbarView toolbarView) {
         int toolbarLayout = toolbarView.getToolbarLayout();
         if (toolbarLayout == TOOLBAR_TEMPLATE_DEFAULT) {
-            return new SimpleToolbarHelperImpl(toolbarView, toolbarLayout);
+            return new SimpleToolbarHelperImpl(toolbarView);
         } else {
             return new EmptyToolbarHelperImpl();
         }

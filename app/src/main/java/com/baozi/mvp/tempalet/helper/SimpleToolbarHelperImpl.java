@@ -1,7 +1,6 @@
 package com.baozi.mvp.tempalet.helper;
 
 import android.support.annotation.ColorInt;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageButton;
@@ -29,8 +28,8 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     private LinearLayout endActions;
 
 
-    SimpleToolbarHelperImpl(ToolbarView uiView, @LayoutRes int toolbar) {
-        super(uiView, toolbar);
+    SimpleToolbarHelperImpl(ToolbarView uiView) {
+        super(uiView);
     }
 
     @Override
