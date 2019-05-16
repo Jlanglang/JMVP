@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.baozi.demo.R;
-import com.baozi.demo.persenter.MainPresenter;
+import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.tempalet.TemplateActivity;
 
-public class DemoTemplateActivity extends TemplateActivity<MainPresenter> {
+public class DemoTemplateActivity extends TemplateActivity<DemoPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_main;
+        return R.layout.activity_template;
     }
 
     @Override
@@ -23,7 +23,7 @@ public class DemoTemplateActivity extends TemplateActivity<MainPresenter> {
     }
 
     @Override
-    protected MainPresenter initPresenter() {
-        return new MainPresenter();
+    protected DemoPresenter initPresenter() {
+        return new DemoPresenter();
     }
 }

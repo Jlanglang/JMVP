@@ -101,7 +101,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 已经setContentView
      * 可以做一些初始化操作
      *
-     * @return
      */
     protected void init(@Nullable Bundle savedInstanceState) {
 
