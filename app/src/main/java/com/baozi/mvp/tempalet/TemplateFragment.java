@@ -17,7 +17,6 @@ import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseFragment;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.tempalet.helper.ToolbarHelper;
-import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
@@ -93,10 +92,6 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
-    }
-
-    protected ContentOptions getContentOptions() {
-        return MVPManager.getContentOptions();
     }
 
     @Override

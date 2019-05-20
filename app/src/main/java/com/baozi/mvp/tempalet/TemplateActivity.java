@@ -181,8 +181,4 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
         return mToolbarHelper;
     }
 
-
-    protected ContentOptions getContentOptions() {
-        return MVPManager.getContentOptions();
-    }
 }

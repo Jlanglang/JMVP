@@ -130,7 +130,7 @@ public class ContentOptions implements Cloneable {
         return this;
     }
 
-    public List<Class> getThrowables() {
+    public List<Class> getThrowable() {
         return throwables;
     }
 }

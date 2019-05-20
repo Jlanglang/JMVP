@@ -15,6 +15,7 @@ import com.baozi.mvp.MVPManager;
 import java.util.List;
 
 /**
+ *
  */
 public class LoadingPager extends FrameLayout {
     private Context context;
@@ -245,23 +246,23 @@ public class LoadingPager extends FrameLayout {
         show(STATE_EMPTY);
     }
 
-    public void showError(Throwable throwable) {
-        if (throwable == null) {
-            show(STATE_ERROR);
-            return;
-        }
-        List<Class> throwables = MVPManager.getContentOptions().getThrowables();
-        if (throwables != null && throwables.indexOf(throwable.getClass()) != -1) {
-            show(STATE_ERROR);
-        }
-    }
-
     public void showSuccess() {
         show(STATE_SUCCESS);
     }
 
     public void showLoading() {
         show(STATE_LOADING);
+    }
+
+    public void showError(Throwable throwable) {
+        if (throwable == null) {
+            show(STATE_ERROR);
+            return;
+        }
+        List<Class> list = MVPManager.getContentOptions().getThrowable();
+        if (list != null && list.indexOf(throwable.getClass()) != -1) {
+            show(STATE_ERROR);
+        }
     }
 
     public interface OnRefreshListener {

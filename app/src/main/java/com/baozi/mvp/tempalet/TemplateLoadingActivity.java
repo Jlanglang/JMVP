@@ -2,7 +2,9 @@ package com.baozi.mvp.tempalet;
 
 import android.view.View;
 
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.LoadView;
 
@@ -71,4 +73,7 @@ public abstract class TemplateLoadingActivity<T extends BasePresenter> extends T
         mPresenter.onRefreshData();
     }
 
+    protected ContentOptions getContentOptions() {
+        return MVPManager.getContentOptions();
+    }
 }
