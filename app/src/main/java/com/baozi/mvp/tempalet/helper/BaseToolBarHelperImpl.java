@@ -21,10 +21,10 @@ import com.baozi.mvp.view.ToolbarView;
 /**
  * @author jlanglang  2017/2/22 16:58
  */
-public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
-    Toolbar mToolbar;
-    ToolbarView mToolbarView;
-    Context mContext;
+public class BaseToolBarHelperImpl extends ToolbarHelper {
+    protected Toolbar mToolbar;
+    protected ToolbarView mToolbarView;
+    private Context mContext;
     private AppBarLayout mAppBarLayout;
     private SparseArray<View> mViews;
 
@@ -35,8 +35,9 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
 
         //初始化AppBarLayout
         mAppBarLayout = toolbarView.getContentView().findViewById(R.id.app_bar);
-        mAppBarLayout.removeAllViews();
-
+        if (mAppBarLayout != null) {
+            mAppBarLayout.removeAllViews();
+        }
         //将toolbarLayout添加到AppBarLayout中
         View inflate = LayoutInflater.from(mContext).inflate(toolbarView.getToolbarLayout(), mAppBarLayout, true);
         //如果find不为null,则设置toolbar
@@ -82,7 +83,9 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
 
     }
 
-    public abstract void initToolbar();
+    public void initToolbar() {
+
+    }
 
     /**
      * 从AppBarLayout中获取控件
@@ -125,9 +128,18 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
         return true;
     }
 
+
     @Override
+    public AppBarLayout getAppBarLayout() {
+        return mAppBarLayout;
+    }
+
     public Toolbar getToolbar() {
         return mToolbar;
+    }
+
+    public <T extends View> T findView(int id) {
+        return mToolbar.findViewById(id);
     }
 
     public void setTextSize(int size) {
@@ -148,12 +160,13 @@ public abstract class BaseToolBarHelperImpl extends ToolbarHelper {
     }
 
     @Override
-    public AppBarLayout getAppBarLayout() {
-        return mAppBarLayout;
+    public void setLeading(int leadRes) {
+
     }
 
-    public <T extends View> T findView(int id) {
-        return mToolbar.findViewById(id);
+    @Override
+    public void setLeading(String leading) {
+
     }
 
     @Override

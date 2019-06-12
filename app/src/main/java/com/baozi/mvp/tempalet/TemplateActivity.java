@@ -34,7 +34,7 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     private ViewGroup mRootView;
 
     @Override
-    public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
+    public  View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             throw new IllegalStateException("请使用NoActionbar的Theme,否则使用该模板无意义");

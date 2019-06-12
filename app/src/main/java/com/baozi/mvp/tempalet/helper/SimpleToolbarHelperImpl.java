@@ -2,6 +2,7 @@ package com.baozi.mvp.tempalet.helper;
 
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -19,9 +20,6 @@ import com.baozi.mvp.view.ToolbarView;
 
 public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     private TextView mTitleView;
-    private int mTitleSize;
-    @ColorInt
-    private int mTitleColor;
     @ColorInt
     private int mOtherTextColor;
     private int mOtherTextSize;
@@ -42,8 +40,8 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     @Override
     public void setToolbarOptions(ToolbarOptions options) {
         super.setToolbarOptions(options);
-        mTitleSize = options.getTitleSize();
-        mTitleColor = options.getTitleColor();
+        int mTitleSize = options.getTitleSize();
+        int mTitleColor = options.getTitleColor();
         mOtherTextColor = options.getOtherTextColor();
         mOtherTextSize = options.getOtherTextSize();
         if (mOtherTextColor != 0 || mOtherTextSize != 0) {
@@ -110,7 +108,7 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     @Override
     public void setLeading(String leading) {
         TextView view = findView(R.id.tv_start);
-        if (leading == null) {
+        if (TextUtils.isEmpty(leading)) {
             view.setVisibility(View.GONE);
             return;
         }

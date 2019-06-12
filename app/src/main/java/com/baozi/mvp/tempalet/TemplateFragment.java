@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,9 +41,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
         //初始化一次
         mToolbarHelper = getToolbarHelper();
         View view = wrapperContentView(super.initView(inflater, savedInstanceState));
-
         rootView.addView(view, 1);
-
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -64,7 +61,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
      */
     @Override
     public int getToolbarLayout() {
-        return ToolbarHelper.TOOLBAR_TEMPLATE_DEFAULT;
+        return getToolbarOptions().getToolbarLayout();
     }
 
     @Override
@@ -97,15 +94,6 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
     @Override
     public boolean isMaterialDesign() {
         return false;
-    }
-
-    /**
-     * 如果设置的主题不是NoActionBar或者initToolbar()返回是0,则返回null.
-     *
-     * @return mToolbar 可能为null.
-     */
-    public Toolbar getToolbar() {
-        return getToolbarHelper().getToolbar();
     }
 
     /**
