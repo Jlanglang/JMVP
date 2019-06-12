@@ -4,6 +4,7 @@ import android.widget.Toast;
 
 import com.baozi.demo.model.MainModel;
 import com.baozi.demo.ui.MainActivity;
+import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 
 public class MainPresenter extends BasePresenter<MainActivity> {
@@ -32,6 +33,6 @@ public class MainPresenter extends BasePresenter<MainActivity> {
     }
 
     public void toDemoAt(Class activityClass) {
-        mView.startActivity(activityClass);
+        StartFactory.startActivity(mView, activityClass);
     }
 }

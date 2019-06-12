@@ -18,8 +18,9 @@ import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
+import com.baozi.mvp.view.BaseView;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -28,7 +29,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @param <T>
  */
 public abstract class TemplateActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements ToolbarView {
+        implements ToolbarView, BaseView {
     private ToolbarHelper mToolbarHelper;
     private ViewGroup mRootView;
 
@@ -42,14 +43,14 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
         //初始化一次
         mToolbarHelper = getToolbarHelper();
         View baseView = super.initView(inflater, savedInstanceState);
-        View templateView = wrapperContentView(baseView);
-        mRootView.addView(templateView, 1);
-        ViewGroup.LayoutParams layoutParams = templateView.getLayoutParams();
+        View wrapperView = wrapperContentView(baseView);
+        mRootView.addView(wrapperView, 1);
+        ViewGroup.LayoutParams layoutParams = wrapperView.getLayoutParams();
         if (layoutParams instanceof CoordinatorLayout.LayoutParams) {
             layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
             layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT;
             ((CoordinatorLayout.LayoutParams) layoutParams).setBehavior(new AppBarLayout.ScrollingViewBehavior());
-            templateView.requestLayout();
+            wrapperView.requestLayout();
         }
         return mRootView;
     }

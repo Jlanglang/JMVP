@@ -17,6 +17,8 @@ import android.view.View;
 
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.tempalet.helper.load.LoadHelper;
+import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
 
 /**
@@ -29,6 +31,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private SparseArray<View> mViews;
     private View mContentView;
     private View statusBarView;
+    private LoadHelper loadHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter.onAttach(this);
         //初始化ContentView
         mContentView = initView(getLayoutInflater(), savedInstanceState);
+        if (isOpenLoading()) {
+            loadHelper = new LoadHelper();
+            mContentView = loadHelper.wrapperLoad(mContentView, new LoadingPager.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    mPresenter.onRefreshData();
+                }
+            });
+        }
         if (mContentView != null) {
             super.setContentView(mContentView);
         }
@@ -238,4 +250,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     protected abstract T initPresenter();
+
+    @Override
+    public boolean isOpenLoading() {
+        return false;
+    }
+
+    @Nullable
+    public LoadHelper getLoadHelper() {
+        return loadHelper;
+    }
 }

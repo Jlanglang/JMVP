@@ -17,6 +17,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.tempalet.helper.load.LoadHelper;
+import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
 
 
@@ -36,12 +38,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     private SparseArray<View> mViews;
     private View mContentView;
+    private LoadHelper loadHelper;
 
 
     /**
      * 绑定activity
      *
-     * @param context 
+     * @param context
      */
     @Override
     public void onAttach(Context context) {
@@ -93,6 +96,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (null == mContentView) {
             mContentView = initView(inflater, savedInstanceState);
+            if (isOpenLoading()) {
+                loadHelper = new LoadHelper();
+                mContentView = loadHelper.wrapperLoad(mContentView, new LoadingPager.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mPresenter.onRefreshData();
+                    }
+                });
+            }
         } else {
             //缓存的ContentView需要判断是否已有parent， 如果有parent需要从parent删除，否则会抛出异常。
             ViewGroup parent = (ViewGroup) mContentView.getParent();
@@ -362,4 +374,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public boolean isLazy() {
         return false;
     }
+
+    @Override
+    public boolean isOpenLoading() {
+        return false;
+    }
+
+    public LoadHelper getLoadHelper() {
+        return loadHelper;
+    }
+
 }

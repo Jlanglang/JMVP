@@ -5,9 +5,9 @@ import android.support.annotation.Nullable;
 
 import com.baozi.demo.R;
 import com.baozi.demo.persenter.MainPresenter;
-import com.baozi.mvp.tempalet.TemplateLoadingActivity;
+import com.baozi.mvp.tempalet.TemplateActivity;
 
-public class DemoLoadingActivity extends TemplateLoadingActivity<MainPresenter> {
+public class DemoLoadingActivity extends TemplateActivity<MainPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
@@ -22,5 +22,10 @@ public class DemoLoadingActivity extends TemplateLoadingActivity<MainPresenter> 
     @Override
     protected MainPresenter initPresenter() {
         return new MainPresenter();
+    }
+
+    @Override
+    public boolean isOpenLoading() {
+        return true;
     }
 }

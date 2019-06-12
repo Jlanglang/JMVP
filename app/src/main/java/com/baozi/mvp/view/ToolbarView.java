@@ -3,7 +3,7 @@ package com.baozi.mvp.view;
 import android.support.annotation.LayoutRes;
 import android.view.View;
 
-import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 /**

@@ -60,7 +60,6 @@ public interface UIView extends BaseView {
      */
     void onNewThrowable(Throwable throwable);
 
-
     Window getWindow();
 
     ActionBar getSupportActionBar();
@@ -68,4 +67,6 @@ public interface UIView extends BaseView {
     void setSupportActionBar(@Nullable Toolbar toolbar);
 
     void finishActivity();
+
+    boolean isOpenLoading();
 }

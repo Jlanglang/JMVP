@@ -1,4 +1,4 @@
-package com.baozi.mvp.tempalet.helper;
+package com.baozi.mvp.tempalet.helper.toolbar;
 
 import android.content.Context;
 import android.support.annotation.DrawableRes;

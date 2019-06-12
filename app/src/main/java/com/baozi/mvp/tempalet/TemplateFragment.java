@@ -15,8 +15,9 @@ import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseFragment;
 import com.baozi.mvp.presenter.BasePresenter;
-import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
+import com.baozi.mvp.view.BaseView;
 import com.baozi.mvp.view.ToolbarView;
 
 /**
@@ -25,7 +26,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @param <T>
  */
 public abstract class TemplateFragment<T extends BasePresenter> extends BaseFragment<T>
-        implements ToolbarView {
+        implements ToolbarView, BaseView {
     private ToolbarHelper mToolbarHelper;
     private ViewGroup rootView;
 
@@ -108,5 +109,4 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
     protected View wrapperContentView(View view) {
         return view;
     }
-
 }

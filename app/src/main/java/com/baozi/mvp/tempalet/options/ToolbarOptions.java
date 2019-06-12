@@ -4,7 +4,7 @@ import android.support.annotation.ColorInt;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 
-import com.baozi.mvp.tempalet.helper.ToolbarHelper;
+import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 
 /**
  * Created by baozi on 2017/10/25.
