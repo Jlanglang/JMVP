@@ -91,11 +91,6 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean isMaterialDesign() {
-        return false;
-    }
-
     /**
      * @return
      */

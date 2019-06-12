@@ -3,7 +3,6 @@ package com.baozi.mvp.view;
 import android.content.res.Resources;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -61,27 +60,6 @@ public interface UIView extends BaseView {
      */
     void onNewThrowable(Throwable throwable);
 
-    /**
-     * Frgament跳转.
-     *
-     * @param fragment
-     */
-    void startFragment(Fragment fragment);
-
-    /**
-     * Frgament跳转.
-     *
-     * @param fragment
-     */
-    void startFragment(Fragment fragment, String tag);
-
-    void startFragment(Fragment fragment, String tag, boolean isAdd);
-
-    void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim);
-
-    void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack);
-
-    void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack);
 
     Window getWindow();
 

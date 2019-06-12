@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
-import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.UIView;
 
@@ -259,110 +257,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     }
 
-    /**
-     * 跳转fragment
-     *
-     * @param fragment
-     */
-    @Override
-    public void startFragment(Fragment fragment) {
-        startFragment(fragment, null);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag) {
-        startFragment(fragment, tag, true);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, boolean isAdd) {
-        startFragment(fragment, tag,
-                MVPManager.getEnterAnim(),
-                MVPManager.getExitAnim(),
-                MVPManager.getEnterPopAnim(),
-                MVPManager.getExitPopAnim(), isAdd);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enter, int popExit) {
-        startFragment(fragment, tag, enter, popExit, true);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack) {
-        startFragment(fragment, tag,
-                enter,
-                0,
-                0,
-                popExit, isAddBack);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack) {
-        FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit);
-        fragmentTransaction.add(android.R.id.content, fragment, tag).hide(this);
-        if (isAddBack) {
-            fragmentTransaction.addToBackStack(tag);
-        }
-        fragmentTransaction.commitAllowingStateLoss();
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass) {
-        Intent intent = new Intent(mContext, aClass);
-        startActivity(intent);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, Bundle bundle) {
-        Intent intent = new Intent(mContext, aClass);
-        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, Bundle bundle, int flag) {
-        Intent intent = new Intent(mContext, aClass);
-        intent.putExtras(bundle);
-        intent.addFlags(flag);
-        startActivity(intent);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, int flag) {
-        Intent intent = new Intent(mContext, aClass);
-        intent.addFlags(flag);
-        startActivity(intent);
-    }
 
     @Override
     public Context getContext() {

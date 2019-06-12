@@ -19,13 +19,6 @@ public interface ToolbarView extends BaseView {
     ToolbarHelper getToolbarHelper();
 
     /**
-     * 是否使用MaterialDesign风格
-     *
-     * @return
-     */
-    boolean isMaterialDesign();
-
-    /**
      * 通过这个修改toolbar的样式layout,不需要可以传0或者-1;
      *
      * @return

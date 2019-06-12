@@ -10,15 +10,12 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.baozi.mvp.MVPManager;
-import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.view.UIView;
 
@@ -100,7 +97,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 运行在initView之后
      * 已经setContentView
      * 可以做一些初始化操作
-     *
      */
     protected void init(@Nullable Bundle savedInstanceState) {
 
@@ -158,107 +154,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onSaveInstanceState(Bundle outState) {
         mPresenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
-    }
-
-    /**
-     * 跳转fragment
-     *
-     * @param tofragment
-     */
-    @Override
-    public void startFragment(Fragment tofragment) {
-        startFragment(tofragment, null);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag) {
-        startFragment(fragment, tag, true);
-    }
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, boolean isAdd) {
-        startFragment(fragment, tag,
-                MVPManager.getEnterAnim(),
-                MVPManager.getExitAnim(),
-                MVPManager.getEnterPopAnim(),
-                MVPManager.getExitPopAnim(), isAdd);
-    }
-
-
-    /**
-     * @param fragment 跳转的fragment
-     * @param tag      fragment的标签
-     */
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enter, int popExit) {
-        startFragment(fragment, tag, enter, popExit, true);
-    }
-
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enter, int popExit, boolean isAddBack) {
-        startFragment(fragment, tag,
-                enter,
-                0,
-                0,
-                popExit, isAddBack);
-    }
-
-    @Override
-    public void startFragment(Fragment fragment, String tag, int enterAnim, int exitAnim, int popEnter, int popExit, boolean isAddBack) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.setCustomAnimations(enterAnim, exitAnim, popEnter, popExit);
-        fragmentTransaction.add(android.R.id.content, fragment, tag);
-        if (isAddBack) {
-            fragmentTransaction.addToBackStack(tag);
-        }
-        fragmentTransaction.commitAllowingStateLoss();
-    }
-
-
-    /**
-     * @param rootFragment Activity内部fragment
-     * @param containerId  fragment父容器
-     */
-    public void replaceFragment(Fragment rootFragment, int containerId) {
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.add(containerId, rootFragment);
-        fragmentTransaction.commitAllowingStateLoss();
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass) {
-        StartFactory.startActivity(this, aClass);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, Bundle bundle) {
-        StartFactory.startActivity(this, aClass, bundle);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, Bundle bundle, int flag) {
-        StartFactory.startActivity(this, aClass, bundle, flag);
-    }
-
-    /**
-     * 跳转Activity
-     */
-    public void startActivity(Class aClass, int flag) {
-        StartFactory.startActivity(this, aClass, flag);
     }
 
     @Override

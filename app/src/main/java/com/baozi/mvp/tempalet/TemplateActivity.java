@@ -19,7 +19,6 @@ import com.baozi.mvp.R;
 import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.tempalet.helper.ToolbarHelper;
-import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
 import com.baozi.mvp.view.ToolbarView;
 
@@ -34,7 +33,7 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     private ViewGroup mRootView;
 
     @Override
-    public  View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
+    public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
         ActionBar supportActionBar = getSupportActionBar();
         if (supportActionBar != null) {
             throw new IllegalStateException("请使用NoActionbar的Theme,否则使用该模板无意义");
@@ -96,7 +95,7 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
      */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        return isMaterialDesign() && super.onCreateOptionsMenu(menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     /**
@@ -151,11 +150,6 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
     @Override
     public TemplateActivity getAppcompatActivity() {
         return this;
-    }
-
-    @Override
-    public boolean isMaterialDesign() {
-        return false;
     }
 
     /**
