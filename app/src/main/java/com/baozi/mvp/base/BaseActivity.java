@@ -11,6 +11,7 @@ import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +41,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttach(this);
+        getLifecycle().addObserver(mPresenter);
         //初始化ContentView
         mContentView = initView(getLayoutInflater(), savedInstanceState);
         if (isOpenLoading()) {
@@ -54,6 +56,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (mContentView != null) {
             super.setContentView(mContentView);
         }
+        //初始化Activity
+        init(savedInstanceState);
     }
 
     @Override
@@ -65,13 +69,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        //初始化Activity
-        init(savedInstanceState);
-        //初始化presenter
-        mPresenter.onCreate();
         onPresentersCreate();
         if (getStatusBarDrawable() > 0) {
-            initStatusBar();
             getWindow().getDecorView().addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
                 @Override
                 public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -111,49 +110,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * 可以做一些初始化操作
      */
     protected void init(@Nullable Bundle savedInstanceState) {
-
+        Log.d("lifecycle", "activityInit");
     }
 
     @Override
     @Nullable
     public View getContentView() {
         return mContentView != null ? mContentView : findViewById(android.R.id.content);
-    }
-
-    @Override
-    protected void onStart() {
-        mPresenter.onStart();
-        super.onStart();
-    }
-
-    @Override
-    protected void onPause() {
-        mPresenter.onPause();
-        super.onPause();
-    }
-
-    @Override
-    protected void onRestart() {
-        mPresenter.onRestart();
-        super.onRestart();
-    }
-
-    @Override
-    protected void onStop() {
-        mPresenter.onStop();
-        super.onStop();
-    }
-
-    @Override
-    protected void onResume() {
-        mPresenter.onResume();
-        super.onResume();
-    }
-
-    @Override
-    protected void onDestroy() {
-        mPresenter.onDestroy();
-        super.onDestroy();
     }
 
     @Override
@@ -164,8 +127,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        mPresenter.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+        mPresenter.onSaveInstanceState(outState);
     }
 
     @Override

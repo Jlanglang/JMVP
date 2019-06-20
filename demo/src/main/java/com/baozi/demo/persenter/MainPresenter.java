@@ -12,14 +12,10 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
     @Override
     public void onCreate() {
+        super.onCreate();
         mainModel = new MainModel();
         String login = mainModel.login();
         Toast.makeText(mView, login, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onRefreshData() {
-
     }
 
     @Override

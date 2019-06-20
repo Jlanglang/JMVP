@@ -7,17 +7,7 @@ package com.baozi.mvp.presenter;
 public final class EmptyPresenter extends BasePresenter {
 
     @Override
-    public void onCreate() {
-    }
-
-    @Override
-    public void onRefreshData() {
-
-    }
-
-    @Override
     public void cancelNetWork() {
-
     }
 
     @Override

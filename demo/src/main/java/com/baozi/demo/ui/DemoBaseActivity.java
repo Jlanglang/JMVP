@@ -17,7 +17,6 @@ public class DemoBaseActivity extends BaseActivity<DemoPresenter> {
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         super.init(savedInstanceState);
-
     }
 
     @Override

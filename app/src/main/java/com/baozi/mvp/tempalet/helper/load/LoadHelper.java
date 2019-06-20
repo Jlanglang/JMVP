@@ -33,10 +33,6 @@ public class LoadHelper {
         showError(throwable, true);
     }
 
-    public void onNewThrowable(Throwable throwable) {
-        showError(throwable);
-    }
-
     public void showLoading() {
         mLoadingPager.showLoading();
     }

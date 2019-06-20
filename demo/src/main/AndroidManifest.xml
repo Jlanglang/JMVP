@@ -32,6 +32,7 @@
         <activity android:name=".ui.DemoBaseActivity" />
         <activity android:name=".ui.DemoLoadingActivity" />
         <activity android:name=".ui.DemoTemplateActivity" />
+        <activity android:name=".ui.PageAt" />
     </application>
 
 </manifest>

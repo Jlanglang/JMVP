@@ -53,6 +53,10 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
         return rootView;
     }
 
+    @Override
+    public View getContentView() {
+        return rootView;
+    }
 
     /**
      * 默认使用base_toolbar

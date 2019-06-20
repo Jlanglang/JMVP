@@ -36,6 +36,12 @@ public class MainActivity extends BaseActivity<MainPresenter> {
                 mPresenter.toDemoAt(DemoLoadingActivity.class);
             }
         });
+        findView(R.id.bt_fg).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.toDemoAt(PageAt.class);
+            }
+        });
     }
 
     @Override

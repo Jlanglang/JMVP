@@ -30,4 +30,12 @@
         android:layout_marginTop="8dp"
         android:text="loading的activity"
         app:layout_constraintTop_toBottomOf="@+id/bt_template" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/bt_fg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="demo的fragment"
+        app:layout_constraintTop_toBottomOf="@+id/bt_loading" />
 </android.support.constraint.ConstraintLayout>

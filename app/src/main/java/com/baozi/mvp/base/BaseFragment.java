@@ -53,8 +53,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         //应该只创建一次Presenter.
         if (mPresenter == null || !isInit) {
             mPresenter = initPresenter();
+            getLifecycle().addObserver(mPresenter);
         }
         mPresenter.onAttach(this);
+    }
+
+    @Override
+    public void onDetach() {
+        mPresenter.onDetach();
+        super.onDetach();
     }
 
     /**
@@ -75,7 +82,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         if (mBundle != null) {
             outState.putBundle("bundle", mBundle);
         }
@@ -132,7 +139,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         //初始化Presenter,应该只初始化一次
         if (!isInit) {
             isInit = true;
-            mPresenter.onCreate();
             onPresentersCreate();
             if (!isLazy()) {
                 mPresenter.onRefreshData();
@@ -152,11 +158,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     }
 
-    @Override
-    public void onStart() {
-        mPresenter.onStart();
-        super.onStart();
-    }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
@@ -183,46 +184,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
                 if (isLazy() && isFirst()) {//懒加载
                     first = false;
                     mPresenter.onRefreshData();
-                    return;
                 }
-                //相当于Fragment的onResume
-                mPresenter.onResume();
-            } else {
-                //相当于Fragment的onPause
-                mPresenter.onPause();
             }
         }
     }
 
-    @Override
-    public void onStop() {
-        mPresenter.onStop();
-        super.onStop();
-    }
-
-    @Override
-    public void onDetach() {
-        mPresenter.onDetach();
-        super.onDetach();
-    }
-
-    @Override
-    public void onDestroyView() {
-        mPresenter.onDestroy();
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onResume() {
-        mPresenter.onResume();
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        mPresenter.onPause();
-        super.onPause();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -268,7 +234,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void init(Bundle savedInstanceState) {
 
     }
-
 
     @Override
     public Context getContext() {

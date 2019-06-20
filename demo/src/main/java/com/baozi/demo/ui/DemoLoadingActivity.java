@@ -15,11 +15,6 @@ public class DemoLoadingActivity extends TemplateActivity<MainPresenter> {
     }
 
     @Override
-    protected void init(@Nullable Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-    }
-
-    @Override
     protected MainPresenter initPresenter() {
         return new MainPresenter();
     }
