@@ -79,38 +79,43 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public void setTextSize(int size) {
+    public ToolbarHelper setTextSize(int size) {
+        return this;
     }
 
     @Override
-    public void setTitleSize(int size) {
+    public ToolbarHelper setTitleSize(int size) {
         mTitleView.setTextSize(size);
+        return this;
     }
 
 
-    public void setTitle(@NonNull String titleView) {
+    public ToolbarHelper setTitle(@NonNull String titleView) {
         mTitleView.setText(titleView);
+        return this;
     }
 
     @Override
-    public void setTitle(int titleId) {
+    public ToolbarHelper setTitle(int titleId) {
         String title = mToolbarView.getContext().getResources().getString(titleId);
         setTitle(title);
+        return this;
     }
 
 
     @Override
-    public void setCanBack(boolean canBack) {
+    public ToolbarHelper setCanBack(boolean canBack) {
         super.setCanBack(canBack);
         findView(R.id.ll_start_group).setVisibility(canBack ? View.VISIBLE : View.GONE);
+        return this;
     }
 
     @Override
-    public void setLeading(String leading) {
+    public ToolbarHelper setLeading(String leading) {
         TextView view = findView(R.id.tv_start);
         if (TextUtils.isEmpty(leading)) {
             view.setVisibility(View.GONE);
-            return;
+            return this;
         }
         view.setVisibility(View.VISIBLE);
         view.setText(leading);
@@ -120,10 +125,11 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
                 mToolbarView.onBackPressed();
             }
         });
+        return this;
     }
 
     @Override
-    public void setLeading(int leadRes) {
+    public ToolbarHelper setLeading(int leadRes) {
         ImageButton view = findView(R.id.ib_start);
         view.setVisibility(View.VISIBLE);
         view.setImageResource(leadRes);
@@ -133,10 +139,11 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
                 mToolbarView.onBackPressed();
             }
         });
+        return this;
     }
 
     @Override
-    public void addActions(View view) {
+    public ToolbarHelper addActions(View view) {
         if (endActions != null && view != null) {
             if (view instanceof TextView) {
                 if (mOtherTextColor != 0) {
@@ -148,6 +155,7 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
             }
             endActions.addView(view);
         }
+        return this;
     }
 
     public void setEndText(String str, View.OnClickListener clickListener) {

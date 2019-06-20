@@ -112,16 +112,36 @@ public abstract class ToolbarHelper {
      *
      * @param str
      */
-    public abstract void setTitle(@NonNull String str);
+    public ToolbarHelper setTitle(@NonNull String str) {
+        return this;
+    }
 
-    public abstract void setTitle(@StringRes int str);
+    public ToolbarHelper setTitle(@StringRes int str) {
+        return this;
+    }
 
-    public abstract void setCanBack(boolean canBack);
 
-    public abstract void setLeading(String leading);
+    public ToolbarHelper setCanBack(boolean canBack) {
+        return this;
+    }
 
-    public abstract void setLeading(@DrawableRes int leadRes);
+    public ToolbarHelper setLeading(String leading) {
+        return this;
+    }
 
-    public abstract void addActions(View view);
+    public ToolbarHelper setLeading(@DrawableRes int leadRes) {
+        return this;
+    }
 
+    public ToolbarHelper addActions(View view) {
+        return this;
+    }
+
+    public ToolbarHelper setTextSize(int size) {
+        return this;
+    }
+
+    public ToolbarHelper setTitleSize(int size) {
+        return this;
+    }
 }

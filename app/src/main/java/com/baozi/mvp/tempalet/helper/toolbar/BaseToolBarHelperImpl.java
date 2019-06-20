@@ -5,7 +5,6 @@ import android.os.Build;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.SparseArray;
@@ -78,11 +77,6 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
         }
     }
 
-    @Override
-    public void setCanBack(boolean canBack) {
-
-    }
-
     public void initToolbar() {
 
     }
@@ -142,34 +136,5 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
         return mToolbar.findViewById(id);
     }
 
-    public void setTextSize(int size) {
-    }
 
-
-    public void setTitleSize(int size) {
-    }
-
-
-    public void setTitle(@NonNull String str) {
-
-    }
-
-    @Override
-    public void setTitle(@StringRes int str) {
-
-    }
-
-    @Override
-    public void setLeading(int leadRes) {
-
-    }
-
-    @Override
-    public void setLeading(String leading) {
-
-    }
-
-    @Override
-    public void addActions(View view) {
-    }
 }

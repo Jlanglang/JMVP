@@ -41,9 +41,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mPresenter = initPresenter();
         //绑定Activity
         mPresenter.onAttach(this);
+
         getLifecycle().addObserver(mPresenter);
+
         //初始化ContentView
         mContentView = initView(getLayoutInflater(), savedInstanceState);
+
         if (isOpenLoading()) {
             loadHelper = new LoadHelper();
             mContentView = loadHelper.wrapperLoad(mContentView, new LoadingPager.OnRefreshListener() {
@@ -53,9 +56,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 }
             });
         }
+
         if (mContentView != null) {
             super.setContentView(mContentView);
         }
+
         //初始化Activity
         init(savedInstanceState);
     }

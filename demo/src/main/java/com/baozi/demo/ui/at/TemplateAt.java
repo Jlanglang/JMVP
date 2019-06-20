@@ -17,9 +17,9 @@ public class TemplateAt extends TemplateActivity<DemoPresenter> {
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        getToolbarHelper().setTitle("我是模板Activity");
-        getToolbarHelper().setLeading("关闭");
-        getToolbarHelper().setCanBack(false);
+        getToolbarHelper().setTitle("我是模板Activity")
+                .setLeading("关闭")
+                .setCanBack(true);
     }
 
     @Override
