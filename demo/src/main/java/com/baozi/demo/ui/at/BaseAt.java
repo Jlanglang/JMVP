@@ -1,4 +1,4 @@
-package com.baozi.demo.ui;
+package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import com.baozi.demo.R;
 import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.base.BaseActivity;
 
-public class DemoBaseActivity extends BaseActivity<DemoPresenter> {
+public class BaseAt extends BaseActivity<DemoPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {

@@ -3,7 +3,7 @@ package com.baozi.demo.persenter;
 import android.widget.Toast;
 
 import com.baozi.demo.model.MainModel;
-import com.baozi.demo.ui.MainActivity;
+import com.baozi.demo.ui.at.MainActivity;
 import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 

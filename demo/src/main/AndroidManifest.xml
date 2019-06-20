@@ -22,17 +22,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         >
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".ui.at.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.DemoBaseActivity" />
-        <activity android:name=".ui.DemoLoadingActivity" />
-        <activity android:name=".ui.DemoTemplateActivity" />
-        <activity android:name=".ui.PageAt" />
+        <activity android:name=".ui.at.BaseAt" />
+        <activity android:name=".ui.at.LoadingAt" />
+        <activity android:name=".ui.at.TemplateAt" />
+        <activity android:name=".ui.at.PageAt" />
     </application>
 
 </manifest>

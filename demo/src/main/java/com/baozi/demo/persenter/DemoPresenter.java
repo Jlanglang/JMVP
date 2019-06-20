@@ -1,10 +1,9 @@
 package com.baozi.demo.persenter;
 
-import com.baozi.demo.ui.DemoBaseActivity;
+import com.baozi.demo.ui.at.BaseAt;
 import com.baozi.mvp.presenter.BasePresenter;
 
-public class DemoPresenter extends BasePresenter<DemoBaseActivity> {
-
+public class DemoPresenter extends BasePresenter<BaseAt> {
 
 
     @Override

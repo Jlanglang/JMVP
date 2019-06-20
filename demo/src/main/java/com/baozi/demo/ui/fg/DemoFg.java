@@ -1,4 +1,4 @@
-package com.baozi.demo.ui;
+package com.baozi.demo.ui.fg;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

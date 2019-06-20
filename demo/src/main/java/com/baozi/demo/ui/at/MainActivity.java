@@ -1,4 +1,4 @@
-package com.baozi.demo.ui;
+package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,19 +21,19 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         findView(R.id.bt_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.toDemoAt(DemoBaseActivity.class);
+                mPresenter.toDemoAt(BaseAt.class);
             }
         });
         findView(R.id.bt_template).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.toDemoAt(DemoTemplateActivity.class);
+                mPresenter.toDemoAt(TemplateAt.class);
             }
         });
         findView(R.id.bt_loading).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.toDemoAt(DemoLoadingActivity.class);
+                mPresenter.toDemoAt(LoadingAt.class);
             }
         });
         findView(R.id.bt_fg).setOnClickListener(new View.OnClickListener() {

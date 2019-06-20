@@ -1,4 +1,4 @@
-package com.baozi.demo.ui;
+package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +7,7 @@ import com.baozi.demo.R;
 import com.baozi.demo.persenter.MainPresenter;
 import com.baozi.mvp.tempalet.TemplateActivity;
 
-public class DemoLoadingActivity extends TemplateActivity<MainPresenter> {
+public class LoadingAt extends TemplateActivity<MainPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {

@@ -1,4 +1,4 @@
-package com.baozi.demo.ui;
+package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 
 import com.baozi.demo.R;
+import com.baozi.demo.ui.fg.DemoFg;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.presenter.PagerFragmentPresenter;
 import com.baozi.mvp.tempalet.TemplateActivity;
@@ -16,7 +17,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PageAt extends TemplateActivity<EmptyPresenter> implements PageFragmentView {
-    private List f = Arrays.asList(new DemoFg(), new DemoFg(), new DemoFg(),new DemoFg(), new DemoFg());
+    private List f = Arrays.asList(
+            new DemoFg(),
+            new DemoFg(),
+            new DemoFg(),
+            new DemoFg(),
+            new DemoFg()
+    );
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
