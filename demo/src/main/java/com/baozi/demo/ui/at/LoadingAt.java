@@ -12,7 +12,7 @@ public class LoadingAt extends TemplateActivity<MainPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_main;
+        return R.layout.at_main;
     }
 
     @NonNull

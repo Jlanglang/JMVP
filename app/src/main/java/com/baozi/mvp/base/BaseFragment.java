@@ -17,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
@@ -223,12 +225,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return inflater.inflate(layout, null);
     }
 
-    /**
-     * 创建Fragment视图
-     *
-     * @return Fragment视图
-     */
-    protected abstract int initView(@Nullable Bundle savedInstanceState);
 
     /**
      * 运行在initView之后
@@ -311,11 +307,44 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     }
 
     /**
+     * 创建Fragment视图
+     *
+     * @return Fragment视图
+     */
+    protected int initView(@Nullable Bundle savedInstanceState) {
+        JView annotation = this.getClass().getAnnotation(JView.class);
+        if (annotation != null) {
+            return annotation.layout();
+        }
+        return 0;
+    }
+    /**
      * 初始化Presenter
      *
      * @return
      */
-    protected abstract T initPresenter();
+    /**
+     * 子类实现Presenter,且必须继承BasePresenter
+     *
+     * @return
+     */
+    @NonNull
+    protected T initPresenter() {
+        T t = null;
+        JView annotation = this.getClass().getAnnotation(JView.class);
+        if (annotation != null) {
+            try {
+                t = (T) annotation.p().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (t == null) {
+            t = (T) new EmptyPresenter();
+        }
+        return t;
+    }
+
 
     /**
      * 视图是否加载

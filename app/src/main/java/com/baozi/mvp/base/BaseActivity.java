@@ -16,7 +16,7 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.baozi.mvp.JView;
+import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;

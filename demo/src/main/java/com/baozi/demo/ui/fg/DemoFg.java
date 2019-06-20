@@ -1,24 +1,15 @@
 package com.baozi.demo.ui.fg;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.baozi.demo.R;
+import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.base.BaseFragment;
 import com.baozi.mvp.presenter.EmptyPresenter;
 
+@JView(layout = R.layout.fg_demo)
 public class DemoFg extends BaseFragment<EmptyPresenter> {
-    @Override
-    protected int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.fg_demo;
-    }
-
-    @Override
-    protected EmptyPresenter initPresenter() {
-        return new EmptyPresenter();
-    }
-
     @Override
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
