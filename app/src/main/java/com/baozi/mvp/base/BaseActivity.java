@@ -175,7 +175,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return (V) view;
     }
 
-
     /**
      * 初始化ContentView
      * 建议不要包含toolbar
@@ -217,6 +216,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      *
      * @return
      */
+    @NonNull
     protected abstract T initPresenter();
 
     @Override

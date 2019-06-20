@@ -1,6 +1,7 @@
 package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -30,6 +31,7 @@ public class PageAt extends TemplateActivity<EmptyPresenter> implements PageFrag
         return R.layout.at_viewpage;
     }
 
+    @NonNull
     @Override
     protected EmptyPresenter initPresenter() {
         return new EmptyPresenter();

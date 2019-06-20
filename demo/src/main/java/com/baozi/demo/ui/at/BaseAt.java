@@ -1,6 +1,7 @@
 package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.baozi.demo.R;
@@ -19,6 +20,7 @@ public class BaseAt extends BaseActivity<DemoPresenter> {
         super.init(savedInstanceState);
     }
 
+    @NonNull
     @Override
     protected DemoPresenter initPresenter() {
         return new DemoPresenter();

@@ -1,6 +1,7 @@
 package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.baozi.demo.R;
@@ -14,6 +15,7 @@ public class LoadingAt extends TemplateActivity<MainPresenter> {
         return R.layout.activity_main;
     }
 
+    @NonNull
     @Override
     protected MainPresenter initPresenter() {
         return new MainPresenter();
