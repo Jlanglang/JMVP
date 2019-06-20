@@ -1,28 +1,21 @@
 package com.baozi.demo.ui.at;
 
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.baozi.demo.R;
 import com.baozi.demo.persenter.DemoPresenter;
+import com.baozi.mvp.JView;
 import com.baozi.mvp.base.BaseActivity;
 
+@JView(layout = R.layout.activity_main,p = DemoPresenter.class)
 public class BaseAt extends BaseActivity<DemoPresenter> {
 
-    @Override
-    protected int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_main;
-    }
-
-    @Override
-    protected void init(@Nullable Bundle savedInstanceState) {
-        super.init(savedInstanceState);
-    }
-
-    @NonNull
-    @Override
-    protected DemoPresenter initPresenter() {
-        return new DemoPresenter();
-    }
+//    @Override
+//    protected int initView(@Nullable Bundle savedInstanceState) {
+//        return R.layout.activity_main;
+//    }
+//
+//    @NonNull
+//    @Override
+//    protected DemoPresenter initPresenter() {
+//        return new DemoPresenter();
+//    }
 }

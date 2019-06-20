@@ -16,8 +16,10 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.baozi.mvp.JView;
 import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
+import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
@@ -209,7 +211,13 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return 布局layout
      */
     @LayoutRes
-    protected abstract int initView(@Nullable Bundle savedInstanceState);
+    protected int initView(@Nullable Bundle savedInstanceState) {
+        JView annotation = this.getClass().getAnnotation(JView.class);
+        if (annotation != null) {
+            return annotation.layout();
+        }
+        return 0;
+    }
 
     /**
      * 子类实现Presenter,且必须继承BasePresenter
@@ -217,7 +225,21 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      * @return
      */
     @NonNull
-    protected abstract T initPresenter();
+    protected T initPresenter() {
+        T t = null;
+        JView annotation = this.getClass().getAnnotation(JView.class);
+        if (annotation != null) {
+            try {
+                t = (T) annotation.p().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (t == null) {
+            t = (T) new EmptyPresenter();
+        }
+        return t;
+    }
 
     @Override
     public boolean isOpenLoading() {

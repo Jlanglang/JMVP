@@ -1,20 +1,21 @@
 package com.baozi.demo.ui.at;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.baozi.demo.R;
 import com.baozi.demo.persenter.MainPresenter;
+import com.baozi.mvp.JView;
 import com.baozi.mvp.base.BaseActivity;
 
+@JView(layout = R.layout.activity_main,p = MainPresenter.class)
 public class MainActivity extends BaseActivity<MainPresenter> {
 
-    @Override
-    protected int initView(@Nullable Bundle savedInstanceState) {
-        return R.layout.activity_main;
-    }
+//    @Override
+//    protected int initView(@Nullable Bundle savedInstanceState) {
+//        return R.layout.activity_main;
+//    }
 
     @Override
     protected void init(@Nullable Bundle savedInstanceState) {
@@ -49,11 +50,11 @@ public class MainActivity extends BaseActivity<MainPresenter> {
     public void onNewThrowable(Throwable throwable) {
         super.onNewThrowable(throwable);
     }
-
-    @NonNull
-    @Override
-    protected MainPresenter initPresenter() {
-        return new MainPresenter();
-    }
+//
+//    @NonNull
+//    @Override
+//    protected MainPresenter initPresenter() {
+//        return new MainPresenter();
+//    }
 
 }
