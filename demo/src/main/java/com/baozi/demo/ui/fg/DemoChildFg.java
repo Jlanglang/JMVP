@@ -1,8 +1,7 @@
-package com.baozi.demo.ui.at;
+package com.baozi.demo.ui.fg;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,29 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.baozi.demo.R;
-import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.annotation.JView;
-import com.baozi.mvp.tempalet.TemplateActivity;
+import com.baozi.mvp.base.BaseFragment;
+import com.baozi.mvp.presenter.EmptyPresenter;
 
-@JView(p = DemoPresenter.class, layout = R.layout.at_template)
-public class TemplateAt extends TemplateActivity<DemoPresenter> {
+@JView(layout = R.layout.fg_demo_child)
+public class DemoChildFg extends BaseFragment<EmptyPresenter> {
     @Override
-    protected void init(@Nullable Bundle savedInstanceState) {
+    public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        getToolbarHelper().setTitle("我是模板Activity")
-                .setLeading("关闭");
-        RecyclerView view = findView(R.id.rv_content);
-        view.setLayoutManager(new LinearLayoutManager(this));
+        final RecyclerView view = findView(R.id.rv_content);
+        view.setLayoutManager(new LinearLayoutManager(mContext));
         view.setAdapter(new RecyclerView.Adapter() {
             @NonNull
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
                 View inflate = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_test, viewGroup, false);
-                RecyclerView.ViewHolder viewHolder = new RecyclerView.ViewHolder(inflate) {
+                return new RecyclerView.ViewHolder(inflate) {
                 };
-
-                return viewHolder;
             }
 
             @Override
@@ -42,7 +36,7 @@ public class TemplateAt extends TemplateActivity<DemoPresenter> {
 
             @Override
             public int getItemCount() {
-                return 1000;
+                return 100;
             }
         });
     }

@@ -38,7 +38,6 @@ public class PagerPresenter<T> {
         initTabLayout();
     }
 
-
     private void bindTab(TabLayout.Tab tab, int image, String tabStr) {
         int tabLayoutItem = tablayoutView.getTabLayoutItem();
         if (tabLayoutItem == 0 && tab != null) {

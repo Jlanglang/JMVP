@@ -13,8 +13,19 @@ import com.baozi.mvp.base.BaseActivity;
 public class MainActivity extends BaseActivity<MainPresenter> {
 
     @Override
+    protected int initView(@Nullable Bundle savedInstanceState) {
+        return R.layout.at_main;
+    }
+
+    @Override
     protected void init(@Nullable Bundle savedInstanceState) {
         super.init(savedInstanceState);
+        findView(R.id.bt_viewPage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.toDemoAt(PageAt.class);
+            }
+        });
         findView(R.id.bt_demo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,10 +47,11 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         findView(R.id.bt_fg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.toDemoAt(PageAt.class);
+                mPresenter.toDemoAt(TestActivity.class);
             }
         });
     }
+
 
     @Override
     public void onNewThrowable(Throwable throwable) {

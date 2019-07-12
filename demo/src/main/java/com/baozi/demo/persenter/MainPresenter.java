@@ -1,21 +1,18 @@
 package com.baozi.demo.persenter;
 
-import android.widget.Toast;
-
-import com.baozi.demo.model.MainModel;
 import com.baozi.demo.ui.at.MainActivity;
 import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 
 public class MainPresenter extends BasePresenter<MainActivity> {
-    private MainModel mainModel;
+//    private MainModel mainModel;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mainModel = new MainModel();
-        String login = mainModel.login();
-        Toast.makeText(mView, login, Toast.LENGTH_SHORT).show();
+//        mainModel = new MainModel();
+//        String login = mainModel.login();
+//        Toast.makeText(mView, login, Toast.LENGTH_SHORT).show();
     }
 
     @Override
