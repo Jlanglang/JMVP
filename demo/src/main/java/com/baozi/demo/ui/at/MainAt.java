@@ -10,7 +10,7 @@ import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.base.BaseActivity;
 
 @JView(layout = R.layout.at_main, p = MainPresenter.class)
-public class MainActivity extends BaseActivity<MainPresenter> {
+public class MainAt extends BaseActivity<MainPresenter> {
 
     @Override
     protected int initView(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class MainActivity extends BaseActivity<MainPresenter> {
         findView(R.id.bt_fg).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mPresenter.toDemoAt(TestActivity.class);
+                mPresenter.toDemoAt(TestAt.class);
             }
         });
     }

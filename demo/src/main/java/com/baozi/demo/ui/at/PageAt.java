@@ -18,7 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 @JView(layout = R.layout.at_viewpage)
-public class PageAt extends TemplateActivity<EmptyPresenter> implements PageFragmentView, TabLayoutView {
+public class PageAt extends TemplateActivity<EmptyPresenter>
+        implements PageFragmentView, TabLayoutView {
     private List f = Arrays.asList(
             new DemoFg(),
             new DemoFg(),

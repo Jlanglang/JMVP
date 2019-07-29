@@ -16,6 +16,5 @@ public class App extends Application {
                         .setOtherTextColor(getResources().getColor(android.R.color.black))
                         .setTitleColor(getResources().getColor(android.R.color.holo_red_dark))
         );
-
     }
 }

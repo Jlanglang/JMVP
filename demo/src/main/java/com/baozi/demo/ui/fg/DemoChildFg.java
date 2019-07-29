@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.baozi.demo.R;
 import com.baozi.mvp.annotation.JView;
@@ -18,12 +20,14 @@ public class DemoChildFg extends BaseFragment<EmptyPresenter> {
     @Override
     public void init(Bundle savedInstanceState) {
         super.init(savedInstanceState);
-        final RecyclerView view = findView(R.id.rv_content);
+        final RecyclerView view =  findView(R.id.rv_content);
         view.setLayoutManager(new LinearLayoutManager(mContext));
         view.setAdapter(new RecyclerView.Adapter() {
             @NonNull
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+
+
                 View inflate = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_test, viewGroup, false);
                 return new RecyclerView.ViewHolder(inflate) {
                 };

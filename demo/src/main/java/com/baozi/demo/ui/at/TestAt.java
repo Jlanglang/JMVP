@@ -10,7 +10,7 @@ import com.baozi.demo.R;
 import com.baozi.mvp.StartFactory;
 
 
-public class TestActivity extends Activity {
+public class TestAt extends Activity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +26,7 @@ public class TestActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        Intent intent = new Intent(this, TestActivity.class);
+        Intent intent = new Intent(this, TestAt.class);
         startActivity(intent);
     }
 }

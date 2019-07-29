@@ -177,7 +177,7 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
      */
     public void setEndImage(int drawable, View.OnClickListener clickListener) {
         if (endActions != null) {
-            ImageButton view = findView(R.id.tv_start);
+            ImageButton view = findView(R.id.ib_start);
             if (drawable == 0) {
                 view.setVisibility(View.GONE);
                 return;

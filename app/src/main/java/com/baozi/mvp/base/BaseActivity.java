@@ -195,15 +195,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
-    public boolean isFinish() {
-        return isFinishing();
-    }
-
-    @Override
-    public void finishActivity() {
-        finish();
-    }
-
     /**
      * 建议不要包含toolbar
      *
@@ -217,6 +208,15 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             return annotation.layout();
         }
         return 0;
+    }
+
+    public boolean isFinish() {
+        return isFinishing();
+    }
+
+    @Override
+    public void finishActivity() {
+        finish();
     }
 
     /**

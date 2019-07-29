@@ -23,7 +23,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.at.MainActivity">
+        <activity android:name=".ui.at.MainAt">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,7 +35,7 @@
         <activity android:name=".ui.at.TemplateAt" />
         <activity android:name=".ui.at.PageAt" />
         <activity
-            android:name=".ui.at.TestActivity"
+            android:name=".ui.at.TestAt"
             android:launchMode="singleInstance" />
     </application>
 

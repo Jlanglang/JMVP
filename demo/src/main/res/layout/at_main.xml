@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.at.MainActivity">
+    tools:context=".ui.at.MainAt">
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/bt_viewPage"
