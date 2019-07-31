@@ -20,4 +20,9 @@ public @interface JView {
      * @return 布局id
      */
     int layout() default 0;
+
+    /**
+     * 打开加载设置
+     */
+    boolean openLoading() default false;
 }

@@ -17,10 +17,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 
+import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
+import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
 
@@ -35,13 +37,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     protected Context mContext;//activity的上下文对象
     protected Bundle mBundle;
 
-
     private boolean isInit;
     private boolean first = true;
 
     private SparseArray<View> mViews;
     private View mContentView;
     private LoadHelper loadHelper;
+    private ContentOptions contentOptions;
+    private JView jView;
 
 
     /**
@@ -53,6 +56,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
+        jView = this.getClass().getAnnotation(JView.class);
         //应该只创建一次Presenter.
         if (mPresenter == null || !isInit) {
             mPresenter = initPresenter();
@@ -106,14 +110,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (null == mContentView) {
             mContentView = initView(inflater, savedInstanceState);
-            if (isOpenLoading()) {
-                loadHelper = new LoadHelper();
-                mContentView = loadHelper.wrapperLoad(mContentView, new LoadingPager.OnRefreshListener() {
-                    @Override
-                    public void onRefresh() {
-                        mPresenter.onRefreshData();
-                    }
-                });
+            // 包装加载
+            if (jView != null && jView.openLoading()) {
+                wrapperLoad();
             }
         } else {
             //缓存的ContentView需要判断是否已有parent， 如果有parent需要从parent删除，否则会抛出异常。
@@ -124,6 +123,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         }
         return mContentView;
     }
+
 
     /**
      * 运行在onCreateView之后
@@ -139,11 +139,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         if (mPresenter == null) {
             return;
         }
-        //初始化Presenter,应该只初始化一次
+        //初始化,应该只初始化一次
         if (!isInit) {
             isInit = true;
             onPresentersCreate();
-            if (!isLazy()) {
+            if (!isLazy()) { // 没开懒加载,刷新
                 mPresenter.onRefreshData();
             }
         }
@@ -312,9 +312,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
      * @return Fragment视图
      */
     protected int initView(@Nullable Bundle savedInstanceState) {
-        JView annotation = this.getClass().getAnnotation(JView.class);
-        if (annotation != null) {
-            return annotation.layout();
+        if (jView != null) {
+            return jView.layout();
         }
         return 0;
     }
@@ -331,10 +330,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     @NonNull
     protected T initPresenter() {
         T t = null;
-        JView annotation = this.getClass().getAnnotation(JView.class);
-        if (annotation != null) {
+        if (jView != null) {
             try {
-                t = (T) annotation.p().newInstance();
+                t = (T) jView.p().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -345,6 +343,19 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return t;
     }
 
+    private void wrapperLoad() {
+        loadHelper = new LoadHelper();
+        mContentView = loadHelper.wrapperLoad(
+                mContentView,
+                getContentOptions(),
+                new LoadingPager.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mPresenter.onRefreshData();
+                    }
+                }
+        );
+    }
 
     /**
      * 视图是否加载
@@ -373,9 +384,11 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         return false;
     }
 
-    @Override
-    public boolean isOpenLoading() {
-        return false;
+    public ContentOptions getContentOptions() {
+        if (contentOptions == null) {
+            contentOptions = MVPManager.getContentOptions();
+        }
+        return contentOptions;
     }
 
     public LoadHelper getLoadHelper() {

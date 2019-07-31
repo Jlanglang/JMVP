@@ -24,15 +24,10 @@ public class ContentOptions implements Cloneable {
     @LayoutRes
     private int loadingLayout;
 
-    /**
-     * 是否显示
-     */
-    private boolean isOpenLoading;
-
     private Set<Integer> clickIds;
 
 
-    private List<Class> throwables;
+    private List<Class> throwableList;
 
     public static ContentOptions create() {
         return new ContentOptions();
@@ -80,16 +75,6 @@ public class ContentOptions implements Cloneable {
         return this;
     }
 
-    public boolean isOpenLoading() {
-        return isOpenLoading;
-    }
-
-    public ContentOptions setOpenLoading(boolean openLoading) {
-        isOpenLoading = openLoading;
-        return this;
-    }
-
-
 
     /**
      * @param context     上下文
@@ -101,7 +86,7 @@ public class ContentOptions implements Cloneable {
         loadingPager.setEmptyLayout(emptyLayout);
         loadingPager.setErrorLayout(errorLayout);
         loadingPager.setLoadingLayout(loadingLayout);
-        loadingPager.setShowLoading(isOpenLoading);
+        loadingPager.setShowLoading(true);
         loadingPager.setSuccessPage(SuccessView);
         if (clickIds != null && clickIds.size() > 0) {
             for (Integer id : clickIds) {
@@ -126,12 +111,12 @@ public class ContentOptions implements Cloneable {
      * @return
      */
     public ContentOptions setThrowableList(Class... throwable) {
-        this.throwables = Arrays.asList(throwable);
+        this.throwableList = Arrays.asList(throwable);
         return this;
     }
 
     public List<Class> getThrowable() {
-        return throwables;
+        return throwableList;
     }
 }
 

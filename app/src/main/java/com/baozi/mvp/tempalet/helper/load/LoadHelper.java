@@ -9,8 +9,16 @@ import com.baozi.mvp.tempalet.weight.LoadingPager;
 public class LoadHelper {
     private LoadingPager mLoadingPager;
 
+    public LoadHelper() {
+    }
+
     public View wrapperLoad(View view, LoadingPager.OnRefreshListener onRefreshListener) {
-        mLoadingPager = getContentOptions().buildLoadingPager(view.getContext(), view);
+        return wrapperLoad(view, MVPManager.getContentOptions(), onRefreshListener);
+    }
+
+    public View wrapperLoad(View view, ContentOptions options, LoadingPager.OnRefreshListener onRefreshListener) {
+        if (options == null) return view;
+        mLoadingPager = options.buildLoadingPager(view.getContext(), view);
         mLoadingPager.setRefreshListener(onRefreshListener);
         return mLoadingPager;
     }
@@ -29,6 +37,10 @@ public class LoadHelper {
         }
     }
 
+    public void showError() {
+        showError(null, true);
+    }
+
     public void showError(Throwable throwable) {
         showError(throwable, true);
     }
@@ -41,7 +53,4 @@ public class LoadHelper {
         mLoadingPager.showSuccess();
     }
 
-    protected ContentOptions getContentOptions() {
-        return MVPManager.getContentOptions();
-    }
 }

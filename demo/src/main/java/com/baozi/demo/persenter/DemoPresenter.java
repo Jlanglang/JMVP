@@ -13,6 +13,6 @@ public class DemoPresenter extends BasePresenter<BaseAt> {
 
     @Override
     public void netWorkError(Throwable throwable) {
-
+        mView.getLoadHelper().showError(throwable);
     }
 }

@@ -68,5 +68,4 @@ public interface UIView extends BaseView {
 
     void finishActivity();
 
-    boolean isOpenLoading();
 }

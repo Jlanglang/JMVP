@@ -13,7 +13,7 @@ import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 public class MVPManager {
     private static ToolbarOptions mToolbarOptions;
-    private static ContentOptions mTemplateContentOptions;
+    private static ContentOptions mContentOptions;
     @AnimRes
     @AnimatorRes
     private static int enterAnim;
@@ -73,15 +73,20 @@ public class MVPManager {
         mToolbarOptions = toolbarOptions;
     }
 
+    /**
+     * 防止影响全局,第二次获取只能获取clone的副本;
+     *
+     * @return
+     */
     public static ContentOptions getContentOptions() {
-        if (mTemplateContentOptions == null) {
-            mTemplateContentOptions = ContentOptions.create();
+        if (mContentOptions == null) {
+            mContentOptions = ContentOptions.create();
         }
-        return mTemplateContentOptions.clone();
+        return mContentOptions.clone();
     }
 
     public static void setContentOptions(ContentOptions templetContentOptions) {
-        mTemplateContentOptions = templetContentOptions;
+        mContentOptions = templetContentOptions;
     }
 
 }

@@ -21,6 +21,7 @@ import com.baozi.mvp.MVPManager;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
+import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
 import com.baozi.mvp.view.UIView;
 
@@ -35,10 +36,14 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     private View mContentView;
     private View statusBarView;
     private LoadHelper loadHelper;
+    private JView jView;
+    private ContentOptions contentOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        jView = this.getClass().getAnnotation(JView.class);
+
         //创建presenter
         mPresenter = initPresenter();
         //绑定Activity
@@ -46,25 +51,31 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
 
         getLifecycle().addObserver(mPresenter);
 
-        //初始化ContentView
+        // 初始化ContentView
         mContentView = initView(getLayoutInflater(), savedInstanceState);
-
-        if (isOpenLoading()) {
-            loadHelper = new LoadHelper();
-            mContentView = loadHelper.wrapperLoad(mContentView, new LoadingPager.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    mPresenter.onRefreshData();
-                }
-            });
+        // 包装加载
+        if (jView != null && jView.openLoading()) {
+            wrapperLoad();
         }
-
         if (mContentView != null) {
             super.setContentView(mContentView);
         }
-
         //初始化Activity
         init(savedInstanceState);
+    }
+
+    private void wrapperLoad() {
+        loadHelper = new LoadHelper();
+        mContentView = loadHelper.wrapperLoad(
+                mContentView,
+                getContentOptions(),
+                new LoadingPager.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        mPresenter.onRefreshData();
+                    }
+                }
+        );
     }
 
     @Override
@@ -203,9 +214,8 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     @LayoutRes
     protected int initView(@Nullable Bundle savedInstanceState) {
-        JView annotation = this.getClass().getAnnotation(JView.class);
-        if (annotation != null) {
-            return annotation.layout();
+        if (jView != null) {
+            return jView.layout();
         }
         return 0;
     }
@@ -227,10 +237,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @NonNull
     protected T initPresenter() {
         T t = null;
-        JView annotation = this.getClass().getAnnotation(JView.class);
-        if (annotation != null) {
+        if (jView != null) {
             try {
-                t = (T) annotation.p().newInstance();
+                t = (T) jView.p().newInstance();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -241,9 +250,11 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         return t;
     }
 
-    @Override
-    public boolean isOpenLoading() {
-        return false;
+    public ContentOptions getContentOptions() {
+        if (contentOptions == null) {
+            contentOptions = MVPManager.getContentOptions();
+        }
+        return contentOptions;
     }
 
     @Nullable

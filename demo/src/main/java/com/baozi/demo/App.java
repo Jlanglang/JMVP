@@ -16,5 +16,10 @@ public class App extends Application {
                         .setOtherTextColor(getResources().getColor(android.R.color.black))
                         .setTitleColor(getResources().getColor(android.R.color.holo_red_dark))
         );
+        MVPManager.setContentOptions(
+                MVPManager.getContentOptions()
+                .setErrorLayout(R.layout.empty_layout)
+                .setLoadingLayout(R.layout.load_layout)
+        );
     }
 }

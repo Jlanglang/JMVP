@@ -107,9 +107,6 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
         return mToolbarHelper;
     }
 
-//    @Override
-//    protected abstract T initPresenter();
-
     protected View wrapperContentView(View view) {
         return view;
     }
