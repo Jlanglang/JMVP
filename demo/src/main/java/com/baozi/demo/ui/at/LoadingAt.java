@@ -7,6 +7,7 @@ import com.baozi.demo.R;
 import com.baozi.demo.persenter.MainPresenter;
 import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.tempalet.TemplateActivity;
+import com.baozi.mvp.tempalet.options.ContentOptions;
 
 @JView(layout = R.layout.at_load, p = MainPresenter.class, openLoading = true)
 public class LoadingAt extends TemplateActivity<MainPresenter> {
@@ -53,4 +54,9 @@ public class LoadingAt extends TemplateActivity<MainPresenter> {
 //        return super.wrapperContentView(view);
 //    }
 
+    @Override
+    public ContentOptions getContentOptions() {
+        return super.getContentOptions()
+                .setEmptyLayout(R.layout.empty_layout);
+    }
 }
