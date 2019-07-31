@@ -29,6 +29,7 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
         implements ToolbarView, BaseView {
     private ToolbarHelper mToolbarHelper;
     private ViewGroup rootView;
+    private ToolbarOptions toolbarOptions;
 
     /**
      * @param inflater
@@ -76,7 +77,10 @@ public abstract class TemplateFragment<T extends BasePresenter> extends BaseFrag
 
     @Override
     public ToolbarOptions getToolbarOptions() {
-        return MVPManager.getToolbarOptions();
+        if (toolbarOptions == null) {
+            toolbarOptions = MVPManager.getToolbarOptions();
+        }
+        return toolbarOptions;
     }
 
     /**

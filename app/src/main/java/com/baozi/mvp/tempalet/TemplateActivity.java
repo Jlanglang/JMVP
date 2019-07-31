@@ -32,6 +32,7 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
         implements ToolbarView, BaseView {
     private ToolbarHelper mToolbarHelper;
     private ViewGroup mRootView;
+    private ToolbarOptions toolbarOptions;
 
     @Override
     public View initView(@NonNull LayoutInflater inflater, Bundle savedInstanceState) {
@@ -87,7 +88,10 @@ public abstract class TemplateActivity<T extends BasePresenter> extends BaseActi
 
     @Override
     public ToolbarOptions getToolbarOptions() {
-        return MVPManager.getToolbarOptions();
+        if (toolbarOptions == null) {
+            toolbarOptions = MVPManager.getToolbarOptions();
+        }
+        return toolbarOptions;
     }
 
     /**
