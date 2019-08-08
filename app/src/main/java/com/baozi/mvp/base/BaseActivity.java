@@ -112,7 +112,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @DrawableRes
     @ColorRes
     protected int getStatusBarDrawable() {
-        return MVPManager.getToolbarOptions().getStatusDrawable();
+        return MVPManager.getStatusDrawable();
     }
 
     /**

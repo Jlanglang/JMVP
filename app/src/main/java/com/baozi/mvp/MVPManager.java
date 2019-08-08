@@ -89,4 +89,7 @@ public class MVPManager {
         mContentOptions = templetContentOptions;
     }
 
+    public static int getStatusDrawable() {
+        return MVPManager.getToolbarOptions().getStatusDrawable();
+    }
 }

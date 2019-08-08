@@ -58,10 +58,11 @@ public class BaseToolBarHelperImpl extends ToolbarHelper {
         int toolbarColor = options.getToolbarColor();
         int toolbarDrawable = options.getToolbarDrawable();
         int toolbarHeight = options.getToolbarHeight();
+
         if (toolbarColor != 0) {
             mToolbar.setBackgroundColor(toolbarColor);
         }
-        if (options.getToolbarDrawable() != 0) {
+        if (toolbarDrawable != 0) {
             mToolbar.setBackgroundResource(toolbarDrawable);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

@@ -13,6 +13,7 @@ import com.baozi.demo.R;
 import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.tempalet.TemplateActivity;
+import com.baozi.mvp.tempalet.options.ToolbarOptions;
 
 @JView(p = DemoPresenter.class, layout = R.layout.at_template)
 public class TemplateAt extends TemplateActivity<DemoPresenter> {
@@ -45,5 +46,13 @@ public class TemplateAt extends TemplateActivity<DemoPresenter> {
                 return 1000;
             }
         });
+    }
+
+    @Override
+    public ToolbarOptions getToolbarOptions() {
+        return super.getToolbarOptions()
+                .setNoBack(true)
+                .setToolbarColor(0)
+                .setElevation(0);
     }
 }
