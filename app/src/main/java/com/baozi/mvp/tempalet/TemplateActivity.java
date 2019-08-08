@@ -29,7 +29,7 @@ import com.baozi.mvp.view.ToolbarView;
  * @param <T>
  */
 public abstract class TemplateActivity<T extends BasePresenter> extends BaseActivity<T>
-        implements ToolbarView, BaseView {
+        implements ToolbarView {
     private ToolbarHelper mToolbarHelper;
     private ViewGroup mRootView;
     private ToolbarOptions toolbarOptions;

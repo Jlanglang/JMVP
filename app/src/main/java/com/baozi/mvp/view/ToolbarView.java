@@ -26,12 +26,10 @@ public interface ToolbarView extends BaseView {
     @LayoutRes
     int getToolbarLayout();
 
-
     /**
      * 回退
      */
     void onBackPressed();
-
 
     View getContentView();
 
