@@ -19,7 +19,8 @@
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
             android:contentDescription="@null"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_start"
@@ -31,29 +32,11 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:ellipsize="end"
-        android:gravity="center"
-        android:lines="1" />
-
     <LinearLayout
         android:id="@+id/ll_end_group"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="end">
-
-        <TextView
-            android:id="@+id/tv_end"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="center"
-            android:minWidth="48dp"
-            android:visibility="gone" />
 
         <ImageButton
             android:id="@+id/ib_end"
@@ -63,5 +46,23 @@
             android:contentDescription="@null"
             android:gravity="center"
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_end"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@null"
+            android:gravity="center"
+            android:minWidth="48dp"
+            android:visibility="gone" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lines="1" />
 </android.support.v7.widget.Toolbar>

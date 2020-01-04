@@ -8,12 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.baozi.demo.R;
 import com.baozi.demo.persenter.DemoPresenter;
 import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.tempalet.TemplateActivity;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
+
 
 @JView(p = DemoPresenter.class, layout = R.layout.at_template)
 public class TemplateAt extends TemplateActivity<DemoPresenter> {
@@ -22,30 +27,21 @@ public class TemplateAt extends TemplateActivity<DemoPresenter> {
         super.init(savedInstanceState);
         getToolbarHelper().setTitle("我是模板Activity")
                 .setLeading("关闭");
-        RecyclerView view = findView(R.id.rv_content);
-        view.setLayoutManager(new LinearLayoutManager(this));
-        view.setAdapter(new RecyclerView.Adapter() {
-            @NonNull
-            @Override
-            public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-
-                View inflate = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_test, viewGroup, false);
-                RecyclerView.ViewHolder viewHolder = new RecyclerView.ViewHolder(inflate) {
-                };
-
-                return viewHolder;
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
-
-            }
-
-            @Override
-            public int getItemCount() {
-                return 1000;
-            }
-        });
+        WebView viewById = findViewById(R.id.wb_content);
+        viewById.setWebViewClient(new WebViewClient());
+        WebSettings webSetting = viewById.getSettings();
+        webSetting.setJavaScriptEnabled(true);
+        webSetting.setDomStorageEnabled(true);
+//        webSetting.setAppCacheMaxSize(1024 * 1024 * 8);
+        webSetting.setUseWideViewPort(true); //将图片调整到适合webview的大小
+        webSetting.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        webSetting.setAllowFileAccess(true);
+        webSetting.setAppCacheEnabled(true);
+        String appCachePath = getApplication().getCacheDir().getAbsolutePath();
+        webSetting.setAppCachePath(appCachePath);
+        webSetting.setDatabaseEnabled(true);
+        webSetting.setCacheMode(WebSettings.LOAD_NO_CACHE);
+        viewById.loadUrl("https://smlt.tsign.cn/n8gmKAfuuemC");
     }
 
     @Override

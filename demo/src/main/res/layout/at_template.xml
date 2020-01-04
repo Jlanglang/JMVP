@@ -4,12 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_content"
-        android:background="#0ff"
+    <WebView
+        android:id="@+id/wb_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="123123" />
+        android:layout_height="match_parent" />
 
 </android.support.constraint.ConstraintLayout>

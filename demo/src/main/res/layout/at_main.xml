@@ -10,8 +10,8 @@
         android:id="@+id/bt_viewPage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ViewPage的At"
         android:layout_marginTop="8dp"
+        android:text="ViewPage的At"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.v7.widget.AppCompatButton
