@@ -3,7 +3,6 @@ package com.baozi.mvp.base;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -24,7 +23,6 @@ import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
 import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
-import com.baozi.mvp.utils.StatusBarUtil;
 import com.baozi.mvp.view.UIView;
 
 /**
@@ -110,19 +108,6 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (statusBarView != null) {
             statusBarView.setBackgroundResource(statusBarDrawable);
         }
-    }
-
-    public void setStatusBar(@DrawableRes int res, boolean isLight, @DrawableRes int normalRes) {
-        if (statusBarView != null) {
-            statusBarView.setBackgroundResource(res);
-        }
-        //5.0以下不允许修改字体颜色
-        if (isLight && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            if (statusBarView != null) {
-                statusBarView.setBackgroundResource(normalRes);
-            }
-        }
-        StatusBarUtil.setStatusBarLightMode(getWindow(), isLight);
     }
 
     @DrawableRes

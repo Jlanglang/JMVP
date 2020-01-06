@@ -1,6 +1,8 @@
 package com.baozi.mvp.utils;
 
+import android.app.Activity;
 import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -31,6 +33,35 @@ public class StatusBarUtil {
             }
         }
         return result;
+    }
+
+    /**
+     * @param activity          要修改的activity
+     * @param statusBarDrawable 背景色
+     * @param isLight           是否黑色字体
+     * @param normalRes         不能修改黑色字体时的颜色
+     */
+    public void setStatusBar(Activity activity,
+                             @DrawableRes int statusBarDrawable,
+                             boolean isLight,
+                             @DrawableRes int normalRes
+    ) {
+        if (activity == null) {
+            return;
+        }
+        Window window = activity.getWindow();
+        int statusId = activity.getResources().getIdentifier("statusBarBackground", "id", "android");
+        View statusBarView = window.findViewById(statusId);
+        if (statusBarView != null) {
+            statusBarView.setBackgroundResource(statusBarDrawable);
+        }
+        //5.0以下不允许修改字体颜色
+        if (isLight && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (statusBarView != null) {
+                statusBarView.setBackgroundResource(normalRes);
+            }
+        }
+        StatusBarUtil.setStatusBarLightMode(window, isLight);
     }
 
     /**
