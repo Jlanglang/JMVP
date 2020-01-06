@@ -106,6 +106,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         }
         int statusBarDrawable = getStatusBarDrawable();
         if (statusBarView != null) {
+            statusBarView.setBackgroundDrawable(null);
             statusBarView.setBackgroundResource(statusBarDrawable);
         }
     }

@@ -53,6 +53,9 @@ public class StatusBarUtil {
         int statusId = activity.getResources().getIdentifier("statusBarBackground", "id", "android");
         View statusBarView = window.findViewById(statusId);
         if (statusBarView != null) {
+            if (isLight) {
+                statusBarView.setBackgroundDrawable(null);
+            }
             statusBarView.setBackgroundResource(statusBarDrawable);
         }
         //5.0以下不允许修改字体颜色
@@ -61,6 +64,7 @@ public class StatusBarUtil {
                 statusBarView.setBackgroundResource(normalRes);
             }
         }
+
         StatusBarUtil.setStatusBarLightMode(window, isLight);
     }
 
