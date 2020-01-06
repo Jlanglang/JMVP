@@ -3,6 +3,7 @@ package com.baozi.mvp.base;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
@@ -16,13 +17,14 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.MVPManager;
+import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
 import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.weight.LoadingPager;
+import com.baozi.mvp.utils.StatusBarUtil;
 import com.baozi.mvp.view.UIView;
 
 /**
@@ -32,9 +34,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         implements UIView {
     public final String TAG = this.getClass().getSimpleName();//tag不要用反射的形式取
     protected T mPresenter;
+    protected View statusBarView;
     private SparseArray<View> mViews;
     private View mContentView;
-    private View statusBarView;
     private LoadHelper loadHelper;
     private JView jView;
     private ContentOptions contentOptions;
@@ -104,9 +106,23 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             int identifier = getResources().getIdentifier("statusBarBackground", "id", "android");
             statusBarView = getWindow().findViewById(identifier);
         }
+        int statusBarDrawable = getStatusBarDrawable();
         if (statusBarView != null) {
-            statusBarView.setBackgroundResource(getStatusBarDrawable());
+            statusBarView.setBackgroundResource(statusBarDrawable);
         }
+    }
+
+    public void setStatusBar(@DrawableRes int res, boolean isLight, @DrawableRes int normalRes) {
+        if (statusBarView != null) {
+            statusBarView.setBackgroundResource(res);
+        }
+        //5.0以下不允许修改字体颜色
+        if (isLight && Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if (statusBarView != null) {
+                statusBarView.setBackgroundResource(normalRes);
+            }
+        }
+        StatusBarUtil.setStatusBarLightMode(getWindow(), isLight);
     }
 
     @DrawableRes

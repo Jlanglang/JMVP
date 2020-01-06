@@ -4,6 +4,7 @@ import com.baozi.demo.ui.at.MainAt;
 import com.baozi.mvp.StartFactory;
 import com.baozi.mvp.presenter.BasePresenter;
 
+
 public class MainPresenter extends BasePresenter<MainAt> {
     @Override
     public void onCreate() {
