@@ -124,13 +124,14 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
         view.setVisibility(View.VISIBLE);
         view.setText(leading);
         if (click == null) {
-            view.setOnClickListener(new View.OnClickListener() {
+            click = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mToolbarView.onBackPressed();
                 }
-            });
+            };
         }
+        view.setOnClickListener(click);
         return this;
     }
 
@@ -144,13 +145,14 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
         view.setVisibility(View.VISIBLE);
         view.setImageResource(leadRes);
         if (click == null) {
-            view.setOnClickListener(new View.OnClickListener() {
+            click = new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     mToolbarView.onBackPressed();
                 }
-            });
+            };
         }
+        view.setOnClickListener(click);
         return this;
     }
 
