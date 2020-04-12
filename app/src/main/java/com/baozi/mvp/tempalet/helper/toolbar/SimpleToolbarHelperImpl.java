@@ -172,7 +172,7 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
 
     public void setEndText(String str, View.OnClickListener clickListener) {
         if (endActions != null) {
-            TextView view = findView(R.id.tv_start);
+            TextView view = findView(R.id.tv_end);
             if (str == null) {
                 view.setVisibility(View.GONE);
                 return;
@@ -189,7 +189,7 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
      */
     public void setEndImage(int drawable, View.OnClickListener clickListener) {
         if (endActions != null) {
-            ImageButton view = findView(R.id.ib_start);
+            ImageButton view = findView(R.id.ib_end);
             if (drawable == 0) {
                 view.setVisibility(View.GONE);
                 return;
