@@ -47,8 +47,6 @@ public class TemplateAt extends TemplateActivity<DemoPresenter> {
     @Override
     public ToolbarOptions getToolbarOptions() {
         return super.getToolbarOptions()
-                .setNoBack(true)
-                .setToolbarColor(0)
-                .setElevation(0);
+                .setNoBack(true);
     }
 }

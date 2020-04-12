@@ -5,6 +5,10 @@
 
 上手简单
 
+依赖
+```
+ implementation 'com.github.Jlanglang:JMVP:1.0.4'
+```
 
 
  

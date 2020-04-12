@@ -16,8 +16,8 @@ import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.MVPManager;
+import com.baozi.mvp.annotation.JView;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.presenter.EmptyPresenter;
 import com.baozi.mvp.tempalet.helper.load.LoadHelper;
@@ -32,9 +32,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         implements UIView {
     public final String TAG = this.getClass().getSimpleName();//tag不要用反射的形式取
     protected T mPresenter;
+    protected View statusBarView;
     private SparseArray<View> mViews;
     private View mContentView;
-    private View statusBarView;
     private LoadHelper loadHelper;
     private JView jView;
     private ContentOptions contentOptions;
@@ -104,8 +104,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             int identifier = getResources().getIdentifier("statusBarBackground", "id", "android");
             statusBarView = getWindow().findViewById(identifier);
         }
+        int statusBarDrawable = getStatusBarDrawable();
         if (statusBarView != null) {
-            statusBarView.setBackgroundResource(getStatusBarDrawable());
+            statusBarView.setBackgroundDrawable(null);
+            statusBarView.setBackgroundResource(statusBarDrawable);
         }
     }
 
