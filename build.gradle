@@ -13,6 +13,7 @@ buildscript {
         maven {
             url 'https://maven.aliyun.com/repository/gradle-plugin'
         }
+        maven { url "https://jitpack.io" }
         mavenCentral() // add repository
     }
     dependencies {

@@ -79,24 +79,24 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
     }
 
     @Override
-    public ToolbarHelper setTextSize(int size) {
+    public SimpleToolbarHelperImpl setTextSize(int size) {
         return this;
     }
 
     @Override
-    public ToolbarHelper setTitleSize(int size) {
+    public SimpleToolbarHelperImpl setTitleSize(int size) {
         mTitleView.setTextSize(size);
         return this;
     }
 
 
-    public ToolbarHelper setTitle(@NonNull String titleView) {
+    public SimpleToolbarHelperImpl setTitle(@NonNull String titleView) {
         mTitleView.setText(titleView);
         return this;
     }
 
     @Override
-    public ToolbarHelper setTitle(int titleId) {
+    public SimpleToolbarHelperImpl setTitle(int titleId) {
         String title = mToolbarView.getContext().getResources().getString(titleId);
         setTitle(title);
         return this;
@@ -104,14 +104,18 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
 
 
     @Override
-    public ToolbarHelper setCanBack(boolean canBack) {
+    public SimpleToolbarHelperImpl setCanBack(boolean canBack) {
         super.setCanBack(canBack);
         findView(R.id.ll_start_group).setVisibility(canBack ? View.VISIBLE : View.GONE);
         return this;
     }
 
     @Override
-    public ToolbarHelper setLeading(String leading) {
+    public SimpleToolbarHelperImpl setLeading(String leading) {
+        return setLeading(leading, null);
+    }
+
+    public SimpleToolbarHelperImpl setLeading(String leading, View.OnClickListener click) {
         TextView view = findView(R.id.tv_start);
         if (TextUtils.isEmpty(leading)) {
             view.setVisibility(View.GONE);
@@ -119,31 +123,39 @@ public class SimpleToolbarHelperImpl extends BaseToolBarHelperImpl {
         }
         view.setVisibility(View.VISIBLE);
         view.setText(leading);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mToolbarView.onBackPressed();
-            }
-        });
+        if (click == null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mToolbarView.onBackPressed();
+                }
+            });
+        }
         return this;
     }
 
     @Override
-    public ToolbarHelper setLeading(int leadRes) {
+    public SimpleToolbarHelperImpl setLeading(int leadRes) {
+        return setLeading(leadRes, null);
+    }
+
+    public SimpleToolbarHelperImpl setLeading(int leadRes, View.OnClickListener click) {
         ImageButton view = findView(R.id.ib_start);
         view.setVisibility(View.VISIBLE);
         view.setImageResource(leadRes);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mToolbarView.onBackPressed();
-            }
-        });
+        if (click == null) {
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mToolbarView.onBackPressed();
+                }
+            });
+        }
         return this;
     }
 
     @Override
-    public ToolbarHelper addActions(View view) {
+    public SimpleToolbarHelperImpl addActions(View view) {
         if (endActions != null && view != null) {
             if (view instanceof TextView) {
                 if (mOtherTextColor != 0) {
