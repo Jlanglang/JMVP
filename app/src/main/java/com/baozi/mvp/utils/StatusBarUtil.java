@@ -2,7 +2,7 @@ package com.baozi.mvp.utils;
 
 import android.app.Activity;
 import android.os.Build;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;

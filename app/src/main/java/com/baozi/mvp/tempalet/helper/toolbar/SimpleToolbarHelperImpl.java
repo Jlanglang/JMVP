@@ -1,7 +1,7 @@
 package com.baozi.mvp.tempalet.helper.toolbar;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.NonNull;
+import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageButton;

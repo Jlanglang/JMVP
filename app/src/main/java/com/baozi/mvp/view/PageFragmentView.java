@@ -1,7 +1,7 @@
 package com.baozi.mvp.view;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 /**
  * Created by Administrator on 2017/8/8 0008.

@@ -1,6 +1,6 @@
 package com.baozi.mvp.view;
 
-import android.support.v4.view.ViewPager;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 

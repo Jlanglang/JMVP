@@ -1,8 +1,8 @@
 package com.baozi.mvp;
 
-import android.support.annotation.AnimRes;
-import android.support.annotation.AnimatorRes;
-import android.support.annotation.StyleRes;
+import androidx.annotation.AnimRes;
+import androidx.annotation.AnimatorRes;
+import androidx.annotation.StyleRes;
 
 import com.baozi.mvp.tempalet.options.ContentOptions;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;

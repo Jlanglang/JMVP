@@ -1,8 +1,8 @@
 package com.baozi.mvp.tempalet.options;
 
-import android.support.annotation.ColorInt;
-import android.support.annotation.DrawableRes;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
+import androidx.annotation.LayoutRes;
 
 import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 

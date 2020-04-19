@@ -1,6 +1,6 @@
 package com.baozi.mvp.view;
 
-import android.support.annotation.LayoutRes;
+import androidx.annotation.LayoutRes;
 import android.view.View;
 
 import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;

@@ -1,7 +1,7 @@
 package com.baozi.mvp.presenter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import com.baozi.mvp.view.PageFragmentView;
 import com.baozi.mvp.view.TabLayoutView;

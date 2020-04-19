@@ -1,13 +1,13 @@
 package com.baozi.mvp.tempalet;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.view.menu.MenuBuilder;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import com.google.android.material.appbar.AppBarLayout;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,6 @@ import com.baozi.mvp.base.BaseActivity;
 import com.baozi.mvp.presenter.BasePresenter;
 import com.baozi.mvp.tempalet.helper.toolbar.ToolbarHelper;
 import com.baozi.mvp.tempalet.options.ToolbarOptions;
-import com.baozi.mvp.view.BaseView;
 import com.baozi.mvp.view.ToolbarView;
 
 /**

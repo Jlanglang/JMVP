@@ -1,8 +1,8 @@
 package com.baozi.mvp.tempalet.options;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
-import android.support.annotation.LayoutRes;
+import androidx.annotation.IdRes;
+import androidx.annotation.LayoutRes;
 import android.view.View;
 
 import com.baozi.mvp.tempalet.weight.LoadingPager;

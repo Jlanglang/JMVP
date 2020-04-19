@@ -1,6 +1,6 @@
 package com.baozi.mvp.view;
 
-import android.support.design.widget.TabLayout;
+import com.google.android.material.tabs.TabLayout;
 
 public interface TabLayoutView extends BaseView {
 
