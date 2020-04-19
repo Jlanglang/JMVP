@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
@@ -11,6 +12,7 @@ import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -200,12 +202,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
      */
     protected View initView(@NonNull LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         int layout = initView(savedInstanceState);
-        try {
-            return inflater.inflate(layout, null);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+//        try {
+        return inflater.inflate(layout, null);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
     }
 
     /**
